@@ -1,8 +1,7 @@
-import AppLayoutTemplate from '@/layouts/app/app-sidebar-layout';
-import type { AppLayoutProps } from '@/types';
+import AppHeader from '@/components/app/app-header';
 
-export default ({ children, breadcrumbs, ...props }: AppLayoutProps) => (
-    <AppLayoutTemplate breadcrumbs={breadcrumbs} {...props}>
-        {children}
-    </AppLayoutTemplate>
+export default () => (
+    <div className="layout">
+        <AppHeader/>
+    </div>
 );
