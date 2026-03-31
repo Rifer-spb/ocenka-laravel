@@ -37,9 +37,11 @@ h2 {
     border-collapse: collapse;
     margin-bottom: 0;
     background-color: transparent;
+    width: 100%;
 }
 
-.table .table {
+.table>:not(caption)>*>* {
+    padding: 0;
     background-color: transparent;
 }
 
@@ -107,11 +109,11 @@ h2 {
     color: #fff;
 }
 
-.navigation {
+.header .navigation {
     margin-left: 20px;
 }
 
-.navigation ul li {
+.header .navigation ul li {
     -webkit-transition: All 0.3s ease;
     -moz-transition: All 0.3s ease;
     -o-transition: All 0.3s ease;
@@ -120,26 +122,38 @@ h2 {
     vertical-align: middle;
 }
 
-.navigation ul li:hover {
+.header .navigation ul li:hover {
     background-color: #496877;
 }
 
-.navigation ul li:last-child {
+.header .navigation ul li a {
+    position: relative;
     color: #fff;
     font-size: 14px;
     padding: 17px;
+    display: block;
+    text-decoration: none;
+    line-height: 14px;
 }
 
-.navigation ul li a {
-    position: relative;
-}
-
-.navigation a>svg {
+.header .navigation a>svg {
     font-size: 24px;
 }
 
+.header .navigation {
+    text-align: right;
+}
+
 @media (max-width: 768px) {
-    .navigation .name {
+    .header  .navigation .name {
         display: none;
     }
+}
+
+ul {
+    margin: 0;
+}
+
+.layout main {
+    padding: 20px;
 }

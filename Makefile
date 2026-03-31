@@ -6,3 +6,6 @@ docker-build:
 
 docker-down:
 	docker compose down --remove-orphans
+
+cli:
+	docker compose exec -it php bash
