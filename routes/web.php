@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\DefaultController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\DefaultController;
 
 Route::get('/', [DefaultController::class, 'home'])->name('default.home');
+Route::get('/auth/sign-up', [AuthController::class, 'index'])->name('auth.sign-up');
 
 /*
 Route::get('/', function () {
@@ -16,4 +18,4 @@ Route::get('/', function () {
 })->name('default');
 */
 
-//require __DIR__.'/settings.php';
+// require __DIR__.'/settings.php';
