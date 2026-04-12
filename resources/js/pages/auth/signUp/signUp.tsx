@@ -40,6 +40,5 @@ export default function SignUp() {
                 </div>
             </AppLayout>
         </>
-    )
-        ;
+    );
 }

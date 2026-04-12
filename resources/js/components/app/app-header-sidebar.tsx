@@ -7,7 +7,7 @@ export default () => (
                 <Link href="/">Вход</Link>
             </li>
             <li>
-                <Link href="/">Регистрация</Link>
+                <Link href="/auth/sign-up">Регистрация</Link>
             </li>
         </ul>
     </div>

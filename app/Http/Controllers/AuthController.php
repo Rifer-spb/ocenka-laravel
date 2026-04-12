@@ -9,6 +9,6 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return Inertia::render('auth/signUp/SignUp');
+        return Inertia::render('auth/signUp/signUp');
     }
 }
