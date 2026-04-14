@@ -1,13 +1,16 @@
 import AppLayout from "@/layouts/app-layout";
+import { Form, Head } from '@inertiajs/react';
 import styles from "./signUp.module.css";
+import { store } from "@/routes/auth/sign-up";
 
 export default function SignUp() {
     return (
         <>
             <AppLayout>
                 <div className={styles.singUp}>
-                    <h1>Регистрация</h1>
-                    <form>
+                    <Form {...store.form()}>
+                        <Head title="Регистрация" />
+                        <h1>Регистрация</h1>
                         <div className="form-group">
                             <label>Ваш e-mail</label>
                             <input type="text" className="form-control"/>
@@ -36,7 +39,7 @@ export default function SignUp() {
                         <div className="form-group">
                             <button className="btn btn-success" type="submit">Зарегистрироваться</button>
                         </div>
-                    </form>
+                    </Form>
                 </div>
             </AppLayout>
         </>
