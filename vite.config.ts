@@ -9,7 +9,7 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],
             ssr: 'resources/js/ssr.tsx',
-            refresh: true,
+            refresh: true
         }),
         react({
             babel: {
@@ -17,9 +17,9 @@ export default defineConfig({
             },
         }),
         tailwindcss(),
-        wayfinder({
-            formVariants: true,
-        }),
+        //wayfinder({
+        //    formVariants: true,
+        //}),
     ],
     server: {
         host: '0.0.0.0',  // Разрешаем доступ извне контейнера

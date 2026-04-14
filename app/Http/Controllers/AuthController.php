@@ -11,4 +11,9 @@ class AuthController extends Controller
     {
         return Inertia::render('auth/signUp/signUp');
     }
+
+    public function store(Request $request)
+    {
+
+    }
 }
