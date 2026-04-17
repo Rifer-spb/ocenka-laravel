@@ -157,3 +157,11 @@ ul {
 .layout main {
     padding: 20px;
 }
+
+.error {
+    font-size: 14px;
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: red;
+}

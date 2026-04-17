@@ -3,7 +3,6 @@
     margin: 0 auto;
 }
 
-.singUp .form-group a {
-    text-decoration: none;
-    color: #000000;
+.formGroup {
+    margin-bottom: 10px;
 }
