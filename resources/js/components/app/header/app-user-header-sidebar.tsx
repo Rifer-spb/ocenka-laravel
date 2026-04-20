@@ -1,8 +1,9 @@
 import { Link } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
+import { Auth } from "@/types";
 
 export default function () {
-    const { auth } = usePage().props;
+    const { auth } = usePage<{ auth: Auth }>().props;
 
     return (
         <div>

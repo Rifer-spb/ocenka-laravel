@@ -6,6 +6,7 @@ import InputError from "@/components/input-error";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Link } from "@inertiajs/react";
 
 export default function SignIn() {
     return (
@@ -14,7 +15,7 @@ export default function SignIn() {
                 <Form {...signIn.form()}>
                     {({ errors }) => (
                         <>
-                            <Head title="Авторизация" />
+                            <Head title="Авторизация"/>
                             <h1>Авторизация</h1>
                             <div className={styles.formGroup}>
                                 <Label htmlFor="email">E-mail</Label>
@@ -29,7 +30,7 @@ export default function SignIn() {
                                     placeholder="email@example.com"
                                     className="form-control"
                                 />
-                                <InputError message={errors.email} className="error" />
+                                <InputError message={errors.email} className="error"/>
                             </div>
                             <div className={styles.formGroup}>
                                 <Label htmlFor="password">Пароль</Label>
@@ -44,7 +45,11 @@ export default function SignIn() {
                                     placeholder="Password"
                                     className="form-control"
                                 />
-                                <InputError message={errors.password} className="error" />
+                                <InputError message={errors.password} className="error"/>
+                            </div>
+                            <div className={styles.formGroup}>
+                                <p className={styles.p}><Link href="/manager/auth/lostpass">Забыли пароль?</Link></p>
+                                <p className={styles.p}><Link href="/manager/auth/sign-up">Регистрация</Link></p>
                             </div>
                             <div className={styles.formGroup}>
                                 <Button
