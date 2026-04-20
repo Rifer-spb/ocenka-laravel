@@ -33,4 +33,9 @@ enum Role: string
     {
         return $role == self::NOTARY;
     }
+
+    public static function managerRoles(): array
+    {
+        return [self::PHYS->value, self::LEGAL->value];
+    }
 }

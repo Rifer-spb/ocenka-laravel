@@ -26,6 +26,19 @@ class BaseAuthController extends Controller
         return redirect()->route($redirectTo);
     }
 
+    public function _authenticate(array $credentials, Request $request, string $redirectTo)
+    {
+        if ($this->guard->attempt($credentials)) {
+            if ($request->hasSession()) {
+                $request->session()->regenerate();
+            }
+
+            return redirect()->intended(route($redirectTo));
+        }
+
+        return false;
+    }
+
     public function _logout(Request $request, string $redirectTo)
     {
         $this->guard->logout();

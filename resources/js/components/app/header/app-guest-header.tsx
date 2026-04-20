@@ -13,7 +13,7 @@ export default () => (
                         <div className="navigation">
                             <ul>
                                 <li>
-                                    <Link href="/">Вход</Link>
+                                    <Link href="/manager/auth/sign-in">Вход</Link>
                                 </li>
                                 <li>
                                     <Link href="/manager/auth/sign-up">Регистрация</Link>

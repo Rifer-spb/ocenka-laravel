@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Manager;
 
 use App\Actions\Manager\Auth\SignUpAction;
 use App\Http\Controllers\BaseAuthController;
+use App\Http\Requests\Auth\SignInRequest;
 use App\Http\Requests\Auth\SignUpRequest;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
@@ -34,5 +35,25 @@ class AuthController extends BaseAuthController
     public function logout(Request $request)
     {
         return $this->_logout($request, 'manager.home');
+    }
+
+    public function viewSignIn()
+    {
+        return Inertia::render('manager/auth/signIn/signIn');
+    }
+
+    public function signIn(SignInRequest $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        $result = $this->_authenticate($credentials, $request, 'manager.home');
+
+        if (! $result) {
+            return back()
+                ->withErrors(['email' => 'Неверный email или пароль'])
+                ->onlyInput('email');
+        }
+
+        return $result;
     }
 }
