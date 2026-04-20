@@ -6,17 +6,11 @@ use App\Actions\Manager\Auth\SignUpAction;
 use App\Http\Controllers\BaseAuthController;
 use App\Http\Requests\Auth\SignInRequest;
 use App\Http\Requests\Auth\SignUpRequest;
-use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class AuthController extends BaseAuthController
 {
-    public function __construct(StatefulGuard $guard)
-    {
-        parent::__construct($guard);
-    }
-
     public function viewSignUp()
     {
         return Inertia::render('manager/auth/signUp/signUp');
