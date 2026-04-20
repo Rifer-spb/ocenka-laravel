@@ -9,3 +9,6 @@ docker-down:
 
 cli:
 	docker compose exec -it php bash
+
+chown:
+	sudo chown -R $USER:$USER database/migrations

@@ -1,7 +1,7 @@
 import AppLayout from "@/layouts/app-layout";
 import { Form, Head } from '@inertiajs/react';
 import styles from "./signUp.module.css";
-import { store } from "@/routes/auth/sign-up";
+import { signUp } from "@/routes/manager/auth";
 import InputError from "@/components/input-error";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,7 +12,7 @@ export default function SignUp() {
     return (
         <AppLayout>
             <div className={styles.singUp}>
-                <Form {...store.form()}>
+                <Form {...signUp.form()}>
                     {({ errors }) => (
                         <>
                             <Head title="Регистрация" />

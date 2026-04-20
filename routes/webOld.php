@@ -1,9 +1,8 @@
 <?php
 
 use App\Http\Controllers\DefaultController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Manager\AuthController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', [DefaultController::class, 'home'])->name('default.home');
 

@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 /**
  * @property string $email
  * @property string $password
- * @property string $accountType
+ * @property string $role
  */
 class SignUpRequest extends FormRequest
 {
