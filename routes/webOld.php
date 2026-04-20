@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\DefaultController;
 use App\Http\Controllers\Manager\AuthController;
+use App\Http\Controllers\Manager\DefaultController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DefaultController::class, 'home'])->name('default.home');

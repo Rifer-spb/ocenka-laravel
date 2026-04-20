@@ -3,16 +3,18 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Actions\Manager\Auth\SignUpAction;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseAuthController;
 use App\Http\Requests\Auth\SignUpRequest;
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class AuthController extends Controller
+class AuthController extends BaseAuthController
 {
-    public function __construct(
-        protected StatefulGuard $guard
-    ) {}
+    public function __construct(StatefulGuard $guard)
+    {
+        parent::__construct($guard);
+    }
 
     public function viewSignUp()
     {
@@ -26,12 +28,11 @@ class AuthController extends Controller
     {
         $user = $action->signUp($request);
 
-        $this->guard->login($user);
+        return $this->_login($user, $request, 'manager.home');
+    }
 
-        if ($request->hasSession()) {
-            $request->session()->regenerate();
-        }
-
-        return redirect()->route("manager/{$user->role}/home");
+    public function logout(Request $request)
+    {
+        return $this->_logout($request, 'manager.home');
     }
 }

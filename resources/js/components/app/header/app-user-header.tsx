@@ -1,5 +1,5 @@
-import AppHeaderBrand from '@/components/app/app-header-brand';
-import AppHeaderSidebar from '@/components/app/app-header-sidebar';
+import AppHeaderBrand from '@/components/app/header/app-user-header-brand';
+import AppHeaderSidebar from '@/components/app/header/app-user-header-sidebar';
 
 export default () => (
     <div className="header">
