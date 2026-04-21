@@ -1,6 +1,6 @@
-import AppHeaderBrand from '@/components/app/header/appUserHeaderBrand';
-import AppUserHeaderNav from "@/components/app/header/appUserHeaderNav";
-import AppUserHeaderLogout from '@/components/app/header/appUserHeaderLogout';
+import AppHeaderBrand from '@/components/app/manager/appUserHeaderBrand';
+import AppUserHeaderNav from "@/components/app/manager/appUserHeaderNav";
+import AppUserHeaderLogout from '@/components/app/manager/appUserHeaderLogout';
 
 export default () => (
     <div className="header">

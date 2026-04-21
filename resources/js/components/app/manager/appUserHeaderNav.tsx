@@ -12,12 +12,12 @@ export default function () {
         <div className={styles.navigation}>
             <ul className={styles.ul}>
                 <li className={styles.li}>
-                    <Link href={`${auth.user.role}/setting`} className={styles.a}>
+                    <Link href={`/manager/${auth.user.role}/setting`} className={styles.a}>
                         <FontAwesomeIcon icon={faCog} className={styles.svg} />
                     </Link>
                 </li>
                 <li className={styles.li}>
-                    <Link href={`${auth.user.role}/home`} className={styles.a}>
+                    <Link href={`/manager/${auth.user.role}/home`} className={styles.a}>
                         <FontAwesomeIcon icon={faBars} className={styles.svg} />
                     </Link>
                 </li>

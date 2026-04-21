@@ -1,4 +1,4 @@
-import AppLayout from '@/layouts/appLayout';
+import AppLayout from '@/layouts/appManagerLayout';
 
 export default function Home() {
     return (
