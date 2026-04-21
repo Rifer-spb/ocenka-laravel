@@ -8,9 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
+ * @property int $id
  * @property string $username
- * @property string $email
+ * @property string|null $email
+ * @property string|null $email_verified_at
  * @property string $password
+ * @property string $created_at
+ * @property string $updated_at
  * @property string $role
  */
 class User extends Authenticatable
