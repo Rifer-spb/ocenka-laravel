@@ -1,0 +1,47 @@
+.navigation {
+    margin-left: 20px;
+}
+
+.ul {
+    padding-left: 0;
+}
+
+.li {
+    -webkit-transition: All 0.3s ease;
+    -moz-transition: All 0.3s ease;
+    -o-transition: All 0.3s ease;
+    -ms-transition: All 0.3s ease;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.li:hover {
+    background-color: #496877;
+}
+
+.li:last-child {
+    color: #fff;
+    font-size: 14px;
+    padding: 17px;
+}
+
+.a {
+    position: relative;
+    color: #fff;
+    font-size: 14px;
+    line-height: 14px;
+    padding: 12px;
+    display: block;
+    text-decoration: none;
+    -webkit-transition: All .3s ease;
+}
+
+.svg {
+    font-size: 24px;
+}
+
+@media (max-width: 768px) {
+    .name {
+        display: none;
+    }
+}

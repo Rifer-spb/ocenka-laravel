@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * @property string $name
+ * @property string $username
  * @property string $email
  * @property string $password
  * @property string $role
@@ -21,7 +21,7 @@ class User extends Authenticatable
     protected $table = 'users';
 
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
         'role',
@@ -46,7 +46,7 @@ class User extends Authenticatable
     public static function signUpManager(string $email, string $password, string $role): static
     {
         return parent::create([
-            'name' => $email,
+            'username' => $email,
             'email' => $email,
             'password' => $password,
             'role' => $role,

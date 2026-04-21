@@ -1,5 +1,5 @@
-import AppGuestHeader from '@/components/app/header/app-guest-header';
-import AppUserHeader from '@/components/app/header/app-user-header';
+import AppGuestHeader from '@/components/app/header/appGuestHeader';
+import AppUserHeader from '@/components/app/header/appUserHeader';
 import { usePage } from "@inertiajs/react";
 import { Auth } from "@/types";
 

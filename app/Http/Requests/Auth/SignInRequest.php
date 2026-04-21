@@ -28,7 +28,7 @@ class SignInRequest extends FormRequest
                 'max:255',
                 Rule::exists('users')->where(function (Builder $query) {
                     return $query
-                        ->where('name', $this->email)
+                        ->where('username', $this->email)
                         ->whereIn('role', Role::managerRoles());
                 }),
             ],

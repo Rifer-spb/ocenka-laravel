@@ -57,6 +57,7 @@ h2 {
 .td {
     display: table-cell;
     font-size: 14px;
+    line-height: 14px;
 }
 
 .red {

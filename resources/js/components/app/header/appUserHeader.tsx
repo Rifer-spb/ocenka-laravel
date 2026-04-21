@@ -1,5 +1,6 @@
-import AppHeaderBrand from '@/components/app/header/app-user-header-brand';
-import AppHeaderSidebar from '@/components/app/header/app-user-header-sidebar';
+import AppHeaderBrand from '@/components/app/header/appUserHeaderBrand';
+import AppUserHeaderNav from "@/components/app/header/appUserHeaderNav";
+import AppUserHeaderLogout from '@/components/app/header/appUserHeaderLogout';
 
 export default () => (
     <div className="header">
@@ -10,10 +11,10 @@ export default () => (
                         <AppHeaderBrand/>
                     </div>
                     <div className="td center">
-
+                        <AppUserHeaderNav/>
                     </div>
                     <div className="td right">
-                        <AppHeaderSidebar/>
+                        <AppUserHeaderLogout/>
                     </div>
                 </div>
             </div>

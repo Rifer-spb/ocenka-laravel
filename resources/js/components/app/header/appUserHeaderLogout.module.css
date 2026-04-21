@@ -1,0 +1,33 @@
+.auth {
+    text-align: right;
+}
+
+.li {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.a {
+    color: #fff;
+    font-size: 14px;
+    line-height: 14px;
+    padding: 17px;
+    display: block;
+    text-decoration: none;
+    -webkit-transition: All 0.3s ease;
+    -moz-transition: All 0.3s ease;
+    -o-transition: All 0.3s ease;
+    -ms-transition: All 0.3s ease;
+    border: none;
+    background: transparent;
+}
+
+.a:hover {
+    background-color: #496877;
+}
+
+@media (max-width: 768px) {
+    .name {
+        display: none;
+    }
+}

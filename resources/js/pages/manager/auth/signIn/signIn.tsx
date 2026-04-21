@@ -1,4 +1,4 @@
-import AppLayout from "@/layouts/app-layout";
+import AppLayout from "@/layouts/appLayout";
 import { Form, Head } from '@inertiajs/react';
 import styles from "./signIn.module.css";
 import { signIn } from "@/routes/manager/auth";

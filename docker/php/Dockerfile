@@ -14,6 +14,12 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Установка Node.js 20.x (LTS) и npm
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 # Установка расширений PHP
 RUN docker-php-ext-install mbstring exif pcntl bcmath gd zip
 
