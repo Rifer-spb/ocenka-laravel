@@ -6,6 +6,7 @@ use App\Actions\Manager\Auth\SignUpAction;
 use App\Http\Controllers\BaseAuthController;
 use App\Http\Requests\Auth\SignInRequest;
 use App\Http\Requests\Auth\SignUpRequest;
+use App\Models\User\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -23,7 +24,7 @@ class AuthController extends BaseAuthController
     {
         $user = $action->signUp($request);
 
-        return $this->_login($user, $request, 'manager.home');
+        return $this->_login($user, $request, "manager.{$user->role}.home");
     }
 
     public function logout(Request $request)
@@ -40,7 +41,9 @@ class AuthController extends BaseAuthController
     {
         $credentials = $request->only('email', 'password');
 
-        $result = $this->_authenticate($credentials, $request, 'manager.home');
+        $result = $this->_authenticate($credentials, $request, function (User $user) {
+            return "manager.{$user->role}.home";
+        });
 
         if (! $result) {
             return back()

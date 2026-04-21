@@ -27,11 +27,16 @@ class BaseAuthController extends Controller
         return redirect()->route($redirectTo);
     }
 
-    public function _authenticate(array $credentials, Request $request, string $redirectTo)
+    public function _authenticate(array $credentials, Request $request, string|callable $redirectTo)
     {
         if ($this->guard()->attempt($credentials)) {
             if ($request->hasSession()) {
                 $request->session()->regenerate();
+            }
+
+            if (is_callable($redirectTo)) {
+                $user = $this->guard()->user();
+                $redirectTo = $redirectTo($user);
             }
 
             return redirect()->intended(route($redirectTo));

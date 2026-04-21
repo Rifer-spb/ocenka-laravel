@@ -24,7 +24,7 @@ class Phys extends User
         });
     }
 
-    public function profile(): HasOne|Phys
+    public function profile(): HasOne|PhysProfile
     {
         return $this->hasOne(PhysProfile::class, 'id', 'id');
     }
