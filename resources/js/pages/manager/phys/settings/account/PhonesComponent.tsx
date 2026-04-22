@@ -4,15 +4,19 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import InputError from "@/components/input-error";
 import { Phones } from "./account.types";
+import { useManagerRoute } from "@/hooks/useManagerRoute";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Props {
-    phones: Phones
+    phones: Phones[]
 }
 
 export default function ({ phones }: Props) {
+    const route = useManagerRoute();
 
     return (
-        <section style={{ maxWidth: '400px' }}>
+        <section className="phones">
             <h2>Номера телефонов</h2>
             <Form {...addPhone.form()}>
                 {({ errors }) => (
@@ -37,6 +41,21 @@ export default function ({ phones }: Props) {
                     </div>
                 )}
             </Form>
+            <div className="phones">
+                {phones.map((item, index) => (
+                    <Form
+                        key={index}
+                        method="delete"
+                        action={route(`settings/account/phones/${item.id}`)}
+                        className="item"
+                    >
+                        <span>{item.phone}</span>
+                        <Button type="submit">
+                            <FontAwesomeIcon icon={faTrash}/>
+                        </Button>
+                    </Form>
+                ))}
+            </div>
         </section>
     );
 }

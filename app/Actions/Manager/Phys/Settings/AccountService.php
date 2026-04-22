@@ -29,4 +29,9 @@ class AccountService
     {
         $user->addPhone($request->phone);
     }
+
+    public function deletePhone(Phys $user, int $phoneId): void
+    {
+        $user->deletePhone($phoneId);
+    }
 }

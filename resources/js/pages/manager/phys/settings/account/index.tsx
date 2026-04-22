@@ -2,14 +2,14 @@ import AppLayout from '@/layouts/appManagerLayout';
 import EmailComponent from "./EmailComponent";
 import {usePage} from "@inertiajs/react";
 import { SharedData } from "@/types";
-import styles from './index.module.css';
+import './index.css';
 import NameComponent from "./NameComponent";
 import {Profile, Phones} from "./account.types";
 import PhonesComponent from "./PhonesComponent";
 
 interface Props {
     profile: Profile,
-    phones: Phones
+    phones: Phones[]
 }
 
 export default function Home({ profile, phones }: Props) {
@@ -18,7 +18,7 @@ export default function Home({ profile, phones }: Props) {
 
     return (
         <AppLayout>
-            <div className={styles.account}>
+            <div className="account">
                 <h1>Аккаунт</h1>
                 <EmailComponent user={user}/>
                 <NameComponent profile={profile}/>

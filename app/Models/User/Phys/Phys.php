@@ -39,6 +39,11 @@ class Phys extends User
         $this->phones()->create(['phone' => $phone]);
     }
 
+    public function deletePhone(int $id): void
+    {
+        $this->phones()->findOrFail($id)->delete();
+    }
+
     public function profile(): HasOne
     {
         return $this->hasOne(PhysProfile::class, 'id', 'id');

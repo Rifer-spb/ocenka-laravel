@@ -26,7 +26,8 @@ Route::prefix('manager')->name('manager.')->group(function () {
             Route::get('/', fn () => Inertia::render('manager/phys/settings/index'))->name('index');
             Route::get('account', [AccountController::class, 'view'])->name('view');
             Route::post('account/name', [AccountController::class, 'updateName'])->name('updateName');
-            Route::post('account/phone', [AccountController::class, 'addPhone'])->name('addPhone');
+            Route::post('account/phones', [AccountController::class, 'addPhone'])->name('addPhone');
+            Route::delete('account/phones/{phone}', [AccountController::class, 'deletePhone'])->name('deletePhone');
         });
     });
 });

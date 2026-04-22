@@ -6,6 +6,7 @@ use App\Actions\Manager\Phys\Settings\AccountService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Manager\Phys\Settings\Account\AddPhoneRequest;
 use App\Http\Requests\Manager\Phys\Settings\Account\NameRequest;
+use App\Models\User\Phys\PhysPhone;
 use Inertia\Inertia;
 
 class AccountController extends Controller
@@ -33,5 +34,12 @@ class AccountController extends Controller
         return $this->tryCatch(function () use ($request) {
             $this->service->addPhone($this->getUser(), $request);
         }, 'Успешно добавлено');
+    }
+
+    public function deletePhone(PhysPhone $phone)
+    {
+        return $this->tryCatch(function () use ($phone) {
+            $this->service->deletePhone($this->getUser(), $phone->id);
+        }, 'Успешно удалено');
     }
 }

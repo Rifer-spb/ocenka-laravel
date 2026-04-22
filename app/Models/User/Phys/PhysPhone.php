@@ -5,14 +5,19 @@ namespace App\Models\User\Phys;
 use App\Helpers\StringHelper;
 use Illuminate\Database\Eloquent\Model;
 
-/** @property int $id */
-/** @property int $user_id */
-/** @property string $phone */
+/**
+ * @property int $id
+ * @property int $user_id
+ * @property string $phone
+ */
 class PhysPhone extends Model
 {
     public $timestamps = false;
     protected $fillable = [
         'phone',
+    ];
+    protected $hidden = [
+        'user_id',
     ];
 
     public function setPhoneAttribute($value): void
