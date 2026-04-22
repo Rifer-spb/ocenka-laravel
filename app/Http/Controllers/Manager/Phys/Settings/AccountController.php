@@ -26,20 +26,26 @@ class AccountController extends Controller
     {
         return $this->tryCatch(function () use ($request) {
             $this->service->updateName($this->getUser(), $request);
-        }, 'Успешно обновлено');
+
+            return back()->with('success', 'Успешно обновлено');
+        });
     }
 
     public function addPhone(AddPhoneRequest $request)
     {
         return $this->tryCatch(function () use ($request) {
             $this->service->addPhone($this->getUser(), $request);
-        }, 'Успешно добавлено');
+
+            return back()->with('success', 'Успешно обновлено');
+        });
     }
 
     public function deletePhone(PhysPhone $phone)
     {
         return $this->tryCatch(function () use ($phone) {
             $this->service->deletePhone($this->getUser(), $phone->id);
-        }, 'Успешно удалено');
+
+            return back()->with('success', 'Успешно удалено');
+        });
     }
 }

@@ -12,23 +12,12 @@ use Illuminate\Support\Facades\Log;
 
 abstract class Controller
 {
-    protected function tryCatch(callable $callback, ?string $successMessage = null)
+    protected function tryCatch(callable $callback)
     {
         try {
-            $result = $callback();
-
-            if ($successMessage && ! $result instanceof \Illuminate\Http\RedirectResponse) {
-                return back()->with('success', $successMessage);
-            }
-
-            return $result ?? back();
-
+            return $callback();
         } catch (\Throwable $e) {
-            Log::error($e->getMessage(), [
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString(),
-            ]);
+            Log::error($e);
 
             if (App::environment('local', 'development')) {
                 throw $e;
