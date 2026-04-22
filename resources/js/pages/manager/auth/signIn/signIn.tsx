@@ -7,8 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Link } from "@inertiajs/react";
+import { useManagerRoute } from "@/hooks/useManagerRoute";
 
 export default function SignIn() {
+    const route = useManagerRoute();
+
     return (
         <AppLayout>
             <div className={styles.signIn}>
@@ -48,8 +51,8 @@ export default function SignIn() {
                                 <InputError message={errors.password} className="error"/>
                             </div>
                             <div className={styles.formGroup}>
-                                <p className={styles.p}><Link href="/manager/auth/lostpass">Забыли пароль?</Link></p>
-                                <p className={styles.p}><Link href="/manager/auth/sign-up">Регистрация</Link></p>
+                                <p className={styles.p}><Link href={route('auth/lostpass', false)}>Забыли пароль?</Link></p>
+                                <p className={styles.p}><Link href={route('auth/sign-up', false)}>Регистрация</Link></p>
                             </div>
                             <div className={styles.formGroup}>
                                 <Button

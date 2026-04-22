@@ -2,16 +2,18 @@ import { Link } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
 import { Auth } from "@/types";
 import styles from './appUserHeaderLogout.module.css';
+import { useManagerRoute } from "@/hooks/useManagerRoute";
 
 export default function () {
     const { auth } = usePage<{ auth: Auth }>().props;
+    const route = useManagerRoute();
 
     return (
         <div className={styles.auth}>
             <ul>
                 <li className={styles.li}>
                     <Link
-                        href="/manager/auth/logout"
+                        href={route('auth/logout', false)}
                         method="post"
                         as="button"
                         className={styles.a}

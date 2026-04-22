@@ -3,6 +3,7 @@ import {usePage} from "@inertiajs/react";
 import {Auth} from "@/types";
 import {useEffect, useState} from "react";
 import { Link } from "@inertiajs/react";
+import { useManagerRoute } from "@/hooks/useManagerRoute";
 
 interface MenuItem {
     route: string;
@@ -14,40 +15,41 @@ export default function () {
     const role = auth.user.role;
     const pathname = window.location.pathname;
     const [items, setItems] = useState<MenuItem[]>([]);
+    const route = useManagerRoute();
 
     const getPhysItems = () => {
         if (pathname === '/manager/phys/settings') {
             return [
-                {route: '/manager/phys/settings/account', name: 'Аккаунт'},
-                {route: '/manager/phys/settings/legals', name: 'Юр. лица'},
-                {route: '/manager/phys/settings/telegram', name: 'Телеграм'},
+                {route: route('settings/account'), name: 'Аккаунт'},
+                {route: route('settings/legals'), name: 'Юр. лица'},
+                {route: route('settings/telegram'), name: 'Телеграм'},
             ];
         }
 
         return [
-            {route: '/manager/phys/notaries', name: 'Нотариусы'},
-            {route: '/manager/phys/calls', name: 'Реестр звонков'},
-            {route: '/manager/phys/contacts', name: 'Контакты'},
-            {route: '/manager/phys/chats', name: 'Чаты'},
-            {route: '/manager/phys/pre-orders', name: 'Предзаказы'},
-            {route: '/manager/phys/orders', name: 'Заказы'},
-            {route: '/manager/phys/registry', name: 'Договора'},
-            {route: '/manager/phys/rides', name: 'Выезды'},
-            {route: '/manager/phys/wait-document', name: 'Ждут документы'},
-            {route: '/manager/phys/reports', name: 'Отчеты'},
-            {route: '/manager/phys/check-reports', name: 'Проверка отчетов'},
-            {route: '/manager/phys/client-notify', name: 'Уведомление заказчика'},
-            {route: '/manager/phys/sign-ecp', name: 'Подпись ЭЦП'},
-            {route: '/manager/phys/wait-confirm', name: 'Ждут подтверждения'},
-            {route: '/manager/phys/print-reports', name: 'Печать сшивка'},
-            {route: '/manager/phys/coordinate', name: 'Согласовать получение'},
-            {route: '/manager/phys/wait-office', name: 'Отчет ждет в офисе'},
-            {route: '/manager/phys/delivery', name: 'Передача в доставку'},
-            {route: '/manager/phys/delivery-complete', name: 'Ждут подтв. доставки'},
-            {route: '/manager/phys/complete', name: 'Завершение'},
-            {route: '/manager/phys/monitoring', name: 'Мониторинг'},
-            {route: '/manager/phys/resources', name: 'Ресурсы'},
-            {route: '/manager/phys/client-log', name: 'Лог заказчика'}
+            {route: route('notaries'), name: 'Нотариусы'},
+            {route: route('calls'), name: 'Реестр звонков'},
+            {route: route('contacts'), name: 'Контакты'},
+            {route: route('chats'), name: 'Чаты'},
+            {route: route('pre-orders'), name: 'Предзаказы'},
+            {route: route('orders'), name: 'Заказы'},
+            {route: route('registry'), name: 'Договора'},
+            {route: route('rides'), name: 'Выезды'},
+            {route: route('wait-document'), name: 'Ждут документы'},
+            {route: route('reports'), name: 'Отчеты'},
+            {route: route('check-reports'), name: 'Проверка отчетов'},
+            {route: route('client-notify'), name: 'Уведомление заказчика'},
+            {route: route('sign-ecp'), name: 'Подпись ЭЦП'},
+            {route: route('wait-confirm'), name: 'Ждут подтверждения'},
+            {route: route('print-reports'), name: 'Печать сшивка'},
+            {route: route('coordinate'), name: 'Согласовать получение'},
+            {route: route('wait-office'), name: 'Отчет ждет в офисе'},
+            {route: route('delivery'), name: 'Передача в доставку'},
+            {route: route('delivery-complete'), name: 'Ждут подтв. доставки'},
+            {route: route('complete'), name: 'Завершение'},
+            {route: route('monitoring'), name: 'Мониторинг'},
+            {route: route('resources'), name: 'Ресурсы'},
+            {route: route('client-log'), name: 'Лог заказчика'}
         ];
     };
 
