@@ -3,14 +3,12 @@ import AppMainSideBar from "@/components/app/manager/appMainSideBar";
 export default function ({ children } : { children: any }) {
     return (
         <main style={{ padding: 0 }}>
-            <div className="table">
+            <div className="table" style={{ minHeight: '1000px' }}>
                 <div className="tr">
                     <AppMainSideBar/>
                     <div className="td">
-                        <div className="page">
-                            <div className="content">
-                                {children}
-                            </div>
+                        <div style={{ padding: '20px' }}>
+                            { children }
                         </div>
                     </div>
                 </div>
