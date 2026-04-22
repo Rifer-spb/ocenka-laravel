@@ -2,12 +2,12 @@
 
 namespace App\Actions\Manager\Auth;
 
+use App\Http\Requests\Manager\Auth\SignUpRequest;
 use App\Jobs\Manager\Auth\SendSignUpEmailJob;
 use App\Models\User\Legal\Legal;
 use App\Models\User\Phys\Phys;
 use App\Models\User\User;
 use App\Models\User\UserFactory;
-use App\Http\Requests\Auth\SignUpRequest;
 use Illuminate\Support\Facades\DB;
 
 class SignUpAction

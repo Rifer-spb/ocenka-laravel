@@ -13,7 +13,7 @@ export default function () {
         <div className={styles.navigation}>
             <ul className={styles.ul}>
                 <li className={styles.li}>
-                    <Link href={route('setting')} className={styles.a}>
+                    <Link href={route('settings')} className={styles.a}>
                         <FontAwesomeIcon icon={faCog} className={styles.svg} />
                     </Link>
                 </li>

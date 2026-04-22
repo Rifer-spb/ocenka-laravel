@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User\Phys\PhysProfile;
+use App\Models\User\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -38,11 +40,25 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'name' => config('app.name'),
-            'auth' => [
-                'user' => $request->user(),
-                'isAuthenticated' => $request->user() !== null,
-            ],
+            'auth' => $this->getAuth($request),
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'flash' => [
+                'success' => $request->session()->get('success'),
+                'error' => $request->session()->get('error'),
+                'warning' => $request->session()->get('warning'),
+                'info' => $request->session()->get('info'),
+            ],
+        ];
+    }
+
+    private function getAuth(Request $request): array
+    {
+        $user = $request->user();
+        $isAuthenticated = $user !== null;
+
+        return [
+            'user' => $user,
+            'isAuthenticated' => $isAuthenticated,
         ];
     }
 }

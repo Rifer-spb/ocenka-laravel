@@ -22,5 +22,19 @@ class PhysProfile extends Model
     protected $table = 'phys_profiles';
     protected $fillable = [
         'id',
+        'first_name',
+        'second_name',
+        'last_name',
+        'full_name',
     ];
+
+    public function updateName(string $firstName, string $secondName, string $lastName): void
+    {
+        $this->update([
+            'first_name' => $firstName,
+            'second_name' => $secondName,
+            'last_name' => $lastName,
+            'full_name' => "$firstName $secondName $lastName",
+        ]);
+    }
 }

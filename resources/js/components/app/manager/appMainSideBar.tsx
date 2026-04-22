@@ -18,7 +18,7 @@ export default function () {
     const route = useManagerRoute();
 
     const getPhysItems = () => {
-        if (pathname === '/manager/phys/settings') {
+        if (pathname.includes('/manager/phys/settings')) {
             return [
                 {route: route('settings/account'), name: 'Аккаунт'},
                 {route: route('settings/legals'), name: 'Юр. лица'},

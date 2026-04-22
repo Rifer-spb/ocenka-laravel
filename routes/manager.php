@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\Manager\AuthController;
 use App\Http\Controllers\Manager\DefaultController;
+use App\Http\Controllers\Manager\Phys\Settings\AccountController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Manager\Phys\HomeController;
+use Inertia\Inertia;
 
 Route::get('/', [DefaultController::class, 'home'])->name('default.home');
 
@@ -19,6 +20,13 @@ Route::prefix('manager')->name('manager.')->group(function () {
     });
 
     Route::prefix('phys')->name('phys.')->middleware('auth')->group(function () {
-        Route::get('home', [HomeController::class, 'index'])->name('home');
+        Route::get('home', fn () => Inertia::render('manager/phys/home'))->name('home');
+
+        Route::prefix('settings')->name('settings.')->group(function () {
+            Route::get('/', fn () => Inertia::render('manager/phys/settings/index'))->name('index');
+            Route::get('account', [AccountController::class, 'view'])->name('view');
+            Route::post('account/name', [AccountController::class, 'updateName'])->name('updateName');
+            Route::post('account/phone', [AccountController::class, 'addPhone'])->name('addPhone');
+        });
     });
 });

@@ -4,8 +4,13 @@ namespace App\Models\User\Phys;
 
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @property PhysProfile $profile
+ * @property PhysPhone[] $phones
+ */
 class Phys extends User
 {
     public static function signUpManager(string $email, string $password, string $role): static
@@ -24,8 +29,23 @@ class Phys extends User
         });
     }
 
-    public function profile(): HasOne|PhysProfile
+    public function updateName(string $firstName, string $secondName, string $lastName): void
+    {
+        $this->profile->updateName($firstName, $secondName, $lastName);
+    }
+
+    public function addPhone(string $phone): void
+    {
+        $this->phones()->create(['phone' => $phone]);
+    }
+
+    public function profile(): HasOne
     {
         return $this->hasOne(PhysProfile::class, 'id', 'id');
+    }
+
+    public function phones(): HasMany
+    {
+        return $this->hasMany(PhysPhone::class, 'user_id', 'id');
     }
 }
