@@ -44,6 +44,11 @@ class Phys extends User
         $this->phones()->findOrFail($id)->delete();
     }
 
+    public function updateHoliday(string $from, string $to): void
+    {
+        $this->profile->updateHoliday($from, $to);
+    }
+
     public function profile(): HasOne
     {
         return $this->hasOne(PhysProfile::class, 'id', 'id');

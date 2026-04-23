@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Manager;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class DefaultController extends Controller
+class DefaultController extends AbstractController
 {
     public function home(): Response
     {

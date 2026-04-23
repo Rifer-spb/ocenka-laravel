@@ -1,9 +1,8 @@
-import {User} from "@/types";
 import {Form} from '@inertiajs/react';
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import InputError from "@/components/input-error";
-import {updateName} from "@/routes/manager/phys/settings";
+import { update } from "@/routes/manager/phys/settings/account/name";
 import {Button} from "@/components/ui/button";
 import {Profile} from "./account.types";
 
@@ -15,7 +14,7 @@ export default function ({ profile }: Props) {
     return (
         <section style={{maxWidth: '500px'}}>
             <h2>Мои данные</h2>
-            <Form {...updateName.form()}>
+            <Form {...update.form()}>
                 {({errors}) => (
                     <>
                         <div className="form-group">

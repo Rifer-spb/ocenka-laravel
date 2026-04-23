@@ -6,6 +6,7 @@ import './index.css';
 import NameComponent from "./NameComponent";
 import {Profile, Phones} from "./account.types";
 import PhonesComponent from "./PhonesComponent";
+import HolidayComponent from "./HolidayComponent";
 
 interface Props {
     profile: Profile,
@@ -23,6 +24,7 @@ export default function Home({ profile, phones }: Props) {
                 <EmailComponent user={user}/>
                 <NameComponent profile={profile}/>
                 <PhonesComponent phones={phones} />
+                <HolidayComponent holiday_from={profile.holiday_from} holiday_to={profile.holiday_to} />
             </div>
         </AppLayout>
     );

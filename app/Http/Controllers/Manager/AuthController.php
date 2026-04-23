@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Actions\Manager\Auth\SignUpAction;
-use App\Http\Controllers\BaseAuthController;
+use App\Http\Controllers\AbstractAuthController;
 use App\Http\Requests\Manager\Auth\SignInRequest;
 use App\Http\Requests\Manager\Auth\SignUpRequest;
 use App\Models\User\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class AuthController extends BaseAuthController
+class AuthController extends AbstractAuthController
 {
     public function viewSignUp()
     {

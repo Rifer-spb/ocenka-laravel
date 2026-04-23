@@ -6,7 +6,7 @@ use App\Models\User\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class BaseAuthController extends Controller
+abstract class AbstractAuthController extends AbstractController
 {
     protected function guard()
     {
@@ -16,7 +16,7 @@ class BaseAuthController extends Controller
     /**
      * @throws \Throwable
      */
-    public function _login(User $user, Request $request, string $redirectTo)
+    protected function _login(User $user, Request $request, string $redirectTo)
     {
         $this->guard()->login($user);
 
@@ -27,7 +27,7 @@ class BaseAuthController extends Controller
         return redirect()->route($redirectTo);
     }
 
-    public function _authenticate(array $credentials, Request $request, string|callable $redirectTo)
+    protected function _authenticate(array $credentials, Request $request, string|callable $redirectTo)
     {
         if ($this->guard()->attempt($credentials)) {
             if ($request->hasSession()) {
@@ -45,7 +45,7 @@ class BaseAuthController extends Controller
         return false;
     }
 
-    public function _logout(Request $request, string $redirectTo)
+    protected function _logout(Request $request, string $redirectTo)
     {
         $this->guard()->logout();
 

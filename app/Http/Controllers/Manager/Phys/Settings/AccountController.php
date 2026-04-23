@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Manager\Phys\Settings;
 
 use App\Actions\Manager\Phys\Settings\AccountService;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use App\Http\Requests\Manager\Phys\Settings\Account\AddPhoneRequest;
+use App\Http\Requests\Manager\Phys\Settings\Account\HolidayRequest;
 use App\Http\Requests\Manager\Phys\Settings\Account\NameRequest;
 use App\Models\User\Phys\PhysPhone;
 use Inertia\Inertia;
 
-class AccountController extends Controller
+class AccountController extends AbstractController
 {
     public function __construct(
         private AccountService $service
@@ -24,28 +25,29 @@ class AccountController extends Controller
 
     public function updateName(NameRequest $request)
     {
-        return $this->tryCatch(function () use ($request) {
-            $this->service->updateName($this->getUser(), $request);
+        $this->service->updateName($this->getUser(), $request);
 
-            return back()->with('success', 'Успешно обновлено');
-        });
+        return back()->with('success', 'Успешно обновлено');
     }
 
     public function addPhone(AddPhoneRequest $request)
     {
-        return $this->tryCatch(function () use ($request) {
-            $this->service->addPhone($this->getUser(), $request);
+        $this->service->addPhone($this->getUser(), $request);
 
-            return back()->with('success', 'Успешно обновлено');
-        });
+        return back()->with('success', 'Успешно обновлено');
     }
 
     public function deletePhone(PhysPhone $phone)
     {
-        return $this->tryCatch(function () use ($phone) {
-            $this->service->deletePhone($this->getUser(), $phone->id);
+        $this->service->deletePhone($this->getUser(), $phone->id);
 
-            return back()->with('success', 'Успешно удалено');
-        });
+        return back()->with('success', 'Успешно удалено');
+    }
+
+    public function updateHoliday(HolidayRequest $request)
+    {
+        $this->service->updateHoliday($this->getUser(), $request);
+
+        return back()->with('success', 'Успешно обновлено');
     }
 }

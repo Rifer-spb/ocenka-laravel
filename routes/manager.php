@@ -14,7 +14,7 @@ Route::prefix('manager')->name('manager.')->group(function () {
     Route::prefix('auth')->name('auth.')->group(function () {
         Route::get('sign-up', [AuthController::class, 'viewSignUp'])->name('viewSignUp')->middleware('guest');
         Route::post('sign-up', [AuthController::class, 'signUp'])->name('signUp')->middleware('guest');
-        Route::post('logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+        Route::post('logout', [AuthController::class, '_logout'])->name('logout')->middleware('auth');
         Route::get('sign-in', [AuthController::class, 'viewSignIn'])->name('viewSignIn')->middleware('guest');
         Route::post('sign-in', [AuthController::class, 'signIn'])->name('signIn')->middleware('guest');
     });
@@ -24,10 +24,14 @@ Route::prefix('manager')->name('manager.')->group(function () {
 
         Route::prefix('settings')->name('settings.')->group(function () {
             Route::get('/', fn () => Inertia::render('manager/phys/settings/index'))->name('index');
-            Route::get('account', [AccountController::class, 'view'])->name('account');
-            Route::post('account/name', [AccountController::class, 'updateName'])->name('updateName');
-            Route::post('account/phones', [AccountController::class, 'addPhone'])->name('addPhone');
-            Route::delete('account/phones/{phone}', [AccountController::class, 'deletePhone'])->name('deletePhone');
+
+            Route::prefix('account')->name('account.')->group(function () {
+                Route::get('/', [AccountController::class, 'view'])->name('account');
+                Route::post('name', [AccountController::class, 'updateName'])->name('name.update');
+                Route::post('phones', [AccountController::class, 'addPhone'])->name('phones.create');
+                Route::delete('phones/{phone}', [AccountController::class, 'deletePhone'])->name('phones.delete');
+                Route::put('holiday', [AccountController::class, 'updateHoliday'])->name('holiday.update');
+            });
         });
     });
 });

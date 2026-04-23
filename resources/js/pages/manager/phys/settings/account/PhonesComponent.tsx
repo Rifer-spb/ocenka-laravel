@@ -1,5 +1,5 @@
 import { Form } from "@inertiajs/react";
-import { addPhone } from "@/routes/manager/phys/settings";
+import { create } from "@/routes/manager/phys/settings/account/phones";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import InputError from "@/components/input-error";
@@ -18,7 +18,7 @@ export default function ({ phones }: Props) {
     return (
         <section className="phones">
             <h2>Номера телефонов</h2>
-            <Form {...addPhone.form()}>
+            <Form {...create.form()}>
                 {({ errors }) => (
                     <div className="form-group">
                         <div className="input-group">

@@ -26,6 +26,8 @@ class PhysProfile extends Model
         'second_name',
         'last_name',
         'full_name',
+        'holiday_from',
+        'holiday_to',
     ];
 
     public function updateName(string $firstName, string $secondName, string $lastName): void
@@ -35,6 +37,14 @@ class PhysProfile extends Model
             'second_name' => $secondName,
             'last_name' => $lastName,
             'full_name' => "$firstName $secondName $lastName",
+        ]);
+    }
+
+    public function updateHoliday(string $from, string $to): void
+    {
+        $this->update([
+            'holiday_from' => $from,
+            'holiday_to' => $to,
         ]);
     }
 }

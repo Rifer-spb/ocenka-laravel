@@ -3,6 +3,7 @@
 namespace App\Actions\Manager\Phys\Settings;
 
 use App\Http\Requests\Manager\Phys\Settings\Account\AddPhoneRequest;
+use App\Http\Requests\Manager\Phys\Settings\Account\HolidayRequest;
 use App\Http\Requests\Manager\Phys\Settings\Account\NameRequest;
 use App\Models\User\Phys\Phys;
 
@@ -33,5 +34,13 @@ class AccountService
     public function deletePhone(Phys $user, int $phoneId): void
     {
         $user->deletePhone($phoneId);
+    }
+
+    public function updateHoliday(Phys $user, HolidayRequest $request): void
+    {
+        $user->updateHoliday(
+            $request->holidayFrom,
+            $request->holidayTo
+        );
     }
 }

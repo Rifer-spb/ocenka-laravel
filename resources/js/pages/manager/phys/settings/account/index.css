@@ -33,3 +33,11 @@
     line-height: 14px;
     color: #007bff;
 }
+
+.account .holiday {
+    max-width: 400px;
+}
+
+.account .holiday label {
+    margin-right: 10px;
+}

@@ -2,8 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\User\Phys\PhysProfile;
-use App\Models\User\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
