@@ -48,7 +48,7 @@ export default function ({holiday_from, holiday_to}: Props) {
                     onSelect={(date: Date | null) => handleDateChange('holidayFrom', date)}
                     className="form-control"
                 />
-                <InputError message={errors.holidayFrom}/>
+                <InputError message={errors.holidayFrom} className="error"/>
             </div>
             <div className="form-group">
                 <Label>До</Label>
@@ -62,7 +62,7 @@ export default function ({holiday_from, holiday_to}: Props) {
                     onSelect={(date: Date | null) => handleDateChange('holidayTo', date)}
                     className="form-control"
                 />
-                <InputError message={errors.holidayTo}/>
+                <InputError message={errors.holidayTo} className="error"/>
             </div>
         </section>
     );

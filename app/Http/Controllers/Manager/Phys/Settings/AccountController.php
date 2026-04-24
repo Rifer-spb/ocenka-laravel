@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Manager\Phys\Settings;
 use App\Actions\Manager\Phys\Settings\AccountService;
 use App\Http\Controllers\AbstractController;
 use App\Http\Requests\Manager\Phys\Settings\Account\AddPhoneRequest;
+use App\Http\Requests\Manager\Phys\Settings\Account\ChangePasswordRequest;
 use App\Http\Requests\Manager\Phys\Settings\Account\HolidayRequest;
 use App\Http\Requests\Manager\Phys\Settings\Account\NameRequest;
 use App\Models\User\Phys\PhysPhone;
@@ -49,5 +50,10 @@ class AccountController extends AbstractController
         $this->service->updateHoliday($this->getUser(), $request);
 
         return back()->with('success', 'Успешно обновлено');
+    }
+
+    public function changePassword(ChangePasswordRequest $request)
+    {
+
     }
 }

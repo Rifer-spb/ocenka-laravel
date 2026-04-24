@@ -42,6 +42,10 @@ class PhysProfile extends Model
 
     public function updateHoliday(string $from, string $to): void
     {
+        if ($from >= $to) {
+            throw new \DomainException('Дата начала должна быть меньше даты окончания.');
+        }
+
         $this->update([
             'holiday_from' => $from,
             'holiday_to' => $to,

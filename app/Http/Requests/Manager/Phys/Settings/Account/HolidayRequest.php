@@ -19,7 +19,7 @@ class HolidayRequest extends FormRequest
     {
         return [
             'holidayFrom' => 'required|date',
-            'holidayTo' => 'required|date',
+            'holidayTo' => 'required|date|after:holidayFrom',
         ];
     }
 
@@ -27,6 +27,7 @@ class HolidayRequest extends FormRequest
     {
         return [
             'required' => 'Поле обязательно для заполнения',
+            'after' => 'Дата должна быть больше чем дата От',
         ];
     }
 }
