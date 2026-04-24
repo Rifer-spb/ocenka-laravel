@@ -2,7 +2,7 @@
 
 namespace App\Core\Models\User\Phys;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Core\Models\AbstractEntity;
 
 /**
  * @property int $id
@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $created_at
  * @property string $updated_at
  */
-class PhysProfile extends Model
+class PhysProfile extends AbstractEntity
 {
     protected $table = 'phys_profiles';
     protected $fillable = [

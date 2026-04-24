@@ -4,9 +4,9 @@ namespace App\Manager;
 
 use App\Core\Http\Controllers\AbstractAuthController;
 use App\Core\Models\User\User;
-use App\Manager\Actions\Auth\SignUpAction;
 use App\Manager\Http\Requests\Auth\SignInRequest;
 use App\Manager\Http\Requests\Auth\SignUpRequest;
+use App\Manager\UseCases\UserService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -20,9 +20,9 @@ class AuthController extends AbstractAuthController
     /**
      * @throws \Throwable
      */
-    public function signUp(SignUpRequest $request, SignUpAction $action)
+    public function signUp(SignUpRequest $request, UserService $service)
     {
-        $user = $action->signUp($request);
+        $user = $service->register($request);
 
         return $this->_login($user, $request, "manager.{$user->role}.home");
     }

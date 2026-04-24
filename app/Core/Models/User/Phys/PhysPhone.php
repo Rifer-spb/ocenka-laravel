@@ -3,14 +3,14 @@
 namespace App\Core\Models\User\Phys;
 
 use App\Core\Helpers\StringHelper;
-use Illuminate\Database\Eloquent\Model;
+use App\Core\Models\AbstractEntity;
 
 /**
  * @property int $id
  * @property int $user_id
  * @property string $phone
  */
-class PhysPhone extends Model
+class PhysPhone extends AbstractEntity
 {
     protected $fillable = [
         'phone',

@@ -3,19 +3,20 @@
 namespace App\Manager\Modules\Phys\Http\Controllers;
 
 use App\Core\Http\Controllers\AbstractController;
-use App\Manager\Modules\Phys\Actions\Profile\AddPhoneAction;
-use App\Manager\Modules\Phys\Actions\Profile\DeletePhoneAction;
 use App\Manager\Modules\Phys\Actions\Profile\GetProfileAction;
-use App\Manager\Modules\Phys\Actions\Profile\UpdateHolidayAction;
-use App\Manager\Modules\Phys\Actions\Profile\UpdateNameAction;
 use App\Manager\Modules\Phys\Http\Requests\Profile\AddPhoneRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\ChangePasswordRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateHolidayRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateNameRequest;
+use App\Manager\Modules\Phys\UseCases\ProfileService;
 use Inertia\Inertia;
 
 class ProfileController extends AbstractController
 {
+    public function __construct(
+        private ProfileService $service
+    ) {}
+
     public function view(GetProfileAction $action)
     {
         $profile = $action->get($this->getUser());
@@ -23,30 +24,30 @@ class ProfileController extends AbstractController
         return Inertia::render('manager/phys/settings/account/index', $profile);
     }
 
-    public function updateName(UpdateNameRequest $request, UpdateNameAction $action)
+    public function updateName(UpdateNameRequest $request)
     {
-        $action->update($this->getUser(), $request);
+        $this->service->updateName($this->getUserId(), $request);
 
         return back()->with('success', 'Успешно обновлено');
     }
 
-    public function addPhone(AddPhoneRequest $request, AddPhoneAction $action)
+    public function addPhone(AddPhoneRequest $request)
     {
-        $action->add($this->getUser(), $request);
+        $this->service->addPhone($this->getUserId(), $request);
 
         return back()->with('success', 'Успешно обновлено');
     }
 
-    public function deletePhone(int $id, DeletePhoneAction $action)
+    public function deletePhone(int $id)
     {
-        $action->delete($this->getUser(), $id);
+        $this->service->deletePhone($this->getUserId(), $id);
 
         return back()->with('success', 'Успешно удалено');
     }
 
-    public function updateHoliday(UpdateHolidayRequest $request, UpdateHolidayAction $action)
+    public function updateHoliday(UpdateHolidayRequest $request)
     {
-        $action->update($this->getUser(), $request);
+        $this->service->updateHoliday($this->getUserId(), $request);
 
         return back()->with('success', 'Успешно обновлено');
     }
