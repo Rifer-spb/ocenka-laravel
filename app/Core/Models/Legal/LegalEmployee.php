@@ -22,11 +22,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class LegalEmployee extends AbstractEntity
 {
-    private const FOR_PHYS = 1;
-    private const FOR_LEGAL = 2;
-    private const STATUS_WAIT = 0;
-    private const STATUS_ACTIVE = 1;
-    private const STATUS_FIRED = 2;
+    const FOR_PHYS = 1;
+    const FOR_LEGAL = 2;
+    const STATUS_WAIT = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_FIRED = 2;
 
     protected $fillable = [
         'phys_id',
