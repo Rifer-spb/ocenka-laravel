@@ -6,7 +6,9 @@ use App\Core\Models\Legal\LegalMail;
 use App\Core\Models\Legal\LegalPayment;
 use App\Core\Models\Legal\LegalProfile;
 use App\Core\Models\Legal\LegalWhatsApp;
+use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
+use Illuminate\Database\Eloquent\Builder;
 
 class Legal extends User
 {
@@ -20,5 +22,12 @@ class Legal extends User
         LegalWhatsApp::create(['id' => $user->id]);
 
         return $user;
+    }
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope('legal_role', function (Builder $builder) {
+            $builder->where('role', Role::LEGAL->value);
+        });
     }
 }

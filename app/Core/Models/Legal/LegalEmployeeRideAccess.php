@@ -13,5 +13,8 @@ use App\Core\Models\AbstractEntity;
  */
 class LegalEmployeeRideAccess extends AbstractEntity
 {
-
+    protected $fillable = [
+        'phys_id',
+        'legal_id',
+    ];
 }

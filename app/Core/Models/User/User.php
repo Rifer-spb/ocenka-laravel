@@ -82,4 +82,15 @@ class User extends Authenticatable
     {
         $this->password = $password;
     }
+
+    public static function getByUsername(string $username): static
+    {
+        $user = static::where('username', $username)->first();
+
+        if (! $user) {
+            throw new \DomainException('Пользователь не найден.');
+        }
+
+        return $user;
+    }
 }
