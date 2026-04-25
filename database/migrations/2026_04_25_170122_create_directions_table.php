@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('directions', function (Blueprint $table) {
             $table->unsignedInteger('id')->autoIncrement()->primary();
             $table->string('name');
-            $table->string('short_name')->nullable();
+            $table->string('short_name');
         });
     }
 

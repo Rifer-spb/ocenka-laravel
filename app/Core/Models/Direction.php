@@ -7,7 +7,4 @@ namespace App\Core\Models;
  * @property string $name
  * @property string $short_name
  */
-class Direction extends AbstractEntity
-{
-    public $timestamps = false;
-}
+class Direction extends AbstractEntity {}
