@@ -4,6 +4,7 @@ namespace App\Manager\Modules\Phys\Http\Controllers\legal;
 
 use App\Core\Http\Controllers\AbstractController;
 use App\Manager\Modules\Phys\Http\Requests\Legal\Invite\CreateRequest;
+use App\Manager\Modules\Phys\Readers\Legal\InviteSearcher;
 use App\Manager\Modules\Phys\UseCases\legal\InviteService;
 
 class InviteController extends AbstractController
@@ -11,6 +12,11 @@ class InviteController extends AbstractController
     public function __construct(
         private InviteService $service
     ) {}
+
+    public function search(InviteSearcher $searcher)
+    {
+        return $searcher->search($this->getUser());
+    }
 
     /**
      * @throws \Throwable
