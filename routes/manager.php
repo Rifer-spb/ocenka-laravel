@@ -35,4 +35,8 @@ Route::prefix('manager')->name('manager.')->group(function () {
             });
         });
     });
+
+    Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
+        Route::get('home', fn () => Inertia::render('manager/legal/home'))->name('home');
+    });
 });

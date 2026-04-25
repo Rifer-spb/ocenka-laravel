@@ -10,9 +10,10 @@ use App\Core\Models\AbstractEntity;
  * @property int $legal_id
  * @property int $phys_id
  * @property int $direction_id
- * @property bool $value
+ * @property bool $do
+ * @property bool $write
  */
-class LegalEmployeeWriteReportAccess extends AbstractEntity
+class LegalEmployeeReportAccess extends AbstractEntity
 {
 
 }
