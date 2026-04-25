@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('phys_phones', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedInteger('id')->autoIncrement()->primary();
+            $table->unsignedInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

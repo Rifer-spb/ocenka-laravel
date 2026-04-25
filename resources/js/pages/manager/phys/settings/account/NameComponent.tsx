@@ -28,7 +28,7 @@ export default function ({ profile }: Props) {
                                 tabIndex={1}
                                 autoComplete="firstName"
                                 className="form-control"
-                                defaultValue={profile.first_name}
+                                defaultValue={profile.first_name ?? undefined}
                             />
                             <InputError message={errors.firstName} className="error"/>
                         </div>
@@ -43,7 +43,7 @@ export default function ({ profile }: Props) {
                                 tabIndex={2}
                                 autoComplete="secondName"
                                 className="form-control"
-                                defaultValue={profile.second_name}
+                                defaultValue={profile.second_name ?? undefined}
                             />
                             <InputError message={errors.secondName} className="error"/>
                         </div>
@@ -58,7 +58,7 @@ export default function ({ profile }: Props) {
                                 tabIndex={3}
                                 autoComplete="lastName"
                                 className="form-control"
-                                defaultValue={profile.last_name}
+                                defaultValue={profile.last_name ?? undefined}
                             />
                             <InputError message={errors.lastName} className="error"/>
                         </div>

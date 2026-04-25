@@ -4,8 +4,10 @@ namespace App\Manager\Modules\Phys\UseCases;
 
 use App\Core\Models\User\Phys\Phys;
 use App\Manager\Modules\Phys\Http\Requests\Profile\AddPhoneRequest;
+use App\Manager\Modules\Phys\Http\Requests\Profile\ChangePasswordRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateHolidayRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateNameRequest;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileService
 {
@@ -38,5 +40,20 @@ class ProfileService
             $request->holidayFrom,
             $request->holidayTo
         );
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function changePassword(int $id, ChangePasswordRequest $request): void
+    {
+        $user = Phys::findOrFail($id);
+
+        if (! Hash::check($request->oldPassword, $user->password)) {
+            throw new \DomainException('Неверный текущий пароль');
+        }
+
+        $user->updatePassword($request->newPassword);
+        $user->saveOrFail();
     }
 }

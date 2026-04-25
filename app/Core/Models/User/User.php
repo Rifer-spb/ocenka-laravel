@@ -77,4 +77,9 @@ class User extends Authenticatable
     {
         return $this->role === Role::NOTARY->value;
     }
+
+    public function updatePassword(string $password): void
+    {
+        $this->password = $password;
+    }
 }

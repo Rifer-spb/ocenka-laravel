@@ -31,6 +31,7 @@ Route::prefix('manager')->name('manager.')->group(function () {
                 Route::post('phones', [ProfileController::class, 'addPhone'])->name('phones.create');
                 Route::delete('phones/{phone}', [ProfileController::class, 'deletePhone'])->name('phones.delete');
                 Route::put('holiday', [ProfileController::class, 'updateHoliday'])->name('holiday.update');
+                Route::put('password', [ProfileController::class, 'changePassword'])->name('password.update');
             });
         });
     });

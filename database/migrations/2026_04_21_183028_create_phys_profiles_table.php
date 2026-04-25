@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('second_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('full_name')->nullable();
-            $table->unsignedBigInteger('telegram_id')->nullable()->unique();
+            $table->string('telegram_id', 20)->nullable()->unique();
             $table->boolean('is_admin')->default(false);
             $table->date('holiday_from')->nullable();
             $table->date('holiday_to')->nullable();

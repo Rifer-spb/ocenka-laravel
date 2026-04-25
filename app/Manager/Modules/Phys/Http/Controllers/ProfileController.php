@@ -3,12 +3,13 @@
 namespace App\Manager\Modules\Phys\Http\Controllers;
 
 use App\Core\Http\Controllers\AbstractController;
-use App\Manager\Modules\Phys\Actions\Profile\GetProfileAction;
 use App\Manager\Modules\Phys\Http\Requests\Profile\AddPhoneRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\ChangePasswordRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateHolidayRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateNameRequest;
+use App\Manager\Modules\Phys\Readers\ProfileGetter;
 use App\Manager\Modules\Phys\UseCases\ProfileService;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
 class ProfileController extends AbstractController
@@ -17,9 +18,9 @@ class ProfileController extends AbstractController
         private ProfileService $service
     ) {}
 
-    public function view(GetProfileAction $action)
+    public function view(ProfileGetter $getter)
     {
-        $profile = $action->get($this->getUser());
+        $profile = $getter->get($this->getUser());
 
         return Inertia::render('manager/phys/settings/account/index', $profile);
     }
@@ -52,8 +53,15 @@ class ProfileController extends AbstractController
         return back()->with('success', 'Успешно обновлено');
     }
 
+    /**
+     * @return RedirectResponse
+     *
+     * @throws \Throwable
+     */
     public function changePassword(ChangePasswordRequest $request)
     {
+        $this->service->changePassword($this->getUserId(), $request);
 
+        return back()->with('success', 'Пароль успешно изменен');
     }
 }
