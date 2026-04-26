@@ -2,12 +2,12 @@
 
 namespace App\Manager\UseCases;
 
+use App\Core\Jobs\SendMailJob;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\User;
 use App\Core\Models\User\UserFactory;
 use App\Manager\Http\Requests\Auth\SignUpRequest;
-use App\Manager\Jobs\Auth\SendSignUpEmailJob;
 use Illuminate\Support\Facades\DB;
 
 class UserService
@@ -37,7 +37,17 @@ class UserService
 
             DB::commit();
 
-            SendSignUpEmailJob::dispatch($user);
+            SendMailJob::dispatch(
+                'emails.manager.sign-up',
+                [
+                    'appName' => config('app.name'),
+                    'username' => $user->username,
+                    'password' => $request->password,
+                    'verifyLink' => url('/manager/auth/verify-email?token='),
+                ],
+                $user->email,
+                'Регистрация на сайте',
+            );
 
             return $user;
         } catch (\Throwable $e) {

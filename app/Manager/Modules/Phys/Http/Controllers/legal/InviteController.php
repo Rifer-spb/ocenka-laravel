@@ -7,6 +7,7 @@ use App\Manager\Modules\Phys\Http\Requests\Legal\Invite\CreateRequest;
 use App\Manager\Modules\Phys\Http\Requests\Legal\Invite\SearchRequest;
 use App\Manager\Modules\Phys\Readers\Legal\InviteSearcher;
 use App\Manager\Modules\Phys\UseCases\legal\InviteService;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class InviteController extends AbstractController
