@@ -26,7 +26,7 @@ class CreateRequest extends FormRequest
                 Rule::exists('users')->where(function (Builder $query) {
                     return $query
                         ->where('username', $this->email)
-                        ->whereIn('role', Role::LEGAL->value);
+                        ->where('role', Role::LEGAL->value);
                 }),
             ],
         ];

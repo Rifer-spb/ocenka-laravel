@@ -4,8 +4,10 @@ namespace App\Manager\Modules\Phys\Http\Controllers\legal;
 
 use App\Core\Http\Controllers\AbstractController;
 use App\Manager\Modules\Phys\Http\Requests\Legal\Invite\CreateRequest;
+use App\Manager\Modules\Phys\Http\Requests\Legal\Invite\SearchRequest;
 use App\Manager\Modules\Phys\Readers\Legal\InviteSearcher;
 use App\Manager\Modules\Phys\UseCases\legal\InviteService;
+use Inertia\Inertia;
 
 class InviteController extends AbstractController
 {
@@ -13,9 +15,11 @@ class InviteController extends AbstractController
         private InviteService $service
     ) {}
 
-    public function search(InviteSearcher $searcher)
+    public function view(InviteSearcher $searcher, SearchRequest $searchRequest)
     {
-        return $searcher->search($this->getUser());
+        return Inertia::render('manager/phys/settings/legals/index', [
+            'invites' => $searcher->search($this->getUser(), $searchRequest),
+        ]);
     }
 
     /**

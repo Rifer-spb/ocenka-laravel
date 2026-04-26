@@ -3,6 +3,7 @@
 use App\Manager\AuthController;
 use App\Manager\DefaultController;
 use App\Manager\Modules\Phys\Http\Controllers\ProfileController;
+use App\Manager\Modules\Phys\Http\Controllers\legal\InviteController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -32,6 +33,11 @@ Route::prefix('manager')->name('manager.')->group(function () {
                 Route::delete('phones/{phone}', [ProfileController::class, 'deletePhone'])->name('phones.delete');
                 Route::put('holiday', [ProfileController::class, 'updateHoliday'])->name('holiday.update');
                 Route::put('password', [ProfileController::class, 'changePassword'])->name('password.update');
+            });
+
+            Route::prefix('legals')->name('legals.')->group(function () {
+                Route::get('/', [InviteController::class, 'view'])->name('index');
+                Route::post('/', [InviteController::class, 'create'])->name('create');
             });
         });
     });

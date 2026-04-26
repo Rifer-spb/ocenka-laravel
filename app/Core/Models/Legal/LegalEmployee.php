@@ -42,29 +42,12 @@ class LegalEmployee extends AbstractEntity
      */
     private static function new(Phys $phys, Legal $legal, int $for): self
     {
-        $model = self::create([
+        return self::create([
             'phys_id' => $phys->id,
             'legal_id' => $legal->id,
             'for' => $for,
             'status' => self::STATUS_WAIT,
         ]);
-
-        $directions = Direction::all();
-
-        foreach ($directions as $direction) {
-            $model->reportAccess()->create([
-                'phys_id' => $phys->id,
-                'legal_id' => $legal->id,
-                'direction_id' => $direction->id,
-            ]);
-
-            $model->rideAccess()->create([
-                'phys_id' => $phys->id,
-                'legal_id' => $legal->id,
-            ]);
-        }
-
-        return $model;
     }
 
     /**
@@ -81,6 +64,38 @@ class LegalEmployee extends AbstractEntity
     public static function createByLegal(Legal $legal, Phys $phys): self
     {
         return self::new($phys, $legal, self::FOR_PHYS);
+    }
+
+    public function confirm(): void
+    {
+        if (! $this->isWait()) {
+            throw new \DomainException('Заявка должна быть в статусе ожидания.');
+        }
+
+        $directions = Direction::all();
+
+        foreach ($directions as $direction) {
+            $this->reportAccess()->create([
+                'phys_id' => $this->phys_id,
+                'legal_id' => $this->legal_id,
+                'direction_id' => $direction->id,
+            ]);
+
+            $this->rideAccess()->create([
+                'phys_id' => $this->phys_id,
+                'legal_id' => $this->legal_id,
+            ]);
+        }
+    }
+
+    public function isActive(): bool
+    {
+        return $this->status == self::STATUS_ACTIVE;
+    }
+
+    public function isWait(): bool
+    {
+        return $this->status == self::STATUS_WAIT;
     }
 
     public static function hasByPhysAndLegal(Phys $phys, Legal $legal): bool

@@ -1,0 +1,48 @@
+.invite-tabs {
+    margin: 20px 0;
+}
+
+.invite-tabs ul li {
+    display: inline-block;
+    -webkit-transition: All 0.3s ease;
+    -moz-transition: All 0.3s ease;
+    -o-transition: All 0.3s ease;
+    -ms-transition: All 0.3s ease;
+}
+
+.invite-tabs ul li:hover {
+    opacity: .7;
+}
+
+.invite-tabs ul li.inbox {
+    background-color: #a7e0ec;
+}
+
+.invite-tabs ul li.outbox {
+    background-color: #d8d8b1;
+}
+
+.invite-tabs ul li.active {
+    background-color: #a1e27e;
+}
+
+.invite-tabs ul li.fired {
+    background-color: #f7b8b8;
+}
+
+.invite-tabs ul li.current a {
+    font-weight: bold;
+}
+
+.invite-tabs ul li a {
+    display: block;
+    padding: 10px 20px;
+    color: #000000;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.invite-tabs-content {
+    background-color: #FFFFFF;
+    padding: 20px;
+}
