@@ -6,7 +6,9 @@ use App\Core\Models\AbstractEntity;
 use App\Core\Models\Direction;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $id
@@ -16,17 +18,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $status
  * @property bool $is_manager
  * @property int $work_rate
- * @property string $created_at
- * @property string $rejected_at
- * @property string $fired_at
+ * @property string|Carbon $created_at
+ * @property string|Carbon $rejected_at
+ * @property string|Carbon $fired_at
+ * @property Legal $legal
+ * @property Phys $phys
  */
 class LegalEmployee extends AbstractEntity
 {
     const FOR_PHYS = 1;
+
     const FOR_LEGAL = 2;
-    const STATUS_WAIT = 0;
-    const STATUS_ACTIVE = 1;
-    const STATUS_FIRED = 2;
+
+    public $timestamps = false;
 
     protected $fillable = [
         'phys_id',
@@ -34,8 +38,6 @@ class LegalEmployee extends AbstractEntity
         'for',
         'status',
     ];
-
-    public $timestamps = false;
 
     /**
      * @throws \Throwable
@@ -46,7 +48,7 @@ class LegalEmployee extends AbstractEntity
             'phys_id' => $phys->id,
             'legal_id' => $legal->id,
             'for' => $for,
-            'status' => self::STATUS_WAIT,
+            'status' => LegalEmployeeStatus::WAIT->value,
         ]);
     }
 
@@ -90,12 +92,12 @@ class LegalEmployee extends AbstractEntity
 
     public function isActive(): bool
     {
-        return $this->status == self::STATUS_ACTIVE;
+        return $this->status == LegalEmployeeStatus::ACTIVE->value;
     }
 
     public function isWait(): bool
     {
-        return $this->status == self::STATUS_WAIT;
+        return $this->status == LegalEmployeeStatus::WAIT->value;
     }
 
     public static function hasByPhysAndLegal(Phys $phys, Legal $legal): bool
@@ -110,7 +112,7 @@ class LegalEmployee extends AbstractEntity
         return self::find([
             'phys_id' => $phys->id,
             'legal_id' => $legal->id,
-            'status' => self::STATUS_WAIT,
+            'status' => LegalEmployeeStatus::WAIT->value,
         ]);
     }
 
@@ -119,8 +121,23 @@ class LegalEmployee extends AbstractEntity
         return self::find([
             'phys_id' => $phys->id,
             'legal_id' => $legal->id,
-            'status' => self::STATUS_ACTIVE,
+            'status' => LegalEmployeeStatus::ACTIVE->value,
         ]);
+    }
+
+    public function getFormatedCreatedAt(): string
+    {
+        return $this->created_at->format('d.m.Y H:i');
+    }
+
+    public function getFormatedRejectedAt(): string
+    {
+        return $this->rejected_at->format('d.m.Y H:i');
+    }
+
+    public function getFormatedFiredAt(): string
+    {
+        return $this->fired_at->format('d.m.Y H:i');
     }
 
     public function reportAccess(): HasMany|LegalEmployeeReportAccess
@@ -131,5 +148,15 @@ class LegalEmployee extends AbstractEntity
     public function rideAccess(): HasMany|LegalEmployeeRideAccess
     {
         return $this->hasMany(LegalEmployeeRideAccess::class, 'legal_employee_id', 'id');
+    }
+
+    public function legal(): HasOne|Legal
+    {
+        return $this->hasOne(Legal::class, 'id', 'legal_id');
+    }
+
+    public function phys(): HasOne|Phys
+    {
+        return $this->hasOne(Phys::class, 'id', 'phys_id');
     }
 }

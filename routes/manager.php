@@ -38,6 +38,7 @@ Route::prefix('manager')->name('manager.')->group(function () {
             Route::prefix('legals')->name('legals.')->group(function () {
                 Route::get('/', [InviteController::class, 'view'])->name('index');
                 Route::post('/', [InviteController::class, 'create'])->name('create');
+                Route::get('/search', [InviteController::class, 'search'])->name('search');
             });
         });
     });

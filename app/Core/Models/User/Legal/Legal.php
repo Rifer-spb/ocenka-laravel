@@ -9,7 +9,14 @@ use App\Core\Models\Legal\LegalWhatsApp;
 use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @property LegalProfile $profile
+ * @property LegalPayment $payment
+ * @property LegalMail $mail
+ * @property LegalWhatsApp $whatsApp
+ */
 class Legal extends User
 {
     public static function signUpManager(string $email, string $password, string $role): static
@@ -24,10 +31,37 @@ class Legal extends User
         return $user;
     }
 
+    public function getName(): string
+    {
+        return ! empty($this->profile->short_name)
+            ? $this->profile->short_name
+            : $this->username;
+    }
+
     protected static function booted(): void
     {
         static::addGlobalScope('legal_role', function (Builder $builder) {
             $builder->where('role', Role::LEGAL->value);
         });
+    }
+
+    public function profile(): HasOne|LegalProfile
+    {
+        return $this->hasOne(LegalProfile::class, 'id', 'id');
+    }
+
+    public function payment(): HasOne|LegalPayment
+    {
+        return $this->hasOne(LegalPayment::class, 'id', 'id');
+    }
+
+    public function mail(): HasOne|LegalMail
+    {
+        return $this->hasOne(LegalMail::class, 'id', 'id');
+    }
+
+    public function whatsApp(): HasOne|LegalWhatsApp
+    {
+        return $this->hasOne(LegalWhatsApp::class, 'id', 'id');
     }
 }

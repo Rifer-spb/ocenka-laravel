@@ -15,11 +15,16 @@ class InviteController extends AbstractController
         private InviteService $service
     ) {}
 
-    public function view(InviteSearcher $searcher, SearchRequest $searchRequest)
+    public function view(SearchRequest $searchRequest, InviteSearcher $searcher)
     {
         return Inertia::render('manager/phys/settings/legals/index', [
             'invites' => $searcher->search($this->getUser(), $searchRequest),
         ]);
+    }
+
+    public function search(SearchRequest $request, InviteSearcher $searcher)
+    {
+        return $searcher->search($this->getUser(), $request);
     }
 
     /**
