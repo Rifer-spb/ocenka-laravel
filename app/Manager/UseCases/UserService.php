@@ -8,6 +8,7 @@ use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\User;
 use App\Core\Models\User\UserFactory;
 use App\Manager\Http\Requests\Auth\SignUpRequest;
+use App\Manager\Mails\Auth\SignUpMail;
 use Illuminate\Support\Facades\DB;
 
 class UserService
@@ -17,8 +18,6 @@ class UserService
     ) {}
 
     /**
-     * @param SignUpRequest $request
-     * @return User
      * @throws \Throwable
      */
     public function register(SignUpRequest $request): User
@@ -35,19 +34,16 @@ class UserService
                 $request->role
             );
 
-            DB::commit();
-
-            SendMailJob::dispatch(
-                'emails.manager.sign-up',
-                [
-                    'appName' => config('app.name'),
-                    'username' => $user->username,
-                    'password' => $request->password,
-                    'verifyLink' => url('/manager/auth/verify-email?token='),
-                ],
-                $user->email,
-                'Регистрация на сайте',
+            $signUpMail = new SignUpMail(
+                appName: config('app.name'),
+                username: $user->username,
+                password: $request->password,
+                emailVerifyToken: $user->email_verify_token,
             );
+
+            SendMailJob::dispatch($signUpMail, $user->email);
+
+            DB::commit();
 
             return $user;
         } catch (\Throwable $e) {

@@ -6,11 +6,13 @@ use App\Core\Models\EloquentDocMethods;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
  * @property string $username
  * @property string|null $email
+ * @property string|null $email_verify_token
  * @property string|null $email_verified_at
  * @property string $password
  * @property string $created_at
@@ -30,6 +32,7 @@ class User extends Authenticatable
         'password',
         'role',
         'phone',
+        'email_verify_token',
     ];
 
     protected $hidden = [
@@ -55,6 +58,7 @@ class User extends Authenticatable
             'email' => $email,
             'password' => $password,
             'role' => $role,
+            'email_verify_token' => Str::random(60),
         ]);
     }
 

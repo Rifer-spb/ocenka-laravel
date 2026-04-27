@@ -15,6 +15,7 @@ return new class extends Migration
             $table->unsignedInteger('id')->autoIncrement()->primary();
             $table->string('username')->unique();
             $table->string('email')->unique()->nullable();
+            $table->string('email_verify_token')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
