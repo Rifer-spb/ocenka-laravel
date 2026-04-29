@@ -3,7 +3,7 @@ import './InviteTabsComponent.css';
 import { InviteTab } from "./types";
 
 interface Props {
-    children: (args: any) => React.ReactNode;
+    children: ((args: any) => React.ReactNode) | React.ReactNode;
     handleEvent: Function
 }
 
@@ -37,7 +37,9 @@ export default function ({ children, handleEvent } : Props) {
                     ))}
                 </ul>
                 <div className="invite-tabs-content">
-                    {children({currentTab})}
+                    {typeof children === 'function'
+                        ? children({currentTab})
+                        : children}
                 </div>
             </div>
         </>

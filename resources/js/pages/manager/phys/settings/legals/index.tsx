@@ -5,11 +5,9 @@ import InviteTabsComponent from "@/components/app/manager/legal/inviteTabs/Invit
 import {useState} from "react";
 import { useManagerRoute } from "@/hooks/useManagerRoute";
 import { getRequest } from "@/services/api";
-
-interface InviteItem {
-    id: number,
-    created_at: string
-}
+import InvitesComponent from './InvitesComponent';
+import { InviteItem } from './types';
+import './styles.css';
 
 export default function ({ invites } : { invites: InviteItem[] }) {
     const route = useManagerRoute();
@@ -26,15 +24,7 @@ export default function ({ invites } : { invites: InviteItem[] }) {
                 <h1>Установленные связи с юр. лицами</h1>
                 <FormComponent />
                 <InviteTabsComponent handleEvent={handleSelectTab}>
-                    {() => (
-                        <>
-                            {items.length ? items.map((item, index) => (
-                                <div key={index}>
-                                    { item.id }
-                                </div>
-                            )) : 'Заявок не найдено'}
-                        </>
-                    )}
+                    <InvitesComponent invites={items} />
                 </InviteTabsComponent>
             </div>
         </AppLayout>

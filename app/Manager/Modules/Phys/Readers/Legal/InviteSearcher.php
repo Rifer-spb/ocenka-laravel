@@ -40,6 +40,7 @@ class InviteSearcher
                     'name' => $model->legal->getName(),
                 ],
                 'status' => [
+                    'id' => $status->value,
                     'name' => $status->getLabel(),
                 ],
                 'created_at' => DateHelper::toDatetime($model->created_at),
