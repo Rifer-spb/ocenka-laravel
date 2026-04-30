@@ -16,33 +16,23 @@ export default function ({ children, handleEvent } : Props) {
     const [currentTab, setCurrentTab] = useState<InviteTab | undefined>();
 
     useEffect(() => {
-        getRequest(route('legals/invites/tabs', false))
-            .then(response => {
-                if (response.data?.length) {
-                    const initialItems = response.data.map(item => ({ ...item, count: 0 }));
-                    setItems(initialItems);
+        Promise.all([
+            getRequest(route('legals/invites/tabs', false)),
+            getRequest(route('legals/invites/counts', false))
+        ])
+            .then(([tabsRes, countsRes]) => {
+                const tabs = tabsRes.data ?? [];
+                const counts = countsRes.data ?? {};
 
-                    if (initialItems.length > 0) {
-                        setCurrentTab(initialItems[0]);
-                    }
+                const mapped = tabs.map(item => ({
+                    ...item,
+                    count: counts[item.id] || 0
+                }));
 
-                    return response;
-                }
-                throw new Error('Не удалось загрузить вкладки');
+                setItems(mapped);
+                setCurrentTab(mapped[0]);
             })
-            .then(() => getRequest(route('legals/invites/counts', false)))
-            .then(response => {
-                if (response.data) {
-                    setItems(prevItems => prevItems.map(item => ({
-                        ...item,
-                        count: response.data[item.id] || 0
-                    })));
-
-                    return response;
-                }
-                throw new Error('Не удалось загрузить подсчеты вкладок');
-            })
-            .catch(error => console.error(error));
+            .catch(console.error);
     },[]);
 
     return (
