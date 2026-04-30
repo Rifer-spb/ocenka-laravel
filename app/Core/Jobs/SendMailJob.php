@@ -12,13 +12,12 @@ class SendMailJob implements ShouldQueue
     use Dispatchable;
 
     public function __construct(
-        private Mailable $mailable,
-        private string $emailTo,
+        private Mailable $mailable
     ) {}
 
     public function handle(): void
     {
-        Mail::to($this->emailTo)->send($this->mailable);
+        Mail::send($this->mailable);
     }
 
     public function failed(\Throwable $exception): void

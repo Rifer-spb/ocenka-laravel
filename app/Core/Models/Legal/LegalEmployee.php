@@ -140,6 +140,21 @@ class LegalEmployee extends AbstractEntity
         return $this->fired_at->format('d.m.Y H:i');
     }
 
+    public static function getWaitByIdForPhys(int $id, Phys $phys): self
+    {
+        $model = self::where([
+            'id' => $id,
+            'phys_id' => $phys->id,
+            'status' => LegalInviteStatus::WAIT->value,
+        ])->first();
+
+        if (!$model) {
+            throw new \DomainException('Заявка не найдена.');
+        }
+
+        return $model;
+    }
+
     public function reportAccess(): HasMany|LegalEmployeeReportAccess
     {
         return $this->hasMany(LegalEmployeeReportAccess::class, 'legal_employee_id', 'id');

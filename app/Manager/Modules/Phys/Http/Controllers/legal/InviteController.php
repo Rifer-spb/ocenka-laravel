@@ -41,4 +41,18 @@ class InviteController extends AbstractController
 
         return redirect()->back()->with('success', 'Заявка успешно отправлена');
     }
+
+    public function reSend(int $id)
+    {
+        $this->service->reSend($id, $this->getUserId());
+
+        return redirect()->back()->with('success', 'Заявка успешно отправлена повторно');
+    }
+
+    public function cancel(int $id)
+    {
+        $this->service->cancel($id, $this->getUserId());
+
+        return redirect()->back()->with('success', 'Заявка успешно отменена');
+    }
 }

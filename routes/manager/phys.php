@@ -23,7 +23,9 @@ Route::prefix('phys')->name('phys.')->middleware('auth')->group(function () {
         Route::prefix('legals')->name('legals.')->controller(InviteController::class)->group(function () {
             Route::get('/', 'view')->name('index');
             Route::post('/', 'create')->name('create');
-            Route::get('/search', 'search')->name('search');
+            Route::get('search', 'search')->name('search');
+            Route::post('re-send/{id}', 'reSend')->name('reSend');
+            Route::post('cancel/{id}', 'cancel')->name('cancel');
         });
     });
 });

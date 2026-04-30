@@ -1,7 +1,19 @@
 import InviteComponent from './InviteComponent';
 import { InviteItem } from './types';
+import { useManagerRoute } from '@/hooks/useManagerRoute';
+import { router } from '@inertiajs/react';
 
 export default function({ invites } : { invites: InviteItem[] }) {
+    const route = useManagerRoute();
+
+    const handleReSend = (id) => {
+        router.post(route(`settings/legals/re-send/${id}`))
+    };
+
+    const handleCancel = (id) => {
+        router.post(route(`settings/legals/cancel/${id}`))
+    };
+
     return (
         <div className="invites">
             {invites.length
@@ -12,7 +24,12 @@ export default function({ invites } : { invites: InviteItem[] }) {
                         <div className="th status">Статус</div>
                         <div className="th action">Действие</div>
                     </div>
-                    {invites.map(invite => <InviteComponent key={invite.id} invite={invite}/>)}
+                    {invites.map(invite => <InviteComponent
+                        key={invite.id}
+                        invite={invite}
+                        handleReSend={handleReSend}
+                        handleCancel={handleCancel}
+                    />)}
                 </div>
                 : <div>Заявок не найдено</div>
             }

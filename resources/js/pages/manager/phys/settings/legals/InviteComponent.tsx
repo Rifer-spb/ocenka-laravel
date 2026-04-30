@@ -1,7 +1,13 @@
 import { InviteItem } from './types';
 import { Button } from '@/components/ui/button';
 
-export default function({ invite } : { invite: InviteItem }) {
+interface Props {
+    invite: InviteItem,
+    handleReSend: Function,
+    handleCancel: Function
+}
+
+export default function({ invite, handleReSend, handleCancel } : Props) {
     return (
         <div className="tr">
             <div className="td date"> { invite.created_at } </div>
@@ -11,8 +17,16 @@ export default function({ invite } : { invite: InviteItem }) {
             </div>
             <div className="td">
                 <div className="btn-group">
-                    <Button type="button" className="btn btn-success">Повторить</Button>
-                    <Button type="button" className="btn btn-primary">Отозвать</Button>
+                    <Button
+                        type="button"
+                        className="btn btn-success"
+                        onClick={() => handleReSend(invite.id)}
+                    >Повторить</Button>
+                    <Button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={() => handleCancel(invite.id)}
+                    >Отозвать</Button>
                 </div>
             </div>
         </div>

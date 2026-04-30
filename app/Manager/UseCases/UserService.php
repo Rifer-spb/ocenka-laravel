@@ -35,13 +35,13 @@ class UserService
             );
 
             $signUpMail = new SignUpMail(
-                appName: config('app.name'),
                 username: $user->username,
                 password: $request->password,
                 emailVerifyToken: $user->email_verify_token,
+                emailTo: $user->email,
             );
 
-            SendMailJob::dispatch($signUpMail, $user->email);
+            SendMailJob::dispatch($signUpMail);
 
             DB::commit();
 
