@@ -48,7 +48,7 @@ class LegalEmployee extends AbstractEntity
             'phys_id' => $phys->id,
             'legal_id' => $legal->id,
             'for' => $for,
-            'status' => LegalEmployeeStatus::WAIT->value,
+            'status' => LegalInviteStatus::WAIT->value,
         ]);
     }
 
@@ -92,12 +92,12 @@ class LegalEmployee extends AbstractEntity
 
     public function isActive(): bool
     {
-        return $this->status == LegalEmployeeStatus::ACTIVE->value;
+        return $this->status == LegalInviteStatus::ACTIVE->value;
     }
 
     public function isWait(): bool
     {
-        return $this->status == LegalEmployeeStatus::WAIT->value;
+        return $this->status == LegalInviteStatus::WAIT->value;
     }
 
     public static function hasByPhysAndLegal(Phys $phys, Legal $legal): bool
@@ -112,7 +112,7 @@ class LegalEmployee extends AbstractEntity
         return self::find([
             'phys_id' => $phys->id,
             'legal_id' => $legal->id,
-            'status' => LegalEmployeeStatus::WAIT->value,
+            'status' => LegalInviteStatus::WAIT->value,
         ]);
     }
 
@@ -121,7 +121,7 @@ class LegalEmployee extends AbstractEntity
         return self::find([
             'phys_id' => $phys->id,
             'legal_id' => $legal->id,
-            'status' => LegalEmployeeStatus::ACTIVE->value,
+            'status' => LegalInviteStatus::ACTIVE->value,
         ]);
     }
 

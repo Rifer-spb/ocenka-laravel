@@ -24,7 +24,7 @@ class SearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => 'required|string|in:inbox,outbox,active,fired',
+            'type' => 'required|string|in:inbox,outbox,active,complete',
         ];
     }
 }

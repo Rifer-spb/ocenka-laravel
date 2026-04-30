@@ -4,7 +4,7 @@ namespace App\Manager\Modules\Phys\Readers\Legal;
 
 use App\Core\Helpers\DateHelper;
 use App\Core\Models\Legal\LegalEmployee;
-use App\Core\Models\Legal\LegalEmployeeStatus;
+use App\Core\Models\Legal\LegalInviteStatus;
 use App\Core\Models\User\Phys\Phys;
 use App\Manager\Modules\Phys\Http\Requests\Legal\Invite\SearchRequest;
 
@@ -17,22 +17,22 @@ class InviteSearcher
         match ($request->type) {
             'inbox' => $allRequests->where([
                 'for' => LegalEmployee::FOR_PHYS,
-                'status' => LegalEmployeeStatus::WAIT->value,
+                'status' => LegalInviteStatus::WAIT->value,
             ]),
             'outbox' => $allRequests->where([
                 'for' => LegalEmployee::FOR_LEGAL,
-                'status' => LegalEmployeeStatus::WAIT->value,
+                'status' => LegalInviteStatus::WAIT->value,
             ]),
             'active' => $allRequests->where([
-                'status' => LegalEmployeeStatus::ACTIVE->value,
+                'status' => LegalInviteStatus::ACTIVE->value,
             ]),
-            'fired' => $allRequests->where([
-                'status' => LegalEmployeeStatus::FIRED->value,
+            'complete' => $allRequests->where([
+                'status' => LegalInviteStatus::COMPLETE->value,
             ]),
         };
 
         return array_map(function (LegalEmployee $model) {
-            $status = LegalEmployeeStatus::tryFrom($model->status);
+            $status = LegalInviteStatus::tryFrom($model->status);
 
             return [
                 'id' => $model->id,
