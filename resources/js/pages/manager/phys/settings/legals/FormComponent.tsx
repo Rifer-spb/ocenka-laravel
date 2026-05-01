@@ -5,10 +5,12 @@ import InputError from "@/components/input-error";
 import {Button} from "@/components/ui/button";
 import { create } from "@/routes/manager/phys/settings/legals";
 
-export default () => (
-    <>
+export default function() {
+    console.log(create.form());
+
+    return (
         <Form {...create.form()} style={{ maxWidth: '550px' }}>
-            {({errors}) => (
+            {({ errors }: any) => (
                 <>
                     <div className="form-group">
                         <Label htmlFor="email">E-mail адрес Юр.лица</Label>
@@ -26,6 +28,5 @@ export default () => (
                 </>
             )}
         </Form>
-    </>
-)
-;
+    );
+};
