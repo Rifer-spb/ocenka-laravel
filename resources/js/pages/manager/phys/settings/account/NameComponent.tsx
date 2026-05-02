@@ -15,10 +15,6 @@ export default function ({ profile }: Props) {
         <section style={{maxWidth: '500px'}}>
             <h2>Мои данные</h2>
             <Form {...update.form()}>
-                {((props) => {
-                    const { errors } = props;
-                    return ( ... );
-                }) as any}
                 {({errors}) => (
                     <>
                         <div className="form-group">
@@ -26,7 +22,7 @@ export default function ({ profile }: Props) {
                             <Input
                                 id="firstName"
                                 type="text"
-                                name="firstName"
+                                name="firstName""?etyu[]"
                                 required
                                 autoFocus
                                 tabIndex={1}
