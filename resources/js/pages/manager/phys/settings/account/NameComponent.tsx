@@ -22,7 +22,7 @@ export default function ({ profile }: Props) {
                             <Input
                                 id="firstName"
                                 type="text"
-                                name="firstName""?etyu[]"
+                                name="firstName"
                                 required
                                 autoFocus
                                 tabIndex={1}
