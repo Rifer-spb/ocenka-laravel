@@ -6,12 +6,20 @@ import { router } from '@inertiajs/react';
 export default function({ invites } : { invites: InviteItem[] }) {
     const route = useManagerRoute();
 
-    const handleReSend = (id) => {
-        router.post(route(`settings/legals/re-send/${id}`));
+    const handleReSend = (id: number) => {
+        router.post(route(`settings/legals/re-send/${id}`), {}, {
+            onSuccess: () => {
+                router.reload({ only: ['invites', 'counts'] });
+            }
+        });
     };
 
-    const handleCancel = (id) => {
-        router.post(route(`settings/legals/cancel/${id}`))
+    const handleCancel = (id: number) => {
+        router.post(route(`settings/legals/cancel/${id}`), {}, {
+            onSuccess: () => {
+                router.reload({ only: ['invites', 'counts'] });
+            }
+        });
     };
 
     return (

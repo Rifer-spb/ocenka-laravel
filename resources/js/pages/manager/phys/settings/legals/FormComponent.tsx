@@ -4,12 +4,18 @@ import { Input } from "@/components/ui/input";
 import InputError from "@/components/input-error";
 import {Button} from "@/components/ui/button";
 import { create } from "@/routes/manager/phys/settings/legals";
+import { router } from "@inertiajs/react";
 
 export default function() {
-    console.log(create.form());
-
     return (
-        <Form {...create.form()} style={{ maxWidth: '550px' }}>
+        <Form
+            {...create.form()}
+            style={{ maxWidth: '550px' }}
+            onSuccess={() => {
+                console.log(true);
+                router.reload({ only: ['invites', 'counts'] });
+            }}
+        >
             {({ errors }: any) => (
                 <>
                     <div className="form-group">

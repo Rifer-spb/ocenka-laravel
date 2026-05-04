@@ -2,20 +2,21 @@ import AppLayout from '@/layouts/appManagerLayout';
 import FormComponent from "./FormComponent";
 import { InviteTab } from '@/components/app/manager/legal/inviteTabs/types';
 import InviteTabsComponent from "@/components/app/manager/legal/inviteTabs/InviteTabsComponent";
-import {useState} from "react";
 import { useManagerRoute } from "@/hooks/useManagerRoute";
-import { getRequest } from "@/services/api";
 import InvitesComponent from './InvitesComponent';
 import { InviteItem } from './types';
 import './styles.css';
+import { router } from '@inertiajs/react';
 
 export default function ({ invites } : { invites: InviteItem[] }) {
     const route = useManagerRoute();
-    const [items, setItems] = useState(invites);
 
     const handleSelectTab = (currentTab : InviteTab) => {
-        getRequest(route('settings/legals/search'), { type: currentTab.id })
-            .then(response => setItems(response.data));
+        router.get(route('settings/legals'), { type: currentTab.id }, {
+            only: ['invites'],
+            preserveState: true,
+            replace: true,
+        });
     }
 
     return (
@@ -24,7 +25,7 @@ export default function ({ invites } : { invites: InviteItem[] }) {
                 <h1>Установленные связи с юр. лицами</h1>
                 <FormComponent />
                 <InviteTabsComponent handleEvent={handleSelectTab}>
-                    <InvitesComponent invites={items} />
+                    <InvitesComponent invites={invites} />
                 </InviteTabsComponent>
             </div>
         </AppLayout>

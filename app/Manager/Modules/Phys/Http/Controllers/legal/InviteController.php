@@ -23,7 +23,7 @@ class InviteController extends AbstractController
         return Inertia::render('manager/phys/settings/legals/index', [
             'tabs' => LegalInviteTab::all(),
             'invites' => $searcher->search($this->getUser(), $searchRequest),
-            'counts' => $this->finder->getCounts($this->getUser())
+            'counts' => $this->finder->getCounts($this->getUser()),
         ]);
     }
 
