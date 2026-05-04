@@ -8,7 +8,7 @@ import { InviteItem } from './types';
 import './styles.css';
 import { router } from '@inertiajs/react';
 
-export default function ({ invites } : { invites: InviteItem[] }) {
+export default function ({ tabs, counts, invites } : { invites: InviteItem[] }) {
     const route = useManagerRoute();
 
     const handleSelectTab = (currentTab : InviteTab) => {
@@ -24,7 +24,7 @@ export default function ({ invites } : { invites: InviteItem[] }) {
             <div>
                 <h1>Установленные связи с юр. лицами</h1>
                 <FormComponent />
-                <InviteTabsComponent handleEvent={handleSelectTab}>
+                <InviteTabsComponent tabs={tabs} counts={counts} handleEvent={handleSelectTab}>
                     <InvitesComponent invites={invites} />
                 </InviteTabsComponent>
             </div>

@@ -5,18 +5,24 @@ import InputError from "@/components/input-error";
 import {Button} from "@/components/ui/button";
 import { create } from "@/routes/manager/phys/settings/legals";
 import { router } from "@inertiajs/react";
+import { useRef } from "react";
 
 export default function() {
+    const form = create.form();
+    const formRef = useRef<HTMLFormElement>(null);
+
     return (
         <Form
-            {...create.form()}
+            ref={formRef}
+            {...form}
             style={{ maxWidth: '550px' }}
             onSuccess={() => {
                 console.log(true);
-                router.reload({ only: ['invites', 'counts'] });
+                formRef.current?.reset(); // ← нативный reset
+                router.reload({ only: ['counts'] });
             }}
         >
-            {({ errors }: any) => (
+            {({ errors }) => (
                 <>
                     <div className="form-group">
                         <Label htmlFor="email">E-mail адрес Юр.лица</Label>
