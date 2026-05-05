@@ -27,11 +27,6 @@ class InviteController extends AbstractController
         ]);
     }
 
-    public function search(SearchRequest $request, InviteSearcher $searcher)
-    {
-        return $searcher->search($this->getUser(), $request);
-    }
-
     /**
      * @throws \Throwable
      */
@@ -39,20 +34,20 @@ class InviteController extends AbstractController
     {
         $this->service->create($this->getUserId(), $request);
 
-        return redirect()->back()->with('success', 'Заявка успешно отправлена');
+        return back()->with('success', 'Заявка успешно отправлена');
     }
 
     public function reSend(int $id)
     {
         $this->service->reSend($id, $this->getUserId());
 
-        return redirect()->back()->with('success', 'Заявка успешно отправлена повторно');
+        return back()->with('success', 'Заявка успешно отправлена повторно');
     }
 
     public function cancel(int $id)
     {
         $this->service->cancel($id, $this->getUserId());
 
-        return redirect()->back()->with('success', 'Заявка успешно отменена');
+        return back()->with('success', 'Заявка успешно отменена');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager;
+namespace App\Manager\Http\Controllers;
 
 use App\Core\Http\Controllers\AbstractAuthController;
 use App\Core\Models\User\User;

@@ -43,6 +43,6 @@ return Application::configure(basePath: dirname(__DIR__))
                 return response()->json(['error' => $e->getMessage()], 422);
             }
 
-            return redirect()->back()->with('error', $e->getMessage());
+            return back()->with('error', $e->getMessage());
         });
     })->create();
