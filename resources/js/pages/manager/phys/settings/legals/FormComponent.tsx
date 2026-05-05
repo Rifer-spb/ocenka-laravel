@@ -5,40 +5,45 @@ import InputError from "@/components/input-error";
 import {Button} from "@/components/ui/button";
 import { create } from "@/routes/manager/phys/settings/legals";
 import { router } from "@inertiajs/react";
-import { useRef } from "react";
+import { useForm } from "@inertiajs/react";
 
 export default function() {
     const form = create.form();
-    const formRef = useRef<HTMLFormElement>(null);
+    const { data, setData, post, processing, errors, reset } = useForm({
+        email: ''
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        post(create.url(), {
+            onSuccess: () => {
+                reset();
+                router.reload({ only: ['counts'] });
+            }
+        });
+    };
 
     return (
-        <Form
-            ref={formRef}
-            {...form}
-            style={{ maxWidth: '550px' }}
-            onSuccess={() => {
-                console.log(true);
-                formRef.current?.reset(); // ← нативный reset
-                router.reload({ only: ['counts'] });
-            }}
+        <form
+            style={{maxWidth: '550px'}}
+            onSubmit={handleSubmit}
         >
-            {({ errors }) => (
-                <>
-                    <div className="form-group">
-                        <Label htmlFor="email">E-mail адрес Юр.лица</Label>
-                        <Input
-                            name="email"
-                            type="text"
-                            required
-                            style={{ backgroundColor: '#fff' }}
-                        />
-                        <InputError className="error" message={errors.email} />
-                    </div>
-                    <div className="form-group">
-                        <Button className="btn btn-success" type="submit">Отправить заявку</Button>
-                    </div>
-                </>
-            )}
-        </Form>
+            <div className="form-group">
+                <Label htmlFor="email">E-mail адрес Юр.лица</Label>
+                <Input
+                    id="email"
+                    name="email"
+                    type="text"
+                    value={data.email}
+                    required
+                    style={{backgroundColor: '#fff'}}
+                    onChange={e => setData('email', e.target.value)}
+                />
+                <InputError className="error" message={errors.email}/>
+            </div>
+            <div className="form-group">
+                <Button className="btn btn-success" type="submit">Отправить заявку</Button>
+            </div>
+        </form>
     );
 };

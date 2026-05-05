@@ -8,7 +8,13 @@ import { InviteItem } from './types';
 import './styles.css';
 import { router } from '@inertiajs/react';
 
-export default function ({ tabs, counts, invites } : { invites: InviteItem[] }) {
+type Props = {
+    tabs: InviteTab[];
+    counts: any;
+    invites: InviteItem[];
+}
+
+export default function ({ tabs, counts, invites } : Props) {
     const route = useManagerRoute();
 
     const handleSelectTab = (currentTab : InviteTab) => {
