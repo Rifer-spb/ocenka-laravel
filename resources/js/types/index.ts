@@ -1,8 +1,8 @@
-export type * from './auth';
+export type * from './Auth';
 export type * from './navigation';
 export type * from './ui';
 
-import type { Auth } from './auth';
+import type { TAuth } from './Auth';
 
 export type Flash = {
     success?: string | null;
@@ -13,7 +13,7 @@ export type Flash = {
 
 export type SharedData = {
     name: string;
-    auth: Auth;
+    auth: TAuth;
     sidebarOpen: boolean;
     flash: Flash;
     [key: string]: unknown;

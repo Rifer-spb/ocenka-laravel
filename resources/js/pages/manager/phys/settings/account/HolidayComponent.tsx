@@ -7,12 +7,12 @@ import InputError from "@/components/input-error";
 import { router } from "@inertiajs/react";
 import {usePage} from "@inertiajs/react";
 
-interface Props {
+interface IProps {
     holiday_from: Date | null;
     holiday_to: Date | null;
 }
 
-export default function ({holiday_from, holiday_to}: Props) {
+export default function ({holiday_from, holiday_to}: IProps) {
     const { errors } = usePage().props;
     const { data, setData } = useForm({
         holidayFrom: holiday_from,

@@ -3,22 +3,22 @@ import { create } from "@/routes/manager/phys/settings/account/phones";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import InputError from "@/components/input-error";
-import { Phones } from "./account.types";
+import { IPhones } from "./account.types";
 import { useManagerRoute } from "@/hooks/useManagerRoute";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-interface Props {
-    phones: Phones[]
+interface IProps {
+    phones: IPhones[];
 }
 
-export default function ({ phones }: Props) {
+export default function ({ phones }: IProps) {
     const route = useManagerRoute();
 
     return (
         <section className="phones">
             <h2>Номера телефонов</h2>
-            <Form {...create.form()}>
+            <Form {...create.form()} resetOnSuccess={true}>
                 {({ errors }) => (
                     <div className="form-group">
                         <div className="input-group">

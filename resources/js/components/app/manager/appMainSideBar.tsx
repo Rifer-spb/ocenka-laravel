@@ -1,6 +1,6 @@
 import styles from './appMainSideBar.module.css';
 import {usePage} from "@inertiajs/react";
-import {Auth} from "@/types";
+import {TAuth} from "@/types";
 import {useEffect, useState} from "react";
 import { Link } from "@inertiajs/react";
 import { useManagerRoute } from "@/hooks/useManagerRoute";
@@ -11,7 +11,7 @@ interface MenuItem {
 }
 
 export default function () {
-    const {auth} = usePage<{ auth: Auth }>().props;
+    const {auth} = usePage<{ auth: TAuth }>().props;
     const role = auth.user.role;
     const pathname = window.location.pathname;
     const [items, setItems] = useState<MenuItem[]>([]);
@@ -53,9 +53,22 @@ export default function () {
         ];
     };
 
+    const getLegalItems = () => {
+        if (pathname.includes('/manager/legal/settings')) {
+            return [
+                {route: route('settings/account'), name: 'Аккаунт'},
+                {route: route('settings/persons'), name: 'Сотрудники'},
+            ];
+        }
+
+        return [];
+    };
+
     useEffect(() => {
         if (role === 'phys') {
             setItems(getPhysItems());
+        } else if (role === 'legal') {
+            setItems(getLegalItems());
         }
     }, [pathname]);
 

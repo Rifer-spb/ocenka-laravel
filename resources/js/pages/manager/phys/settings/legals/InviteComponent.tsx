@@ -1,13 +1,13 @@
-import { InviteItem } from './types';
+import { IInviteItem } from './types';
 import { Button } from '@/components/ui/button';
 
-interface Props {
-    invite: InviteItem,
+interface IProps {
+    invite: IInviteItem,
     handleReSend: Function,
     handleCancel: Function
 }
 
-export default function({ invite, handleReSend, handleCancel } : Props) {
+export default function({ invite, handleReSend, handleCancel } : IProps) {
     return (
         <div className="tr">
             <div className="td date"> { invite.created_at } </div>

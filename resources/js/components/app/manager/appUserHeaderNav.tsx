@@ -1,4 +1,4 @@
-import {Auth} from "@/types";
+import {TAuth} from "@/types";
 import {Link, usePage} from "@inertiajs/react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faBars } from '@fortawesome/free-solid-svg-icons';
@@ -6,7 +6,7 @@ import styles from './appUserHeaderNav.module.css';
 import {useManagerRoute} from "@/hooks/useManagerRoute";
 
 export default function () {
-    const { auth } = usePage<{ auth: Auth }>().props;
+    const { auth } = usePage<{ auth: TAuth }>().props;
     const route = useManagerRoute();
 
     return (

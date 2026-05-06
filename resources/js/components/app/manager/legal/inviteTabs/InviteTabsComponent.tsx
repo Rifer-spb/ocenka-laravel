@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import './InviteTabsComponent.css';
-import { InviteTab } from "./types";
+import { IInviteTab } from "./types";
 import { useEffect } from 'react';
 
-interface Props {
+interface IProps {
     children: ((args: any) => React.ReactNode) | React.ReactNode;
-    tabs: InviteTab[];
+    tabs: IInviteTab[];
     counts: any;
     handleEvent: Function;
 }
 
-export default function ({ children, tabs, counts, handleEvent } : Props) {
-    const [items, setItems] = useState<InviteTab[]>([]);
-    const [currentTab, setCurrentTab] = useState<InviteTab | undefined>();
+export default function ({ children, tabs, counts, handleEvent } : IProps) {
+    const [items, setItems] = useState<IInviteTab[]>([]);
+    const [currentTab, setCurrentTab] = useState<IInviteTab | undefined>();
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);

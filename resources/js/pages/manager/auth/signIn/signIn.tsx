@@ -15,7 +15,7 @@ export default function SignIn() {
     return (
         <AppLayout>
             <div className={styles.signIn}>
-                <Form {...signIn.form()}>
+                <Form {...signIn.form()} resetOnSuccess={true}>
                     {({ errors }) => (
                         <>
                             <Head title="Авторизация"/>

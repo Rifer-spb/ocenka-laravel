@@ -1,11 +1,11 @@
 import { Link } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
-import { Auth } from "@/types";
+import { TAuth } from "@/types";
 import styles from './appUserHeaderLogout.module.css';
 import { useManagerRoute } from "@/hooks/useManagerRoute";
 
 export default function () {
-    const { auth } = usePage<{ auth: Auth }>().props;
+    const { auth } = usePage<{ auth: TAuth }>().props;
     const route = useManagerRoute();
 
     return (

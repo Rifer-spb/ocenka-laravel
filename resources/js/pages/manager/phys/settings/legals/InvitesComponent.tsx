@@ -1,9 +1,9 @@
 import InviteComponent from './InviteComponent';
-import { InviteItem } from './types';
+import { IInviteItem } from './types';
 import { useManagerRoute } from '@/hooks/useManagerRoute';
 import { router } from '@inertiajs/react';
 
-export default function({ invites } : { invites: InviteItem[] }) {
+export default function({ invites } : { invites: IInviteItem[] }) {
     const route = useManagerRoute();
 
     const handleReSend = (id: number) => {

@@ -1,4 +1,4 @@
-export interface Profile {
+export interface IProfile {
     first_name: string | null;
     second_name: string | null;
     last_name: string | null;
@@ -6,7 +6,7 @@ export interface Profile {
     holiday_to: Date | null;
 }
 
-export interface Phones {
+export interface IPhones {
     id: Number;
     phone: string;
 }

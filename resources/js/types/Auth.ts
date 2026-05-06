@@ -1,4 +1,4 @@
-export type User = {
+export type TUser = {
     id: number;
     email: string;
     email_verified_at: string | null;
@@ -6,7 +6,7 @@ export type User = {
     [key: string]: unknown;
 };
 
-export type Auth = {
-    user: User;
+export type TAuth = {
+    user: TUser;
     isAuthenticated: Boolean;
 };

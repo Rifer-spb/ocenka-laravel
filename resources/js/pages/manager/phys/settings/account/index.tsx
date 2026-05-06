@@ -4,17 +4,17 @@ import {usePage} from "@inertiajs/react";
 import { SharedData } from "@/types";
 import './index.css';
 import NameComponent from "./NameComponent";
-import {Profile, Phones} from "./account.types";
+import {IProfile, IPhones} from "./account.types";
 import PhonesComponent from "./PhonesComponent";
 import HolidayComponent from "./HolidayComponent";
 import PasswordComponent from "./PasswordComponent";
 
-interface Props {
-    profile: Profile,
-    phones: Phones[]
+interface IProps {
+    profile: IProfile;
+    phones: IPhones[];
 }
 
-export default function Home({ profile, phones }: Props) {
+export default function Home({ profile, phones }: IProps) {
     const { auth } = usePage<SharedData>().props;
     const user = auth.user;
 

@@ -1,23 +1,23 @@
 import AppLayout from '@/layouts/appManagerLayout';
 import FormComponent from "./FormComponent";
-import { InviteTab } from '@/components/app/manager/legal/inviteTabs/types';
+import { IInviteTab } from '@/components/app/manager/legal/inviteTabs/types';
 import InviteTabsComponent from "@/components/app/manager/legal/inviteTabs/InviteTabsComponent";
 import { useManagerRoute } from "@/hooks/useManagerRoute";
 import InvitesComponent from './InvitesComponent';
-import { InviteItem } from './types';
+import { IInviteItem } from './types';
 import './styles.css';
 import { router } from '@inertiajs/react';
 
-type Props = {
-    tabs: InviteTab[];
+type TProps = {
+    tabs: IInviteTab[];
     counts: any;
-    invites: InviteItem[];
+    invites: IInviteItem[];
 }
 
-export default function ({ tabs, counts, invites } : Props) {
+export default function ({ tabs, counts, invites } : TProps) {
     const route = useManagerRoute();
 
-    const handleSelectTab = (currentTab : InviteTab) => {
+    const handleSelectTab = (currentTab : IInviteTab) => {
         router.get(route('settings/legals'), { type: currentTab.id }, {
             only: ['invites'],
             preserveState: true,

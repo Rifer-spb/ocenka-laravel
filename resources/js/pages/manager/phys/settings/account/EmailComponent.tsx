@@ -1,10 +1,10 @@
-import { User } from "@/types";
+import { TUser } from "@/types";
 
-interface Props {
-    user: User;
+interface IProps {
+    user: TUser;
 }
 
-export default function ({ user } : Props) {
+export default function ({ user } : IProps) {
     return (
         <section style={{ maxWidth: '400px' }}>
             <h2>E-mail:</h2>

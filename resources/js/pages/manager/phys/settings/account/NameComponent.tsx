@@ -4,13 +4,13 @@ import {Input} from "@/components/ui/input";
 import InputError from "@/components/input-error";
 import { update } from "@/routes/manager/phys/settings/account/name";
 import {Button} from "@/components/ui/button";
-import {Profile} from "./account.types";
+import {IProfile} from "./account.types";
 
-interface Props {
-    profile: Profile;
+interface IProps {
+    profile: IProfile;
 }
 
-export default function ({ profile }: Props) {
+export default function ({ profile }: IProps) {
     return (
         <section style={{maxWidth: '500px'}}>
             <h2>Мои данные</h2>

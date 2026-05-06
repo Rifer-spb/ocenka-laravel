@@ -12,7 +12,7 @@ export default function SignUp() {
     return (
         <AppLayout>
             <div className={styles.singUp}>
-                <Form {...signUp.form()}>
+                <Form {...signUp.form()} resetOnSuccess={true}>
                     {({ errors }) => (
                         <>
                             <Head title="Регистрация" />

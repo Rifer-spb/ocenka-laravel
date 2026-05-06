@@ -1,4 +1,4 @@
-export interface InviteTab {
+export interface IInviteTab {
     id: string,
     name: string,
     count: number
