@@ -14,7 +14,7 @@ type TProps = {
 export default function ({ types, company } : TProps) {
     const { auth } = usePage<SharedData>().props;
     const user = auth.user;
-console.log(types);
+
     return (
         <AppLayout>
             <div className="account">

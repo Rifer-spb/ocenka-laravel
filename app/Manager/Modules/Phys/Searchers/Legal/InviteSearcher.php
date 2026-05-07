@@ -10,7 +10,7 @@ use App\Manager\Http\Requests\InviteSearchRequest;
 
 class InviteSearcher
 {
-    public static function search(Phys $user, InviteSearchRequest $request): array
+    public function search(Phys $user, InviteSearchRequest $request): array
     {
         $allRequests = LegalEmployee::where('phys_id', $user->id);
 

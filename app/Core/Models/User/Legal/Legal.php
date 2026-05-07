@@ -2,6 +2,7 @@
 
 namespace App\Core\Models\User\Legal;
 
+use App\Core\Models\Legal\Company;
 use App\Core\Models\Legal\LegalMail;
 use App\Core\Models\Legal\LegalPayment;
 use App\Core\Models\Legal\LegalProfile;
@@ -36,6 +37,13 @@ class Legal extends User
         return ! empty($this->profile->short_name)
             ? $this->profile->short_name
             : $this->username;
+    }
+
+    public function updateCompany(Company $company): void
+    {
+        $profile = $this->profile;
+        $profile->updateCompany($company);
+        $profile->saveOrFail();
     }
 
     protected static function booted(): void

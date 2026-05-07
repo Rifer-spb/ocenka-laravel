@@ -39,6 +39,9 @@ class InviteController extends AbstractController
         return back()->with('success', 'Заявка успешно отправлена повторно');
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function cancel(int $id)
     {
         $this->service->cancel($id, $this->getUserId());

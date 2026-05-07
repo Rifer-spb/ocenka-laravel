@@ -32,6 +32,23 @@ class LegalProfile extends AbstractEntity
         'id',
     ];
 
+    protected $casts = [
+        'date_ogrn' => 'date',
+    ];
+
+    public function updateCompany(Company $company): void
+    {
+        $this->type_id = $company->typeId;
+        $this->full_name = $company->fullName;
+        $this->short_name = $company->shortName;
+        $this->abbr = $company->abbr;
+        $this->address = $company->address;
+        $this->inn = $company->inn;
+        $this->kpp = $company->kpp;
+        $this->ogrn = $company->ogrn;
+        $this->date_ogrn = $company->dateOgrn;
+    }
+
     public function type(): HasOne|LegalType
     {
         return $this->hasOne(LegalType::class, 'id', 'type_id');
