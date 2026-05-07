@@ -3,28 +3,23 @@
 namespace App\Manager\Modules\Phys\Http\Controllers\legal;
 
 use App\Core\Http\Controllers\AbstractController;
-use App\Core\Models\Legal\LegalInviteTab;
-use App\Manager\Finders\Legal\InviteFinder;
+use App\Manager\Http\Requests\InviteSearchRequest;
 use App\Manager\Modules\Phys\Http\Requests\Legal\Invite\CreateRequest;
-use App\Manager\Modules\Phys\Http\Requests\Legal\Invite\SearchRequest;
-use App\Manager\Modules\Phys\Readers\Legal\InviteSearcher;
 use App\Manager\Modules\Phys\UseCases\legal\InviteService;
+use App\Manager\Modules\Phys\Views\legal\InviteView;
 use Inertia\Inertia;
 
 class InviteController extends AbstractController
 {
     public function __construct(
-        private InviteFinder $finder,
         private InviteService $service
     ) {}
 
-    public function view(SearchRequest $searchRequest, InviteSearcher $searcher)
+    public function view(InviteSearchRequest $request, InviteView $view)
     {
-        return Inertia::render('manager/phys/settings/legals/index', [
-            'tabs' => LegalInviteTab::all(),
-            'counts' => $this->finder->getCounts($this->getUser()),
-            'invites' => $searcher->search($this->getUser(), $searchRequest),
-        ]);
+        $view = $view->get($this->getUser(), $request);
+
+        return Inertia::render('manager/phys/settings/legals/index', $view);
     }
 
     /**

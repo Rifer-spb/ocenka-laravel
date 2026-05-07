@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Manager\Modules\Phys\Readers\Legal;
+namespace App\Manager\Modules\Phys\Searchers\Legal;
 
 use App\Core\Helpers\DateHelper;
 use App\Core\Models\Legal\LegalEmployee;
 use App\Core\Models\Legal\LegalInviteStatus;
 use App\Core\Models\User\Phys\Phys;
-use App\Manager\Modules\Phys\Http\Requests\Legal\Invite\SearchRequest;
+use App\Manager\Http\Requests\InviteSearchRequest;
 
 class InviteSearcher
 {
-    public static function search(Phys $user, SearchRequest $request): array
+    public static function search(Phys $user, InviteSearchRequest $request): array
     {
         $allRequests = LegalEmployee::where('phys_id', $user->id);
 

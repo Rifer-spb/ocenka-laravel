@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Manager\Modules\Phys\Readers;
+namespace App\Manager\Modules\Phys\Views;
 
 use App\Core\Models\User\Phys\Phys;
 
-class ProfileGetter
+class ProfileView
 {
     public function get(Phys $user): array
     {

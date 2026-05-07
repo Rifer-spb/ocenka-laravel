@@ -7,4 +7,13 @@ namespace App\Core\Models;
  * @property string $name
  * @property string $short_name
  */
-class LegalType extends AbstractEntity {}
+class LegalType extends AbstractEntity
+{
+    /**
+     * @return LegalType[]
+     */
+    public static function getAll(): array
+    {
+        return self::all()->all();
+    }
+}

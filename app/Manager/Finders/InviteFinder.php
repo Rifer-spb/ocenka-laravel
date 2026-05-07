@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager\Finders\Legal;
+namespace App\Manager\Finders;
 
 use App\Core\Models\Legal\LegalEmployee;
 use App\Core\Models\Legal\LegalInviteTab;
@@ -29,7 +29,7 @@ class InviteFinder
             }
 
             $query = clone $baseQuery;
-            $counts[$tab->id] = $query->where($andWhere)->count();;
+            $counts[$tab->id] = $query->where($andWhere)->count();
         }
 
         return $counts;

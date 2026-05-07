@@ -7,8 +7,8 @@ use App\Manager\Modules\Phys\Http\Requests\Profile\AddPhoneRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\ChangePasswordRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateHolidayRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateNameRequest;
-use App\Manager\Modules\Phys\Readers\ProfileGetter;
 use App\Manager\Modules\Phys\UseCases\ProfileService;
+use App\Manager\Modules\Phys\Views\ProfileView;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
@@ -18,11 +18,11 @@ class ProfileController extends AbstractController
         private ProfileService $service
     ) {}
 
-    public function view(ProfileGetter $getter)
+    public function view(ProfileView $view)
     {
-        $profile = $getter->get($this->getUser());
+        $params = $view->get($this->getUser());
 
-        return Inertia::render('manager/phys/settings/account/index', $profile);
+        return Inertia::render('manager/phys/settings/account/index', $params);
     }
 
     public function updateName(UpdateNameRequest $request)

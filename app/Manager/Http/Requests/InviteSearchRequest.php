@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Manager\Modules\Phys\Http\Requests\Legal\Invite;
+namespace App\Manager\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * @property string $type
  */
-class SearchRequest extends FormRequest
+class InviteSearchRequest extends FormRequest
 {
     public function authorize(): bool
     {
