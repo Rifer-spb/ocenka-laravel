@@ -13,6 +13,7 @@ Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
         Route::prefix('account')->name('account.')->controller(ProfileController::class)->group(function () {
             Route::get('/', 'view')->name('account');
             Route::put('company', 'updateCompany')->name('company.update');
+            Route::put('password', 'changePassword')->name('password.update');
         });
     });
 });

@@ -5,6 +5,7 @@ import {SharedData} from "@/types";
 import './index.css';
 import { TType, TCompany } from "./types";
 import CompanyComponent from "./CompanyComponent";
+import PasswordComponent from "./PasswordComponent";
 
 type TProps = {
     types: TType[];
@@ -21,6 +22,7 @@ export default function ({ types, company } : TProps) {
                 <h1>Аккаунт</h1>
                 <EmailComponent user={user}/>
                 <CompanyComponent types={types} company={company} />
+                <PasswordComponent />
             </div>
         </AppLayout>
     );

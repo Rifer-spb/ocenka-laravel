@@ -3,19 +3,21 @@
 namespace App\Manager\Modules\Phys\Http\Controllers;
 
 use App\Core\Http\Controllers\AbstractController;
+use App\Manager\Http\Requests\ChangePasswordRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\AddPhoneRequest;
-use App\Manager\Modules\Phys\Http\Requests\Profile\ChangePasswordRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateHolidayRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateNameRequest;
 use App\Manager\Modules\Phys\UseCases\ProfileService;
 use App\Manager\Modules\Phys\Views\ProfileView;
+use App\Manager\UseCases\UserService;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
 class ProfileController extends AbstractController
 {
     public function __construct(
-        private ProfileService $service
+        private ProfileService $profileService,
+        private UserService $userService,
     ) {}
 
     public function view(ProfileView $view)
@@ -27,28 +29,28 @@ class ProfileController extends AbstractController
 
     public function updateName(UpdateNameRequest $request)
     {
-        $this->service->updateName($this->getUserId(), $request);
+        $this->profileService->updateName($this->getUserId(), $request);
 
         return back()->with('success', 'Успешно обновлено');
     }
 
     public function addPhone(AddPhoneRequest $request)
     {
-        $this->service->addPhone($this->getUserId(), $request);
+        $this->profileService->addPhone($this->getUserId(), $request);
 
         return back()->with('success', 'Успешно обновлено');
     }
 
     public function deletePhone(int $id)
     {
-        $this->service->deletePhone($this->getUserId(), $id);
+        $this->profileService->deletePhone($this->getUserId(), $id);
 
         return back()->with('success', 'Успешно удалено');
     }
 
     public function updateHoliday(UpdateHolidayRequest $request)
     {
-        $this->service->updateHoliday($this->getUserId(), $request);
+        $this->profileService->updateHoliday($this->getUserId(), $request);
 
         return back()->with('success', 'Успешно обновлено');
     }
@@ -60,7 +62,7 @@ class ProfileController extends AbstractController
      */
     public function changePassword(ChangePasswordRequest $request)
     {
-        $this->service->changePassword($this->getUserId(), $request);
+        $this->userService->changePassword($this->getUserId(), $request);
 
         return back()->with('success', 'Пароль успешно изменен');
     }

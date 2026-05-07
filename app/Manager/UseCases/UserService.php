@@ -8,8 +8,10 @@ use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\User;
 use App\Core\Models\User\UserFactory;
 use App\Manager\Http\Requests\Auth\SignUpRequest;
+use App\Manager\Http\Requests\ChangePasswordRequest;
 use App\Manager\Mails\Auth\SignUpMail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
@@ -50,5 +52,17 @@ class UserService
             DB::rollBack();
             throw $e;
         }
+    }
+
+    public function changePassword(int $id, ChangePasswordRequest $request): void
+    {
+        $user = User::findOrFail($id);
+
+        if (! Hash::check($request->oldPassword, $user->password)) {
+            throw new \DomainException('Неверный текущий пароль');
+        }
+
+        $user->updatePassword($request->newPassword);
+        $user->saveOrFail();
     }
 }

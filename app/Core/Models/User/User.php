@@ -6,6 +6,7 @@ use App\Core\Models\EloquentDocMethods;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -80,6 +81,15 @@ class User extends Authenticatable
     public function isNotary(): bool
     {
         return $this->role === Role::NOTARY->value;
+    }
+
+    public function changePassword(string $oldPassword, string $newPassword): void
+    {
+        if (! Hash::check($oldPassword, $newPassword)) {
+            throw new \DomainException('Неверный текущий пароль');
+        }
+
+        $this->updatePassword($newPassword);
     }
 
     public function updatePassword(string $password): void
