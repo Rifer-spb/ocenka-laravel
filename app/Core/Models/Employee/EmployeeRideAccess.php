@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Core\Models\Legal;
+namespace App\Core\Models\Employee;
 
 use App\Core\Models\AbstractEntity;
 
 /**
  * @property int $id
- * @property int $legal_employee_id
+ * @property int $employee_id
  * @property int $legal_id
  * @property int $phys_id
  * @property bool $access
  */
-class LegalEmployeeRideAccess extends AbstractEntity
+class EmployeeRideAccess extends AbstractEntity
 {
     protected $fillable = [
         'phys_id',

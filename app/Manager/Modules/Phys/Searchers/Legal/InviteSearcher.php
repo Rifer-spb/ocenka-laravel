@@ -3,8 +3,8 @@
 namespace App\Manager\Modules\Phys\Searchers\Legal;
 
 use App\Core\Helpers\DateHelper;
-use App\Core\Models\Legal\LegalEmployee;
-use App\Core\Models\Legal\LegalInviteStatus;
+use App\Core\Models\Invite\Invite;
+use App\Core\Models\Invite\InviteStatus;
 use App\Core\Models\User\Phys\Phys;
 use App\Manager\Http\Requests\InviteSearchRequest;
 
@@ -12,27 +12,27 @@ class InviteSearcher
 {
     public function search(Phys $user, InviteSearchRequest $request): array
     {
-        $allRequests = LegalEmployee::where('phys_id', $user->id);
+        $allRequests = Invite::where('phys_id', $user->id);
 
         match ($request->type) {
             'inbox' => $allRequests->where([
-                'for' => LegalEmployee::FOR_PHYS,
-                'status' => LegalInviteStatus::WAIT->value,
+                'for' => Invite::FOR_PHYS,
+                'status' => InviteStatus::WAIT->value,
             ]),
             'outbox' => $allRequests->where([
-                'for' => LegalEmployee::FOR_LEGAL,
-                'status' => LegalInviteStatus::WAIT->value,
+                'for' => Invite::FOR_LEGAL,
+                'status' => InviteStatus::WAIT->value,
             ]),
             'active' => $allRequests->where([
-                'status' => LegalInviteStatus::ACTIVE->value,
+                'status' => InviteStatus::ACTIVE->value,
             ]),
             'complete' => $allRequests->where([
-                'status' => LegalInviteStatus::COMPLETE->value,
+                'status' => InviteStatus::COMPLETE->value,
             ]),
         };
 
-        return array_map(function (LegalEmployee $model) {
-            $status = LegalInviteStatus::tryFrom($model->status);
+        return array_map(function (Invite $model) {
+            $status = InviteStatus::tryFrom($model->status);
 
             return [
                 'id' => $model->id,
@@ -44,8 +44,7 @@ class InviteSearcher
                     'name' => $status->getLabel(),
                 ],
                 'created_at' => DateHelper::toDatetime($model->created_at),
-                'rejected_at' => DateHelper::toDatetime($model->rejected_at),
-                'fired_at' => DateHelper::toDatetime($model->fired_at),
+                'completed_at' => DateHelper::toDatetime($model->completed_at),
             ];
         }, $allRequests->get()->all());
     }

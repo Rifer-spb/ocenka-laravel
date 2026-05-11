@@ -41,7 +41,7 @@ class SendInviteMail extends Mailable
             view: 'emails.manager.invite.new-invite',
             with: [
                 'appName' => Config::get('app.name'),
-                'link' => url("/manager/{$this->role}/settings/legals")
+                'link' => url("/manager/{$this->role}/settings/legals"),
             ]
         );
     }

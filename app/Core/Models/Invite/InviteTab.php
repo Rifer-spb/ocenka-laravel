@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Core\Models\Legal;
+namespace App\Core\Models\Invite;
 
-readonly class LegalInviteTab
+readonly class InviteTab
 {
     private const TAB_INBOX = 'inbox';
+
     private const TAB_OUTBOX = 'outbox';
-    private const TAB_ACTIVE= 'active';
+
+    private const TAB_ACTIVE = 'active';
+
     private const TAB_COMPLETE = 'complete';
 
     private const TABS = [
@@ -17,10 +20,10 @@ readonly class LegalInviteTab
     ];
 
     private const STATUSES = [
-        self::TAB_INBOX => LegalInviteStatus::WAIT->value,
-        self::TAB_OUTBOX => LegalInviteStatus::WAIT->value,
-        self::TAB_ACTIVE => LegalInviteStatus::ACTIVE->value,
-        self::TAB_COMPLETE => LegalInviteStatus::COMPLETE->value,
+        self::TAB_INBOX => InviteStatus::WAIT->value,
+        self::TAB_OUTBOX => InviteStatus::WAIT->value,
+        self::TAB_ACTIVE => InviteStatus::ACTIVE->value,
+        self::TAB_COMPLETE => InviteStatus::COMPLETE->value,
     ];
 
     private function __construct(
@@ -33,7 +36,7 @@ readonly class LegalInviteTab
      */
     public static function all(): array
     {
-        return array_map(fn(array $tab) => new self($tab['id'], $tab['name']), self::TABS);
+        return array_map(fn (array $tab) => new self($tab['id'], $tab['name']), self::TABS);
     }
 
     public function isInbox(): bool

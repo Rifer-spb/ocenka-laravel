@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Core\Models\Legal;
+namespace App\Core\Models\Invite;
 
-enum LegalInviteStatus: int
+enum InviteStatus: int
 {
     case WAIT = 0;
     case ACTIVE = 1;

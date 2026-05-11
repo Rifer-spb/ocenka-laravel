@@ -5,8 +5,8 @@ namespace App\Manager\Modules\Phys\Http\Controllers\legal;
 use App\Core\Http\Controllers\AbstractController;
 use App\Manager\Http\Requests\InviteSearchRequest;
 use App\Manager\Modules\Phys\Http\Requests\Legal\Invite\CreateRequest;
-use App\Manager\Modules\Phys\UseCases\legal\InviteService;
 use App\Manager\Modules\Phys\Views\legal\InviteView;
+use App\Manager\UseCases\InviteService;
 use Inertia\Inertia;
 
 class InviteController extends AbstractController
@@ -34,7 +34,7 @@ class InviteController extends AbstractController
 
     public function reSend(int $id)
     {
-        $this->service->reSend($id, $this->getUserId());
+        $this->service->reSend($id);
 
         return back()->with('success', 'Заявка успешно отправлена повторно');
     }
@@ -44,7 +44,7 @@ class InviteController extends AbstractController
      */
     public function cancel(int $id)
     {
-        $this->service->cancel($id, $this->getUserId());
+        $this->service->cancel($id);
 
         return back()->with('success', 'Заявка успешно отменена');
     }

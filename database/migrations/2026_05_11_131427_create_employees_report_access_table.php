@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('legal_employee_report_access', function (Blueprint $table) {
+        Schema::create('employees_report_access', function (Blueprint $table) {
             $table->unsignedInteger('id')->autoIncrement()->primary();
-            $table->unsignedInteger('legal_employee_id');
-            $table->foreign('legal_employee_id')
+            $table->unsignedInteger('employee_id');
+            $table->foreign('employee_id')
                 ->references('id')
-                ->on('legal_employees')
+                ->on('employees')
                 ->onDelete('cascade');
             $table->unsignedInteger('legal_id');
             $table->foreign('legal_id')
@@ -35,6 +35,8 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->boolean('do')->default(false);
             $table->boolean('write')->default(false);
+
+            $table->unique(['employee_id', 'legal_id', 'phys_id', 'direction_id']);
         });
     }
 
@@ -43,6 +45,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('legal_employee_report_access');
+        Schema::dropIfExists('employees_report_access');
     }
 };

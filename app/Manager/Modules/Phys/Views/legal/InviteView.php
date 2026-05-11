@@ -2,7 +2,7 @@
 
 namespace App\Manager\Modules\Phys\Views\legal;
 
-use App\Core\Models\Legal\LegalInviteTab;
+use App\Core\Models\Invite\InviteTab;
 use App\Core\Models\User\Phys\Phys;
 use App\Manager\Finders\InviteFinder;
 use App\Manager\Http\Requests\InviteSearchRequest;
@@ -18,7 +18,7 @@ class InviteView
     public function get(Phys $user, InviteSearchRequest $searchRequest): array
     {
         return [
-            'tabs' => LegalInviteTab::all(),
+            'tabs' => InviteTab::all(),
             'counts' => $this->inviteFinder->getCounts($user),
             'invites' => $this->searcher->search($user, $searchRequest),
         ];
