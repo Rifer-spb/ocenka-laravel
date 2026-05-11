@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employees_report_access', function (Blueprint $table) {
+        Schema::create('employee_report_accesses', function (Blueprint $table) {
             $table->unsignedInteger('id')->autoIncrement()->primary();
             $table->unsignedInteger('employee_id');
             $table->foreign('employee_id')
