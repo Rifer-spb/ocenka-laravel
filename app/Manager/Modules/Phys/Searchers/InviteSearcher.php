@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager\Modules\Phys\Searchers\Legal;
+namespace App\Manager\Modules\Phys\Searchers;
 
 use App\Core\Helpers\DateHelper;
 use App\Core\Models\Invite\Invite;

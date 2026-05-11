@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Manager\Modules\Phys\Http\Controllers\legal;
+namespace App\Manager\Modules\Phys\Http\Controllers;
 
 use App\Core\Http\Controllers\AbstractController;
 use App\Manager\Http\Requests\InviteSearchRequest;
-use App\Manager\Modules\Phys\Http\Requests\Legal\Invite\CreateRequest;
-use App\Manager\Modules\Phys\Views\legal\InviteView;
-use App\Manager\UseCases\InviteService;
+use App\Manager\Modules\Phys\Http\Requests\Invite\CreateRequest;
+use App\Manager\Modules\Phys\UseCases\InviteService;
+use App\Manager\Modules\Phys\Views\InviteView;
 use Inertia\Inertia;
 
 class InviteController extends AbstractController
@@ -27,14 +27,14 @@ class InviteController extends AbstractController
      */
     public function create(CreateRequest $request)
     {
-        $this->service->create($this->getUserId(), $request);
+        $this->service->create($this->getUserId(), $request->email);
 
         return back()->with('success', 'Заявка успешно отправлена');
     }
 
     public function reSend(int $id)
     {
-        $this->service->reSend($id);
+        $this->service->reSend($id, $this->getUser());
 
         return back()->with('success', 'Заявка успешно отправлена повторно');
     }
@@ -47,5 +47,12 @@ class InviteController extends AbstractController
         $this->service->cancel($id);
 
         return back()->with('success', 'Заявка успешно отменена');
+    }
+
+    public function confirm(int $id)
+    {
+        $this->service->confirm($id);
+
+        return back()->with('success', 'Заявка успешно подтверждена');
     }
 }

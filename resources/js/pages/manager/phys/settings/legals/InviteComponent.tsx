@@ -1,33 +1,31 @@
 import { IInviteItem } from './types';
-import { Button } from '@/components/ui/button';
+import ButtonsComponent from "./ButtonsComponent";
+import {IInviteTab} from "@/components/app/manager/legal/inviteTabs/types";
 
 interface IProps {
-    invite: IInviteItem,
-    handleReSend: Function,
-    handleCancel: Function
+    currentTab: IInviteTab
+    invite: IInviteItem;
+    handleReSend: Function;
+    handleCancel: Function;
+    handleConfirm: Function;
 }
 
-export default function({ invite, handleReSend, handleCancel } : IProps) {
+export default function({ currentTab, invite, handleReSend, handleCancel, handleConfirm } : IProps) {
     return (
         <div className="tr">
-            <div className="td date"> { invite.created_at } </div>
+            <div className="td date"> { currentTab.id == 'complete' ? invite.completed_at : invite.created_at } </div>
             <div className="td name"> { invite.legal.name } </div>
             <div className="td status">
                 <div className={`status-${invite.status.id}`}>{ invite.status.name }</div>
             </div>
             <div className="td">
-                <div className="btn-group">
-                    <Button
-                        type="button"
-                        className="btn btn-success"
-                        onClick={() => handleReSend(invite.id)}
-                    >Повторить</Button>
-                    <Button
-                        type="button"
-                        className="btn btn-primary"
-                        onClick={() => handleCancel(invite.id)}
-                    >Отозвать</Button>
-                </div>
+                <ButtonsComponent
+                    id={invite.id}
+                    currentTab={currentTab}
+                    handleReSend={handleReSend}
+                    handleCancel={handleCancel}
+                    handleConfirm={handleConfirm}
+                />
             </div>
         </div>
     );

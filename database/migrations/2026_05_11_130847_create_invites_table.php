@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Core\Models\Invite\InviteStatus;
 
 return new class extends Migration
 {
@@ -21,9 +22,13 @@ return new class extends Migration
             $table->unsignedTinyInteger('status')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('completed_at')->nullable();
-
-            $table->unique(['legal_id', 'phys_id', 'status']);
         });
+
+        DB::statement('
+            CREATE UNIQUE INDEX unique_active_combination
+            ON invites (legal_id, phys_id, status)
+            WHERE status != ' . InviteStatus::COMPLETE->value
+        );
     }
 
     /**

@@ -31,7 +31,7 @@ export default function ({ tabs, counts, invites } : TProps) {
                 <h1>Установленные связи с юр. лицами</h1>
                 <FormComponent />
                 <InviteTabsComponent tabs={tabs} counts={counts} handleEvent={handleSelectTab}>
-                    <InvitesComponent invites={invites} />
+                    {({ currentTab }) => (<InvitesComponent currentTab={currentTab} invites={invites} />)}
                 </InviteTabsComponent>
             </div>
         </AppLayout>

@@ -107,11 +107,35 @@ class Invite extends AbstractEntity
         $this->status = InviteStatus::ACTIVE->value;
     }
 
+    public function complete(): void
+    {
+        if (! $this->isActive()) {
+            throw new \DomainException('Заявка должна быть в активном статусе.');
+        }
+
+        $this->completed_at = Carbon::now();
+        $this->status = InviteStatus::COMPLETE->value;
+    }
+
     public static function getWaitById(int $id): self
     {
         $model = self::where([
             'id' => $id,
             'status' => InviteStatus::WAIT->value,
+        ])->first();
+
+        if (! $model) {
+            throw new \DomainException('Заявка не найдена.');
+        }
+
+        return $model;
+    }
+
+    public static function getActiveById(int $id): self
+    {
+        $model = self::where([
+            'id' => $id,
+            'status' => InviteStatus::ACTIVE->value,
         ])->first();
 
         if (! $model) {

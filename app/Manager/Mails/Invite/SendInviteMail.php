@@ -4,6 +4,7 @@ namespace App\Manager\Mails\Invite;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -17,8 +18,8 @@ class SendInviteMail extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        public string $role,
-        public string $emailTo
+        public string $emailTo,
+        public string $viewLink
     ) {}
 
     /**
@@ -41,7 +42,7 @@ class SendInviteMail extends Mailable
             view: 'emails.manager.invite.new-invite',
             with: [
                 'appName' => Config::get('app.name'),
-                'link' => url("/manager/{$this->role}/settings/legals"),
+                'link' => $this->viewLink,
             ]
         );
     }
@@ -49,7 +50,7 @@ class SendInviteMail extends Mailable
     /**
      * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array<int, Attachment>
      */
     public function attachments(): array
     {

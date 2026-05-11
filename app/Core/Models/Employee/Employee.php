@@ -26,6 +26,17 @@ class Employee extends AbstractEntity
         'legal_id',
     ];
 
+    public static function getByPhysId(int $physId): Employee
+    {
+        $model = self::where('phys_id', $physId)->first();
+
+        if (! $model) {
+            throw new \DomainException('Сотрудник не найден.');
+        }
+
+        return $model;
+    }
+
     public function reportAccess(): HasMany|EmployeeReportAccess
     {
         return $this->hasMany(EmployeeReportAccess::class, 'employee_id', 'id');

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager\Modules\Phys\Http\Requests\Legal\Invite;
+namespace App\Manager\Modules\Legal\Http\Requests\Invite;
 
 use App\Core\Models\User\Role;
 use Illuminate\Database\Query\Builder;
@@ -26,7 +26,7 @@ class CreateRequest extends FormRequest
                 Rule::exists('users')->where(function (Builder $query) {
                     return $query
                         ->where('username', $this->email)
-                        ->where('role', Role::LEGAL->value);
+                        ->where('role', Role::PHYS->value);
                 }),
             ],
         ];
@@ -37,7 +37,7 @@ class CreateRequest extends FormRequest
         return [
             'email.required' => 'Поле обязательно к заполнению',
             'email.email' => 'Некорректный e-mail адрес',
-            'email.exists' => 'Юр.лицо с указанным e-mail не найден',
+            'email.exists' => 'Сотрудник с указанным e-mail не найден',
         ];
     }
 }

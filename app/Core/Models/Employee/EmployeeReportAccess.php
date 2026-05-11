@@ -15,9 +15,14 @@ use App\Core\Models\AbstractEntity;
  */
 class EmployeeReportAccess extends AbstractEntity
 {
+    protected $table = 'employees_report_access';
+
+    public $timestamps = false;
+
     protected $fillable = [
         'direction_id',
         'phys_id',
         'legal_id',
+        'employee_id',
     ];
 }

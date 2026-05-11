@@ -1,7 +1,7 @@
 <?php
 
+use App\Manager\Modules\Phys\Http\Controllers\InviteController;
 use App\Manager\Modules\Phys\Http\Controllers\ProfileController;
-use App\Manager\Modules\Phys\Http\Controllers\legal\InviteController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -26,6 +26,7 @@ Route::prefix('phys')->name('phys.')->middleware('auth')->group(function () {
             Route::get('search', 'search')->name('search');
             Route::post('re-send/{id}', 'reSend')->name('reSend');
             Route::post('cancel/{id}', 'cancel')->name('cancel');
+            Route::post('confirm/{id}', 'confirm')->name('confirm');
         });
     });
 });

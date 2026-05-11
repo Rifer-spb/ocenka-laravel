@@ -13,8 +13,13 @@ use App\Core\Models\AbstractEntity;
  */
 class EmployeeRideAccess extends AbstractEntity
 {
+    protected $table = 'employees_ride_access';
+
+    public $timestamps = false;
+
     protected $fillable = [
         'phys_id',
         'legal_id',
+        'employee_id',
     ];
 }
