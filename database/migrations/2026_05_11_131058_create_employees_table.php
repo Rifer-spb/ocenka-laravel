@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->unsignedInteger('id')->autoIncrement()->primary();
+            $table->unsignedInteger('id')->autoIncrement();
             $table->unsignedInteger('legal_id');
             $table->foreign('legal_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedInteger('phys_id');

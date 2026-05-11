@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('legal_mails', function (Blueprint $table) {
-            $table->unsignedInteger('id')->autoIncrement()->primary();
+            $table->unsignedInteger('id')->autoIncrement();
             $table->foreign('id')->references('id')->on('users')->onDelete('cascade');
             $table->string('server')->nullable();
             $table->string('login')->nullable();

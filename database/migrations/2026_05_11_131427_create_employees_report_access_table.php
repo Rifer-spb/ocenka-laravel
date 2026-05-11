@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employee_report_accesses', function (Blueprint $table) {
-            $table->unsignedInteger('id')->autoIncrement()->primary();
+            $table->unsignedInteger('id')->autoIncrement();
             $table->unsignedInteger('employee_id');
             $table->foreign('employee_id')
                 ->references('id')

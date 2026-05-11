@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('phys_phones', function (Blueprint $table) {
-            $table->unsignedInteger('id')->autoIncrement()->primary();
+            $table->unsignedInteger('id')->autoIncrement();
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')
