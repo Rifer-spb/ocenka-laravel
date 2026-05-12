@@ -1,16 +1,39 @@
-export interface ILegal {
+export type ILegal = {
     name: string;
 }
 
-export interface IStatus {
+export type IStatus = {
     id: number;
     name: string;
 }
 
-export interface IInviteItem {
+export type IRideAccess = {
+    id: number;
+    value: boolean;
+}
+
+export type IReportAccess = {
+    id: number;
+    name: string;
+    do: boolean;
+    write: boolean;
+}
+
+export type IPhys = {
+    name: string;
+    access: {
+        ride: IRideAccess;
+        report: IReportAccess[];
+    };
+    isManager: boolean;
+    workRate: number | null;
+}
+
+export type IInviteItem = {
     id: number;
     legal: ILegal;
     status: IStatus;
     created_at: string;
     completed_at: string | null;
+    phys: IPhys;
 }

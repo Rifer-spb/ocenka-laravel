@@ -3,6 +3,7 @@
 namespace App\Core\Models\User\Phys;
 
 use App\Core\Helpers\UserHelper;
+use App\Core\Models\Employee\Employee;
 use App\Core\Models\Employee\EmployeeReportAccess;
 use App\Core\Models\Employee\EmployeeRideAccess;
 use App\Core\Models\User\Role;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * @property PhysProfile $profile
  * @property PhysPhone[] $phones
+ * @property Employee $employee
  * @property Collection|EmployeeReportAccess $reportAccesses
  * @property EmployeeRideAccess $rideAccess
  */
@@ -66,6 +68,11 @@ class Phys extends User
         return ! empty($this->profile->full_name)
             ? UserHelper::getShortName($this->profile->full_name)
             : $this->username;
+    }
+
+    public function employee(): HasOne
+    {
+        return $this->hasOne(Employee::class, 'phys_id', 'id');
     }
 
     public function profile(): HasOne

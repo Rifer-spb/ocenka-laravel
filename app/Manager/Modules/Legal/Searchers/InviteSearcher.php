@@ -19,6 +19,7 @@ class InviteSearcher
             'phys.reportAccesses',
             'phys.reportAccesses.direction',
             'phys.rideAccess',
+            'phys.employee',
         ]);
 
         match ($request->type) {
@@ -52,7 +53,7 @@ class InviteSearcher
                 ],
                 'created_at' => DateHelper::toDatetime($model->created_at),
                 'completed_at' => DateHelper::toDatetime($model->completed_at),
-                'user' => $this->getPhys($model),
+                'phys' => $this->getPhys($model),
             ];
         }, $allRequests->get()->all());
     }
@@ -64,6 +65,7 @@ class InviteSearcher
         }
 
         $phys = $model->phys;
+        $employee = $phys->employee;
         $rideAccess = $phys->rideAccess;
         $reportAccesses = $phys->reportAccesses;
 
@@ -83,6 +85,8 @@ class InviteSearcher
                     ];
                 }),
             ],
+            'isManager' => $employee->is_manager,
+            'workRate' => $employee->work_rate,
         ];
     }
 }

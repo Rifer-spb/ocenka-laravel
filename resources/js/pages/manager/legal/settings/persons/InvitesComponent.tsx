@@ -36,6 +36,15 @@ export default function({ currentTab, invites } : IProps) {
                         <div className="th date">Дата</div>
                         <div className="th name">Сотрудник</div>
                         <div className="th status">Статус</div>
+                        {currentTab.id == 'active' && (
+                            <>
+                                <div className="th can_report_write">Может подп.отч. по напр.</div>
+                                <div className="th can_do_write">Может дел. отч. по напр.</div>
+                                <div className="th can_ride">Может езд. на выез.</div>
+                                <div className="th is_manager">Менеджер</div>
+                                <div className="th work_rate">Норма</div>
+                            </>
+                        )}
                         <div className="th action">Действие</div>
                     </div>
                     {invites.map(invite => <InviteComponent
