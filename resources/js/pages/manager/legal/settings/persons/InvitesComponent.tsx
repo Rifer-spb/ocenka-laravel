@@ -28,6 +28,10 @@ export default function({ currentTab, invites } : IProps) {
         router.post(route(`settings/persons/complete/${id}`));
     };
 
+    const handleUpdateDoReport = (employeeId: number, accessId: number) => {
+        router.put(route(`employees/${employeeId}/report-access/${accessId}/do`));
+    };
+
     return (
         <div className="invites">
             {invites.length
@@ -55,6 +59,7 @@ export default function({ currentTab, invites } : IProps) {
                         handleCancel={handleCancel}
                         handleConfirm={handleConfirm}
                         handleComplete={handleComplete}
+                        handleUpdateDoReport={handleUpdateDoReport}
                     />)}
                 </div>
                 : <div>Заявок не найдено</div>

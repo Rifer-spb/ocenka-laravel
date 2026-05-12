@@ -9,9 +9,18 @@ interface IProps {
     handleCancel: Function;
     handleConfirm: Function;
     handleComplete: Function;
+    handleUpdateDoReport: Function;
 }
 
-export default function({ currentTab, invite, handleReSend, handleCancel, handleConfirm, handleComplete } : IProps) {
+export default function({
+    currentTab,
+    invite,
+    handleReSend,
+    handleCancel,
+    handleConfirm,
+    handleComplete,
+    handleUpdateDoReport
+} : IProps) {
     return (
         <div className="tr">
             <div className="td date"> {currentTab.id == 'complete' ? invite.completed_at : invite.created_at} </div>
@@ -21,8 +30,21 @@ export default function({ currentTab, invite, handleReSend, handleCancel, handle
             </div>
             {currentTab.id == 'active' && (
                 <>
-                    <div className="td can_report_write"></div>
-                    <div className="td can_do_write"></div>
+                    <div className="td can_report_write">
+                        {invite.phys.access.report.map(item => (
+                            <div key={item.id} className="checkbox-item">
+                                <label>{item.name}</label>
+                                <input
+                                    type="checkbox"
+                                    checked={item.do}
+                                    onChange={() => handleUpdateDoReport(item.id)}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                    <div className="td can_do_write">
+
+                    </div>
                     <div className="td can_ride"></div>
                     <div className="td is_manager">
                         {invite.phys.isManager}
