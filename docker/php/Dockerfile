@@ -11,6 +11,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libzip-dev \
     libpq-dev \
+    libsqlite3-dev \
+    sqlite3 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -24,7 +26,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 RUN docker-php-ext-install mbstring exif pcntl bcmath gd zip
 
 # Установка pdo_pgsql отдельно с отладкой
-RUN docker-php-ext-install pdo_pgsql
+RUN docker-php-ext-install pdo_pgsql pdo_sqlite
 
 # Установка Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
