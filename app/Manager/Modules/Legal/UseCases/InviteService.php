@@ -33,6 +33,11 @@ class InviteService extends AbstractInviteService
         $this->sendInviteEmail($phys);
     }
 
+    /**
+     * @param int $inviteId
+     * @return void
+     * @throws \Exception
+     */
     public function reSend(int $inviteId): void
     {
         $invite = Invite::getWaitById($inviteId);

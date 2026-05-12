@@ -5,7 +5,6 @@ namespace App\Manager\Modules\Phys\UseCases;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
-use App\Core\Models\User\User;
 use App\Manager\UseCases\AbstractInviteService;
 
 class InviteService extends AbstractInviteService
@@ -34,6 +33,11 @@ class InviteService extends AbstractInviteService
         $this->sendInviteEmail($legal);
     }
 
+    /**
+     * @param int $inviteId
+     * @return void
+     * @throws \Exception
+     */
     public function reSend(int $inviteId): void
     {
         $invite = Invite::getWaitById($inviteId);
