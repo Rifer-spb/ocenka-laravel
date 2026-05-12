@@ -13,8 +13,6 @@ class InviteSearcher
 {
     public function search(Legal $user, InviteSearchRequest $request): array
     {
-        \DB::enableQueryLog();
-
         $allRequests = Invite::where('legal_id', $user->id)->with([
             'legal.profile',
             'phys.profile',
