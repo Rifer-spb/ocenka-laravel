@@ -2,15 +2,21 @@
 
 namespace App\Core\Models\User\Phys;
 
+use App\Core\Helpers\UserHelper;
+use App\Core\Models\Employee\EmployeeReportAccess;
+use App\Core\Models\Employee\EmployeeRideAccess;
 use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property PhysProfile $profile
  * @property PhysPhone[] $phones
+ * @property Collection|EmployeeReportAccess $reportAccesses
+ * @property EmployeeRideAccess $rideAccess
  */
 class Phys extends User
 {
@@ -50,6 +56,18 @@ class Phys extends User
         $this->profile->updateHoliday($from, $to);
     }
 
+    public function getFullName(): string
+    {
+        return $this->profile->full_name ?? $this->username;
+    }
+
+    public function getName(): string
+    {
+        return ! empty($this->profile->full_name)
+            ? UserHelper::getShortName($this->profile->full_name)
+            : $this->username;
+    }
+
     public function profile(): HasOne
     {
         return $this->hasOne(PhysProfile::class, 'id', 'id');
@@ -58,5 +76,15 @@ class Phys extends User
     public function phones(): HasMany
     {
         return $this->hasMany(PhysPhone::class, 'user_id', 'id');
+    }
+
+    public function reportAccesses(): HasMany
+    {
+        return $this->hasMany(EmployeeReportAccess::class, 'phys_id', 'id');
+    }
+
+    public function rideAccess(): HasOne
+    {
+        return $this->hasOne(EmployeeRideAccess::class, 'phys_id', 'id');
     }
 }

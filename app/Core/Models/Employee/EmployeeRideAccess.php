@@ -9,7 +9,7 @@ use App\Core\Models\AbstractEntity;
  * @property int $employee_id
  * @property int $legal_id
  * @property int $phys_id
- * @property bool $access
+ * @property bool $value
  */
 class EmployeeRideAccess extends AbstractEntity
 {
