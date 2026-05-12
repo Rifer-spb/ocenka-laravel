@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\User;
+namespace Tests\Unit\Core\Models\User\Legal;
 
 use App\Core\Models\Legal\LegalMail;
 use App\Core\Models\Legal\LegalPayment;

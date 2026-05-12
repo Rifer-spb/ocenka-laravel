@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\User;
+namespace Tests\Unit\Core\Models\User\Phys;
 
 use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\Phys\PhysProfile;
