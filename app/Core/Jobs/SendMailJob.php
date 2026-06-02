@@ -11,6 +11,10 @@ class SendMailJob implements ShouldQueue
 {
     use Dispatchable;
 
+    public int $tries = 5;
+
+    public array $backoff = [10, 30, 60, 120];
+
     public function __construct(
         private Mailable $mailable
     ) {}
@@ -22,6 +26,6 @@ class SendMailJob implements ShouldQueue
 
     public function failed(\Throwable $exception): void
     {
-        logger()->error('Job failed: '.$exception->getMessage());
+        logger()->error('SendMailJob failed: '.$exception->getMessage());
     }
 }
