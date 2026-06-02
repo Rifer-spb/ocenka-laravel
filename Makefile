@@ -12,3 +12,9 @@ cli:
 
 chown:
 	sudo chown -R $USER:$USER database/migrations
+
+redis-cli:
+	 docker exec -it ocenka_laravel_redis redis-cli
+
+tinker:
+	docker exec -it ocenka_laravel_php php artisan tinker
