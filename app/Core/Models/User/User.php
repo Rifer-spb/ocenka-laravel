@@ -85,7 +85,7 @@ class User extends Authenticatable
 
     public function changePassword(string $oldPassword, string $newPassword): void
     {
-        if (! Hash::check($oldPassword, $newPassword)) {
+        if (! Hash::check($oldPassword, $this->password)) {
             throw new \DomainException('Неверный текущий пароль');
         }
 

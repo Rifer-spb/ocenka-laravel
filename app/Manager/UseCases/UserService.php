@@ -43,9 +43,9 @@ class UserService
                 emailTo: $user->email,
             );
 
-            SendMailJob::dispatch($signUpMail);
-
             DB::commit();
+
+            SendMailJob::dispatch($signUpMail);
 
             return $user;
         } catch (\Throwable $e) {
