@@ -9,6 +9,8 @@ use App\Core\Models\Legal\LegalProfile;
 use App\Core\Models\Legal\LegalWhatsApp;
 use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
+use App\Core\Models\User\ValueObjects\Password;
+use App\Core\ValueObjects\Email;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -20,7 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Legal extends User
 {
-    public static function signUpManager(string $email, string $password, string $role): static
+    public static function signUpManager(Email $email, Password $password, Role $role): static
     {
         $user = parent::signUpManager($email, $password, $role);
 

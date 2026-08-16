@@ -3,13 +3,14 @@
 namespace App\Manager\Modules\Phys\Http\Controllers;
 
 use App\Core\Http\Controllers\AbstractController;
+use App\Core\Models\User\ValueObjects\Password;
 use App\Manager\Http\Requests\ChangePasswordRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\AddPhoneRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateHolidayRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateNameRequest;
 use App\Manager\Modules\Phys\UseCases\ProfileService;
 use App\Manager\Modules\Phys\Views\ProfileView;
-use App\Manager\UseCases\UserService;
+use App\Manager\UseCases\User\ChangePasswordUseCase;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
@@ -17,7 +18,6 @@ class ProfileController extends AbstractController
 {
     public function __construct(
         private ProfileService $profileService,
-        private UserService $userService,
     ) {}
 
     public function view(ProfileView $view)
@@ -60,9 +60,13 @@ class ProfileController extends AbstractController
      *
      * @throws \Throwable
      */
-    public function changePassword(ChangePasswordRequest $request)
+    public function changePassword(ChangePasswordRequest $request, ChangePasswordUseCase $useCase)
     {
-        $this->userService->changePassword($this->getUserId(), $request);
+        $useCase->execute(
+            $this->getUser(),
+            new Password($request->oldPassword),
+            new Password($request->newPassword)
+        );
 
         return back()->with('success', 'Пароль успешно изменен');
     }

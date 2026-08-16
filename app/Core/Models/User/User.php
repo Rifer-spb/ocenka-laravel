@@ -3,6 +3,8 @@
 namespace App\Core\Models\User;
 
 use App\Core\Models\EloquentDocMethods;
+use App\Core\Models\User\ValueObjects\Password;
+use App\Core\ValueObjects\Email;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -52,13 +54,17 @@ class User extends Authenticatable
         ];
     }
 
-    public static function signUpManager(string $email, string $password, string $role): static
+    public static function signUpManager(Email $email, Password $password, Role $role): static
     {
+        if (! $role->isManager()) {
+            throw new \DomainException('Роль должна быть либо юр.лицо, либо физ.лицо.');
+        }
+
         return parent::create([
-            'username' => $email,
-            'email' => $email,
-            'password' => $password,
-            'role' => $role,
+            'username' => $email->getValue(),
+            'email' => $email->getValue(),
+            'password' => $password->getValue(),
+            'role' => $role->value,
             'email_verify_token' => Str::random(60),
         ]);
     }
@@ -83,18 +89,9 @@ class User extends Authenticatable
         return $this->role === Role::NOTARY->value;
     }
 
-    public function changePassword(string $oldPassword, string $newPassword): void
+    public function updatePassword(Password $password): void
     {
-        if (! Hash::check($oldPassword, $this->password)) {
-            throw new \DomainException('Неверный текущий пароль');
-        }
-
-        $this->updatePassword($newPassword);
-    }
-
-    public function updatePassword(string $password): void
-    {
-        $this->password = $password;
+        $this->password = $password->getValue();
     }
 
     public static function getByUsername(string $username): static

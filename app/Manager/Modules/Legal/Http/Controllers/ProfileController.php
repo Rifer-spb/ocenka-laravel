@@ -3,18 +3,18 @@
 namespace App\Manager\Modules\Legal\Http\Controllers;
 
 use App\Core\Http\Controllers\AbstractController;
+use App\Core\Models\User\ValueObjects\Password;
 use App\Manager\Http\Requests\ChangePasswordRequest;
 use App\Manager\Modules\Legal\Http\Requests\Profile\UpdateCompanyRequest;
 use App\Manager\Modules\Legal\UseCases\ProfileService;
 use App\Manager\Modules\Legal\Views\ProfileView;
-use App\Manager\UseCases\UserService;
+use App\Manager\UseCases\User\ChangePasswordUseCase;
 use Inertia\Inertia;
 
 class ProfileController extends AbstractController
 {
     public function __construct(
-        private ProfileService $profileService,
-        private UserService $userService,
+        private ProfileService $profileService
     ) {}
 
     public function view(ProfileView $view)
@@ -31,9 +31,16 @@ class ProfileController extends AbstractController
         return back()->with('success', 'Успешно обновлено');
     }
 
-    public function changePassword(ChangePasswordRequest $request)
+    /**
+     * @throws \Throwable
+     */
+    public function changePassword(ChangePasswordRequest $request, ChangePasswordUseCase $useCase)
     {
-        $this->userService->changePassword($this->getUserId(), $request);
+        $useCase->execute(
+            $this->getUser(),
+            new Password($request->oldPassword),
+            new Password($request->newPassword)
+        );
 
         return back()->with('success', 'Пароль успешно изменен');
     }

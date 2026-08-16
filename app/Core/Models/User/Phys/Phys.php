@@ -8,6 +8,8 @@ use App\Core\Models\Employee\EmployeeReportAccess;
 use App\Core\Models\Employee\EmployeeRideAccess;
 use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
+use App\Core\Models\User\ValueObjects\Password;
+use App\Core\ValueObjects\Email;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,7 +24,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Phys extends User
 {
-    public static function signUpManager(string $email, string $password, string $role): static
+    public static function signUpManager(Email $email, Password $password, Role $role): static
     {
         $user = parent::signUpManager($email, $password, $role);
 

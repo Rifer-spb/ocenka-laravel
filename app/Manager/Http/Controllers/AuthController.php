@@ -3,10 +3,13 @@
 namespace App\Manager\Http\Controllers;
 
 use App\Core\Http\Controllers\AbstractAuthController;
+use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
+use App\Core\Models\User\ValueObjects\Password;
+use App\Core\ValueObjects\Email;
 use App\Manager\Http\Requests\Auth\SignInRequest;
 use App\Manager\Http\Requests\Auth\SignUpRequest;
-use App\Manager\UseCases\UserService;
+use App\Manager\UseCases\User\SignUpUseCase;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -20,9 +23,13 @@ class AuthController extends AbstractAuthController
     /**
      * @throws \Throwable
      */
-    public function signUp(SignUpRequest $request, UserService $service)
+    public function signUp(SignUpRequest $request, SignUpUseCase $useCase)
     {
-        $user = $service->register($request);
+        $user = $useCase->execute(
+            new Email($request->email),
+            new Password($request->password),
+            Role::from($request->role)
+        );
 
         return $this->_login($user, $request, "manager.{$user->role}.home");
     }

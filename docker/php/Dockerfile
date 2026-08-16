@@ -21,13 +21,13 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && rm -rf /var/lib/apt/lists/*
 
 # Установка расширений PHP
-RUN docker-php-ext-install mbstring exif pcntl bcmath gd zip
+RUN docker-php-ext-install mbstring exif pcntl bcmath gd zip xml
 
 # Установка pdo_pgsql отдельно с отладкой
 RUN docker-php-ext-install pdo_pgsql
 
 # Установка Redis расширения
-RUN pecl install redis && docker-php-ext-enable redis
+#RUN pecl install redis && docker-php-ext-enable redis
 
 # Установка Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

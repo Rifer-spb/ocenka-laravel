@@ -14,28 +14,36 @@ enum Role: string
         return in_array($role, array_column(self::cases(), 'value'));
     }
 
-    public static function isPhys(string $role): bool
+    public function isPhys(): bool
     {
-        return $role == self::PHYS;
+        return $this === self::PHYS;
     }
 
-    public static function isLegal(string $role): bool
+    public function isLegal(): bool
     {
-        return $role == self::LEGAL;
+        return $this === self::LEGAL;
     }
 
-    public static function isClient(string $role): bool
+    public function isClient(): bool
     {
-        return $role == self::CLIENT;
+        return $this === self::CLIENT;
     }
 
-    public static function isNotary(string $role): bool
+    public function isNotary(): bool
     {
-        return $role == self::NOTARY;
+        return $this === self::NOTARY;
     }
 
     public static function managerRoles(): array
     {
         return [self::PHYS->value, self::LEGAL->value];
+    }
+
+    public function isManager(): bool
+    {
+        return match ($this) {
+            self::PHYS, self::LEGAL => true,
+            default => false,
+        };
     }
 }
