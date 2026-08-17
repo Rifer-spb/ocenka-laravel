@@ -84,7 +84,7 @@ class SignUpTest extends TestCase
 
         $this->assertAuthenticated();
 
-        $response->assertRedirect(route("manager.{$role}.home"));
+        $response->assertRedirect($this->getRouteRedirect($role));
     }
 
     public function testSignUpLowerCase()
@@ -102,7 +102,7 @@ class SignUpTest extends TestCase
 
         $this->assertAuthenticated();
 
-        $response->assertRedirect(route("manager.{$role}.home"));
+        $response->assertRedirect($this->getRouteRedirect($role));
     }
 
     public function testSignUpLegalSuccess()
@@ -120,7 +120,7 @@ class SignUpTest extends TestCase
 
         $this->assertAuthenticated();
 
-        $response->assertRedirect(route("manager.{$role}.home"));
+        $response->assertRedirect($this->getRouteRedirect($role));
     }
 
     public function testSignUpPhysSuccess()
@@ -138,7 +138,7 @@ class SignUpTest extends TestCase
 
         $this->assertAuthenticated();
 
-        $response->assertRedirect(route("manager.{$role}.home"));
+        $response->assertRedirect($this->getRouteRedirect($role));
     }
 
     public function testSignUpAlreadyExist()
@@ -165,5 +165,10 @@ class SignUpTest extends TestCase
     private function getApiRoute(): string
     {
         return route('manager.auth.signUp');
+    }
+
+    private function getRouteRedirect(string $role)
+    {
+        return route("manager.{$role}.home");
     }
 }
