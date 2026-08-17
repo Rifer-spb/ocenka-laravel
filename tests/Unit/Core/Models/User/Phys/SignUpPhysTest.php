@@ -39,7 +39,7 @@ class SignUpPhysTest extends TestCase
         );
 
         $this->expectException(QueryException::class);
-        $this->expectExceptionMessageMatches('/Duplicate entry|unique constraint|already exists/i');
+        $this->expectExceptionMessageMatches('/Duplicate entry|unique/i');
 
         Phys::new(
             new Email('phys@example.com'),
