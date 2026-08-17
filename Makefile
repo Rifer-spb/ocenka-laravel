@@ -18,3 +18,6 @@ redis-cli:
 
 tinker:
 	docker exec -it ocenka_laravel_php php artisan tinker
+
+test:
+	docker exec -it ocenka_laravel_php php artisan test

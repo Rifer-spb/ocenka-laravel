@@ -13,6 +13,7 @@ use App\Core\Models\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
 
 /**
  * @property LegalProfile $profile
@@ -22,9 +23,15 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Legal extends User
 {
-    public static function signUpManager(Email $email, Password $password, Role $role): static
+    public static function new(Email $email, Password $password): self
     {
-        $user = parent::signUpManager($email, $password, $role);
+        $user = parent::create([
+            'username' => $email->getValue(),
+            'email' => $email->getValue(),
+            'password' => $password->getValue(),
+            'role' => Role::LEGAL->value,
+            'email_verify_token' => Str::random(60),
+        ]);
 
         LegalProfile::create(['id' => $user->id]);
         LegalPayment::create(['id' => $user->id]);

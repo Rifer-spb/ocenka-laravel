@@ -4,12 +4,9 @@ namespace App\Core\Models\User;
 
 use App\Core\Models\EloquentDocMethods;
 use App\Core\Models\User\ValueObjects\Password;
-use App\Core\ValueObjects\Email;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -52,21 +49,6 @@ class User extends Authenticatable
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
         ];
-    }
-
-    public static function signUpManager(Email $email, Password $password, Role $role): static
-    {
-        if (! $role->isManager()) {
-            throw new \DomainException('Роль должна быть либо юр.лицо, либо физ.лицо.');
-        }
-
-        return parent::create([
-            'username' => $email->getValue(),
-            'email' => $email->getValue(),
-            'password' => $password->getValue(),
-            'role' => $role->value,
-            'email_verify_token' => Str::random(60),
-        ]);
     }
 
     public function isPhys(): bool

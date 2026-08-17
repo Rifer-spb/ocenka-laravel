@@ -24,7 +24,7 @@ class SignUpTest extends TestCase
         $this->useCase = app(SignUpUseCase::class);
     }
 
-    public function test_registry_phys(): void
+    public function testSignUpPhys(): void
     {
         $user = $this->useCase->execute(
             new Email('test@test.com'),
@@ -34,8 +34,8 @@ class SignUpTest extends TestCase
 
         $this->assertInstanceOf(User::class, $user);
 
-        $this->assertSame('test@test.com', $user->email);
-        $this->assertSame(Role::PHYS->value, $user->role);
+        $this->assertEquals('test@test.com', $user->email);
+        $this->assertEquals(Role::PHYS->value, $user->role);
 
         $this->assertDatabaseHas('users', [
             'email' => 'test@test.com',
@@ -43,5 +43,17 @@ class SignUpTest extends TestCase
         ]);
 
         $this->assertTrue(Hash::check('password', $user->password));
+    }
+
+    public function testInvalidRole()
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Роль должна быть юр.лицо или физ.лицо.');
+
+        $this->useCase->execute(
+            new Email('test@test.com'),
+            new Password('password'),
+            Role::CLIENT
+        );
     }
 }

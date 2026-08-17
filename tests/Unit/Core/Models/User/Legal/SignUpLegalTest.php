@@ -8,6 +8,8 @@ use App\Core\Models\Legal\LegalProfile;
 use App\Core\Models\Legal\LegalWhatsApp;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Role;
+use App\Core\Models\User\ValueObjects\Password;
+use App\Core\ValueObjects\Email;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
@@ -17,18 +19,16 @@ class SignUpLegalTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_sign_up_success()
+    public function testSignUpSuccess()
     {
-        $user = Legal::signUpManager(
-            $email = 'legal@example.com',
-            $password = 'remote98',
-            $role = Role::LEGAL->value,
+        $user = Legal::new(
+            $email = new Email('legal@example.com'),
+            $password = new Password('password'),
         );
 
-        $this->assertEquals($email, $user->username);
-        $this->assertEquals($email, $user->email);
-        $this->assertTrue(Hash::check($password, $user->password));
-        $this->assertEquals($role, $user->role);
+        $this->assertEquals($email->getValue(), $user->username);
+        $this->assertEquals($email->getValue(), $user->email);
+        $this->assertTrue(Hash::check($password->getValue(), $user->password));
         $this->assertTrue($user->isLegal());
         $this->assertNotNull($user->email_verify_token);
 
@@ -49,12 +49,19 @@ class SignUpLegalTest extends TestCase
         $this->assertInstanceOf(LegalWhatsApp::class, $user->whatsApp);
     }
 
-    public function test_already_exists_email()
+    public function testAlreadyExistsEmail()
     {
-        Legal::signUpManager('legal@example.com', 'remote98', Role::LEGAL->value);
+        Legal::new(
+            new Email('legal@example.com'),
+            new Password('password'),
+        );
 
         $this->expectException(QueryException::class);
+        $this->expectExceptionMessageMatches('/Duplicate entry|unique constraint|already exists/i');
 
-        Legal::signUpManager('legal@example.com', 'remote98', Role::LEGAL->value);
+        Legal::new(
+            new Email('legal@example.com'),
+            new Password('password'),
+        );
     }
 }

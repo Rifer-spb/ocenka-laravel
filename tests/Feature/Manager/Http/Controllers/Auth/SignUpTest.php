@@ -9,7 +9,7 @@ class SignUpTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_sign_up_legal_success()
+    public function testSignUpLegalSuccess()
     {
         $response = $this->post($this->getApiRoute(), [
             'email' => $email = 'legal@example.com',
@@ -28,7 +28,7 @@ class SignUpTest extends TestCase
         $response->assertRedirect(route("manager.{$role}.home"));
     }
 
-    public function test_sign_up_required()
+    public function testSignUpRequired()
     {
         $response = $this->post($this->getApiRoute(), [
             'email' => '',
@@ -46,7 +46,7 @@ class SignUpTest extends TestCase
         ]);
     }
 
-    public function test_sign_up_invalid_email()
+    public function testSignUpInvalidEmail()
     {
         $response = $this->post($this->getApiRoute(), [
             'email' => 'awdawdawd',
@@ -59,6 +59,22 @@ class SignUpTest extends TestCase
 
         $response->assertSessionHasErrors([
             'email' => 'Введите корректный email адрес',
+        ]);
+    }
+
+    public function testSignUpInvalidRole()
+    {
+        $response = $this->post($this->getApiRoute(), [
+            'email' => 'legal@example.com',
+            'password' => 'password',
+            'role' => 'client',
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors(['role']);
+
+        $response->assertSessionHasErrors([
+            'role' => 'Выберите корректный тип аккаунта',
         ]);
     }
 

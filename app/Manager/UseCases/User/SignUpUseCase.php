@@ -19,12 +19,16 @@ class SignUpUseCase
      */
     public function execute(Email $email, Password $password, Role $role): User
     {
+        if (! $role->isManager()) {
+            throw new \DomainException('Роль должна быть юр.лицо или физ.лицо.');
+        }
+
         $user = DB::transaction(function () use ($email, $password, $role) {
             if ($role->isLegal()) {
-                return Legal::signUpManager($email, $password, $role);
+                return Legal::new($email, $password);
             }
 
-            return Phys::signUpManager($email, $password, $role);
+            return Phys::new($email, $password);
         });
 
         $signUpMail = new SignUpMail(

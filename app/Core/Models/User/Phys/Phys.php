@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
 
 /**
  * @property PhysProfile $profile
@@ -24,9 +25,15 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Phys extends User
 {
-    public static function signUpManager(Email $email, Password $password, Role $role): static
+    public static function new(Email $email, Password $password): self
     {
-        $user = parent::signUpManager($email, $password, $role);
+        $user = parent::create([
+            'username' => $email->getValue(),
+            'email' => $email->getValue(),
+            'password' => $password->getValue(),
+            'role' => Role::PHYS->value,
+            'email_verify_token' => Str::random(60),
+        ]);
 
         PhysProfile::create(['id' => $user->id]);
 
