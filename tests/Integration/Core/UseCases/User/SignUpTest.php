@@ -27,8 +27,8 @@ class SignUpTest extends TestCase
     public function testSignUpPhys(): void
     {
         $user = $this->useCase->execute(
-            new Email('test@test.com'),
-            new Password('password'),
+            new Email($email = 'test@test.com'),
+            new Password($password = 'password'),
             Role::PHYS
         );
 
@@ -38,11 +38,32 @@ class SignUpTest extends TestCase
         $this->assertEquals(Role::PHYS->value, $user->role);
 
         $this->assertDatabaseHas('users', [
-            'email' => 'test@test.com',
+            'email' => $email,
             'role' => Role::PHYS->value,
         ]);
 
-        $this->assertTrue(Hash::check('password', $user->password));
+        $this->assertTrue(Hash::check($password, $user->password));
+    }
+
+    public function testSignUpLegal(): void
+    {
+        $user = $this->useCase->execute(
+            new Email($email = 'test@test.com'),
+            new Password($password = 'password'),
+            Role::LEGAL
+        );
+
+        $this->assertInstanceOf(User::class, $user);
+
+        $this->assertEquals('test@test.com', $user->email);
+        $this->assertEquals(Role::LEGAL->value, $user->role);
+
+        $this->assertDatabaseHas('users', [
+            'email' => $email,
+            'role' => Role::LEGAL->value,
+        ]);
+
+        $this->assertTrue(Hash::check($password, $user->password));
     }
 
     public function testInvalidRole()

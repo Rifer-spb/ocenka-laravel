@@ -10,6 +10,12 @@ class Email
 
     public function __construct(string $email)
     {
+        $email = trim($email);
+
+        if ($email === '') {
+            throw new InvalidArgumentException('Не указан e-mail.');
+        }
+
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidArgumentException("Некорректный e-mail: {$email}");
         }
@@ -18,11 +24,6 @@ class Email
     }
 
     public function getValue(): string
-    {
-        return $this->value;
-    }
-
-    public function __toString(): string
     {
         return $this->value;
     }

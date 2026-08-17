@@ -9,6 +9,7 @@ use App\Core\ValueObjects\Email;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class SignUpPhysTest extends TestCase
@@ -22,11 +23,16 @@ class SignUpPhysTest extends TestCase
             $password = new Password('password'),
         );
 
+        $this->assertEquals($email->getValue(), $user->username);
         $this->assertEquals($email->getValue(), $user->email);
-        $this->assertTrue(Hash::check($password->getValue(), $user->password));
         $this->assertTrue($user->isPhys());
 
-        $this->assertDatabaseHas(PhysProfile::getTableName(), ['id' => $user->id]);
+        $this->assertNotEmpty($user->email_verify_token);
+        $this->assertEquals(60, Str::length($user->email_verify_token));
+
+        $passwordHashCheck = Hash::check($password->getValue(), $user->password);
+        $this->assertTrue($passwordHashCheck);
+
         $this->assertNotNull($user->profile);
         $this->assertInstanceOf(PhysProfile::class, $user->profile);
     }

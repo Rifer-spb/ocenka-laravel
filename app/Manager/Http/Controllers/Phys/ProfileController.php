@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Manager\Modules\Phys\Http\Controllers;
+namespace App\Manager\Http\Controllers\Phys;
 
 use App\Core\Http\Controllers\AbstractController;
+use App\Core\Models\User\FirstName;
+use App\Core\Models\User\LastName;
+use App\Core\Models\User\SecondName;
 use App\Core\Models\User\ValueObjects\Password;
 use App\Manager\Http\Requests\ChangePasswordRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\AddPhoneRequest;
@@ -10,6 +13,7 @@ use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateHolidayRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateNameRequest;
 use App\Manager\Modules\Phys\UseCases\ProfileService;
 use App\Manager\Modules\Phys\Views\ProfileView;
+use App\Manager\UseCases\Phys\Profile\UpdateNameUseCase;
 use App\Manager\UseCases\User\ChangePasswordUseCase;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -27,9 +31,14 @@ class ProfileController extends AbstractController
         return Inertia::render('manager/phys/settings/account/index', $params);
     }
 
-    public function updateName(UpdateNameRequest $request)
+    public function updateName(UpdateNameRequest $request, UpdateNameUseCase $useCase): RedirectResponse
     {
-        $this->profileService->updateName($this->getUserId(), $request);
+        $useCase->execute(
+            $this->getUser(),
+            $request->firstName,
+            $request->secondName,
+            $request->lastName,
+        );
 
         return back()->with('success', 'Успешно обновлено');
     }

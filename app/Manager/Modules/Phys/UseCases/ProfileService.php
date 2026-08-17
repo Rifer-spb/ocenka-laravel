@@ -9,16 +9,6 @@ use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateNameRequest;
 
 class ProfileService
 {
-    public function updateName(int $id, UpdateNameRequest $request): void
-    {
-        $user = Phys::findOrFail($id);
-        $user->updateName(
-            $request->firstName,
-            $request->secondName,
-            $request->lastName
-        );
-    }
-
     public function addPhone(int $id, AddPhoneRequest $request): void
     {
         $user = Phys::findOrFail($id);

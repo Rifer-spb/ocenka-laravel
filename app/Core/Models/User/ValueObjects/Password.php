@@ -10,6 +10,8 @@ class Password
 
     public function __construct(string $password)
     {
+        $password = trim($password);
+
         if (strlen($password) < 8) {
             throw new InvalidArgumentException('Пароль должен быть не менее 8 символов.');
         }

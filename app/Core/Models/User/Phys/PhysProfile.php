@@ -36,7 +36,7 @@ class PhysProfile extends AbstractEntity
             'first_name' => $firstName,
             'second_name' => $secondName,
             'last_name' => $lastName,
-            'full_name' => "$firstName $secondName $lastName",
+            'full_name' => "{$firstName} {$secondName} {$lastName}",
         ]);
     }
 
