@@ -20,7 +20,7 @@ class SignUpRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'email' => Str::lower($this->email),
+            'email' => Str::lower(trim($this->email)),
         ]);
     }
 

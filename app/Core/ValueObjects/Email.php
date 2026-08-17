@@ -2,6 +2,7 @@
 
 namespace App\Core\ValueObjects;
 
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 class Email
@@ -10,7 +11,7 @@ class Email
 
     public function __construct(string $email)
     {
-        $email = trim($email);
+        $email = Str::lower(trim($email));
 
         if ($email === '') {
             throw new InvalidArgumentException('Не указан e-mail.');

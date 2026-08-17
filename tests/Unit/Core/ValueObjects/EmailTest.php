@@ -32,6 +32,12 @@ class EmailTest extends TestCase
         $this->assertEquals('valid@email.com', $email->getValue());
     }
 
+    public function testLowercase()
+    {
+        $email = new Email('VALID@email.COM');
+        $this->assertEquals('valid@email.com', $email->getValue());
+    }
+
     public function testValid()
     {
         $email = new Email('valid@email.com');
