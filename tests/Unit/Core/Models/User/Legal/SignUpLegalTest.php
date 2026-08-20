@@ -7,18 +7,14 @@ use App\Core\Models\Legal\LegalPayment;
 use App\Core\Models\Legal\LegalProfile;
 use App\Core\Models\Legal\LegalWhatsApp;
 use App\Core\Models\User\Legal\Legal;
-use App\Core\Models\User\Role;
 use App\Core\Models\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
 use Illuminate\Database\QueryException;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class SignUpLegalTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function testSignUpSuccess()
     {
         $user = Legal::new(

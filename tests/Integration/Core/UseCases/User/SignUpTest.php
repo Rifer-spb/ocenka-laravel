@@ -8,15 +8,12 @@ use App\Core\Models\User\User;
 use App\Core\Models\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
 use App\Manager\UseCases\User\SignUpUseCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class SignUpTest extends TestCase
 {
-    use RefreshDatabase;
-
     private SignUpUseCase $useCase;
 
     protected function setUp(): void

@@ -4,13 +4,10 @@ namespace Feature\Manager\Http\Controllers\Auth;
 
 use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class SignUpTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function testRequired()
     {
         $response = $this->post($this->getApiRoute(), [

@@ -7,15 +7,12 @@ use App\Core\Models\User\Phys\PhysProfile;
 use App\Core\Models\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
 use Illuminate\Database\QueryException;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class SignUpPhysTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function testSignUpSuccess()
     {
         $user = Phys::new(
