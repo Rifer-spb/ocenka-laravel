@@ -8,7 +8,10 @@ use App\Core\Models\Employee\EmployeeReportAccess;
 use App\Core\Models\Employee\EmployeeRideAccess;
 use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
+use App\Core\Models\User\ValueObjects\FirstName;
+use App\Core\Models\User\ValueObjects\LastName;
 use App\Core\Models\User\ValueObjects\Password;
+use App\Core\Models\User\ValueObjects\SecondName;
 use App\Core\ValueObjects\Email;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -47,7 +50,7 @@ class Phys extends User
         });
     }
 
-    public function updateName(string $firstName, string $secondName, string $lastName): void
+    public function updateName(FirstName $firstName, SecondName $secondName, LastName $lastName): void
     {
         $this->profile->updateName($firstName, $secondName, $lastName);
     }

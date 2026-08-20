@@ -3,6 +3,9 @@
 namespace App\Core\Models\User\Phys;
 
 use App\Core\Models\AbstractEntity;
+use App\Core\Models\User\ValueObjects\FirstName;
+use App\Core\Models\User\ValueObjects\LastName;
+use App\Core\Models\User\ValueObjects\SecondName;
 
 /**
  * @property int $id
@@ -30,7 +33,7 @@ class PhysProfile extends AbstractEntity
         'holiday_to',
     ];
 
-    public function updateName(string $firstName, string $secondName, string $lastName): void
+    public function updateName(FirstName $firstName, SecondName $secondName, LastName $lastName): void
     {
         $this->update([
             'first_name' => $firstName,

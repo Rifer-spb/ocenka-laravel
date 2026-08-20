@@ -3,10 +3,10 @@
 namespace App\Manager\Http\Controllers\Phys;
 
 use App\Core\Http\Controllers\AbstractController;
-use App\Core\Models\User\FirstName;
-use App\Core\Models\User\LastName;
-use App\Core\Models\User\SecondName;
+use App\Core\Models\User\ValueObjects\FirstName;
+use App\Core\Models\User\ValueObjects\LastName;
 use App\Core\Models\User\ValueObjects\Password;
+use App\Core\Models\User\ValueObjects\SecondName;
 use App\Manager\Http\Requests\ChangePasswordRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\AddPhoneRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateHolidayRequest;
@@ -35,9 +35,9 @@ class ProfileController extends AbstractController
     {
         $useCase->execute(
             $this->getUser(),
-            $request->firstName,
-            $request->secondName,
-            $request->lastName,
+            new FirstName($request->firstName),
+            new SecondName($request->secondName),
+            new LastName($request->lastName),
         );
 
         return back()->with('success', 'Успешно обновлено');
