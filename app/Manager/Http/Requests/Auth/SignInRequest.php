@@ -24,15 +24,15 @@ class SignInRequest extends FormRequest
             'email' => [
                 'required',
                 'string',
-                'email',
                 'max:255',
+                'email',
                 Rule::exists('users')->where(function (Builder $query) {
                     return $query
                         ->where('username', $this->email)
-                        ->whereIn('role', Role::managerRoles());
+                        ->whereIn('role', Role::getManagerRoleValues());
                 }),
             ],
-            'password' => 'required|string',
+            'password' => 'required|string|max:50',
         ];
     }
 
@@ -43,7 +43,8 @@ class SignInRequest extends FormRequest
             'email.string' => 'Поле должно быть строкой',
             'email.email' => 'Введите корректный email адрес',
             'email.exists' => 'Пользователь с таким email не найден',
-            'email.max' => 'Email не может быть длиннее 255 символов',
+            'email.max' => 'Email не может быть длиннее :max символов',
+            'password.max' => 'Пароль не может быть длиннее :max символов',
             'password.required' => 'Пароль обязателен для заполнения',
             'password.string' => 'Поле должно быть строкой',
         ];

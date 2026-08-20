@@ -11,7 +11,7 @@ class SignUpTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testSignUpRequired()
+    public function testRequired()
     {
         $response = $this->post($this->getApiRoute(), [
             'email' => '',
@@ -27,7 +27,7 @@ class SignUpTest extends TestCase
         ]);
     }
 
-    public function testSignUpInvalidEmail()
+    public function testInvalidEmail()
     {
         $response = $this->post($this->getApiRoute(), [
             'email' => 'awdawdawd',
@@ -41,7 +41,7 @@ class SignUpTest extends TestCase
         ]);
     }
 
-    public function testSignUpInvalidRole()
+    public function testInvalidRole()
     {
         $response = $this->post($this->getApiRoute(), [
             'email' => 'legal@example.com',
@@ -55,7 +55,7 @@ class SignUpTest extends TestCase
         ]);
     }
 
-    public function testSignUpMinPassword()
+    public function testMinPassword()
     {
         $response = $this->post($this->getApiRoute(), [
             'email' => 'legal@example.com',
@@ -69,7 +69,7 @@ class SignUpTest extends TestCase
         ]);
     }
 
-    public function testSignUpMaxPassword()
+    public function testMaxPassword()
     {
         $response = $this->post($this->getApiRoute(), [
             'email' => 'legal@example.com',
@@ -83,7 +83,7 @@ class SignUpTest extends TestCase
         ]);
     }
 
-    public function testSignUpTrim()
+    public function testTrim()
     {
         $response = $this->post($this->getApiRoute(), [
             'email' => '   legal@example.com   ',
@@ -101,7 +101,7 @@ class SignUpTest extends TestCase
         $response->assertRedirect($this->getRouteRedirect($role));
     }
 
-    public function testSignUpLowerCase()
+    public function testLowerCase()
     {
         $response = $this->post($this->getApiRoute(), [
             'email' => 'LEGAL@example.COM',
@@ -119,7 +119,7 @@ class SignUpTest extends TestCase
         $response->assertRedirect($this->getRouteRedirect($role));
     }
 
-    public function testSignUpLegalSuccess()
+    public function testLegalSuccess()
     {
         $response = $this->post($this->getApiRoute(), [
             'email' => $email = 'legal@example.com',
@@ -133,11 +133,10 @@ class SignUpTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-
         $response->assertRedirect($this->getRouteRedirect($role));
     }
 
-    public function testSignUpPhysSuccess()
+    public function testPhysSuccess()
     {
         $response = $this->post($this->getApiRoute(), [
             'email' => $email = 'legal@example.com',
@@ -151,11 +150,10 @@ class SignUpTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-
         $response->assertRedirect($this->getRouteRedirect($role));
     }
 
-    public function testSignUpAlreadyExist()
+    public function testAlreadyExist()
     {
         User::create([
             'username' => 'legal@example.com',
