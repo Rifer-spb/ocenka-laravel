@@ -28,7 +28,7 @@ class SignUpRequest extends FormRequest
     {
         return [
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:8|max:50',
             'role' => 'required|in:phys,legal',
         ];
     }
@@ -39,9 +39,10 @@ class SignUpRequest extends FormRequest
             'email.required' => 'Email обязателен для заполнения',
             'email.email' => 'Введите корректный email адрес',
             'email.unique' => 'Пользователь с таким email уже существует',
-            'email.max' => 'Email не может быть длиннее 255 символов',
+            'email.max' => 'Email не может быть длиннее :max символов',
             'password.required' => 'Пароль обязателен для заполнения',
-            'password.min' => 'Пароль должен быть не менее 8 символов',
+            'password.min' => 'Пароль должен быть не менее :min символов',
+            'password.max' => 'Пароль не может быть длиннее :max символов',
             'role.required' => 'Выберите тип аккаунта',
             'role.in' => 'Выберите корректный тип аккаунта',
         ];

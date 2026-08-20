@@ -24,6 +24,14 @@ class PasswordTest extends TestCase
         new Password('abc-123');
     }
 
+    public function testMaxLength()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Пароль не может быть длиннее 50 символов.');
+
+        new Password('abc-123-abc-123-abc-123-abc-123-abc-123-abc-123-abc-123-abc-123');
+    }
+
     public function testTrim()
     {
         $password = new Password('   abc-123-abc   ');

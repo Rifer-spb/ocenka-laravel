@@ -69,6 +69,20 @@ class SignUpTest extends TestCase
         ]);
     }
 
+    public function testSignUpMaxPassword()
+    {
+        $response = $this->post($this->getApiRoute(), [
+            'email' => 'legal@example.com',
+            'password' => 'my-cat-loves-whiskas-and-sleeps-on-the-sofa-every-day',
+            'role' => Role::LEGAL->value,
+        ]);
+
+        $response->assertSessionHasErrors(['password']);
+        $response->assertSessionHasErrors([
+            'password' => 'Пароль не может быть длиннее 50 символов',
+        ]);
+    }
+
     public function testSignUpTrim()
     {
         $response = $this->post($this->getApiRoute(), [
