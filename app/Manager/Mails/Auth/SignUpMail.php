@@ -13,10 +13,10 @@ class SignUpMail extends Mailable
     use Queueable, SerializesModels;
 
     public function __construct(
-        public string $username,
-        public string $password,
-        public string $emailVerifyToken,
-        public string $emailTo
+        public readonly string $username,
+        public readonly string $password,
+        public readonly string $emailVerifyToken,
+        public readonly string $emailTo
     ) {}
 
     public function envelope(): Envelope

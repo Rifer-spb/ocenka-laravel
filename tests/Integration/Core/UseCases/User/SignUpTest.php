@@ -2,6 +2,7 @@
 
 namespace Integration\Core\UseCases\User;
 
+use App\Core\Jobs\SendMailJob;
 use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
 use App\Core\Models\User\ValueObjects\Password;
@@ -9,6 +10,7 @@ use App\Core\ValueObjects\Email;
 use App\Manager\UseCases\User\SignUpUseCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class SignUpTest extends TestCase
@@ -43,6 +45,7 @@ class SignUpTest extends TestCase
         ]);
 
         $this->assertTrue(Hash::check($password, $user->password));
+        Queue::assertPushed(SendMailJob::class);
     }
 
     public function testSignUpLegal(): void
@@ -64,6 +67,7 @@ class SignUpTest extends TestCase
         ]);
 
         $this->assertTrue(Hash::check($password, $user->password));
+        Queue::assertPushed(SendMailJob::class);
     }
 
     public function testInvalidRole()
