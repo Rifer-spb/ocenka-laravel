@@ -5,7 +5,6 @@ namespace App\Manager\Modules\Phys\UseCases;
 use App\Core\Models\User\Phys\Phys;
 use App\Manager\Modules\Phys\Http\Requests\Profile\AddPhoneRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateHolidayRequest;
-use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateNameRequest;
 
 class ProfileService
 {
