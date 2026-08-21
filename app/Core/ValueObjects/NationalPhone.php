@@ -2,6 +2,8 @@
 
 namespace App\Core\ValueObjects;
 
+use App\Core\Helpers\StringHelper;
+use App\Core\Validators\PhoneValidator;
 use InvalidArgumentException;
 
 class NationalPhone
@@ -14,10 +16,10 @@ class NationalPhone
             throw new InvalidArgumentException('Пустой номер телефона.');
         }
 
-        $value = preg_replace('/[^0-9]/', '', (string)$value);
+        $value = StringHelper::onlyNumbers((string)$value);
         $length = strlen($value);
 
-        if ($length < 10 || $length > 11 || ($length == 11 && !in_array($value[0], [7,8]))) {
+        if (!PhoneValidator::isNational($value)) {
             throw new InvalidArgumentException('Некорректный номер телефона.');
         }
 

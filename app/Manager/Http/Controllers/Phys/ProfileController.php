@@ -7,12 +7,14 @@ use App\Core\Models\User\ValueObjects\FirstName;
 use App\Core\Models\User\ValueObjects\LastName;
 use App\Core\Models\User\ValueObjects\Password;
 use App\Core\Models\User\ValueObjects\SecondName;
+use App\Core\ValueObjects\NationalPhone;
 use App\Manager\Http\Requests\ChangePasswordRequest;
 use App\Manager\Http\Requests\Phys\Profile\UpdateNameRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\AddPhoneRequest;
 use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateHolidayRequest;
 use App\Manager\Modules\Phys\UseCases\ProfileService;
 use App\Manager\Modules\Phys\Views\ProfileView;
+use App\Manager\UseCases\Phys\Profile\Phone;
 use App\Manager\UseCases\Phys\Profile\UpdateNameUseCase;
 use App\Manager\UseCases\User\ChangePasswordUseCase;
 use Illuminate\Http\RedirectResponse;
@@ -43,9 +45,12 @@ class ProfileController extends AbstractController
         return back()->with('success', 'Успешно обновлено');
     }
 
-    public function addPhone(AddPhoneRequest $request)
+    public function addPhone(AddPhoneRequest $request, Phone\AddUseCase $useCase)
     {
-        $this->profileService->addPhone($this->getUserId(), $request);
+        $useCase->execute(
+            $this->getUser(),
+            new NationalPhone($request->phone)
+        );
 
         return back()->with('success', 'Успешно обновлено');
     }

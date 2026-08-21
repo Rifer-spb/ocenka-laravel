@@ -13,6 +13,7 @@ use App\Core\Models\User\ValueObjects\LastName;
 use App\Core\Models\User\ValueObjects\Password;
 use App\Core\Models\User\ValueObjects\SecondName;
 use App\Core\ValueObjects\Email;
+use App\Core\ValueObjects\NationalPhone;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -55,9 +56,18 @@ class Phys extends User
         $this->profile->updateName($firstName, $secondName, $lastName);
     }
 
-    public function addPhone(string $phone): void
+    public function addPhone(NationalPhone $phone): PhysPhone
     {
-        $this->phones()->create(['phone' => $phone]);
+        if ($this->hasPhone($phone->getValue())) {
+            throw new \DomainException("Номер телефона {$phone->getValue()} уже добавлен.");
+        }
+
+        return $this->phones()->create(['phone' => $phone->getValue()]);
+    }
+
+    public function hasPhone(string $phone): bool
+    {
+        return $this->phones()->where('phone', $phone)->exists();
     }
 
     public function deletePhone(int $id): void
