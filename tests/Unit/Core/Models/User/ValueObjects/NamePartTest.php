@@ -118,7 +118,7 @@ class NamePartTest extends TestCase
     public function testMagicString()
     {
         $name = new FirstName('Александр');
-        $this->assertEquals('Александр', $name);
+        $this->assertEquals('Александр', $name->getValue());
     }
 
     // ==================== ОШИБКИ ВАЛИДАЦИИ ====================
@@ -126,7 +126,7 @@ class NamePartTest extends TestCase
     public function testNameExceedsMaxLengthThrowsException()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Имя не должно превышать 100 символов.');
+        $this->expectExceptionMessage('Значение поля Имя не должно превышать 100 символов.');
         new FirstName(str_repeat('а', 101));
     }
 }

@@ -19,9 +19,9 @@ class UpdateNameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstName' => 'required|string',
-            'secondName' => 'required|string',
-            'lastName' => 'required|string',
+            'firstName' => 'nullable|string|max:100',
+            'secondName' => 'nullable|string|max:100',
+            'lastName' => 'nullable|string|max:100',
         ];
     }
 
@@ -30,6 +30,16 @@ class UpdateNameRequest extends FormRequest
         return [
             'required' => 'Поле обязательно для заполнения',
             'string' => 'Поле должно быть строкой',
+            'max' => 'Поле :attribute не должно превышать :max символов',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'firstName' => 'Имя',
+            'secondName' => 'Фамилия',
+            'lastName' => 'Отчество',
         ];
     }
 }

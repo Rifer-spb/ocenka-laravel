@@ -1,6 +1,6 @@
 <?php
 
-namespace Integration\Manager\UseCases\Phys;
+namespace Integration\Manager\UseCases\Phys\Profile;
 
 use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\ValueObjects\FirstName;

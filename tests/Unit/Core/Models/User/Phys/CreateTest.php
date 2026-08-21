@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
-class SignUpPhysTest extends TestCase
+class CreateTest extends TestCase
 {
     public function testSignUpSuccess()
     {

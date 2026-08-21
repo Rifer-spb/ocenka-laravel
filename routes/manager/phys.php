@@ -13,11 +13,11 @@ Route::prefix('phys')->name('phys.')->middleware('auth')->group(function () {
 
         Route::prefix('account')->name('account.')->controller(ProfileController::class)->group(function () {
             Route::get('/', 'view')->name('account');
-            Route::post('name', 'updateName')->name('name.update');
+            Route::patch('name', 'updateName')->name('name.update');
             Route::post('phones', 'addPhone')->name('phones.create');
             Route::delete('phones/{phone}', 'deletePhone')->name('phones.delete');
-            Route::put('holiday', 'updateHoliday')->name('holiday.update');
-            Route::put('password', 'changePassword')->name('password.update');
+            Route::patch('holiday', 'updateHoliday')->name('holiday.update');
+            Route::patch('password', 'changePassword')->name('password.update');
         });
 
         Route::prefix('legals')->name('legals.')->controller(InviteController::class)->group(function () {

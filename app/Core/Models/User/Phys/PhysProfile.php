@@ -36,10 +36,10 @@ class PhysProfile extends AbstractEntity
     public function updateName(FirstName $firstName, SecondName $secondName, LastName $lastName): void
     {
         $this->update([
-            'first_name' => $firstName,
-            'second_name' => $secondName,
-            'last_name' => $lastName,
-            'full_name' => "{$firstName} {$secondName} {$lastName}",
+            'first_name' => $firstName->getValue(),
+            'second_name' => $secondName->getValue(),
+            'last_name' => $lastName->getValue(),
+            'full_name' => trim("{$firstName->getValue()} {$secondName->getValue()} {$lastName->getValue()}"),
         ]);
     }
 

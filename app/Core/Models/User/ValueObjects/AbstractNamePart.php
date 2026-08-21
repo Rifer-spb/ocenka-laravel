@@ -8,15 +8,17 @@ abstract class AbstractNamePart
 {
     protected const MAX_LENGTH = 100;
 
-    private string $value;
+    private ?string $value;
 
-    public function __construct(string $value)
+    public function __construct(?string $value)
     {
-        $value = $this->normalize($value);
-        $length = mb_strlen($value);
+        if (is_string($value)) {
+            $value = $this->normalize($value);
+            $length = mb_strlen($value);
 
-        if ($length > static::MAX_LENGTH) {
-            throw new InvalidArgumentException($this->getMaxLengthErrorMessage());
+            if ($length > static::MAX_LENGTH) {
+                throw new InvalidArgumentException($this->getMaxLengthErrorMessage());
+            }
         }
 
         $this->value = $value;
@@ -33,12 +35,7 @@ abstract class AbstractNamePart
         return implode(' ', $matches[0]);
     }
 
-    public function getValue(): string
-    {
-        return $this->value;
-    }
-
-    public function __toString(): string
+    public function getValue(): ?string
     {
         return $this->value;
     }
@@ -47,6 +44,6 @@ abstract class AbstractNamePart
 
     private function getMaxLengthErrorMessage() : string
     {
-        return "{$this->getFieldName()} не должно превышать " . self::MAX_LENGTH . " символов.";
+        return "Значение поля {$this->getFieldName()} не должно превышать " . self::MAX_LENGTH . " символов.";
     }
 }

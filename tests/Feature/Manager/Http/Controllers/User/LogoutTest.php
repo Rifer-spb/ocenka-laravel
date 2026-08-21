@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Manager\Http\Controllers\Auth;
+namespace Feature\Manager\Http\Controllers\User;
 
 use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
