@@ -3,6 +3,7 @@
 namespace App\Manager\Http\Controllers\Phys;
 
 use App\Core\Http\Controllers\AbstractController;
+use App\Core\Models\User\Phys\PhysPhone;
 use App\Core\Models\User\ValueObjects\FirstName;
 use App\Core\Models\User\ValueObjects\LastName;
 use App\Core\Models\User\ValueObjects\Password;
@@ -33,6 +34,13 @@ class ProfileController extends AbstractController
         return Inertia::render('manager/phys/settings/account/index', $params);
     }
 
+    /**
+     * @param UpdateNameRequest $request
+     * @param UpdateNameUseCase $useCase
+     * @return RedirectResponse
+     *
+     * Тесты @see \Feature\Manager\Http\Controllers\Phys\Profile\UpdateNameTest
+     */
     public function updateName(UpdateNameRequest $request, UpdateNameUseCase $useCase): RedirectResponse
     {
         $useCase->execute(
@@ -45,6 +53,13 @@ class ProfileController extends AbstractController
         return back()->with('success', 'Успешно обновлено');
     }
 
+    /**
+     * @param AddPhoneRequest $request
+     * @param Phone\AddUseCase $useCase
+     * @return RedirectResponse
+     *
+     * Тесты @see \Feature\Manager\Http\Controllers\Phys\Profile\Phone\AddPhoneTest
+     */
     public function addPhone(AddPhoneRequest $request, Phone\AddUseCase $useCase)
     {
         $useCase->execute(
@@ -55,9 +70,16 @@ class ProfileController extends AbstractController
         return back()->with('success', 'Успешно обновлено');
     }
 
-    public function deletePhone(int $id)
+    /**
+     * @param PhysPhone $phone
+     * @param Phone\DeleteUseCase $useCase
+     * @return RedirectResponse
+     *
+     * Тесты @see \Feature\Manager\Http\Controllers\Phys\Profile\Phone\DeletePhoneTest
+     */
+    public function deletePhone(PhysPhone $phone, Phone\DeleteUseCase $useCase)
     {
-        $this->profileService->deletePhone($this->getUserId(), $id);
+        $useCase->execute($this->getUser(), $phone->id);
 
         return back()->with('success', 'Успешно удалено');
     }

@@ -13,7 +13,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-class SignUpLegalTest extends TestCase
+class CreateTest extends TestCase
 {
     public function testSignUpSuccess()
     {

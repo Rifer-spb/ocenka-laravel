@@ -4,6 +4,9 @@ namespace App\Core\Models\User\ValueObjects;
 
 use InvalidArgumentException;
 
+/**
+ * Тесты @see \Tests\Unit\Core\Models\User\ValueObjects\PasswordTest
+ */
 class Password
 {
     private int $minLength = 8;

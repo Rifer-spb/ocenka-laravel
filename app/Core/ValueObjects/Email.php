@@ -5,6 +5,9 @@ namespace App\Core\ValueObjects;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
+/**
+ * Тесты @see \Tests\Unit\Core\ValueObjects\EmailTest
+ */
 class Email
 {
     private string $value;

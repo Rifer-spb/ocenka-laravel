@@ -6,6 +6,9 @@ use App\Core\Helpers\StringHelper;
 use App\Core\Validators\PhoneValidator;
 use InvalidArgumentException;
 
+/**
+ * Тесты @see \Tests\Unit\Core\ValueObjects\NationalPhoneTest
+ */
 class NationalPhone
 {
     private string $value;

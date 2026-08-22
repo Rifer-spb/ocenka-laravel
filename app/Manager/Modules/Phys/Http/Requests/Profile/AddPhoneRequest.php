@@ -18,6 +18,10 @@ class AddPhoneRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        if ($this->phone === null) {
+            return;
+        }
+
         $this->merge([
             'phone' => StringHelper::onlyNumbers($this->phone),
         ]);
@@ -32,7 +36,7 @@ class AddPhoneRequest extends FormRequest
                 'unique:phys_phones,phone',
                 function ($attribute, $value, $fail) {
                     if (!PhoneValidator::isNational($value)) {
-                        $fail('Некорректный номер телефона.');
+                        $fail('Некорректный номер телефона');
                     }
                 },
             ],

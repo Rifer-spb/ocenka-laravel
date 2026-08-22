@@ -12,6 +12,9 @@ use App\Core\ValueObjects\Email;
 use App\Manager\Mails\Auth\SignUpMail;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Тесты @see \Integration\Manager\UseCases\User\SignUpTest
+ */
 class SignUpUseCase
 {
     /**
