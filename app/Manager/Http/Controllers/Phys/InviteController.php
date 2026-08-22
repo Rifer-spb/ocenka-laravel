@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Manager\Modules\Phys\Http\Controllers;
+namespace App\Manager\Http\Controllers\Phys;
 
 use App\Core\Http\Controllers\AbstractController;
 use App\Manager\Http\Requests\InviteSearchRequest;
-use App\Manager\Modules\Phys\Http\Requests\Invite\CreateRequest;
+use App\Manager\Http\Requests\Phys\Invite\CreateRequest;
 use App\Manager\Modules\Phys\UseCases\InviteService;
 use App\Manager\Modules\Phys\Views\InviteView;
 use Inertia\Inertia;

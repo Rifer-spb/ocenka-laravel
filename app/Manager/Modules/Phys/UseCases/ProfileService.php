@@ -3,7 +3,7 @@
 namespace App\Manager\Modules\Phys\UseCases;
 
 use App\Core\Models\User\Phys\Phys;
-use App\Manager\Modules\Phys\Http\Requests\Profile\UpdateHolidayRequest;
+use App\Manager\Http\Requests\Phys\Profile\UpdateHolidayRequest;
 
 class ProfileService
 {

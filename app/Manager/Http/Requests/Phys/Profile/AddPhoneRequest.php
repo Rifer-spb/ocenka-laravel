@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager\Modules\Phys\Http\Requests\Profile;
+namespace App\Manager\Http\Requests\Phys\Profile;
 
 use App\Core\Helpers\StringHelper;
 use App\Core\Validators\PhoneValidator;
