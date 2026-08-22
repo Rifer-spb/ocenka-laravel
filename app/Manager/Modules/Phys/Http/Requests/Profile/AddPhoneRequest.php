@@ -3,6 +3,7 @@
 namespace App\Manager\Modules\Phys\Http\Requests\Profile;
 
 use App\Core\Helpers\StringHelper;
+use App\Core\Validators\PhoneValidator;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -17,6 +18,10 @@ class AddPhoneRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        if ($this->phone === null) {
+            return;
+        }
+
         $this->merge([
             'phone' => StringHelper::onlyNumbers($this->phone),
         ]);
@@ -25,7 +30,16 @@ class AddPhoneRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => 'required|string|unique:phys_phones,phone',
+            'phone' => [
+                'required',
+                'string',
+                'unique:phys_phones,phone',
+                function ($attribute, $value, $fail) {
+                    if (!PhoneValidator::isNational($value)) {
+                        $fail('Некорректный номер телефона');
+                    }
+                },
+            ],
         ];
     }
 

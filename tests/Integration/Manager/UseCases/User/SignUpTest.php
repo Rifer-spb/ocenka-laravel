@@ -1,6 +1,6 @@
 <?php
 
-namespace Integration\Core\UseCases\User;
+namespace Integration\Manager\UseCases\User;
 
 use App\Core\Jobs\SendMailJob;
 use App\Core\Models\User\Role;

@@ -23,6 +23,13 @@ use Illuminate\Support\Str;
  */
 class Legal extends User
 {
+    /**
+     * @param Email $email
+     * @param Password $password
+     * @return self
+     *
+     * Тесты @see \Tests\Unit\Core\Models\User\Legal\CreateTest
+     */
     public static function new(Email $email, Password $password): self
     {
         $user = parent::create([

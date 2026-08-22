@@ -13,6 +13,7 @@ use App\Core\Models\User\ValueObjects\LastName;
 use App\Core\Models\User\ValueObjects\Password;
 use App\Core\Models\User\ValueObjects\SecondName;
 use App\Core\ValueObjects\Email;
+use App\Core\ValueObjects\NationalPhone;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -28,6 +29,13 @@ use Illuminate\Support\Str;
  */
 class Phys extends User
 {
+    /**
+     * @param Email $email
+     * @param Password $password
+     * @return self
+     *
+     * Тесты @see \Tests\Unit\Core\Models\User\Phys\CreateTest
+     */
     public static function new(Email $email, Password $password): self
     {
         $user = parent::create([
@@ -50,16 +58,45 @@ class Phys extends User
         });
     }
 
+    /**
+     * @param FirstName $firstName
+     * @param SecondName $secondName
+     * @param LastName $lastName
+     * @return void
+     *
+     * Тесты @see \Tests\Unit\Core\Models\User\Phys\UpdateNameTest
+     */
     public function updateName(FirstName $firstName, SecondName $secondName, LastName $lastName): void
     {
         $this->profile->updateName($firstName, $secondName, $lastName);
     }
 
-    public function addPhone(string $phone): void
+    /**
+     * @param NationalPhone $phone
+     * @return PhysPhone
+     *
+     * Тесты @see \Tests\Unit\Core\Models\User\Phys\Phone\AddPhoneTest
+     */
+    public function addPhone(NationalPhone $phone): PhysPhone
     {
-        $this->phones()->create(['phone' => $phone]);
+        if ($this->hasPhone($phone->getValue())) {
+            throw new \DomainException("Номер телефона {$phone->getValue()} уже добавлен.");
+        }
+
+        return $this->phones()->create(['phone' => $phone->getValue()]);
     }
 
+    public function hasPhone(int|string $phone): bool
+    {
+        return $this->phones()->where('phone', $phone)->exists();
+    }
+
+    /**
+     * @param int $id
+     * @return void
+     *
+     * Тесты @see \Tests\Unit\Core\Models\User\Phys\Phone\DeletePhoneTest
+     */
     public function deletePhone(int $id): void
     {
         $this->phones()->findOrFail($id)->delete();

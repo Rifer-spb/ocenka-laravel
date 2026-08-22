@@ -4,6 +4,9 @@ namespace App\Core\Models\User\ValueObjects;
 
 use InvalidArgumentException;
 
+/**
+ * Тесты @see \Tests\Unit\Core\Models\User\ValueObjects\NamePartTest
+ */
 abstract class AbstractNamePart
 {
     protected const MAX_LENGTH = 100;

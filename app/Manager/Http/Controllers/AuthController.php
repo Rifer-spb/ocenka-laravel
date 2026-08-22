@@ -10,6 +10,7 @@ use App\Core\ValueObjects\Email;
 use App\Manager\Http\Requests\Auth\SignInRequest;
 use App\Manager\Http\Requests\Auth\SignUpRequest;
 use App\Manager\UseCases\User\SignUpUseCase;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -22,6 +23,8 @@ class AuthController extends AbstractAuthController
 
     /**
      * @throws \Throwable
+     *
+     * Тесты @see \Feature\Manager\Http\Controllers\User\SignUpTest
      */
     public function signUp(SignUpRequest $request, SignUpUseCase $useCase)
     {
@@ -34,6 +37,12 @@ class AuthController extends AbstractAuthController
         return $this->_login($user, $request, "manager.{$user->role}.home");
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     *
+     * Тесты @see \Feature\Manager\Http\Controllers\User\LogoutTest
+     */
     public function logout(Request $request)
     {
         return $this->_logout($request, 'manager.home');
@@ -44,6 +53,12 @@ class AuthController extends AbstractAuthController
         return Inertia::render('manager/auth/signIn/signIn');
     }
 
+    /**
+     * @param SignInRequest $request
+     * @return RedirectResponse
+     *
+     * Тесты @see \Feature\Manager\Http\Controllers\User\SignInTest
+     */
     public function signIn(SignInRequest $request)
     {
         $credentials = $request->only('email', 'password');
