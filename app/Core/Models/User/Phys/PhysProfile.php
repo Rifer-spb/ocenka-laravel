@@ -3,6 +3,7 @@
 namespace App\Core\Models\User\Phys;
 
 use App\Core\Models\AbstractEntity;
+use App\Core\Models\User\Phys\ValueObjects\Holiday;
 use App\Core\Models\User\ValueObjects\FirstName;
 use App\Core\Models\User\ValueObjects\LastName;
 use App\Core\Models\User\ValueObjects\SecondName;
@@ -43,11 +44,11 @@ class PhysProfile extends AbstractEntity
         ]);
     }
 
-    public function updateHoliday(string $from, string $to): void
+    public function updateHoliday(Holiday $holiday): void
     {
         $this->update([
-            'holiday_from' => $from,
-            'holiday_to' => $to,
+            'holiday_from' => $holiday->getFromString(),
+            'holiday_to' => $holiday->getToString(),
         ]);
     }
 }
