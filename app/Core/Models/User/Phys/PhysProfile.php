@@ -7,6 +7,7 @@ use App\Core\Models\User\Phys\ValueObjects\Holiday;
 use App\Core\Models\User\ValueObjects\FirstName;
 use App\Core\Models\User\ValueObjects\LastName;
 use App\Core\Models\User\ValueObjects\SecondName;
+use Carbon\Carbon;
 
 /**
  * @property int $id
@@ -44,11 +45,35 @@ class PhysProfile extends AbstractEntity
         ]);
     }
 
+    /**
+     * @param Holiday $holiday
+     * @return void
+     *
+     * Тесты @see \Tests\Unit\Core\Models\User\Phys\UpdateHolidayTest
+     */
     public function updateHoliday(Holiday $holiday): void
     {
         $this->update([
             'holiday_from' => $holiday->getFromString(),
             'holiday_to' => $holiday->getToString(),
         ]);
+    }
+
+    public function getHolidayFromAttribute($value): ?string
+    {
+        if (!$value) {
+            return null;
+        }
+
+        return Carbon::parse($value)->format('d.m.Y');
+    }
+
+    public function getHolidayToAttribute($value): ?string
+    {
+        if (!$value) {
+            return null;
+        }
+
+        return Carbon::parse($value)->format('d.m.Y');
     }
 }
