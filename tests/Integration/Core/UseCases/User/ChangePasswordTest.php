@@ -6,6 +6,7 @@ use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\ValueObjects\Password;
 use App\Core\UseCases\User\ChangePasswordUseCase;
 use App\Core\ValueObjects\Email;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class ChangePasswordTest extends TestCase
@@ -40,10 +41,11 @@ class ChangePasswordTest extends TestCase
         $this->useCase->execute(
             $user,
             new Password('password'),
-            new Password('newPassword')
+            new Password($newPassword = 'newPassword')
         );
 
-        $this->assertTrue(true);
+        $user = Phys::findOrFail($user->id);
+        $this->assertTrue(Hash::check($newPassword, $user->password));
     }
 
     private function createUser(): Phys

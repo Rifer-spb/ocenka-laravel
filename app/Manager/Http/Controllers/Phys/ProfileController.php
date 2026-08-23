@@ -15,7 +15,6 @@ use App\Manager\Http\Requests\ChangePasswordRequest;
 use App\Manager\Http\Requests\Phys\Profile\AddPhoneRequest;
 use App\Manager\Http\Requests\Phys\Profile\UpdateHolidayRequest;
 use App\Manager\Http\Requests\Phys\Profile\UpdateNameRequest;
-use App\Manager\Modules\Phys\UseCases\ProfileService;
 use App\Manager\Modules\Phys\Views\ProfileView;
 use App\Manager\UseCases\Phys\Profile\Phone;
 use App\Manager\UseCases\Phys\Profile\UpdateHolidayUseCase;
@@ -25,10 +24,6 @@ use Inertia\Inertia;
 
 class ProfileController extends AbstractController
 {
-    public function __construct(
-        private ProfileService $profileService,
-    ) {}
-
     public function view(ProfileView $view)
     {
         $params = $view->get($this->getUser());
@@ -103,9 +98,12 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @param ChangePasswordRequest $request
+     * @param ChangePasswordUseCase $useCase
      * @return RedirectResponse
-     *
      * @throws \Throwable
+     *
+     * Тесты @see \Feature\Manager\Http\Controllers\User\ChangePasswordTest
      */
     public function changePassword(ChangePasswordRequest $request, ChangePasswordUseCase $useCase)
     {
