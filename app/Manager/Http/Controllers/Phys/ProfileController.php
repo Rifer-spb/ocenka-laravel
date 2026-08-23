@@ -4,29 +4,26 @@ namespace App\Manager\Http\Controllers\Phys;
 
 use App\Core\Http\Controllers\AbstractController;
 use App\Core\Models\User\Phys\PhysPhone;
+use App\Core\Models\User\Phys\ValueObjects\Holiday;
 use App\Core\Models\User\ValueObjects\FirstName;
 use App\Core\Models\User\ValueObjects\LastName;
 use App\Core\Models\User\ValueObjects\Password;
 use App\Core\Models\User\ValueObjects\SecondName;
+use App\Core\UseCases\User\ChangePasswordUseCase;
 use App\Core\ValueObjects\NationalPhone;
 use App\Manager\Http\Requests\ChangePasswordRequest;
 use App\Manager\Http\Requests\Phys\Profile\AddPhoneRequest;
 use App\Manager\Http\Requests\Phys\Profile\UpdateHolidayRequest;
 use App\Manager\Http\Requests\Phys\Profile\UpdateNameRequest;
-use App\Manager\Modules\Phys\UseCases\ProfileService;
 use App\Manager\Modules\Phys\Views\ProfileView;
 use App\Manager\UseCases\Phys\Profile\Phone;
+use App\Manager\UseCases\Phys\Profile\UpdateHolidayUseCase;
 use App\Manager\UseCases\Phys\Profile\UpdateNameUseCase;
-use App\Manager\UseCases\User\ChangePasswordUseCase;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
 class ProfileController extends AbstractController
 {
-    public function __construct(
-        private ProfileService $profileService,
-    ) {}
-
     public function view(ProfileView $view)
     {
         $params = $view->get($this->getUser());
@@ -84,17 +81,29 @@ class ProfileController extends AbstractController
         return back()->with('success', 'Успешно удалено');
     }
 
-    public function updateHoliday(UpdateHolidayRequest $request)
+    /**
+     * @param UpdateHolidayRequest $request
+     * @param UpdateHolidayUseCase $useCase
+     * @return RedirectResponse
+     *
+     * Тесты @see \Feature\Manager\Http\Controllers\Phys\Profile\UpdateHolidayTest
+     */
+    public function updateHoliday(UpdateHolidayRequest $request, UpdateHolidayUseCase $useCase)
     {
-        $this->profileService->updateHoliday($this->getUserId(), $request);
+        $holiday = new Holiday($request->holidayFrom, $request->holidayTo);
+
+        $useCase->execute($this->getUser(), $holiday);
 
         return back()->with('success', 'Успешно обновлено');
     }
 
     /**
+     * @param ChangePasswordRequest $request
+     * @param ChangePasswordUseCase $useCase
      * @return RedirectResponse
-     *
      * @throws \Throwable
+     *
+     * Тесты @see \Feature\Manager\Http\Controllers\User\ChangePasswordTest
      */
     public function changePassword(ChangePasswordRequest $request, ChangePasswordUseCase $useCase)
     {

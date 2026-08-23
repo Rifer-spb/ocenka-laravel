@@ -6,6 +6,7 @@ use App\Core\Helpers\UserHelper;
 use App\Core\Models\Employee\Employee;
 use App\Core\Models\Employee\EmployeeReportAccess;
 use App\Core\Models\Employee\EmployeeRideAccess;
+use App\Core\Models\User\Phys\ValueObjects\Holiday;
 use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
 use App\Core\Models\User\ValueObjects\FirstName;
@@ -102,9 +103,9 @@ class Phys extends User
         $this->phones()->findOrFail($id)->delete();
     }
 
-    public function updateHoliday(string $from, string $to): void
+    public function updateHoliday(Holiday $holiday): void
     {
-        $this->profile->updateHoliday($from, $to);
+        $this->profile->updateHoliday($holiday);
     }
 
     public function getFullName(): string

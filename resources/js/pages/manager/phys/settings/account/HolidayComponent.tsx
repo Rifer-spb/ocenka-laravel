@@ -27,7 +27,7 @@ export default function ({holiday_from, holiday_to}: IProps) {
             [field]: date,
         };
 
-        router.put(update.url(), newData, {
+        router.patch(update.url(), newData, {
             preserveScroll: true,
             preserveState: true
         });
