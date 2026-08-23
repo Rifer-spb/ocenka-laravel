@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager\Modules\Phys\Http\Requests\Invite;
+namespace App\Manager\Http\Requests\Phys\Invite;
 
 use App\Core\Models\User\Role;
 use Illuminate\Database\Query\Builder;

@@ -4,6 +4,7 @@ namespace App\Core\Models\User;
 
 use App\Core\Models\EloquentDocMethods;
 use App\Core\Models\User\ValueObjects\Password;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,7 +22,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<UserFactory> */
     use EloquentDocMethods, HasFactory, Notifiable;
 
     protected $table = 'users';
@@ -71,6 +72,12 @@ class User extends Authenticatable
         return $this->role === Role::NOTARY->value;
     }
 
+    /**
+     * @param Password $password
+     * @return void
+     *
+     * Тесты @see \Tests\Unit\Core\Models\User\ChangePasswordTest
+     */
     public function updatePassword(Password $password): void
     {
         $this->password = $password->getValue();

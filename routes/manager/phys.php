@@ -1,7 +1,7 @@
 <?php
 
+use App\Manager\Http\Controllers\Phys\InviteController;
 use App\Manager\Http\Controllers\Phys\ProfileController;
-use App\Manager\Modules\Phys\Http\Controllers\InviteController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 

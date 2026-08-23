@@ -2,8 +2,10 @@
 
 namespace Feature\Manager\Http\Controllers\User;
 
+use App\Core\Jobs\SendMailJob;
 use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class SignUpTest extends TestCase
@@ -131,6 +133,7 @@ class SignUpTest extends TestCase
 
         $this->assertAuthenticated();
         $response->assertRedirect($this->getRouteRedirect($role));
+        Queue::assertPushed(SendMailJob::class);
     }
 
     public function testPhysSuccess()
@@ -148,6 +151,7 @@ class SignUpTest extends TestCase
 
         $this->assertAuthenticated();
         $response->assertRedirect($this->getRouteRedirect($role));
+        Queue::assertPushed(SendMailJob::class);
     }
 
     public function testAlreadyExist()
