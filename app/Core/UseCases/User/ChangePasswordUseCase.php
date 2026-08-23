@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Manager\UseCases\User;
+namespace App\Core\UseCases\User;
 
 use App\Core\Models\User\User;
 use App\Core\Models\User\ValueObjects\Password;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Тесты @see \Integration\Core\UseCases\User\ChangePasswordTest
+ */
 class ChangePasswordUseCase
 {
     /**
