@@ -28,10 +28,10 @@ class SignUpUseCase
 
         $user = DB::transaction(function () use ($email, $password, $role) {
             if ($role->isLegal()) {
-                return Legal::new($email, $password);
+                return Legal::createNew($email, $password);
             }
 
-            return Phys::new($email, $password);
+            return Phys::createNew($email, $password);
         });
 
         $signUpMail = new SignUpMail(

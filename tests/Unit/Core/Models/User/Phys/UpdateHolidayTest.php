@@ -54,7 +54,7 @@ class UpdateHolidayTest extends TestCase
 
     public function createUser(): Phys
     {
-        return Phys::new(
+        return Phys::createNew(
             new Email('phys@example.com'),
             new Password('password'),
         );

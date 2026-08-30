@@ -1,11 +1,11 @@
 <?php
 
-namespace Integration\Core\UseCases\User;
+namespace Integration\Manager\UseCases\User;
 
 use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\ValueObjects\Password;
-use App\Core\UseCases\User\ChangePasswordUseCase;
 use App\Core\ValueObjects\Email;
+use App\Manager\UseCases\User\ChangePasswordUseCase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -50,7 +50,7 @@ class ChangePasswordTest extends TestCase
 
     private function createUser(): Phys
     {
-        return Phys::new(
+        return Phys::createNew(
             new Email('test@test.com'),
             new Password('password')
         );

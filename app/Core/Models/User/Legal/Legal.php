@@ -30,7 +30,7 @@ class Legal extends User
      *
      * Тесты @see \Tests\Unit\Core\Models\User\Legal\CreateTest
      */
-    public static function new(Email $email, Password $password): self
+    public static function createNew(Email $email, Password $password): self
     {
         $user = parent::create([
             'username' => $email->getValue(),

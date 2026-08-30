@@ -19,6 +19,11 @@ class InviteService
         return $invite;
     }
 
+    public function sendEmail(Invite $invite): void
+    {
+        SendInviteMailJob::dispatch($invite);
+    }
+
     /**
      * @param Invite $invite
      * @return void
@@ -32,11 +37,6 @@ class InviteService
         Employee::createNew($invite);
     }
 
-    public function sendEmail(Invite $invite): void
-    {
-        SendInviteMailJob::dispatch($invite);
-    }
-
     /**
      * @param Invite $invite
      * @return void
@@ -47,6 +47,7 @@ class InviteService
         $invite->complete();
         $invite->saveOrFail();
 
-        EmployeeFinder::getByInvite($invite)->deleteOrFail();
+        $employee = EmployeeFinder::getByInvite($invite);
+        $employee->deleteOrFail();
     }
 }

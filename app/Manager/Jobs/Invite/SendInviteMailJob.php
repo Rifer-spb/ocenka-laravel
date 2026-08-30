@@ -8,6 +8,10 @@ use App\Manager\Mails\Invite\SendInviteMail;
 
 class SendInviteMailJob extends SendMailJob
 {
+    /**
+     * @param Invite $invite
+     * @throws \Exception
+     */
     public function __construct(Invite $invite)
     {
         $mail = SendInviteMail::create($invite->getForUser());

@@ -4,11 +4,11 @@ namespace App\Manager\Modules\Legal\Http\Controllers;
 
 use App\Core\Http\Controllers\AbstractController;
 use App\Core\Models\User\ValueObjects\Password;
-use App\Core\UseCases\User\ChangePasswordUseCase;
 use App\Manager\Http\Requests\ChangePasswordRequest;
 use App\Manager\Modules\Legal\Http\Requests\Profile\UpdateCompanyRequest;
 use App\Manager\Modules\Legal\UseCases\ProfileService;
 use App\Manager\Modules\Legal\Views\ProfileView;
+use App\Manager\UseCases\User\ChangePasswordUseCase;
 use Inertia\Inertia;
 
 class ProfileController extends AbstractController

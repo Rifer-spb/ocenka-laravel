@@ -79,7 +79,7 @@ class ChangePasswordTest extends TestCase
 
     private function createUser(): Phys
     {
-        return Phys::new(
+        return Phys::createNew(
             new Email('test@test.com'),
             new Password('password')
         );

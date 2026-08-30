@@ -33,7 +33,7 @@ class DeletePhoneTest extends TestCase
     public function testDeleteByIdFromAnotherUser()
     {
         $user = $this->createUser();
-        $anotherUser = Phys::new(
+        $anotherUser = Phys::createNew(
             new Email('another@test.com'),
             new Password('password'),
         );
@@ -45,7 +45,7 @@ class DeletePhoneTest extends TestCase
 
     private function createUser(): Phys
     {
-        return Phys::new(
+        return Phys::createNew(
             new Email('test@test.com'),
             new Password('password'),
         );

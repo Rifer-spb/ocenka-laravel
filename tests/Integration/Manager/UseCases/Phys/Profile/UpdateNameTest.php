@@ -65,7 +65,7 @@ class UpdateNameTest extends TestCase
 
     private function createUser(): Phys
     {
-        return Phys::new(
+        return Phys::createNew(
             new Email('test@mail.ru'),
             new Password('password')
         );

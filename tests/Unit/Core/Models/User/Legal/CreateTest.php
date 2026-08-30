@@ -17,7 +17,7 @@ class CreateTest extends TestCase
 {
     public function testSignUpSuccess()
     {
-        $user = Legal::new(
+        $user = Legal::createNew(
             $email = new Email('legal@example.com'),
             $password = new Password('password'),
         );
@@ -47,7 +47,7 @@ class CreateTest extends TestCase
 
     public function testAlreadyExistsEmail()
     {
-        Legal::new(
+        Legal::createNew(
             new Email('legal@example.com'),
             new Password('password'),
         );
@@ -55,7 +55,7 @@ class CreateTest extends TestCase
         $this->expectException(QueryException::class);
         $this->expectExceptionMessageMatches('/Duplicate entry|unique constraint|already exists/i');
 
-        Legal::new(
+        Legal::createNew(
             new Email('legal@example.com'),
             new Password('password'),
         );

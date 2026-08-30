@@ -41,7 +41,7 @@ class DeletePhoneTest extends TestCase
 
     private function createUser(): Phys
     {
-        $user = Phys::new(
+        $user = Phys::createNew(
             new Email('test@test.com'),
             new Password('password')
         );

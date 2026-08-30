@@ -15,7 +15,7 @@ class CreateTest extends TestCase
 {
     public function testSignUpSuccess()
     {
-        $user = Phys::new(
+        $user = Phys::createNew(
             $email = new Email('phys@example.com'),
             $password = new Password('password'),
         );
@@ -36,7 +36,7 @@ class CreateTest extends TestCase
 
     public function testAlreadyExistsEmail()
     {
-        Phys::new(
+        Phys::createNew(
             new Email('phys@example.com'),
             new Password('password'),
         );
@@ -44,7 +44,7 @@ class CreateTest extends TestCase
         $this->expectException(QueryException::class);
         $this->expectExceptionMessageMatches('/Duplicate entry|unique/i');
 
-        Phys::new(
+        Phys::createNew(
             new Email('phys@example.com'),
             new Password('password'),
         );
