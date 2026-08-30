@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager\Services;
+namespace App\Core\Services;
 
 use App\Core\Finder\EmployeeFinder;
 use App\Core\Models\Employee\Employee;

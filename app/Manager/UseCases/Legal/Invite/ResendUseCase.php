@@ -4,7 +4,7 @@ namespace App\Manager\UseCases\Legal\Invite;
 
 use App\Core\Finder\InviteFinder;
 use App\Core\Models\User\Legal\Legal;
-use App\Manager\Services\InviteService;
+use App\Core\Services\InviteService;
 
 class ResendUseCase
 {
