@@ -12,6 +12,14 @@ use App\Manager\Jobs\Invite\SendInviteMailJob;
 
 class InviteService
 {
+    /**
+     * @param Phys $phys
+     * @param Legal $legal
+     * @param ForWho $for
+     * @return Invite
+     *
+     * Тесты @see \Integration\Core\Services\InviteCreateTest
+     */
     public function create(Phys $phys, Legal $legal, ForWho $for): Invite
     {
         $invite = Invite::createNew($phys, $legal, $for);

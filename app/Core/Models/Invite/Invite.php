@@ -4,8 +4,6 @@ namespace App\Core\Models\Invite;
 
 use App\Core\Finder\InviteFinder;
 use App\Core\Models\AbstractEntity;
-use App\Core\Models\Invite\Events\InviteConfirmedEvent;
-use App\Core\Models\Invite\Events\InviteCreatedEvent;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\User;
@@ -34,6 +32,14 @@ class Invite extends AbstractEntity
         'status',
     ];
 
+    /**
+     * @param Phys $phys
+     * @param Legal $legal
+     * @param ForWho $for
+     * @return self
+     *
+     * Тесты @see \Tests\Unit\Core\Models\User\Invite\InviteCreateTest
+     */
     public static function createNew(Phys $phys, Legal $legal, ForWho $for): self
     {
         if (InviteFinder::hasWait($phys, $legal)) {
