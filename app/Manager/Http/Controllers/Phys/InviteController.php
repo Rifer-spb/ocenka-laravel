@@ -3,18 +3,18 @@
 namespace App\Manager\Http\Controllers\Phys;
 
 use App\Core\Http\Controllers\AbstractController;
+use App\Core\ValueObjects\Email;
 use App\Manager\Http\Requests\InviteSearchRequest;
 use App\Manager\Http\Requests\Phys\Invite\CreateRequest;
-use App\Manager\Modules\Phys\UseCases\InviteService;
 use App\Manager\Modules\Phys\Views\InviteView;
+use App\Manager\UseCases\Phys\Invite\RefuseUseCase;
+use App\Manager\UseCases\Phys\Invite\CreateUseCase;
+use App\Manager\UseCases\Phys\Invite\ResendUseCase;
+use App\Manager\UseCases\Phys\Invite\RevokeUseCase;
 use Inertia\Inertia;
 
 class InviteController extends AbstractController
 {
-    public function __construct(
-        private InviteService $service
-    ) {}
-
     public function view(InviteSearchRequest $request, InviteView $view)
     {
         $view = $view->get($this->getUser(), $request);
@@ -25,16 +25,16 @@ class InviteController extends AbstractController
     /**
      * @throws \Throwable
      */
-    public function create(CreateRequest $request)
+    public function create(CreateRequest $request, CreateUseCase $useCase)
     {
-        $this->service->create($this->getUserId(), $request->email);
+        $useCase->execute($this->getUser(), new Email($request->email));
 
         return back()->with('success', 'Заявка успешно отправлена');
     }
 
-    public function reSend(int $id)
+    public function reSend(int $id, ResendUseCase $useCase)
     {
-        $this->service->reSend($id, $this->getUser());
+        $useCase->execute($this->getUser(), $id);
 
         return back()->with('success', 'Заявка успешно отправлена повторно');
     }
@@ -42,16 +42,16 @@ class InviteController extends AbstractController
     /**
      * @throws \Throwable
      */
-    public function cancel(int $id)
+    public function cancel(int $id, RefuseUseCase $useCase)
     {
-        $this->service->cancel($id);
+        $useCase->execute($this->getUser(), $id);
 
         return back()->with('success', 'Заявка успешно отменена');
     }
 
-    public function confirm(int $id)
+    public function confirm(int $id, RevokeUseCase $useCase)
     {
-        $this->service->confirm($id);
+        $useCase->execute($this->getUser(), $id);
 
         return back()->with('success', 'Заявка успешно подтверждена');
     }

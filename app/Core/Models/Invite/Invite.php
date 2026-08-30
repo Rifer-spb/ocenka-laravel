@@ -2,9 +2,13 @@
 
 namespace App\Core\Models\Invite;
 
+use App\Core\Finder\InviteFinder;
 use App\Core\Models\AbstractEntity;
+use App\Core\Models\Invite\Events\InviteConfirmedEvent;
+use App\Core\Models\Invite\Events\InviteCreatedEvent;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
+use App\Core\Models\User\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -21,10 +25,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Invite extends AbstractEntity
 {
-    const FOR_PHYS = 1;
-
-    const FOR_LEGAL = 2;
-
     public $timestamps = false;
 
     protected $fillable = [
@@ -34,30 +34,22 @@ class Invite extends AbstractEntity
         'status',
     ];
 
-    private static function new(Phys $phys, Legal $legal, int $for): self
+    public static function createNew(Phys $phys, Legal $legal, ForWho $for): self
     {
+        if (InviteFinder::hasWait($phys, $legal)) {
+            throw new \DomainException('Заявка с указанным уже существует.');
+        }
+
+        if (InviteFinder::hasActive($phys, $legal)) {
+            throw new \DomainException('Связь с указанным уже установлена.');
+        }
+
         return self::create([
             'phys_id' => $phys->id,
             'legal_id' => $legal->id,
-            'for' => $for,
+            'for' => $for->value,
             'status' => InviteStatus::WAIT->value,
         ]);
-    }
-
-    /**
-     * @throws \Throwable
-     */
-    public static function createByPhys(Phys $phys, Legal $legal): self
-    {
-        return self::new($phys, $legal, self::FOR_LEGAL);
-    }
-
-    /**
-     * @throws \Throwable
-     */
-    public static function createByLegal(Legal $legal, Phys $phys): self
-    {
-        return self::new($phys, $legal, self::FOR_PHYS);
     }
 
     public function isActive(): bool
@@ -145,20 +137,19 @@ class Invite extends AbstractEntity
         return $model;
     }
 
-    public static function hasActive(Phys $phys, Legal $legal): bool
+    public function isForPhys(): bool
     {
-        return self::where('phys_id', $phys->id)
-            ->where('legal_id', $legal->id)
-            ->where('status', InviteStatus::ACTIVE->value)
-            ->exists();
+        return $this->for === ForWho::PHYS->value;
     }
 
-    public static function hasWait(Phys $phys, Legal $legal): bool
+    public function isForLegal(): bool
     {
-        return self::where('phys_id', $phys->id)
-            ->where('legal_id', $legal->id)
-            ->where('status', InviteStatus::WAIT->value)
-            ->exists();
+        return $this->for === ForWho::LEGAL->value;
+    }
+
+    public function getForUser(): User
+    {
+        return $this->isForPhys() ? $this->phys : $this->legal;
     }
 
     public function legal(): HasOne|Legal

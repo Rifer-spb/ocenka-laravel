@@ -62,6 +62,8 @@ class Legal extends User
         $profile->saveOrFail();
     }
 
+    /*******************************************************/
+
     protected static function booted(): void
     {
         static::addGlobalScope('legal_role', function (Builder $builder) {

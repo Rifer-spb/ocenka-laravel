@@ -103,6 +103,12 @@ class Phys extends User
         $this->phones()->findOrFail($id)->delete();
     }
 
+    /**
+     * @param Holiday $holiday
+     * @return void
+     *
+     * Тесты @see \Tests\Unit\Core\Models\User\Phys\UpdateHolidayTest
+     */
     public function updateHoliday(Holiday $holiday): void
     {
         $this->profile->updateHoliday($holiday);

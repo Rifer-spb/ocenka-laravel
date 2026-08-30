@@ -3,6 +3,8 @@
 namespace App\Core\Models\Employee;
 
 use App\Core\Models\AbstractEntity;
+use App\Core\Models\Direction;
+use App\Core\Models\Invite\Invite;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -25,6 +27,31 @@ class Employee extends AbstractEntity
         'phys_id',
         'legal_id',
     ];
+
+    public static function createNew(Invite $invite): self
+    {
+        $employee = self::create([
+            'legal_id' => $invite->legal_id,
+            'phys_id' => $invite->phys_id,
+        ]);
+
+        foreach (Direction::all() as $direction) {
+            EmployeeReportAccess::create([
+                'employee_id' => $employee->id,
+                'phys_id' => $invite->phys_id,
+                'legal_id' => $invite->legal_id,
+                'direction_id' => $direction->id,
+            ]);
+        }
+
+        EmployeeRideAccess::create([
+            'employee_id' => $employee->id,
+            'phys_id' => $invite->phys_id,
+            'legal_id' => $invite->legal_id,
+        ]);
+
+        return $employee;
+    }
 
     public static function getByPhysId(int $physId): Employee
     {

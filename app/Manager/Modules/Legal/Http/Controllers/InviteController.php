@@ -3,19 +3,21 @@
 namespace App\Manager\Modules\Legal\Http\Controllers;
 
 use App\Core\Http\Controllers\AbstractController;
+use App\Core\Models\Invite\Invite;
+use App\Core\ValueObjects\Email;
 use App\Manager\Http\Requests\InviteSearchRequest;
 use App\Manager\Modules\Legal\Http\Requests\Invite\CreateRequest;
-use App\Manager\Modules\Legal\UseCases\InviteService;
 use App\Manager\Modules\Legal\Views\InviteView;
+use App\Manager\UseCases\Legal\Invite\ConfirmUseCase;
+use App\Manager\UseCases\Legal\Invite\CreateUseCase;
+use App\Manager\UseCases\Legal\Invite\RefuseUseCase;
+use App\Manager\UseCases\Legal\Invite\ResendUseCase;
+use App\Manager\UseCases\Legal\Invite\RevokeUseCase;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
 class InviteController extends AbstractController
 {
-    public function __construct(
-        private InviteService $service
-    ) {}
-
     public function view(InviteSearchRequest $request, InviteView $view)
     {
         $view = $view->get($this->getUser(), $request);
@@ -23,16 +25,16 @@ class InviteController extends AbstractController
         return Inertia::render('manager/legal/settings/persons/index', $view);
     }
 
-    public function create(CreateRequest $request)
+    public function create(CreateRequest $request, CreateUseCase $useCase)
     {
-        $this->service->create($this->getUserId(), $request->email);
+        $useCase->execute($this->getUser(), new Email($request->email));
 
         return back()->with('success', 'Заявка успешно отправлена');
     }
 
-    public function reSend(int $id)
+    public function reSend(Invite $invite, ResendUseCase $useCase)
     {
-        $this->service->reSend($id);
+        $useCase->execute($this->getUser(), $invite->id);
 
         return back()->with('success', 'Заявка успешно отправлена повторно');
     }
@@ -40,9 +42,9 @@ class InviteController extends AbstractController
     /**
      * @throws \Throwable
      */
-    public function cancel(int $id)
+    public function cancel(Invite $invite, RefuseUseCase $useCase)
     {
-        $this->service->cancel($id);
+        $useCase->execute($this->getUser(), $invite->id);
 
         return back()->with('success', 'Заявка успешно отменена');
     }
@@ -52,9 +54,9 @@ class InviteController extends AbstractController
      *
      * @throws \Throwable
      */
-    public function confirm(int $id)
+    public function confirm(Invite $invite, ConfirmUseCase $useCase)
     {
-        $this->service->confirm($id);
+        $useCase->execute($this->getUser(), $invite->id);
 
         return back()->with('success', 'Заявка успешно подтверждена');
     }
@@ -64,9 +66,9 @@ class InviteController extends AbstractController
      *
      * @throws \Throwable
      */
-    public function complete(int $id)
+    public function complete(Invite $invite, RevokeUseCase $useCase)
     {
-        $this->service->complete($id);
+        $useCase->execute($this->getUser(), $invite->id);
 
         return back()->with('success', 'Заявка успешно подтверждена');
     }
