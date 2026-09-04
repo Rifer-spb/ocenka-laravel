@@ -4,7 +4,7 @@ namespace App\Manager\UseCases\Phys\Invite;
 
 use App\Core\Finder\InviteFinder;
 use App\Core\Models\User\Phys\Phys;
-use App\Core\Services\InviteService;
+use App\Manager\Services\InviteService;
 use Illuminate\Support\Facades\DB;
 
 class RevokeUseCase

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\Services;
+namespace App\Manager\Services;
 
 use App\Core\Finder\EmployeeFinder;
 use App\Core\Models\Employee\Employee;
@@ -18,7 +18,7 @@ class InviteService
      * @param ForWho $for
      * @return Invite
      *
-     * Тесты @see \Integration\Core\Services\InviteCreateTest
+     * Тесты @see \Integration\Manager\Services\InviteCreateTest
      */
     public function create(Phys $phys, Legal $legal, ForWho $for): Invite
     {

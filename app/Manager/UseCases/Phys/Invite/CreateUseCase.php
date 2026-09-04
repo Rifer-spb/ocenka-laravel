@@ -5,8 +5,8 @@ namespace App\Manager\UseCases\Phys\Invite;
 use App\Core\Finder\User\LegalFinder;
 use App\Core\Models\Invite\ForWho;
 use App\Core\Models\User\Phys\Phys;
-use App\Core\Services\InviteService;
 use App\Core\ValueObjects\Email;
+use App\Manager\Services\InviteService;
 
 class CreateUseCase
 {

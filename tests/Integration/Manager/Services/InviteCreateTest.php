@@ -1,15 +1,15 @@
 <?php
 
-namespace Integration\Core\Services;
+namespace Integration\Manager\Services;
 
 use App\Core\Models\Invite\ForWho;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\ValueObjects\Password;
-use App\Core\Services\InviteService;
 use App\Core\ValueObjects\Email;
 use App\Manager\Jobs\Invite\SendInviteMailJob;
+use App\Manager\Services\InviteService;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
