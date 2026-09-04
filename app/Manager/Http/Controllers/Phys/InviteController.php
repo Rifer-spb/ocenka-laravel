@@ -3,23 +3,24 @@
 namespace App\Manager\Http\Controllers\Phys;
 
 use App\Core\Http\Controllers\AbstractController;
+use App\Core\Models\Invite\InviteTab;
 use App\Core\ValueObjects\Email;
 use App\Manager\Http\Requests\InviteSearchRequest;
 use App\Manager\Http\Requests\Phys\Invite\CreateRequest;
-use App\Manager\Modules\Phys\Views\InviteView;
 use App\Manager\UseCases\Phys\Invite\RefuseUseCase;
 use App\Manager\UseCases\Phys\Invite\CreateUseCase;
 use App\Manager\UseCases\Phys\Invite\ResendUseCase;
 use App\Manager\UseCases\Phys\Invite\RevokeUseCase;
+use App\Manager\UseCases\Phys\Invite\SearchUseCase;
 use Inertia\Inertia;
 
 class InviteController extends AbstractController
 {
-    public function view(InviteSearchRequest $request, InviteView $view)
+    public function view(InviteSearchRequest $request, SearchUseCase $useCase)
     {
-        $view = $view->get($this->getUser(), $request);
+        $result = $useCase->execute($this->getUser(), InviteTab::from($request->type));
 
-        return Inertia::render('manager/phys/settings/legals/index', $view);
+        return Inertia::render('manager/phys/settings/legals/index', $result);
     }
 
     /**
