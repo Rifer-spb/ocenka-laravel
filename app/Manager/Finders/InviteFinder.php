@@ -2,7 +2,7 @@
 
 namespace App\Manager\Finders;
 
-use App\Core\Models\Invite\ForWho;
+use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\Invite\InviteTab;
 use App\Core\Models\User\User;
@@ -25,9 +25,9 @@ class InviteFinder
             $andWhere = ['status' => InviteHelper::getStatusByTab($tab)];
 
             if ($tab->isInbox()) {
-                $andWhere['for'] = $user->isPhys() ? ForWho::PHYS->value : ForWho::LEGAL->value;
+                $andWhere['for'] = $user->isPhys() ? InviteForWho::PHYS->value : InviteForWho::LEGAL->value;
             } elseif ($tab->isOutbox()) {
-                $andWhere['for'] = $user->isPhys() ? ForWho::LEGAL->value : ForWho::PHYS->value;
+                $andWhere['for'] = $user->isPhys() ? InviteForWho::LEGAL->value : InviteForWho::PHYS->value;
             }
 
             $query = clone $baseQuery;

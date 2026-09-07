@@ -3,7 +3,7 @@
 namespace App\Manager\UseCases\Phys\Invite;
 
 use App\Core\Helpers\DateHelper;
-use App\Core\Models\Invite\ForWho;
+use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\Invite\InviteStatus;
 use App\Core\Models\Invite\InviteTab;
@@ -11,7 +11,7 @@ use App\Core\Models\User\User;
 use App\Manager\Finders\InviteFinder;
 use App\Manager\Helpers\InviteHelper;
 
-class SearchUseCase
+class GetPageDataUseCase
 {
     public function execute(User $user, InviteTab $tab): array
     {
@@ -28,11 +28,11 @@ class SearchUseCase
 
         match ($tab) {
             InviteTab::INBOX => $allRequests->where([
-                'for' => ForWho::PHYS,
+                'for' => InviteForWho::PHYS,
                 'status' => InviteStatus::WAIT->value,
             ]),
             InviteTab::OUTBOX => $allRequests->where([
-                'for' => ForWho::LEGAL,
+                'for' => InviteForWho::LEGAL,
                 'status' => InviteStatus::WAIT->value,
             ]),
             InviteTab::ACTIVE => $allRequests->where([

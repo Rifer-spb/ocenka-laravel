@@ -14,7 +14,7 @@ use App\Manager\Http\Requests\ChangePasswordRequest;
 use App\Manager\Http\Requests\Phys\Profile\AddPhoneRequest;
 use App\Manager\Http\Requests\Phys\Profile\UpdateHolidayRequest;
 use App\Manager\Http\Requests\Phys\Profile\UpdateNameRequest;
-use App\Manager\Modules\Phys\Views\ProfileView;
+use App\Manager\UseCases\Phys\Profile\GetProfileUseCase;
 use App\Manager\UseCases\Phys\Profile\Phone;
 use App\Manager\UseCases\Phys\Profile\UpdateHolidayUseCase;
 use App\Manager\UseCases\Phys\Profile\UpdateNameUseCase;
@@ -24,9 +24,9 @@ use Inertia\Inertia;
 
 class ProfileController extends AbstractController
 {
-    public function view(ProfileView $view)
+    public function view(GetProfileUseCase $useCase)
     {
-        $params = $view->get($this->getUser());
+        $params = $useCase->execute($this->getUser());
 
         return Inertia::render('manager/phys/settings/account/index', $params);
     }

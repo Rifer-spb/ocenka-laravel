@@ -35,12 +35,12 @@ class Invite extends AbstractEntity
     /**
      * @param Phys $phys
      * @param Legal $legal
-     * @param ForWho $for
+     * @param InviteForWho $for
      * @return self
      *
      * Тесты @see \Tests\Unit\Core\Models\User\Invite\InviteCreateTest
      */
-    public static function createNew(Phys $phys, Legal $legal, ForWho $for): self
+    public static function createNew(Phys $phys, Legal $legal, InviteForWho $for): self
     {
         if (InviteFinder::hasWait($phys, $legal)) {
             throw new \DomainException('Заявка с указанным уже существует.');
@@ -145,12 +145,12 @@ class Invite extends AbstractEntity
 
     public function isForPhys(): bool
     {
-        return $this->for === ForWho::PHYS->value;
+        return $this->for === InviteForWho::PHYS->value;
     }
 
     public function isForLegal(): bool
     {
-        return $this->for === ForWho::LEGAL->value;
+        return $this->for === InviteForWho::LEGAL->value;
     }
 
     public function getForUser(): User

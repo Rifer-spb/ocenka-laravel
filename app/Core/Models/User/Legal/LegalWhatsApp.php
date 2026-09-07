@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\Models\Legal;
+namespace App\Core\Models\User\Legal;
 
 use App\Core\Models\AbstractEntity;
 

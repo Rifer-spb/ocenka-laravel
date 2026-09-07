@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Core\Models\User\Invite;
 
-use App\Core\Models\Invite\ForWho;
+use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
@@ -17,7 +17,7 @@ class InviteCreateTest extends TestCase
         $phys = $this->createPhys();
         $legal = $this->createLegal();
 
-        $invite = Invite::createNew($phys, $legal, ForWho::PHYS);
+        $invite = Invite::createNew($phys, $legal, InviteForWho::PHYS);
         $invite = Invite::findOrFail($invite->id);
 
         $this->assertEquals($invite->phys_id, $phys->id);
@@ -31,7 +31,7 @@ class InviteCreateTest extends TestCase
         $phys = $this->createPhys();
         $legal = $this->createLegal();
 
-        $invite = Invite::createNew($phys, $legal, ForWho::LEGAL);
+        $invite = Invite::createNew($phys, $legal, InviteForWho::LEGAL);
         $invite = Invite::findOrFail($invite->id);
 
         $this->assertEquals($invite->phys_id, $phys->id);
@@ -45,12 +45,12 @@ class InviteCreateTest extends TestCase
         $phys = $this->createPhys();
         $legal = $this->createLegal();
 
-        Invite::createNew($phys, $legal, ForWho::PHYS);
+        Invite::createNew($phys, $legal, InviteForWho::PHYS);
 
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Заявка с указанным уже существует.');
 
-        Invite::createNew($phys, $legal, ForWho::PHYS);
+        Invite::createNew($phys, $legal, InviteForWho::PHYS);
     }
 
     public function testAlreadyExistActive()
@@ -58,14 +58,14 @@ class InviteCreateTest extends TestCase
         $phys = $this->createPhys();
         $legal = $this->createLegal();
 
-        $invite = Invite::createNew($phys, $legal, ForWho::LEGAL);
+        $invite = Invite::createNew($phys, $legal, InviteForWho::LEGAL);
         $invite->confirm();
         $invite->saveOrFail();
 
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Связь с указанным уже установлена.');
 
-        Invite::createNew($phys, $legal, ForWho::LEGAL);
+        Invite::createNew($phys, $legal, InviteForWho::LEGAL);
     }
 
     private function createPhys(): Phys

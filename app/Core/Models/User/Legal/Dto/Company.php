@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Core\Models\Legal;
+namespace App\Core\Models\User\Legal\Dto;
 
 readonly class Company
 {
     public function __construct(
-        public ?int $typeId,
         public ?string $fullName,
         public ?string $shortName,
         public ?string $abbr,

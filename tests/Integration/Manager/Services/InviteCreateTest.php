@@ -2,7 +2,7 @@
 
 namespace Integration\Manager\Services;
 
-use App\Core\Models\Invite\ForWho;
+use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
@@ -31,7 +31,7 @@ class InviteCreateTest extends TestCase
 
         Queue::assertNothingPushed();
 
-        $result = $this->service->create($phys, $legal, ForWho::PHYS);
+        $result = $this->service->create($phys, $legal, InviteForWho::PHYS);
 
         $this->assertInstanceOf(Invite::class, $result);
         $this->assertTrue($result->isForPhys());
@@ -45,7 +45,7 @@ class InviteCreateTest extends TestCase
 
         Queue::assertNothingPushed();
 
-        $result = $this->service->create($phys, $legal, ForWho::LEGAL);
+        $result = $this->service->create($phys, $legal, InviteForWho::LEGAL);
 
         $this->assertInstanceOf(Invite::class, $result);
         $this->assertTrue($result->isForLegal());

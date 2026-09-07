@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Core\Models\Legal;
+namespace App\Core\Models\User\Legal;
 
 use App\Core\Models\AbstractEntity;
 use App\Core\Models\LegalType;
+use App\Core\Models\User\Legal\Dto\Company;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -36,9 +37,9 @@ class LegalProfile extends AbstractEntity
         'date_ogrn' => 'date',
     ];
 
-    public function updateCompany(Company $company): void
+    public function updateCompany(?LegalType $type, Company $company): void
     {
-        $this->type_id = $company->typeId;
+        $this->type_id = $type?->id;
         $this->full_name = $company->fullName;
         $this->short_name = $company->shortName;
         $this->abbr = $company->abbr;

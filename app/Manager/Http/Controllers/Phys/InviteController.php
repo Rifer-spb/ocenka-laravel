@@ -11,12 +11,12 @@ use App\Manager\UseCases\Phys\Invite\RefuseUseCase;
 use App\Manager\UseCases\Phys\Invite\CreateUseCase;
 use App\Manager\UseCases\Phys\Invite\ResendUseCase;
 use App\Manager\UseCases\Phys\Invite\RevokeUseCase;
-use App\Manager\UseCases\Phys\Invite\SearchUseCase;
+use App\Manager\UseCases\Phys\Invite\GetPageDataUseCase;
 use Inertia\Inertia;
 
 class InviteController extends AbstractController
 {
-    public function view(InviteSearchRequest $request, SearchUseCase $useCase)
+    public function view(InviteSearchRequest $request, GetPageDataUseCase $useCase)
     {
         $result = $useCase->execute($this->getUser(), InviteTab::from($request->type));
 

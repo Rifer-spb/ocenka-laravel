@@ -1,7 +1,7 @@
 <?php
 
-use App\Manager\Modules\Legal\Http\Controllers\ProfileController;
-use App\Manager\Modules\Legal\Http\Controllers\InviteController;
+use App\Manager\Http\Controllers\Legal\ProfileController;
+use App\Manager\Http\Requests\Legal\InviteController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 

@@ -1,16 +1,28 @@
 <?php
 
-namespace App\Manager\Modules\Legal\Searchers;
+namespace App\Manager\UseCases\Legal\Invite;
 
 use App\Core\Helpers\DateHelper;
 use App\Core\Models\Employee\EmployeeReportAccess;
 use App\Core\Models\Invite\Invite;
+use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\Invite\InviteStatus;
 use App\Core\Models\User\Legal\Legal;
+use App\Manager\Finders\InviteFinder;
+use App\Manager\Helpers\InviteHelper;
 use App\Manager\Http\Requests\InviteSearchRequest;
 
-class InviteSearcher
+class GetPageDataUseCase
 {
+    public function execute(Legal $legal, InviteSearchRequest $request): array
+    {
+        return [
+            'tabs' => InviteHelper::getTabs(),
+            'counts' => InviteFinder::getCounts($legal),
+            'invites' => $this->search($legal, $request),
+        ];
+    }
+
     public function search(Legal $user, InviteSearchRequest $request): array
     {
         $allRequests = Invite::where('legal_id', $user->id)->with([
@@ -24,11 +36,11 @@ class InviteSearcher
 
         match ($request->type) {
             'inbox' => $allRequests->where([
-                'for' => Invite::FOR_LEGAL,
+                'for' => InviteForWho::LEGAL->value,
                 'status' => InviteStatus::WAIT->value,
             ]),
             'outbox' => $allRequests->where([
-                'for' => Invite::FOR_PHYS,
+                'for' => InviteForWho::PHYS->value,
                 'status' => InviteStatus::WAIT->value,
             ]),
             'active' => $allRequests->where([
@@ -76,14 +88,12 @@ class InviteSearcher
                     'id' => $rideAccess->id,
                     'value' => $rideAccess->value,
                 ],
-                'report' => $reportAccesses->map(function (EmployeeReportAccess $a) {
-                    return [
-                        'id' => $a->id,
-                        'name' => $a->direction->short_name,
-                        'do' => $a->do,
-                        'write' => $a->write,
-                    ];
-                }),
+                'report' => $reportAccesses->map(fn (EmployeeReportAccess $a) => [
+                    'id' => $a->id,
+                    'name' => $a->direction->short_name,
+                    'do' => $a->do,
+                    'write' => $a->write,
+                ]),
             ],
             'isManager' => $employee->is_manager,
             'workRate' => $employee->work_rate,

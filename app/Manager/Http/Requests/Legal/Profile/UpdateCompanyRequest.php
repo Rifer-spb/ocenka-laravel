@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager\Modules\Legal\Http\Requests\Profile;
+namespace App\Manager\Http\Requests\Legal\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Manager\Modules\Legal\Views;
+namespace App\Manager\UseCases\Legal\Profile;
 
 use App\Core\Models\LegalType;
 use App\Core\Models\User\Legal\Legal;
-use App\Core\Models\Legal\LegalProfile;
+use App\Core\Models\User\Legal\LegalProfile;
 
-class ProfileView
+class GetProfileUseCase
 {
-    public function get(Legal $legal): array
+    public function execute(Legal $legal): array
     {
         $profile = $legal->profile;
 

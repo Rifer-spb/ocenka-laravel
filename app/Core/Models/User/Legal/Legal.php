@@ -2,11 +2,8 @@
 
 namespace App\Core\Models\User\Legal;
 
-use App\Core\Models\Legal\Company;
-use App\Core\Models\Legal\LegalMail;
-use App\Core\Models\Legal\LegalPayment;
-use App\Core\Models\Legal\LegalProfile;
-use App\Core\Models\Legal\LegalWhatsApp;
+use App\Core\Models\LegalType;
+use App\Core\Models\User\Legal\Dto\Company;
 use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
 use App\Core\Models\User\ValueObjects\Password;
@@ -55,10 +52,10 @@ class Legal extends User
             : $this->username;
     }
 
-    public function updateCompany(Company $company): void
+    public function updateCompany(LegalType $type, Company $company): void
     {
         $profile = $this->profile;
-        $profile->updateCompany($company);
+        $profile->updateCompany($type, $company);
         $profile->saveOrFail();
     }
 

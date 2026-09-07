@@ -4,7 +4,7 @@ namespace App\Manager\Services;
 
 use App\Core\Finder\EmployeeFinder;
 use App\Core\Models\Employee\Employee;
-use App\Core\Models\Invite\ForWho;
+use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
@@ -15,12 +15,12 @@ class InviteService
     /**
      * @param Phys $phys
      * @param Legal $legal
-     * @param ForWho $for
+     * @param InviteForWho $for
      * @return Invite
      *
      * Тесты @see \Integration\Manager\Services\InviteCreateTest
      */
-    public function create(Phys $phys, Legal $legal, ForWho $for): Invite
+    public function create(Phys $phys, Legal $legal, InviteForWho $for): Invite
     {
         $invite = Invite::createNew($phys, $legal, $for);
         $this->sendEmail($invite);

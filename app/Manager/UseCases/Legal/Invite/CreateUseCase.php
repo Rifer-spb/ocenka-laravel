@@ -3,7 +3,7 @@
 namespace App\Manager\UseCases\Legal\Invite;
 
 use App\Core\Finder\User\PhysFinder;
-use App\Core\Models\Invite\ForWho;
+use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\ValueObjects\Email;
 use App\Manager\Services\InviteService;
@@ -23,6 +23,6 @@ class CreateUseCase
     public function execute(Legal $legal, Email $email): void
     {
         $phys = PhysFinder::getByUsername($email->getValue());
-        $this->inviteService->create($phys, $legal, ForWho::PHYS);
+        $this->inviteService->create($phys, $legal, InviteForWho::PHYS);
     }
 }
