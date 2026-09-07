@@ -17,19 +17,19 @@ export default function({ currentTab, invites } : IProps) {
     };
 
     const handleCancel = (id: number) => {
-        router.post(route(`settings/persons/cancel/${id}`));
+        router.patch(route(`settings/persons/cancel/${id}`));
     };
 
     const handleConfirm = (id: number) => {
-        router.post(route(`settings/persons/confirm/${id}`));
+        router.patch(route(`settings/persons/confirm/${id}`));
     };
 
     const handleComplete = (id: number) => {
-        router.post(route(`settings/persons/complete/${id}`));
+        router.patch(route(`settings/persons/complete/${id}`));
     };
 
     const handleUpdateDoReport = (employeeId: number, accessId: number) => {
-        router.put(route(`employees/${employeeId}/report-access/${accessId}/do`));
+        router.patch(route(`employees/${employeeId}/report-access/${accessId}/do`));
     };
 
     return (

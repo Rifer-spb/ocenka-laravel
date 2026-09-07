@@ -7,6 +7,7 @@ use App\Core\Models\Invite\InviteTab;
 use App\Core\ValueObjects\Email;
 use App\Manager\Http\Requests\InviteSearchRequest;
 use App\Manager\Http\Requests\Phys\Invite\CreateRequest;
+use App\Manager\UseCases\Phys\Invite\ConfirmUseCase;
 use App\Manager\UseCases\Phys\Invite\RefuseUseCase;
 use App\Manager\UseCases\Phys\Invite\CreateUseCase;
 use App\Manager\UseCases\Phys\Invite\ResendUseCase;
@@ -50,7 +51,7 @@ class InviteController extends AbstractController
         return back()->with('success', 'Заявка успешно отменена');
     }
 
-    public function confirm(int $id, RevokeUseCase $useCase)
+    public function confirm(int $id, ConfirmUseCase $useCase)
     {
         $useCase->execute($this->getUser(), $id);
 

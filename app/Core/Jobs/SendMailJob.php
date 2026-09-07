@@ -18,9 +18,13 @@ class SendMailJob implements ShouldQueue
 
     public array $backoff = [10, 30, 60, 120];
 
+    private Mailable $mailable;
+
     public function __construct(
-        private Mailable $mailable
-    ) {}
+        Mailable $mailable
+    ) {
+        $this->mailable = $mailable;
+    }
 
     public function handle(): void
     {

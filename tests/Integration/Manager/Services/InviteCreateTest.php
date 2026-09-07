@@ -2,13 +2,13 @@
 
 namespace Integration\Manager\Services;
 
+use App\Core\Jobs\SendMailJob;
 use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
-use App\Manager\Jobs\Invite\SendInviteMailJob;
 use App\Manager\Services\InviteService;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
@@ -35,7 +35,7 @@ class InviteCreateTest extends TestCase
 
         $this->assertInstanceOf(Invite::class, $result);
         $this->assertTrue($result->isForPhys());
-        Queue::assertPushed(SendInviteMailJob::class);
+        Queue::assertPushed(SendMailJob::class);
     }
 
     public function testSuccessForLegal()
@@ -49,7 +49,7 @@ class InviteCreateTest extends TestCase
 
         $this->assertInstanceOf(Invite::class, $result);
         $this->assertTrue($result->isForLegal());
-        Queue::assertPushed(SendInviteMailJob::class);
+        Queue::assertPushed(SendMailJob::class);
     }
 
     private function createPhys(): Phys

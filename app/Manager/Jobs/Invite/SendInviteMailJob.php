@@ -6,16 +6,11 @@ use App\Core\Jobs\SendMailJob;
 use App\Core\Models\Invite\Invite;
 use App\Manager\Mails\Invite\SendInviteMail;
 
-class SendInviteMailJob extends SendMailJob
+class SendInviteMailJob
 {
-    /**
-     * @param Invite $invite
-     * @throws \Exception
-     */
-    public function __construct(Invite $invite)
+    public static function dispatch(Invite $invite): void
     {
         $mail = SendInviteMail::create($invite->getForUser());
-
-        parent::__construct($mail);
+        SendMailJob::dispatch($mail);
     }
 }

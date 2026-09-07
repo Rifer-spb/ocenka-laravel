@@ -22,9 +22,9 @@ Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
             Route::post('/', 'create')->name('create');
             Route::get('search', 'search')->name('search');
             Route::post('re-send/{id}', 'reSend')->name('reSend');
-            Route::post('cancel/{id}', 'cancel')->name('cancel');
-            Route::post('confirm/{id}', 'confirm')->name('confirm');
-            Route::post('complete/{id}', 'complete')->name('complete');
+            Route::patch('cancel/{invite}', 'cancel')->name('cancel');
+            Route::patch('confirm/{id}', 'confirm')->name('confirm');
+            Route::patch('complete/{id}', 'complete')->name('complete');
         });
     });
 });
