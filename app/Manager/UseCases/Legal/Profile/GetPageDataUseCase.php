@@ -6,7 +6,7 @@ use App\Core\Models\LegalType;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Legal\LegalProfile;
 
-class GetProfileUseCase
+class GetPageDataUseCase
 {
     public function execute(Legal $legal): array
     {

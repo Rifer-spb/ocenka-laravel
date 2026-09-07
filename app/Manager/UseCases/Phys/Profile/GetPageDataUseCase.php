@@ -4,7 +4,7 @@ namespace App\Manager\UseCases\Phys\Profile;
 
 use App\Core\Models\User\Phys\Phys;
 
-class GetProfileUseCase
+class GetPageDataUseCase
 {
     public function execute(Phys $phys): array
     {
