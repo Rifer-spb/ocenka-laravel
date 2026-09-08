@@ -21,7 +21,7 @@ class RevokeUseCase
      */
     public function execute(Legal $legal, int $inviteId): void
     {
-        $invite = InviteFinder::getWaitByIdAndLegal($inviteId, $legal);
+        $invite = InviteFinder::getActiveByIdAndLegal($inviteId, $legal);
         DB::transaction(fn () => $this->inviteService->revoke($invite));
     }
 }

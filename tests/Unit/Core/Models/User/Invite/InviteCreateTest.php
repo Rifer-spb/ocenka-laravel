@@ -6,8 +6,6 @@ use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
-use App\Core\Models\User\ValueObjects\Password;
-use App\Core\ValueObjects\Email;
 use Tests\TestCase;
 
 class InviteCreateTest extends TestCase
@@ -58,9 +56,13 @@ class InviteCreateTest extends TestCase
         $phys = $this->createPhys();
         $legal = $this->createLegal();
 
-        $invite = Invite::createNew($phys, $legal, InviteForWho::LEGAL);
-        $invite->confirm();
-        $invite->saveOrFail();
+        Invite::factory()
+            ->state([
+                'phys_id' => $phys->id,
+                'legal_id' => $legal->id,
+            ])
+            ->withActive()
+            ->create();
 
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Связь с указанным уже установлена.');
@@ -70,17 +72,11 @@ class InviteCreateTest extends TestCase
 
     private function createPhys(): Phys
     {
-        return Phys::createNew(
-            new Email('phys@test.com'),
-            new Password('password')
-        );
+        return Phys::factory()->create();
     }
 
     private function createLegal(): Legal
     {
-        return Legal::createNew(
-            new Email('legal@test.com'),
-            new Password('password')
-        );
+        return Legal::factory()->create();
     }
 }

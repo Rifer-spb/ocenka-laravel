@@ -15,6 +15,7 @@ use App\Core\Models\User\ValueObjects\Password;
 use App\Core\Models\User\ValueObjects\SecondName;
 use App\Core\ValueObjects\Email;
 use App\Core\ValueObjects\NationalPhone;
+use Database\Factories\Core\Models\User\Phys\PhysFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -27,6 +28,8 @@ use Illuminate\Support\Str;
  * @property Employee $employee
  * @property Collection|EmployeeReportAccess $reportAccesses
  * @property EmployeeRideAccess $rideAccess
+ *
+ * @method static PhysFactory factory()
  */
 class Phys extends User
 {

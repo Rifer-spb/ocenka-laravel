@@ -5,9 +5,7 @@ namespace Tests\Unit\Core\Models\User\Phys;
 use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\ValueObjects\FirstName;
 use App\Core\Models\User\ValueObjects\LastName;
-use App\Core\Models\User\ValueObjects\Password;
 use App\Core\Models\User\ValueObjects\SecondName;
-use App\Core\ValueObjects\Email;
 use Tests\TestCase;
 
 class UpdateNameTest extends TestCase
@@ -50,17 +48,6 @@ class UpdateNameTest extends TestCase
 
     public function createUser(): Phys
     {
-        $user = Phys::createNew(
-            new Email('phys@example.com'),
-            new Password('password'),
-        );
-
-        $user->updateName(
-            new FirstName( 'FirstName'),
-            new SecondName('SecondName'),
-            new LastName('LastName'),
-        );
-
-        return $user;
+        return Phys::factory()->withName()->create();
     }
 }

@@ -8,6 +8,7 @@ use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\User;
 use Carbon\Carbon;
+use Database\Factories\Core\Models\Invite\InviteFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -20,6 +21,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string|Carbon $completed_at
  * @property Legal $legal
  * @property Phys $phys
+ *
+ * @method static InviteFactory factory
  */
 class Invite extends AbstractEntity
 {

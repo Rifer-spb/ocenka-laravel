@@ -1,7 +1,7 @@
 <?php
 
+use App\Manager\Http\Controllers\Legal\InviteController;
 use App\Manager\Http\Controllers\Legal\ProfileController;
-use App\Manager\Http\Requests\Legal\InviteController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -21,10 +21,10 @@ Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
             Route::get('/', 'view')->name('index');
             Route::post('/', 'create')->name('create');
             Route::get('search', 'search')->name('search');
-            Route::post('re-send/{id}', 'reSend')->name('reSend');
+            Route::post('re-send/{invite}', 'reSend')->name('reSend');
             Route::patch('cancel/{invite}', 'cancel')->name('cancel');
-            Route::patch('confirm/{id}', 'confirm')->name('confirm');
-            Route::patch('complete/{id}', 'complete')->name('complete');
+            Route::patch('confirm/{invite}', 'confirm')->name('confirm');
+            Route::patch('complete/{invite}', 'complete')->name('complete');
         });
     });
 });

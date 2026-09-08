@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager\Http\Requests\Legal;
+namespace App\Manager\Http\Controllers\Legal;
 
 use App\Core\Http\Controllers\AbstractController;
 use App\Core\Models\Invite\Invite;

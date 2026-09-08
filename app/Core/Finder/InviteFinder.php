@@ -55,4 +55,19 @@ class InviteFinder
 
         return $model;
     }
+
+    public static function getActiveByIdAndLegal(int $id, Legal $legal): Invite
+    {
+        $model = Invite::where([
+            'id' => $id,
+            'legal_id' => $legal->id,
+            'status' => InviteStatus::ACTIVE->value,
+        ])->first();
+
+        if (! $model) {
+            throw new ModelNotFoundException('Отправленная заявка не найдена.');
+        }
+
+        return $model;
+    }
 }

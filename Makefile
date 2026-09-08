@@ -24,3 +24,6 @@ test:
 
 wayfinder-generate:
 	docker exec -it ocenka_laravel_php php artisan wayfinder:generate --with-form
+
+chown:
+	sudo chown -R $USER:$USER .

@@ -4,8 +4,6 @@ namespace Tests\Unit\Core\Models\User\Phys;
 
 use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\Phys\ValueObjects\Holiday;
-use App\Core\Models\User\ValueObjects\Password;
-use App\Core\ValueObjects\Email;
 use Tests\TestCase;
 
 class UpdateHolidayTest extends TestCase
@@ -54,9 +52,6 @@ class UpdateHolidayTest extends TestCase
 
     public function createUser(): Phys
     {
-        return Phys::createNew(
-            new Email('phys@example.com'),
-            new Password('password'),
-        );
+        return Phys::factory()->withProfile()->create();
     }
 }
