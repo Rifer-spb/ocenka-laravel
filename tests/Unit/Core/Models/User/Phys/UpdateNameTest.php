@@ -13,7 +13,6 @@ class UpdateNameTest extends TestCase
     public function testFilledSuccess()
     {
         $user = $this->createUser();
-
         $user->updateName(
             new FirstName($firstName = 'newFirstName'),
             new SecondName($secondName = 'newSecondName'),
@@ -31,7 +30,6 @@ class UpdateNameTest extends TestCase
     public function testEmptySuccess()
     {
         $user = $this->createUser();
-
         $user->updateName(
             new FirstName($firstName = ''),
             new SecondName($secondName = ''),
@@ -48,6 +46,6 @@ class UpdateNameTest extends TestCase
 
     public function createUser(): Phys
     {
-        return Phys::factory()->withName()->create();
+        return Phys::factory()->withProfile()->create();
     }
 }

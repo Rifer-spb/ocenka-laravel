@@ -13,6 +13,8 @@ use App\Manager\UseCases\Legal\Invite\GetPageDataUseCase;
 use App\Manager\UseCases\Legal\Invite\RefuseUseCase;
 use App\Manager\UseCases\Legal\Invite\ResendUseCase;
 use App\Manager\UseCases\Legal\Invite\RevokeUseCase;
+use App\Manager\UseCases\Legal\Invite\UpdateDoReportUseCase;
+use App\Manager\UseCases\Legal\Invite\UpdateWriteReportUseCase;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
@@ -22,7 +24,7 @@ class InviteController extends AbstractController
     {
         $view = $useCase->execute($this->getUser(), $request);
 
-        return Inertia::render('manager/legal/settings/persons/index', $view);
+        return Inertia::render('manager/legal/settings/invites/index', $view);
     }
 
     public function create(CreateRequest $request, CreateUseCase $useCase)
@@ -71,5 +73,19 @@ class InviteController extends AbstractController
         $useCase->execute($this->getUser(), $invite->id);
 
         return back()->with('success', 'Заявка успешно подтверждена');
+    }
+
+    public function updateDoReport(Invite $invite, int $accessId, UpdateDoReportUseCase $useCase)
+    {
+        $useCase->execute($this->getUser(), $invite->id, $accessId);
+
+        return back()->with('success', 'Успешно обновлено');
+    }
+
+    public function updateWriteReport(Invite $invite, int $accessId, UpdateWriteReportUseCase $useCase)
+    {
+        $useCase->execute($this->getUser(), $invite->id, $accessId);
+
+        return back()->with('success', 'Успешно обновлено');
     }
 }

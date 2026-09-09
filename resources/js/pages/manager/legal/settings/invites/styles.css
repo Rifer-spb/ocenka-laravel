@@ -48,3 +48,14 @@
 .invites .td input {
     text-align: center;
 }
+
+.invites .td.access .checkbox-item {
+    display: inline-block;
+    width: 33%;
+}
+
+.invites .td.access .checkbox-item label {
+    font-weight: normal;
+    display: block;
+    margin-bottom: 2px;
+}

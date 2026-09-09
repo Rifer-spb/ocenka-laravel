@@ -2,7 +2,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import InputError from "@/components/input-error";
 import { Button } from "@/components/ui/button";
-import { create } from "@/routes/manager/legal/settings/persons";
+import { create } from "@/routes/manager/legal/settings/invites";
 import { Form } from "@inertiajs/react";
 
 export default function() {

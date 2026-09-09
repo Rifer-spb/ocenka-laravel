@@ -53,15 +53,23 @@ class Employee extends AbstractEntity
         return $employee;
     }
 
-    public static function getByPhysId(int $physId): Employee
+    public function getReportAccess(int $id): EmployeeReportAccess
     {
-        $model = self::where('phys_id', $physId)->first();
+        return $this->reportAccess()->where('id', $id)->firstOrFail();
+    }
 
-        if (! $model) {
-            throw new \DomainException('Сотрудник не найден.');
-        }
+    public function switchDoReportAccess(int $id): void
+    {
+        $access = $this->getReportAccess($id);
+        $access->do = !$access->do;
+        $access->save();
+    }
 
-        return $model;
+    public function switchWriteReportAccess(int $id): void
+    {
+        $access = $this->getReportAccess($id);
+        $access->write = !$access->write;
+        $access->save();
     }
 
     public function reportAccess(): HasMany|EmployeeReportAccess

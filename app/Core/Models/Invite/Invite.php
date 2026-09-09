@@ -2,11 +2,11 @@
 
 namespace App\Core\Models\Invite;
 
-use App\Core\Finder\InviteFinder;
 use App\Core\Models\AbstractEntity;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\User;
+use App\Manager\Finders\InviteFinder;
 use Carbon\Carbon;
 use Database\Factories\Core\Models\Invite\InviteFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -41,7 +41,7 @@ class Invite extends AbstractEntity
      * @param InviteForWho $for
      * @return self
      *
-     * Тесты @see \Tests\Unit\Core\Models\User\Invite\InviteCreateTest
+     * @see \Tests\Unit\Core\Models\User\Invite\InviteCreateTest
      */
     public static function createNew(Phys $phys, Legal $legal, InviteForWho $for): self
     {
@@ -61,32 +61,34 @@ class Invite extends AbstractEntity
         ]);
     }
 
+    /**
+     * @return bool
+     *
+     * @see \Tests\Unit\Core\Models\User\Invite\InviteStatusTest
+     */
     public function isActive(): bool
     {
         return $this->status == InviteStatus::ACTIVE->value;
     }
 
+    /**
+     * @return bool
+     *
+     * @see \Tests\Unit\Core\Models\User\Invite\InviteStatusTest
+     */
     public function isWait(): bool
     {
         return $this->status == InviteStatus::WAIT->value;
     }
 
-    public static function findWait(Phys $phys, Legal $legal): ?self
+    /**
+     * @return bool
+     *
+     * @see \Tests\Unit\Core\Models\User\Invite\InviteStatusTest
+     */
+    public function isComplete(): bool
     {
-        return self::find([
-            'phys_id' => $phys->id,
-            'legal_id' => $legal->id,
-            'status' => InviteStatus::WAIT->value,
-        ]);
-    }
-
-    public static function findActive(Phys $phys, Legal $legal): ?self
-    {
-        return self::find([
-            'phys_id' => $phys->id,
-            'legal_id' => $legal->id,
-            'status' => InviteStatus::ACTIVE->value,
-        ]);
+        return $this->status == InviteStatus::COMPLETE->value;
     }
 
     public function getCreatedAtFormated(): string
@@ -99,6 +101,11 @@ class Invite extends AbstractEntity
         return $this->completed_at->format('d.m.Y H:i');
     }
 
+    /**
+     * @return void
+     *
+     * @see \Tests\Unit\Core\Models\User\Invite\InviteConfirmTest
+     */
     public function confirm(): void
     {
         if (! $this->isWait()) {
@@ -108,6 +115,11 @@ class Invite extends AbstractEntity
         $this->status = InviteStatus::ACTIVE->value;
     }
 
+    /**
+     * @return void
+     *
+     * @see \Tests\Unit\Core\Models\User\Invite\InviteCompleteTest
+     */
     public function complete(): void
     {
         if (! $this->isActive()) {
@@ -118,45 +130,27 @@ class Invite extends AbstractEntity
         $this->status = InviteStatus::COMPLETE->value;
     }
 
-    public static function getWaitById(int $id): self
-    {
-        $model = self::where([
-            'id' => $id,
-            'status' => InviteStatus::WAIT->value,
-        ])->first();
-
-        if (! $model) {
-            throw new \DomainException('Заявка не найдена.');
-        }
-
-        return $model;
-    }
-
-    public static function getActiveById(int $id): self
-    {
-        $model = self::where([
-            'id' => $id,
-            'status' => InviteStatus::ACTIVE->value,
-        ])->first();
-
-        if (! $model) {
-            throw new \DomainException('Заявка не найдена.');
-        }
-
-        return $model;
-    }
-
+    /**
+     * @return bool
+     *
+     * @see \Tests\Unit\Core\Models\User\Invite\InviteForWhoTest
+     */
     public function isForPhys(): bool
     {
         return $this->for === InviteForWho::PHYS->value;
     }
 
+    /**
+     * @return bool
+     *
+     * @see \Tests\Unit\Core\Models\User\Invite\InviteForWhoTest
+     */
     public function isForLegal(): bool
     {
         return $this->for === InviteForWho::LEGAL->value;
     }
 
-    public function getForUser(): User
+    public function getForWhoUser(): User
     {
         return $this->isForPhys() ? $this->phys : $this->legal;
     }

@@ -13,23 +13,27 @@ export default function({ currentTab, invites } : IProps) {
     const route = useManagerRoute();
 
     const handleReSend = (id: number) => {
-        router.post(route(`settings/persons/re-send/${id}`));
+        router.post(route(`settings/invites/${id}/re-send`));
     };
 
     const handleCancel = (id: number) => {
-        router.patch(route(`settings/persons/cancel/${id}`));
+        router.patch(route(`settings/invites/${id}/cancel`));
     };
 
     const handleConfirm = (id: number) => {
-        router.patch(route(`settings/persons/confirm/${id}`));
+        router.patch(route(`settings/invites/${id}/confirm`));
     };
 
     const handleComplete = (id: number) => {
-        router.patch(route(`settings/persons/complete/${id}`));
+        router.patch(route(`settings/invites/${id}/complete`));
     };
 
-    const handleUpdateDoReport = (employeeId: number, accessId: number) => {
-        router.patch(route(`employees/${employeeId}/report-access/${accessId}/do`));
+    const handleUpdateDoReport = (id: number, accessId: number) => {
+        router.patch(route(`settings/invites/${id}/do-report/${accessId}`));
+    };
+
+    const handleUpdateWriteReport = (id: number, accessId: number) => {
+        router.patch(route(`settings/invites/${id}/write-report/${accessId}`));
     };
 
     return (
@@ -60,6 +64,7 @@ export default function({ currentTab, invites } : IProps) {
                         handleConfirm={handleConfirm}
                         handleComplete={handleComplete}
                         handleUpdateDoReport={handleUpdateDoReport}
+                        handleUpdateWriteReport={handleUpdateWriteReport}
                     />)}
                 </div>
                 : <div>Заявок не найдено</div>

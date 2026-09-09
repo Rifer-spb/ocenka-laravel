@@ -65,12 +65,12 @@ class GetPageDataUseCase
                 ],
                 'created_at' => DateHelper::toDatetime($model->created_at),
                 'completed_at' => DateHelper::toDatetime($model->completed_at),
-                'phys' => $this->getPhys($model),
+                'employee' => $this->getEmployee($model),
             ];
         }, $allRequests->get()->all());
     }
 
-    private function getPhys(Invite $model): array
+    private function getEmployee(Invite $model): array
     {
         if (! $model->isActive()) {
             return [];

@@ -5,7 +5,7 @@ namespace App\Core\Validators;
 /**
  * Валидатор телефонных номеров.
  *
- * Тесты @see \Tests\Unit\Core\Validators\PhoneValidatorTest
+ * @see \Tests\Unit\Core\Validators\PhoneValidatorTest
  */
 class PhoneValidator
 {

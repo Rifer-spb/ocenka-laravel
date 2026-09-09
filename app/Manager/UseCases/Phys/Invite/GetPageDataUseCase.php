@@ -3,8 +3,8 @@
 namespace App\Manager\UseCases\Phys\Invite;
 
 use App\Core\Helpers\DateHelper;
-use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\Invite\Invite;
+use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\Invite\InviteStatus;
 use App\Core\Models\Invite\InviteTab;
 use App\Core\Models\User\User;

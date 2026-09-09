@@ -20,6 +20,8 @@ class CreateTest extends TestCase
             $password = new Password('password'),
         );
 
+        $user = Phys::findOrFail($user->id);
+
         $this->assertEquals($email->getValue(), $user->username);
         $this->assertEquals($email->getValue(), $user->email);
         $this->assertTrue($user->isPhys());
@@ -36,10 +38,11 @@ class CreateTest extends TestCase
 
     public function testAlreadyExistsEmail()
     {
-        Phys::createNew(
-            new Email('phys@example.com'),
-            new Password('password'),
-        );
+        $email = 'phys@example.com';
+
+        Phys::factory()
+            ->state(['username' => $email, 'email' => $email])
+            ->create();
 
         $this->expectException(QueryException::class);
         $this->expectExceptionMessageMatches('/Duplicate entry|unique/i');

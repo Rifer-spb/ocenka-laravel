@@ -44,6 +44,13 @@ class InviteFactory extends Factory
         ]);
     }
 
+    public function withComplete(): static
+    {
+        return $this->state([
+            'status' => InviteStatus::COMPLETE->value
+        ]);
+    }
+
     public function withForPhys(): static
     {
         return $this->state([

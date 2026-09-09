@@ -1,6 +1,7 @@
 import { IInviteItem } from './types';
 import {IInviteTab} from "@/components/app/manager/legal/inviteTabs/types";
 import ButtonsComponent from './ButtonsComponent';
+import CheckboxItem from "@/components/app/CheckboxItem";
 
 interface IProps {
     currentTab: IInviteTab;
@@ -10,6 +11,7 @@ interface IProps {
     handleConfirm: Function;
     handleComplete: Function;
     handleUpdateDoReport: Function;
+    handleUpdateWriteReport: Function;
 }
 
 export default function({
@@ -19,38 +21,46 @@ export default function({
     handleCancel,
     handleConfirm,
     handleComplete,
-    handleUpdateDoReport
+    handleUpdateDoReport,
+    handleUpdateWriteReport
 } : IProps) {
     return (
         <div className="tr">
             <div className="td date"> {currentTab.id == 'complete' ? invite.completed_at : invite.created_at} </div>
-            <div className="td name"> {invite.phys.name} </div>
+            <div className="td name"> {invite.employee.name} </div>
             <div className="td status">
                 <div className={`status-${invite.status.id}`}>{invite.status.name}</div>
             </div>
             {currentTab.id == 'active' && (
                 <>
-                    <div className="td can_report_write">
-                        {invite.phys.access.report.map(item => (
-                            <div key={item.id} className="checkbox-item">
-                                <label>{item.name}</label>
-                                <input
-                                    type="checkbox"
-                                    checked={item.do}
-                                    onChange={() => handleUpdateDoReport(item.id)}
-                                />
-                            </div>
-                        ))}
+                    <div className="td access">
+                        {invite.employee.access.report.map(
+                            item => <CheckboxItem
+                                key={item.id}
+                                showLabel={true}
+                                labelName={item.name}
+                                checked={item.do}
+                                handler={() => handleUpdateDoReport(invite.id, item.id)}
+                            />
+                        )}
                     </div>
-                    <div className="td can_do_write">
-
+                    <div className="td access">
+                        {invite.employee.access.report.map(
+                            item => <CheckboxItem
+                                key={item.id}
+                                showLabel={true}
+                                labelName={item.name}
+                                checked={item.write}
+                                handler={() => handleUpdateWriteReport(invite.id, item.id)}
+                            />
+                        )}
                     </div>
-                    <div className="td can_ride"></div>
+                    <div className="td access"></div>
                     <div className="td is_manager">
-                        {invite.phys.isManager}
+                        {invite.employee.isManager}
                     </div>
                     <div className="td work_rate">
-                        {invite.phys.workRate}
+                        {invite.employee.workRate}
                     </div>
                 </>
             )}

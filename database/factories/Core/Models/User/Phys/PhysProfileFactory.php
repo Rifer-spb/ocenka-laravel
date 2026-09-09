@@ -2,7 +2,6 @@
 
 namespace Database\Factories\Core\Models\User\Phys;
 
-use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\Phys\PhysProfile;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -26,7 +25,6 @@ class PhysProfileFactory extends Factory
         $fullName = "$firstName $secondName $lastName";
 
         return [
-            'id' => Phys::factory(),
             'first_name' => $firstName,
             'second_name' => $secondName,
             'last_name' => $lastName,

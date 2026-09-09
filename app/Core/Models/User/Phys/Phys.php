@@ -106,6 +106,11 @@ class Phys extends User
         $this->phones()->findOrFail($id)->delete();
     }
 
+    public function getPhoneByValue(string $value): PhysPhone
+    {
+        return $this->phones()->where('phone', $value)->firstOrFail();
+    }
+
     /**
      * @param Holiday $holiday
      * @return void
@@ -146,7 +151,7 @@ class Phys extends User
 
     public function reportAccesses(): HasMany
     {
-        return $this->hasMany(EmployeeReportAccess::class, 'phys_id', 'id');
+        return $this->hasMany(EmployeeReportAccess::class, 'phys_id', 'id')->orderBy('id');
     }
 
     public function rideAccess(): HasOne

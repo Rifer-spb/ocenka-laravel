@@ -28,7 +28,7 @@ class SendInviteMail extends Mailable
         if ($user->isPhys()) {
             $viewLink = url("/manager/{$user->role}/settings/legals");
         } elseif ($user->isLegal()) {
-            $viewLink = url("/manager/{$user->role}/settings/persons");
+            $viewLink = url("/manager/{$user->role}/settings/invites");
         } else {
             throw new \Exception('Недопустимая роль пользователя.');
         }

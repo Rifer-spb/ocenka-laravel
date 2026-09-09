@@ -9,7 +9,6 @@ use App\Core\Models\Invite\Invite;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
 use App\Manager\Jobs\Invite\SendInviteMailJob;
-use App\Manager\Mails\Invite\SendInviteMail;
 
 class InviteService
 {

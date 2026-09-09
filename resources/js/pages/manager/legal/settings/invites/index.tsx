@@ -7,6 +7,7 @@ import {useManagerRoute} from "@/hooks/useManagerRoute";
 import {IInviteTab} from "@/components/app/manager/legal/inviteTabs/types";
 import {router} from "@inertiajs/react";
 import {IInviteItem} from "./types";
+import {useEffect, useState} from "react";
 
 type TProps = {
     tabs: IInviteTab[];
@@ -14,16 +15,22 @@ type TProps = {
     invites: IInviteItem[];
 }
 
-export default function ({ tabs, counts, invites } : TProps) {
+export default function ({ tabs, counts, invites: initialInvites } : TProps) {
     const route = useManagerRoute();
+    const [invites, setInvites] = useState<IInviteItem[]>([]);
 
     const handleSelectTab = (currentTab : IInviteTab) => {
-        router.get(route('settings/persons'), { type: currentTab.id }, {
+        setInvites([]);
+        router.get(route('settings/invites'), { type: currentTab.id }, {
             only: ['invites'],
             preserveState: true,
             replace: true,
         });
     }
+
+    useEffect(() => {
+        setInvites(initialInvites);
+    }, [initialInvites]);
 
     return (
         <AppLayout>

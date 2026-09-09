@@ -3,6 +3,7 @@
 namespace Database\Factories\Core\Models\User\Phys;
 
 use App\Core\Models\User\Phys\Phys;
+use App\Core\Models\User\Phys\PhysPhone;
 use App\Core\Models\User\Phys\PhysProfile;
 use App\Core\Models\User\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -36,6 +37,15 @@ class PhysFactory extends Factory
 
     public function withProfile(): static
     {
-        return $this->has(PhysProfile::factory(), 'profile');
+        return $this->afterCreating(fn (Phys $p) => PhysProfile::factory()->create(['id' => $p->id]));
+    }
+
+    public function withPhone(array $state = []): static
+    {
+        return $this->afterCreating(function (Phys $p) use ($state) {
+            return PhysPhone::factory()
+                ->state($state)
+                ->create(['user_id' => $p->id]);
+        });
     }
 }

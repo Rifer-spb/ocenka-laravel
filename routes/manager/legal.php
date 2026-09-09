@@ -17,14 +17,19 @@ Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
             Route::put('password', 'changePassword')->name('password.update');
         });
 
-        Route::prefix('persons')->name('persons.')->controller(InviteController::class)->group(function () {
+        Route::prefix('invites')->name('invites.')->controller(InviteController::class)->group(function () {
             Route::get('/', 'view')->name('index');
             Route::post('/', 'create')->name('create');
             Route::get('search', 'search')->name('search');
-            Route::post('re-send/{invite}', 'reSend')->name('reSend');
-            Route::patch('cancel/{invite}', 'cancel')->name('cancel');
-            Route::patch('confirm/{invite}', 'confirm')->name('confirm');
-            Route::patch('complete/{invite}', 'complete')->name('complete');
+
+            Route::prefix('{invite}')->group(function () {
+                Route::post('re-send', 'reSend')->name('reSend');
+                Route::patch('cancel', 'cancel')->name('cancel');
+                Route::patch('confirm', 'confirm')->name('confirm');
+                Route::patch('complete', 'complete')->name('complete');
+                Route::patch('do-report/{accessId}', 'updateDoReport')->name('updateDoReport');
+                Route::patch('write-report/{accessId}', 'updateWriteReport')->name('updateWriteReport');
+            });
         });
     });
 });

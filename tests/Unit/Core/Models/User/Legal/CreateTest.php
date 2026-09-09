@@ -22,6 +22,8 @@ class CreateTest extends TestCase
             $password = new Password('password'),
         );
 
+        $user = Legal::findOrFail($user->id);
+
         $this->assertEquals($email->getValue(), $user->username);
         $this->assertEquals($email->getValue(), $user->email);
         $this->assertTrue(Hash::check($password->getValue(), $user->password));
@@ -47,10 +49,12 @@ class CreateTest extends TestCase
 
     public function testAlreadyExistsEmail()
     {
-        Legal::createNew(
-            new Email('legal@example.com'),
-            new Password('password'),
-        );
+        $email = 'legal@example.com';
+
+        Legal::factory()->state([
+            'email' => $email,
+            'username' => $email
+        ])->create();
 
         $this->expectException(QueryException::class);
         $this->expectExceptionMessageMatches('/Duplicate entry|unique constraint|already exists/i');

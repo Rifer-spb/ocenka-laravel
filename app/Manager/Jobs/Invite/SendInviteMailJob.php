@@ -10,7 +10,7 @@ class SendInviteMailJob
 {
     public static function dispatch(Invite $invite): void
     {
-        $mail = SendInviteMail::create($invite->getForUser());
+        $mail = SendInviteMail::create($invite->getForWhoUser());
         SendMailJob::dispatch($mail);
     }
 }

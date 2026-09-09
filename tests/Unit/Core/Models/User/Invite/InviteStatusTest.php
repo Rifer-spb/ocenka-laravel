@@ -20,4 +20,11 @@ class InviteStatusTest extends TestCase
 
         $this->assertTrue($invite->isActive());
     }
+
+    public function testComplete()
+    {
+        $invite = Invite::factory()->withComplete()->create();
+
+        $this->assertTrue($invite->isComplete());
+    }
 }

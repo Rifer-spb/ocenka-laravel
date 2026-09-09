@@ -19,7 +19,7 @@ export type IReportAccess = {
     write: boolean;
 }
 
-export type IPhys = {
+export type IEmployee = {
     name: string;
     access: {
         ride: IRideAccess;
@@ -35,5 +35,5 @@ export type IInviteItem = {
     status: IStatus;
     created_at: string;
     completed_at: string | null;
-    phys: IPhys;
+    employee: IEmployee;
 }
