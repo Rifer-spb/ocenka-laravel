@@ -5,7 +5,6 @@ namespace App\Core\Models\User\Phys;
 use App\Core\Helpers\UserHelper;
 use App\Core\Models\Employee\Employee;
 use App\Core\Models\Employee\EmployeeReportAccess;
-use App\Core\Models\Employee\EmployeeRideAccess;
 use App\Core\Models\User\Phys\ValueObjects\Holiday;
 use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
@@ -17,7 +16,6 @@ use App\Core\ValueObjects\Email;
 use App\Core\ValueObjects\NationalPhone;
 use Database\Factories\Core\Models\User\Phys\PhysFactory;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
@@ -26,8 +24,6 @@ use Illuminate\Support\Str;
  * @property PhysProfile $profile
  * @property PhysPhone[] $phones
  * @property Employee $employee
- * @property Collection|EmployeeReportAccess $reportAccesses
- * @property EmployeeRideAccess $rideAccess
  *
  * @method static PhysFactory factory()
  */
@@ -147,15 +143,5 @@ class Phys extends User
     public function phones(): HasMany
     {
         return $this->hasMany(PhysPhone::class, 'user_id', 'id');
-    }
-
-    public function reportAccesses(): HasMany
-    {
-        return $this->hasMany(EmployeeReportAccess::class, 'phys_id', 'id')->orderBy('id');
-    }
-
-    public function rideAccess(): HasOne
-    {
-        return $this->hasOne(EmployeeRideAccess::class, 'phys_id', 'id');
     }
 }

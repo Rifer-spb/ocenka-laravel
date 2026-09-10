@@ -7,11 +7,6 @@ export type IStatus = {
     name: string;
 }
 
-export type IRideAccess = {
-    id: number;
-    value: boolean;
-}
-
 export type IReportAccess = {
     id: number;
     name: string;
@@ -22,7 +17,7 @@ export type IReportAccess = {
 export type IEmployee = {
     name: string;
     access: {
-        ride: IRideAccess;
+        ride: boolean;
         report: IReportAccess[];
     };
     isManager: boolean;

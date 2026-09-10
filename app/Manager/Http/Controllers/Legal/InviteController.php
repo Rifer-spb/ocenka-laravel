@@ -7,6 +7,7 @@ use App\Core\Models\Invite\Invite;
 use App\Core\ValueObjects\Email;
 use App\Manager\Http\Requests\InviteSearchRequest;
 use App\Manager\Http\Requests\Legal\Invite\CreateRequest;
+use App\Manager\Http\Requests\Legal\Invite\UpdateWorkRateRequest;
 use App\Manager\UseCases\Legal\Invite\ConfirmUseCase;
 use App\Manager\UseCases\Legal\Invite\CreateUseCase;
 use App\Manager\UseCases\Legal\Invite\GetPageDataUseCase;
@@ -14,6 +15,9 @@ use App\Manager\UseCases\Legal\Invite\RefuseUseCase;
 use App\Manager\UseCases\Legal\Invite\ResendUseCase;
 use App\Manager\UseCases\Legal\Invite\RevokeUseCase;
 use App\Manager\UseCases\Legal\Invite\UpdateDoReportUseCase;
+use App\Manager\UseCases\Legal\Invite\UpdateManagerUseCase;
+use App\Manager\UseCases\Legal\Invite\UpdateRideUseCase;
+use App\Manager\UseCases\Legal\Invite\UpdateWorkRateUseCase;
 use App\Manager\UseCases\Legal\Invite\UpdateWriteReportUseCase;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -85,6 +89,43 @@ class InviteController extends AbstractController
     public function updateWriteReport(Invite $invite, int $accessId, UpdateWriteReportUseCase $useCase)
     {
         $useCase->execute($this->getUser(), $invite->id, $accessId);
+
+        return back()->with('success', 'Успешно обновлено');
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function updateRide(Invite $invite, UpdateRideUseCase $useCase)
+    {
+        $useCase->execute($this->getUser(), $invite->id);
+
+        return back()->with('success', 'Успешно обновлено');
+    }
+
+    /**
+     * @param Invite $invite
+     * @param UpdateManagerUseCase $useCase
+     * @return RedirectResponse
+     * @throws \Throwable
+     */
+    public function updateManager(Invite $invite, UpdateManagerUseCase $useCase)
+    {
+        $useCase->execute($this->getUser(), $invite->id);
+
+        return back()->with('success', 'Успешно обновлено');
+    }
+
+    /**
+     * @param Invite $invite
+     * @param UpdateWorkRateRequest $request
+     * @param UpdateWorkRateUseCase $useCase
+     * @return RedirectResponse
+     * @throws \Throwable
+     */
+    public function updateWorkRate(Invite $invite, UpdateWorkRateRequest $request, UpdateWorkRateUseCase $useCase)
+    {
+        $useCase->execute($this->getUser(), $invite->id, $request->value);
 
         return back()->with('success', 'Успешно обновлено');
     }

@@ -7,6 +7,7 @@ use App\Core\Models\Direction;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -16,8 +17,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int $phys_id
  * @property bool $is_manager
  * @property int $work_rate
+ * @property bool $can_ride
  * @property Legal $legal
  * @property Phys $phys
+ * @property Collection|EmployeeReportAccess[] $reportAccess
  */
 class Employee extends AbstractEntity
 {
@@ -44,12 +47,6 @@ class Employee extends AbstractEntity
             ]);
         }
 
-        EmployeeRideAccess::create([
-            'employee_id' => $employee->id,
-            'phys_id' => $invite->phys_id,
-            'legal_id' => $invite->legal_id,
-        ]);
-
         return $employee;
     }
 
@@ -72,14 +69,24 @@ class Employee extends AbstractEntity
         $access->save();
     }
 
+    public function switchRideAccess(): void
+    {
+        $this->can_ride = !$this->can_ride;
+    }
+
+    public function switchIsManagerAccess(): void
+    {
+        $this->is_manager = !$this->is_manager;
+    }
+
+    public function setWorkRateAttribute(?int $value): void
+    {
+        $this->attributes['work_rate'] = $value > 0 ? $value : null;
+    }
+
     public function reportAccess(): HasMany|EmployeeReportAccess
     {
         return $this->hasMany(EmployeeReportAccess::class, 'employee_id', 'id');
-    }
-
-    public function rideAccess(): HasMany|EmployeeRideAccess
-    {
-        return $this->hasMany(EmployeeRideAccess::class, 'employee_id', 'id');
     }
 
     public function legal(): HasOne|Legal

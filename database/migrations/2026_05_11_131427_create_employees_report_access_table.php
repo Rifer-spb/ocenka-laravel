@@ -6,12 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+     private $tableName = 'employee_report_accesses';
+
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('employee_report_accesses', function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
             $table->unsignedInteger('id')->autoIncrement();
             $table->unsignedInteger('employee_id');
             $table->foreign('employee_id')
@@ -45,6 +47,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employees_report_access');
+        Schema::drop($this->tableName);
     }
 };

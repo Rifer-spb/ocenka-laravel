@@ -28,10 +28,7 @@ class GetPageDataUseCase
         $allRequests = Invite::where('legal_id', $user->id)->with([
             'legal.profile',
             'phys.profile',
-            'phys.reportAccesses',
-            'phys.reportAccesses.direction',
-            'phys.rideAccess',
-            'phys.employee',
+            'phys.employee.reportAccess.direction',
         ]);
 
         match ($request->type) {
@@ -78,16 +75,12 @@ class GetPageDataUseCase
 
         $phys = $model->phys;
         $employee = $phys->employee;
-        $rideAccess = $phys->rideAccess;
-        $reportAccesses = $phys->reportAccesses;
+        $reportAccesses = $employee->reportAccess;
 
         return [
             'name' => $phys->getFullName(),
             'access' => [
-                'ride' => [
-                    'id' => $rideAccess->id,
-                    'value' => $rideAccess->value,
-                ],
+                'ride' => $employee->can_ride,
                 'report' => $reportAccesses->map(fn (EmployeeReportAccess $a) => [
                     'id' => $a->id,
                     'name' => $a->direction->short_name,

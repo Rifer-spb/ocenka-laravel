@@ -1,6 +1,5 @@
 type TProps = {
     className?: string;
-    showLabel?: boolean;
     labelName?: string;
     checked: boolean;
     handler: () => void;
@@ -8,13 +7,12 @@ type TProps = {
 
 export default ({
     className = '',
-    showLabel = false,
     labelName = '',
     checked,
     handler
 } : TProps) => (
     <div className={`checkbox-item ${className}`}>
-        {showLabel && labelName !== '' && <label >{labelName}</label>}
+        {labelName !== '' && <label >{labelName}</label>}
         <input
             type="checkbox"
             checked={checked}

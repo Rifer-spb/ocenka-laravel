@@ -11,29 +11,42 @@ interface IProps {
 
 export default function({ currentTab, invites } : IProps) {
     const route = useManagerRoute();
+    const baseUrl = 'settings/invites';
 
     const handleReSend = (id: number) => {
-        router.post(route(`settings/invites/${id}/re-send`));
+        router.post(route(`${baseUrl}/${id}/re-send`));
     };
 
     const handleCancel = (id: number) => {
-        router.patch(route(`settings/invites/${id}/cancel`));
+        router.patch(route(`${baseUrl}/${id}/cancel`));
     };
 
     const handleConfirm = (id: number) => {
-        router.patch(route(`settings/invites/${id}/confirm`));
+        router.patch(route(`${baseUrl}/${id}/confirm`));
     };
 
     const handleComplete = (id: number) => {
-        router.patch(route(`settings/invites/${id}/complete`));
+        router.patch(route(`${baseUrl}/${id}/complete`));
     };
 
     const handleUpdateDoReport = (id: number, accessId: number) => {
-        router.patch(route(`settings/invites/${id}/do-report/${accessId}`));
+        router.patch(route(`${baseUrl}/${id}/do-report/${accessId}`));
     };
 
     const handleUpdateWriteReport = (id: number, accessId: number) => {
-        router.patch(route(`settings/invites/${id}/write-report/${accessId}`));
+        router.patch(route(`${baseUrl}/${id}/write-report/${accessId}`));
+    };
+
+    const handleUpdateRide = (id: number) => {
+        router.patch(route(`${baseUrl}/${id}/ride`));
+    };
+
+    const handleUpdateManager = (id: number) => {
+        router.patch(route(`${baseUrl}/${id}/manager`));
+    };
+
+    const handleUpdateWorkRate = (id: number, value: number) => {
+        router.patch(route(`${baseUrl}/${id}/work-rate`), { value: value });
     };
 
     return (
@@ -65,6 +78,9 @@ export default function({ currentTab, invites } : IProps) {
                         handleComplete={handleComplete}
                         handleUpdateDoReport={handleUpdateDoReport}
                         handleUpdateWriteReport={handleUpdateWriteReport}
+                        handleUpdateRide={handleUpdateRide}
+                        handleUpdateManager={handleUpdateManager}
+                        handleUpdateWorkRate={handleUpdateWorkRate}
                     />)}
                 </div>
                 : <div>Заявок не найдено</div>

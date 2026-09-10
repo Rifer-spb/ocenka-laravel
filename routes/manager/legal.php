@@ -20,7 +20,6 @@ Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
         Route::prefix('invites')->name('invites.')->controller(InviteController::class)->group(function () {
             Route::get('/', 'view')->name('index');
             Route::post('/', 'create')->name('create');
-            Route::get('search', 'search')->name('search');
 
             Route::prefix('{invite}')->group(function () {
                 Route::post('re-send', 'reSend')->name('reSend');
@@ -29,6 +28,9 @@ Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
                 Route::patch('complete', 'complete')->name('complete');
                 Route::patch('do-report/{accessId}', 'updateDoReport')->name('updateDoReport');
                 Route::patch('write-report/{accessId}', 'updateWriteReport')->name('updateWriteReport');
+                Route::patch('ride', 'updateRide')->name('updateRide');
+                Route::patch('manager', 'updateManager')->name('updateManager');
+                Route::patch('work-rate', 'updateWorkRate')->name('updateWorkRate');
             });
         });
     });

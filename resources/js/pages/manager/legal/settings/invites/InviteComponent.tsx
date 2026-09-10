@@ -2,6 +2,8 @@ import { IInviteItem } from './types';
 import {IInviteTab} from "@/components/app/manager/legal/inviteTabs/types";
 import ButtonsComponent from './ButtonsComponent';
 import CheckboxItem from "@/components/app/CheckboxItem";
+import {Input} from "@/components/ui/input";
+import {useEffect, useState} from "react";
 
 interface IProps {
     currentTab: IInviteTab;
@@ -12,6 +14,9 @@ interface IProps {
     handleComplete: Function;
     handleUpdateDoReport: Function;
     handleUpdateWriteReport: Function;
+    handleUpdateRide: Function;
+    handleUpdateManager: Function;
+    handleUpdateWorkRate: Function;
 }
 
 export default function({
@@ -22,7 +27,10 @@ export default function({
     handleConfirm,
     handleComplete,
     handleUpdateDoReport,
-    handleUpdateWriteReport
+    handleUpdateWriteReport,
+    handleUpdateRide,
+    handleUpdateManager,
+    handleUpdateWorkRate
 } : IProps) {
     return (
         <div className="tr">
@@ -37,7 +45,6 @@ export default function({
                         {invite.employee.access.report.map(
                             item => <CheckboxItem
                                 key={item.id}
-                                showLabel={true}
                                 labelName={item.name}
                                 checked={item.do}
                                 handler={() => handleUpdateDoReport(invite.id, item.id)}
@@ -48,19 +55,34 @@ export default function({
                         {invite.employee.access.report.map(
                             item => <CheckboxItem
                                 key={item.id}
-                                showLabel={true}
                                 labelName={item.name}
                                 checked={item.write}
                                 handler={() => handleUpdateWriteReport(invite.id, item.id)}
                             />
                         )}
                     </div>
-                    <div className="td access"></div>
+                    <div className="td access">
+                        <CheckboxItem
+                            checked={invite.employee.access.ride}
+                            handler={() => handleUpdateRide(invite.id)}
+                        />
+                    </div>
                     <div className="td is_manager">
-                        {invite.employee.isManager}
+                        <CheckboxItem
+                            checked={invite.employee.isManager}
+                            handler={() => handleUpdateManager(invite.id)}
+                        />
                     </div>
                     <div className="td work_rate">
-                        {invite.employee.workRate}
+                        <Input
+                            id="is_manager"
+                            name="is_manager"
+                            type="text"
+                            required
+                            value={invite.employee.workRate ?? ''}
+                            onChange={(e) => handleUpdateWorkRate(invite.id, e.target.value)}
+                            style={{backgroundColor: '#fff'}}
+                        />
                     </div>
                 </>
             )}
