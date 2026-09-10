@@ -57,7 +57,7 @@ export default function () {
         if (pathname.includes('/manager/legal/settings')) {
             return [
                 {route: route('settings/account'), name: 'Аккаунт'},
-                {route: route('settings/invites'), name: 'Сотрудники'},
+                {route: route('settings/invites'), name: 'Приглашения'},
             ];
         }
 
