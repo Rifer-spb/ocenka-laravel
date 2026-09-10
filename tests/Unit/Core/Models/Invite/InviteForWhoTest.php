@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Core\Models\User\Invite;
+namespace Tests\Unit\Core\Models\Invite;
 
 use App\Core\Models\Invite\Invite;
 use Tests\TestCase;

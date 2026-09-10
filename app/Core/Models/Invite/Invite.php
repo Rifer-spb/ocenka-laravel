@@ -41,7 +41,7 @@ class Invite extends AbstractEntity
      * @param InviteForWho $for
      * @return self
      *
-     * @see \Tests\Unit\Core\Models\User\Invite\InviteCreateTest
+     * @see \Tests\Unit\Core\Models\Invite\InviteCreateTest
      */
     public static function createNew(Phys $phys, Legal $legal, InviteForWho $for): self
     {
@@ -64,7 +64,7 @@ class Invite extends AbstractEntity
     /**
      * @return bool
      *
-     * @see \Tests\Unit\Core\Models\User\Invite\InviteStatusTest
+     * @see \Tests\Unit\Core\Models\Invite\InviteStatusTest
      */
     public function isActive(): bool
     {
@@ -74,7 +74,7 @@ class Invite extends AbstractEntity
     /**
      * @return bool
      *
-     * @see \Tests\Unit\Core\Models\User\Invite\InviteStatusTest
+     * @see \Tests\Unit\Core\Models\Invite\InviteStatusTest
      */
     public function isWait(): bool
     {
@@ -84,7 +84,7 @@ class Invite extends AbstractEntity
     /**
      * @return bool
      *
-     * @see \Tests\Unit\Core\Models\User\Invite\InviteStatusTest
+     * @see \Tests\Unit\Core\Models\Invite\InviteStatusTest
      */
     public function isComplete(): bool
     {
@@ -104,7 +104,7 @@ class Invite extends AbstractEntity
     /**
      * @return void
      *
-     * @see \Tests\Unit\Core\Models\User\Invite\InviteConfirmTest
+     * @see \Tests\Unit\Core\Models\Invite\InviteConfirmTest
      */
     public function confirm(): void
     {
@@ -118,7 +118,7 @@ class Invite extends AbstractEntity
     /**
      * @return void
      *
-     * @see \Tests\Unit\Core\Models\User\Invite\InviteCompleteTest
+     * @see \Tests\Unit\Core\Models\Invite\InviteCompleteTest
      */
     public function complete(): void
     {
@@ -133,7 +133,7 @@ class Invite extends AbstractEntity
     /**
      * @return bool
      *
-     * @see \Tests\Unit\Core\Models\User\Invite\InviteForWhoTest
+     * @see \Tests\Unit\Core\Models\Invite\InviteForWhoTest
      */
     public function isForPhys(): bool
     {
@@ -143,13 +143,18 @@ class Invite extends AbstractEntity
     /**
      * @return bool
      *
-     * @see \Tests\Unit\Core\Models\User\Invite\InviteForWhoTest
+     * @see \Tests\Unit\Core\Models\Invite\InviteForWhoTest
      */
     public function isForLegal(): bool
     {
         return $this->for === InviteForWho::LEGAL->value;
     }
 
+    /**
+     * @return User
+     *
+     * @see \Tests\Unit\Core\Models\Invite\InviteGetForWhoUser
+     */
     public function getForWhoUser(): User
     {
         return $this->isForPhys() ? $this->phys : $this->legal;

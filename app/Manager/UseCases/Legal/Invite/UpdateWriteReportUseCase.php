@@ -8,6 +8,15 @@ use App\Manager\Finders\InviteFinder;
 
 class UpdateWriteReportUseCase
 {
+
+    /**
+     * @param Legal $legal
+     * @param int $inviteId
+     * @param int $accessId
+     * @return void
+     *
+     * @see \Integration\Manager\UseCases\Legal\Invite\UpdateWriteReportUseCaseTest
+     */
     public function execute(Legal $legal, int $inviteId, int $accessId): void
     {
         $invite = InviteFinder::getActiveByIdAndLegal($inviteId, $legal);

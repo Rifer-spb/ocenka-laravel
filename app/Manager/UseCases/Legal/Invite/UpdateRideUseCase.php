@@ -13,6 +13,8 @@ class UpdateRideUseCase
      * @param int $inviteId
      * @return void
      * @throws \Throwable
+     *
+     * @see \Integration\Manager\UseCases\Legal\Invite\UpdateRideUseCaseTest
      */
     public function execute(Legal $legal, int $inviteId): void
     {

@@ -7,6 +7,7 @@ use App\Core\Models\Direction;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
+use Database\Factories\Core\Models\Employee\EmployeeFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -21,6 +22,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property Legal $legal
  * @property Phys $phys
  * @property Collection|EmployeeReportAccess[] $reportAccess
+ *
+ * @method static EmployeeFactory factory()
  */
 class Employee extends AbstractEntity
 {
@@ -31,6 +34,20 @@ class Employee extends AbstractEntity
         'legal_id',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'can_ride' => 'boolean',
+            'is_manager' => 'boolean',
+        ];
+    }
+
+    /**
+     * @param Invite $invite
+     * @return self
+     *
+     * @see \Tests\Unit\Core\Models\Employee\CreateTest
+     */
     public static function createNew(Invite $invite): self
     {
         $employee = self::create([
@@ -50,11 +67,23 @@ class Employee extends AbstractEntity
         return $employee;
     }
 
+    /**
+     * @param int $id
+     * @return EmployeeReportAccess
+     *
+     * @see \Tests\Unit\Core\Models\Employee\GetReportAccessTest
+     */
     public function getReportAccess(int $id): EmployeeReportAccess
     {
-        return $this->reportAccess()->where('id', $id)->firstOrFail();
+        return $this->reportAccess->findOrFail($id);
     }
 
+    /**
+     * @param int $id
+     * @return void
+     *
+     * @see \Tests\Unit\Core\Models\Employee\SwitchAccessTest
+     */
     public function switchDoReportAccess(int $id): void
     {
         $access = $this->getReportAccess($id);
@@ -62,6 +91,12 @@ class Employee extends AbstractEntity
         $access->save();
     }
 
+    /**
+     * @param int $id
+     * @return void
+     *
+     * @see \Tests\Unit\Core\Models\Employee\SwitchAccessTest
+     */
     public function switchWriteReportAccess(int $id): void
     {
         $access = $this->getReportAccess($id);
@@ -69,19 +104,24 @@ class Employee extends AbstractEntity
         $access->save();
     }
 
+    /**
+     * @return void
+     *
+     * @see \Tests\Unit\Core\Models\Employee\SwitchAccessTest
+     */
     public function switchRideAccess(): void
     {
         $this->can_ride = !$this->can_ride;
     }
 
+    /**
+     * @return void
+     *
+     * @see \Tests\Unit\Core\Models\Employee\SwitchAccessTest
+     */
     public function switchIsManagerAccess(): void
     {
         $this->is_manager = !$this->is_manager;
-    }
-
-    public function setWorkRateAttribute(?int $value): void
-    {
-        $this->attributes['work_rate'] = $value > 0 ? $value : null;
     }
 
     public function reportAccess(): HasMany|EmployeeReportAccess

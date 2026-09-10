@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Core\Models\Invite;
 
+use App\Core\Models\Employee\Employee;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\Invite\InviteStatus;
@@ -63,5 +64,18 @@ class InviteFactory extends Factory
         return $this->state([
             'for' => InviteForWho::LEGAL->value
         ]);
+    }
+
+    public function withEmployee(): static
+    {
+        return $this->afterCreating(function (Invite $i) {
+            return Employee::factory()
+                ->state([
+                    'phys_id' => $i->phys_id,
+                    'legal_id' => $i->legal_id,
+                ])
+                ->withReportAccess()
+                ->create();
+        });
     }
 }

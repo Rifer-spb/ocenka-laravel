@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreign('phys_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->boolean('is_manager')->default(false);
-            $table->unsignedTinyInteger('work_rate')->nullable();
+            $table->unsignedTinyInteger('work_rate')->default(0);
             $table->boolean('can_ride')->default(false);
 
             $table->unique(['legal_id', 'phys_id']);

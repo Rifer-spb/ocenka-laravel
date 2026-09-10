@@ -13,6 +13,8 @@ class UpdateManagerUseCase
      * @param int $inviteId
      * @return void
      * @throws \Throwable
+     *
+     * @see \Integration\Manager\UseCases\Legal\Invite\UpdateManagerUseCaseTest
      */
     public function execute(Legal $legal, int $inviteId): void
     {

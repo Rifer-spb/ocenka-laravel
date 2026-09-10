@@ -14,10 +14,17 @@ class UpdateWorkRateRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        if ($this->value === null) {
+            $this->merge(['value' => 0]);
+        }
+    }
+
     public function rules(): array
     {
         return [
-            'value' => 'nullable|integer|min:0',
+            'value' => 'integer|integer|min:0',
         ];
     }
 

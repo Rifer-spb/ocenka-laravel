@@ -7,7 +7,7 @@ use App\Core\Models\User\ValueObjects\Password;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * Тесты @see \Integration\Manager\UseCases\User\ChangePasswordTest
+ * @see \Integration\Manager\UseCases\User\ChangePasswordTest
  */
 class ChangePasswordUseCase
 {

@@ -18,7 +18,7 @@ class InviteService
      * @param InviteForWho $for
      * @return Invite
      *
-     * Тесты @see \Integration\Manager\Services\InviteCreateTest
+     * @see \Integration\Manager\Services\InviteCreateTest
      */
     public function create(Phys $phys, Legal $legal, InviteForWho $for): Invite
     {
@@ -36,6 +36,8 @@ class InviteService
      * @param Invite $invite
      * @return void
      * @throws \Throwable
+     *
+     * @see \Integration\Manager\Services\ConfirmTest
      */
     public function confirm(Invite $invite): void
     {
@@ -49,6 +51,8 @@ class InviteService
      * @param Invite $invite
      * @return void
      * @throws \Throwable
+     *
+     * @see \Integration\Manager\Services\RevokeTest
      */
     public function revoke(Invite $invite): void
     {
