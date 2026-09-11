@@ -5,7 +5,6 @@ namespace App\Core\Models\User\Phys;
 use App\Core\Helpers\UserHelper;
 use App\Core\Models\Employee\Employee;
 use App\Core\Models\Employee\EmployeeReportAccess;
-use App\Core\Models\Employee\EmployeeRideAccess;
 use App\Core\Models\User\Phys\ValueObjects\Holiday;
 use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
@@ -15,8 +14,8 @@ use App\Core\Models\User\ValueObjects\Password;
 use App\Core\Models\User\ValueObjects\SecondName;
 use App\Core\ValueObjects\Email;
 use App\Core\ValueObjects\NationalPhone;
+use Database\Factories\Core\Models\User\Phys\PhysFactory;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
@@ -25,8 +24,8 @@ use Illuminate\Support\Str;
  * @property PhysProfile $profile
  * @property PhysPhone[] $phones
  * @property Employee $employee
- * @property Collection|EmployeeReportAccess $reportAccesses
- * @property EmployeeRideAccess $rideAccess
+ *
+ * @method static PhysFactory factory()
  */
 class Phys extends User
 {
@@ -37,7 +36,7 @@ class Phys extends User
      *
      * Тесты @see \Tests\Unit\Core\Models\User\Phys\CreateTest
      */
-    public static function new(Email $email, Password $password): self
+    public static function createNew(Email $email, Password $password): self
     {
         $user = parent::create([
             'username' => $email->getValue(),
@@ -103,6 +102,17 @@ class Phys extends User
         $this->phones()->findOrFail($id)->delete();
     }
 
+    public function getPhoneByValue(string $value): PhysPhone
+    {
+        return $this->phones()->where('phone', $value)->firstOrFail();
+    }
+
+    /**
+     * @param Holiday $holiday
+     * @return void
+     *
+     * Тесты @see \Tests\Unit\Core\Models\User\Phys\UpdateHolidayTest
+     */
     public function updateHoliday(Holiday $holiday): void
     {
         $this->profile->updateHoliday($holiday);
@@ -133,15 +143,5 @@ class Phys extends User
     public function phones(): HasMany
     {
         return $this->hasMany(PhysPhone::class, 'user_id', 'id');
-    }
-
-    public function reportAccesses(): HasMany
-    {
-        return $this->hasMany(EmployeeReportAccess::class, 'phys_id', 'id');
-    }
-
-    public function rideAccess(): HasOne
-    {
-        return $this->hasOne(EmployeeRideAccess::class, 'phys_id', 'id');
     }
 }

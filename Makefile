@@ -22,5 +22,5 @@ tinker:
 test:
 	docker exec -it ocenka_laravel_php php artisan test
 
-wayfinder-generate:
+wg:
 	docker exec -it ocenka_laravel_php php artisan wayfinder:generate --with-form

@@ -2,65 +2,38 @@
 
 namespace App\Core\Models\Invite;
 
-readonly class InviteTab
+enum InviteTab: string
 {
-    private const TAB_INBOX = 'inbox';
-
-    private const TAB_OUTBOX = 'outbox';
-
-    private const TAB_ACTIVE = 'active';
-
-    private const TAB_COMPLETE = 'complete';
-
-    private const TABS = [
-        ['id' => self::TAB_INBOX, 'name' => 'Входящие'],
-        ['id' => self::TAB_OUTBOX, 'name' => 'Исходящие'],
-        ['id' => self::TAB_ACTIVE, 'name' => 'Активные'],
-        ['id' => self::TAB_COMPLETE, 'name' => 'Завершенные'],
-    ];
-
-    private const STATUSES = [
-        self::TAB_INBOX => InviteStatus::WAIT->value,
-        self::TAB_OUTBOX => InviteStatus::WAIT->value,
-        self::TAB_ACTIVE => InviteStatus::ACTIVE->value,
-        self::TAB_COMPLETE => InviteStatus::COMPLETE->value,
-    ];
-
-    private function __construct(
-        public string $id,
-        public string $name,
-    ) {}
+    case INBOX = 'inbox';
+    case OUTBOX = 'outbox';
+    case ACTIVE = 'active';
+    case COMPLETE = 'complete';
 
     /**
      * @return self[]
      */
     public static function all(): array
     {
-        return array_map(fn (array $tab) => new self($tab['id'], $tab['name']), self::TABS);
+        return self::cases();
     }
 
     public function isInbox(): bool
     {
-        return $this->id === self::TAB_INBOX;
+        return $this === self::INBOX;
     }
 
     public function isOutbox(): bool
     {
-        return $this->id === self::TAB_OUTBOX;
+        return $this === self::OUTBOX;
     }
 
     public function isActive(): bool
     {
-        return $this->id === self::TAB_ACTIVE;
+        return $this === self::ACTIVE;
     }
 
     public function isComplete(): bool
     {
-        return $this->id === self::TAB_COMPLETE;
-    }
-
-    public function getStatus(): string
-    {
-        return self::STATUSES[$this->id];
+        return $this === self::COMPLETE;
     }
 }

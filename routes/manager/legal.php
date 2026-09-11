@@ -1,7 +1,7 @@
 <?php
 
-use App\Manager\Modules\Legal\Http\Controllers\ProfileController;
-use App\Manager\Modules\Legal\Http\Controllers\InviteController;
+use App\Manager\Http\Controllers\Legal\InviteController;
+use App\Manager\Http\Controllers\Legal\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -17,14 +17,21 @@ Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
             Route::put('password', 'changePassword')->name('password.update');
         });
 
-        Route::prefix('persons')->name('persons.')->controller(InviteController::class)->group(function () {
+        Route::prefix('invites')->name('invites.')->controller(InviteController::class)->group(function () {
             Route::get('/', 'view')->name('index');
             Route::post('/', 'create')->name('create');
-            Route::get('search', 'search')->name('search');
-            Route::post('re-send/{id}', 'reSend')->name('reSend');
-            Route::post('cancel/{id}', 'cancel')->name('cancel');
-            Route::post('confirm/{id}', 'confirm')->name('confirm');
-            Route::post('complete/{id}', 'complete')->name('complete');
+
+            Route::prefix('{invite}')->group(function () {
+                Route::post('re-send', 'reSend')->name('reSend');
+                Route::patch('cancel', 'cancel')->name('cancel');
+                Route::patch('confirm', 'confirm')->name('confirm');
+                Route::patch('close', 'close')->name('close');
+                Route::patch('do-report/{accessId}', 'updateDoReport')->name('updateDoReport');
+                Route::patch('write-report/{accessId}', 'updateWriteReport')->name('updateWriteReport');
+                Route::patch('ride', 'updateRide')->name('updateRide');
+                Route::patch('manager', 'updateManager')->name('updateManager');
+                Route::patch('work-rate', 'updateWorkRate')->name('updateWorkRate');
+            });
         });
     });
 });

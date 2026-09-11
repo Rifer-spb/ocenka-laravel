@@ -3,8 +3,6 @@
 namespace Feature\Manager\Http\Controllers\Phys\Profile\Phone;
 
 use App\Core\Models\User\Phys\Phys;
-use App\Core\Models\User\ValueObjects\Password;
-use App\Core\ValueObjects\Email;
 use App\Core\ValueObjects\NationalPhone;
 use Tests\TestCase;
 
@@ -59,9 +57,6 @@ class AddPhoneTest extends TestCase
 
     private function createUser(): Phys
     {
-        return Phys::new(
-            new Email('test@test.com'),
-            new Password('password')
-        );
+        return Phys::factory()->create();
     }
 }

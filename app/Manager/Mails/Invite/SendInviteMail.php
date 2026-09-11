@@ -2,6 +2,7 @@
 
 namespace App\Manager\Mails\Invite;
 
+use App\Core\Models\User\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Attachment;
@@ -17,10 +18,23 @@ class SendInviteMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(
+    private function __construct(
         public string $emailTo,
         public string $viewLink
     ) {}
+
+    public static function create(User $user): self
+    {
+        if ($user->isPhys()) {
+            $viewLink = url("/manager/{$user->role}/settings/invites");
+        } elseif ($user->isLegal()) {
+            $viewLink = url("/manager/{$user->role}/settings/invites");
+        } else {
+            throw new \Exception('Недопустимая роль пользователя.');
+        }
+
+        return new self($user->email, $viewLink);
+    }
 
     /**
      * Get the message envelope.

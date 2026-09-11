@@ -8,6 +8,7 @@ use App\Core\Models\User\ValueObjects\FirstName;
 use App\Core\Models\User\ValueObjects\LastName;
 use App\Core\Models\User\ValueObjects\SecondName;
 use Carbon\Carbon;
+use Database\Factories\Core\Models\User\Phys\PhysProfileFactory;
 
 /**
  * @property int $id
@@ -21,6 +22,8 @@ use Carbon\Carbon;
  * @property string $holiday_to
  * @property string $created_at
  * @property string $updated_at
+ *
+ * @method static PhysProfileFactory factory()
  */
 class PhysProfile extends AbstractEntity
 {
