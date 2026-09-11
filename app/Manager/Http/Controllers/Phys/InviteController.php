@@ -23,7 +23,7 @@ class InviteController extends AbstractController
     {
         $result = $useCase->execute($this->getUser(), InviteTab::from($request->type));
 
-        return Inertia::render('manager/phys/settings/legals/index', $result);
+        return Inertia::render('manager/phys/settings/invites/index', $result);
     }
 
     /**

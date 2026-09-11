@@ -26,7 +26,7 @@ class SendInviteMail extends Mailable
     public static function create(User $user): self
     {
         if ($user->isPhys()) {
-            $viewLink = url("/manager/{$user->role}/settings/legals");
+            $viewLink = url("/manager/{$user->role}/settings/invites");
         } elseif ($user->isLegal()) {
             $viewLink = url("/manager/{$user->role}/settings/invites");
         } else {

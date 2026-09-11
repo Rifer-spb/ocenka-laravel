@@ -18,7 +18,7 @@ export default function ({ tabs, counts, invites } : TProps) {
     const route = useManagerRoute();
 
     const handleSelectTab = (currentTab : IInviteTab) => {
-        router.get(route('settings/legals'), { type: currentTab.id }, {
+        router.get(route('settings/invites'), { type: currentTab.id }, {
             only: ['invites'],
             preserveState: true,
             replace: true,
