@@ -4,7 +4,7 @@ namespace App\Core\Providers;
 
 use App\Core\Models\User\Client\Client;
 use App\Core\Models\User\Legal\Legal;
-use App\Core\Models\User\Notary\Notary;
+use App\Core\Models\User\Notary\NotaryUser;
 use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\Role;
 use Illuminate\Auth\EloquentUserProvider;
@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
                         Role::PHYS->value => Phys::find($identifier),
                         Role::LEGAL->value => Legal::find($identifier),
                         Role::CLIENT->value => Client::find($identifier),
-                        Role::NOTARY->value => Notary::find($identifier),
+                        Role::NOTARY->value => NotaryUser::find($identifier),
                         default => $user,
                     };
                 }
