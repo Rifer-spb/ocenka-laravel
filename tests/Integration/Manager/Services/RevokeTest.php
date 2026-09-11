@@ -17,7 +17,7 @@ class RevokeTest extends TestCase
             ->create();
 
         $useCase = app(InviteService::class);
-        $useCase->revoke($invite);
+        $useCase->close($invite);
 
         $this->assertTrue($invite->isComplete());
         $this->assertDatabaseMissing(Employee::getTableName(), [

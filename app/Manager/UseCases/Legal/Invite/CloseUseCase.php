@@ -23,6 +23,6 @@ class CloseUseCase
     public function execute(Legal $legal, int $inviteId): void
     {
         $invite = InviteFinder::getActiveByIdAndLegal($inviteId, $legal);
-        DB::transaction(fn () => $this->inviteService->revoke($invite));
+        DB::transaction(fn () => $this->inviteService->close($invite));
     }
 }

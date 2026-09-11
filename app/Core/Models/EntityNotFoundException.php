@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Core\Models;
 
 class EntityNotFoundException extends \DomainException
 {

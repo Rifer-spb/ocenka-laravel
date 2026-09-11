@@ -54,7 +54,7 @@ class InviteService
      *
      * @see \Integration\Manager\Services\RevokeTest
      */
-    public function revoke(Invite $invite): void
+    public function close(Invite $invite): void
     {
         $invite->complete();
         $invite->saveOrFail();

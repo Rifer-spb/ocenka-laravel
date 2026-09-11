@@ -19,6 +19,7 @@ class CreateUseCase
      * @param Email $email
      * @return void
      * @throws \Exception
+     * @see \Integration\Manager\UseCases\Phys\Invite\CreateUseCaseTest
      */
     public function execute(Phys $phys, Email $email): void
     {

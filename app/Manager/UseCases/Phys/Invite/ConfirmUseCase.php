@@ -18,6 +18,7 @@ class ConfirmUseCase
      * @param int $inviteId
      * @return void
      * @throws \Throwable
+     * @see \Integration\Manager\UseCases\Phys\Invite\ConfirmUseCaseTest
      */
     public function execute(Phys $phys, int $inviteId): void
     {

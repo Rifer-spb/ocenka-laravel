@@ -4,10 +4,10 @@ namespace App\Core\Models\Employee;
 
 use App\Core\Models\AbstractEntity;
 use App\Core\Models\Direction;
+use App\Core\Models\EntityNotFoundException;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
-use App\Exceptions\EntityNotFoundException;
 use Database\Factories\Core\Models\Employee\EmployeeFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;

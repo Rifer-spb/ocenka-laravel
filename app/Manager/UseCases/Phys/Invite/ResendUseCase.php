@@ -17,6 +17,7 @@ class ResendUseCase
      * @param int $inviteId
      * @return void
      * @throws \Exception
+     * @see \Integration\Manager\UseCases\Phys\Invite\ResendUseCaseTest
      */
     public function execute(Phys $phys, int $inviteId): void
     {

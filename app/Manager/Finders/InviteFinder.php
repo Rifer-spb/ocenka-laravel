@@ -2,6 +2,7 @@
 
 namespace App\Manager\Finders;
 
+use App\Core\Models\EntityNotFoundException;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\Invite\InviteStatus;
@@ -9,7 +10,6 @@ use App\Core\Models\Invite\InviteTab;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\User;
-use App\Exceptions\EntityNotFoundException;
 use App\Manager\Helpers\InviteHelper;
 
 class InviteFinder
