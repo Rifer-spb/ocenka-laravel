@@ -21,7 +21,7 @@ export default function () {
         if (pathname.includes('/manager/phys/settings')) {
             return [
                 {route: route('settings/account'), name: 'Аккаунт'},
-                {route: route('settings/legals'), name: 'Юр. лица'},
+                {route: route('settings/invites'), name: 'Приглашения'},
                 {route: route('settings/telegram'), name: 'Телеграм'},
             ];
         }
@@ -57,7 +57,7 @@ export default function () {
         if (pathname.includes('/manager/legal/settings')) {
             return [
                 {route: route('settings/account'), name: 'Аккаунт'},
-                {route: route('settings/persons'), name: 'Сотрудники'},
+                {route: route('settings/invites'), name: 'Приглашения'},
             ];
         }
 

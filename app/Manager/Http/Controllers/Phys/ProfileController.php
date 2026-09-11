@@ -9,24 +9,24 @@ use App\Core\Models\User\ValueObjects\FirstName;
 use App\Core\Models\User\ValueObjects\LastName;
 use App\Core\Models\User\ValueObjects\Password;
 use App\Core\Models\User\ValueObjects\SecondName;
-use App\Core\UseCases\User\ChangePasswordUseCase;
 use App\Core\ValueObjects\NationalPhone;
 use App\Manager\Http\Requests\ChangePasswordRequest;
 use App\Manager\Http\Requests\Phys\Profile\AddPhoneRequest;
 use App\Manager\Http\Requests\Phys\Profile\UpdateHolidayRequest;
 use App\Manager\Http\Requests\Phys\Profile\UpdateNameRequest;
-use App\Manager\Modules\Phys\Views\ProfileView;
+use App\Manager\UseCases\Phys\Profile\GetPageDataUseCase;
 use App\Manager\UseCases\Phys\Profile\Phone;
 use App\Manager\UseCases\Phys\Profile\UpdateHolidayUseCase;
 use App\Manager\UseCases\Phys\Profile\UpdateNameUseCase;
+use App\Manager\UseCases\User\ChangePasswordUseCase;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
 class ProfileController extends AbstractController
 {
-    public function view(ProfileView $view)
+    public function view(GetPageDataUseCase $useCase)
     {
-        $params = $view->get($this->getUser());
+        $params = $useCase->execute($this->getUser());
 
         return Inertia::render('manager/phys/settings/account/index', $params);
     }

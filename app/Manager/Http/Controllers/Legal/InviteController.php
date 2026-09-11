@@ -1,0 +1,164 @@
+<?php
+
+namespace App\Manager\Http\Controllers\Legal;
+
+use App\Core\Http\Controllers\AbstractController;
+use App\Core\Models\Invite\Invite;
+use App\Core\ValueObjects\Email;
+use App\Manager\Http\Requests\InviteSearchRequest;
+use App\Manager\Http\Requests\Legal\Invite\CreateRequest;
+use App\Manager\Http\Requests\Legal\Invite\UpdateWorkRateRequest;
+use App\Manager\UseCases\Legal\Invite\ConfirmUseCase;
+use App\Manager\UseCases\Legal\Invite\CreateUseCase;
+use App\Manager\UseCases\Legal\Invite\GetPageDataUseCase;
+use App\Manager\UseCases\Legal\Invite\CancelUseCase;
+use App\Manager\UseCases\Legal\Invite\ResendUseCase;
+use App\Manager\UseCases\Legal\Invite\CloseUseCase;
+use App\Manager\UseCases\Legal\Invite\UpdateDoReportUseCase;
+use App\Manager\UseCases\Legal\Invite\UpdateManagerUseCase;
+use App\Manager\UseCases\Legal\Invite\UpdateRideUseCase;
+use App\Manager\UseCases\Legal\Invite\UpdateWorkRateUseCase;
+use App\Manager\UseCases\Legal\Invite\UpdateWriteReportUseCase;
+use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
+
+class InviteController extends AbstractController
+{
+    public function view(InviteSearchRequest $request, GetPageDataUseCase $useCase)
+    {
+        $view = $useCase->execute($this->getUser(), $request);
+
+        return Inertia::render('manager/legal/settings/invites/index', $view);
+    }
+
+    /**
+     * @param CreateRequest $request
+     * @param CreateUseCase $useCase
+     * @return RedirectResponse
+     * @throws \Exception
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\CreateUseCaseTest
+     */
+    public function create(CreateRequest $request, CreateUseCase $useCase)
+    {
+        $useCase->execute($this->getUser(), new Email($request->email));
+
+        return back()->with('success', 'Заявка успешно отправлена');
+    }
+
+    /**
+     * @param Invite $invite
+     * @param ResendUseCase $useCase
+     * @return RedirectResponse
+     * @throws \Exception
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\ResendUseCaseTest
+     */
+    public function reSend(Invite $invite, ResendUseCase $useCase)
+    {
+        $useCase->execute($this->getUser(), $invite->id);
+
+        return back()->with('success', 'Заявка успешно отправлена повторно');
+    }
+
+    /**
+     * @throws \Throwable
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\CancelUseCaseTest
+     */
+    public function cancel(Invite $invite, CancelUseCase $useCase)
+    {
+        $useCase->execute($this->getUser(), $invite->id);
+
+        return back()->with('success', 'Заявка успешно отменена');
+    }
+
+    /**
+     * @return RedirectResponse
+     * @throws \Throwable
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\ConfirmUseCaseTest
+     */
+    public function confirm(Invite $invite, ConfirmUseCase $useCase)
+    {
+        $useCase->execute($this->getUser(), $invite->id);
+
+        return back()->with('success', 'Заявка успешно подтверждена');
+    }
+
+    /**
+     * @return RedirectResponse
+     * @throws \Throwable
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\CloseUseCaseTest
+     */
+    public function close(Invite $invite, CloseUseCase $useCase)
+    {
+        $useCase->execute($this->getUser(), $invite->id);
+
+        return back()->with('success', 'Заявка успешно завершена');
+    }
+
+    /**
+     * @param Invite $invite
+     * @param int $accessId
+     * @param UpdateDoReportUseCase $useCase
+     * @return RedirectResponse
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateDoReportUseCaseTest
+     */
+    public function updateDoReport(Invite $invite, int $accessId, UpdateDoReportUseCase $useCase)
+    {
+        $useCase->execute($this->getUser(), $invite->id, $accessId);
+
+        return back()->with('success', 'Успешно обновлено');
+    }
+
+    /**
+     * @param Invite $invite
+     * @param int $accessId
+     * @param UpdateWriteReportUseCase $useCase
+     * @return RedirectResponse
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateWriteReportUseCaseTest
+     */
+    public function updateWriteReport(Invite $invite, int $accessId, UpdateWriteReportUseCase $useCase)
+    {
+        $useCase->execute($this->getUser(), $invite->id, $accessId);
+
+        return back()->with('success', 'Успешно обновлено');
+    }
+
+    /**
+     * @throws \Throwable
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateRideUseCaseTest
+     */
+    public function updateRide(Invite $invite, UpdateRideUseCase $useCase)
+    {
+        $useCase->execute($this->getUser(), $invite->id);
+
+        return back()->with('success', 'Успешно обновлено');
+    }
+
+    /**
+     * @param Invite $invite
+     * @param UpdateManagerUseCase $useCase
+     * @return RedirectResponse
+     * @throws \Throwable
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateManagerUseCaseTest
+     */
+    public function updateManager(Invite $invite, UpdateManagerUseCase $useCase)
+    {
+        $useCase->execute($this->getUser(), $invite->id);
+
+        return back()->with('success', 'Успешно обновлено');
+    }
+
+    /**
+     * @param Invite $invite
+     * @param UpdateWorkRateRequest $request
+     * @param UpdateWorkRateUseCase $useCase
+     * @return RedirectResponse
+     * @throws \Throwable
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateWorkRateUseCaseTest
+     */
+    public function updateWorkRate(Invite $invite, UpdateWorkRateRequest $request, UpdateWorkRateUseCase $useCase)
+    {
+        $useCase->execute($this->getUser(), $invite->id, $request->value);
+
+        return back()->with('success', 'Успешно обновлено');
+    }
+}

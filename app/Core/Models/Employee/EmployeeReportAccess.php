@@ -4,6 +4,7 @@ namespace App\Core\Models\Employee;
 
 use App\Core\Models\AbstractEntity;
 use App\Core\Models\Direction;
+use Database\Factories\Core\Models\Employee\EmployeeReportAccessFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -15,6 +16,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property bool $do
  * @property bool $write
  * @property Direction $direction
+ *
+ * @method static EmployeeReportAccessFactory factory()
  */
 class EmployeeReportAccess extends AbstractEntity
 {
@@ -26,6 +29,14 @@ class EmployeeReportAccess extends AbstractEntity
         'legal_id',
         'employee_id',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'do' => 'boolean',
+            'write' => 'boolean',
+        ];
+    }
 
     public function direction(): HasOne
     {

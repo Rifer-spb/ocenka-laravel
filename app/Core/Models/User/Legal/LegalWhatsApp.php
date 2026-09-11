@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Core\Models\User\Legal;
+
+use App\Core\Models\AbstractEntity;
+
+/**
+ * @property int $id
+ * @property string $api_url
+ * @property string $api_key
+ * @property string $api_id
+ * @property int $phone
+ */
+class LegalWhatsApp extends AbstractEntity
+{
+    protected $table = 'legal_whatsapp';
+    public $timestamps = false;
+    protected $fillable = [
+        'id',
+    ];
+}

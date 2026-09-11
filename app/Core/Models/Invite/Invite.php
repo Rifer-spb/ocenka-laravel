@@ -5,7 +5,10 @@ namespace App\Core\Models\Invite;
 use App\Core\Models\AbstractEntity;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
+use App\Core\Models\User\User;
+use App\Manager\Finders\InviteFinder;
 use Carbon\Carbon;
+use Database\Factories\Core\Models\Invite\InviteFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -18,13 +21,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string|Carbon $completed_at
  * @property Legal $legal
  * @property Phys $phys
+ *
+ * @method static InviteFactory factory
  */
 class Invite extends AbstractEntity
 {
-    const FOR_PHYS = 1;
-
-    const FOR_LEGAL = 2;
-
     public $timestamps = false;
 
     protected $fillable = [
@@ -34,58 +35,60 @@ class Invite extends AbstractEntity
         'status',
     ];
 
-    private static function new(Phys $phys, Legal $legal, int $for): self
+    /**
+     * @param Phys $phys
+     * @param Legal $legal
+     * @param InviteForWho $for
+     * @return self
+     *
+     * @see \Tests\Unit\Core\Models\Invite\InviteCreateTest
+     */
+    public static function createNew(Phys $phys, Legal $legal, InviteForWho $for): self
     {
+        if (InviteFinder::hasWait($phys, $legal)) {
+            throw new \DomainException('Заявка с указанным уже существует.');
+        }
+
+        if (InviteFinder::hasActive($phys, $legal)) {
+            throw new \DomainException('Связь с указанным уже установлена.');
+        }
+
         return self::create([
             'phys_id' => $phys->id,
             'legal_id' => $legal->id,
-            'for' => $for,
+            'for' => $for->value,
             'status' => InviteStatus::WAIT->value,
         ]);
     }
 
     /**
-     * @throws \Throwable
+     * @return bool
+     *
+     * @see \Tests\Unit\Core\Models\Invite\InviteStatusTest
      */
-    public static function createByPhys(Phys $phys, Legal $legal): self
-    {
-        return self::new($phys, $legal, self::FOR_LEGAL);
-    }
-
-    /**
-     * @throws \Throwable
-     */
-    public static function createByLegal(Legal $legal, Phys $phys): self
-    {
-        return self::new($phys, $legal, self::FOR_PHYS);
-    }
-
     public function isActive(): bool
     {
         return $this->status == InviteStatus::ACTIVE->value;
     }
 
+    /**
+     * @return bool
+     *
+     * @see \Tests\Unit\Core\Models\Invite\InviteStatusTest
+     */
     public function isWait(): bool
     {
         return $this->status == InviteStatus::WAIT->value;
     }
 
-    public static function findWait(Phys $phys, Legal $legal): ?self
+    /**
+     * @return bool
+     *
+     * @see \Tests\Unit\Core\Models\Invite\InviteStatusTest
+     */
+    public function isComplete(): bool
     {
-        return self::find([
-            'phys_id' => $phys->id,
-            'legal_id' => $legal->id,
-            'status' => InviteStatus::WAIT->value,
-        ]);
-    }
-
-    public static function findActive(Phys $phys, Legal $legal): ?self
-    {
-        return self::find([
-            'phys_id' => $phys->id,
-            'legal_id' => $legal->id,
-            'status' => InviteStatus::ACTIVE->value,
-        ]);
+        return $this->status == InviteStatus::COMPLETE->value;
     }
 
     public function getCreatedAtFormated(): string
@@ -98,6 +101,11 @@ class Invite extends AbstractEntity
         return $this->completed_at->format('d.m.Y H:i');
     }
 
+    /**
+     * @return void
+     *
+     * @see \Tests\Unit\Core\Models\Invite\InviteConfirmTest
+     */
     public function confirm(): void
     {
         if (! $this->isWait()) {
@@ -107,6 +115,11 @@ class Invite extends AbstractEntity
         $this->status = InviteStatus::ACTIVE->value;
     }
 
+    /**
+     * @return void
+     *
+     * @see \Tests\Unit\Core\Models\Invite\InviteCompleteTest
+     */
     public function complete(): void
     {
         if (! $this->isActive()) {
@@ -117,48 +130,34 @@ class Invite extends AbstractEntity
         $this->status = InviteStatus::COMPLETE->value;
     }
 
-    public static function getWaitById(int $id): self
+    /**
+     * @return bool
+     *
+     * @see \Tests\Unit\Core\Models\Invite\InviteForWhoTest
+     */
+    public function isForPhys(): bool
     {
-        $model = self::where([
-            'id' => $id,
-            'status' => InviteStatus::WAIT->value,
-        ])->first();
-
-        if (! $model) {
-            throw new \DomainException('Заявка не найдена.');
-        }
-
-        return $model;
+        return $this->for === InviteForWho::PHYS->value;
     }
 
-    public static function getActiveById(int $id): self
+    /**
+     * @return bool
+     *
+     * @see \Tests\Unit\Core\Models\Invite\InviteForWhoTest
+     */
+    public function isForLegal(): bool
     {
-        $model = self::where([
-            'id' => $id,
-            'status' => InviteStatus::ACTIVE->value,
-        ])->first();
-
-        if (! $model) {
-            throw new \DomainException('Заявка не найдена.');
-        }
-
-        return $model;
+        return $this->for === InviteForWho::LEGAL->value;
     }
 
-    public static function hasActive(Phys $phys, Legal $legal): bool
+    /**
+     * @return User
+     *
+     * @see \Tests\Unit\Core\Models\Invite\InviteGetForWhoUser
+     */
+    public function getForWhoUser(): User
     {
-        return self::where('phys_id', $phys->id)
-            ->where('legal_id', $legal->id)
-            ->where('status', InviteStatus::ACTIVE->value)
-            ->exists();
-    }
-
-    public static function hasWait(Phys $phys, Legal $legal): bool
-    {
-        return self::where('phys_id', $phys->id)
-            ->where('legal_id', $legal->id)
-            ->where('status', InviteStatus::WAIT->value)
-            ->exists();
+        return $this->isForPhys() ? $this->phys : $this->legal;
     }
 
     public function legal(): HasOne|Legal

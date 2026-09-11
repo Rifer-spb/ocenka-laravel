@@ -2,15 +2,13 @@
 
 namespace App\Core\Models\User\Legal;
 
-use App\Core\Models\Legal\Company;
-use App\Core\Models\Legal\LegalMail;
-use App\Core\Models\Legal\LegalPayment;
-use App\Core\Models\Legal\LegalProfile;
-use App\Core\Models\Legal\LegalWhatsApp;
+use App\Core\Models\LegalType;
+use App\Core\Models\User\Legal\Dto\Company;
 use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
 use App\Core\Models\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
+use Database\Factories\Core\Models\User\Legal\LegalFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
@@ -20,6 +18,8 @@ use Illuminate\Support\Str;
  * @property LegalPayment $payment
  * @property LegalMail $mail
  * @property LegalWhatsApp $whatsApp
+ *
+ * @method static LegalFactory factory()
  */
 class Legal extends User
 {
@@ -30,7 +30,7 @@ class Legal extends User
      *
      * Тесты @see \Tests\Unit\Core\Models\User\Legal\CreateTest
      */
-    public static function new(Email $email, Password $password): self
+    public static function createNew(Email $email, Password $password): self
     {
         $user = parent::create([
             'username' => $email->getValue(),
@@ -55,12 +55,14 @@ class Legal extends User
             : $this->username;
     }
 
-    public function updateCompany(Company $company): void
+    public function updateCompany(LegalType $type, Company $company): void
     {
         $profile = $this->profile;
-        $profile->updateCompany($company);
+        $profile->updateCompany($type, $company);
         $profile->saveOrFail();
     }
+
+    /*******************************************************/
 
     protected static function booted(): void
     {

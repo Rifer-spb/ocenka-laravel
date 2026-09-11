@@ -12,7 +12,7 @@ class ChangePasswordTest extends TestCase
 {
     public function testSuccess()
     {
-        $user = Phys::new(
+        $user = Phys::createNew(
             new Email('test@test.com'),
             new Password('password')
         );

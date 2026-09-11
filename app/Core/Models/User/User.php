@@ -4,7 +4,7 @@ namespace App\Core\Models\User;
 
 use App\Core\Models\EloquentDocMethods;
 use App\Core\Models\User\ValueObjects\Password;
-use Database\Factories\UserFactory;
+use Database\Factories\UserTestFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,7 +22,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
+    /** @use HasFactory<UserTestFactory> */
     use EloquentDocMethods, HasFactory, Notifiable;
 
     protected $table = 'users';
@@ -81,16 +81,5 @@ class User extends Authenticatable
     public function updatePassword(Password $password): void
     {
         $this->password = $password->getValue();
-    }
-
-    public static function getByUsername(string $username): static
-    {
-        $user = static::where('username', $username)->first();
-
-        if (! $user) {
-            throw new \DomainException('Пользователь не найден.');
-        }
-
-        return $user;
     }
 }

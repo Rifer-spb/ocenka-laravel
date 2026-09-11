@@ -20,13 +20,15 @@ Route::prefix('phys')->name('phys.')->middleware('auth')->group(function () {
             Route::patch('password', 'changePassword')->name('password.update');
         });
 
-        Route::prefix('legals')->name('legals.')->controller(InviteController::class)->group(function () {
+        Route::prefix('invites')->name('invites.')->controller(InviteController::class)->group(function () {
             Route::get('/', 'view')->name('index');
             Route::post('/', 'create')->name('create');
-            Route::get('search', 'search')->name('search');
-            Route::post('re-send/{id}', 'reSend')->name('reSend');
-            Route::post('cancel/{id}', 'cancel')->name('cancel');
-            Route::post('confirm/{id}', 'confirm')->name('confirm');
+
+            Route::prefix('{invite}')->group(function () {
+                Route::post('re-send', 'reSend')->name('reSend');
+                Route::patch('cancel', 'cancel')->name('cancel');
+                Route::patch('confirm', 'confirm')->name('confirm');
+            });
         });
     });
 });

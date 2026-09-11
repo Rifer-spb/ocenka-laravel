@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Core\Models\User\Legal;
 
-use App\Core\Models\Legal\LegalMail;
-use App\Core\Models\Legal\LegalPayment;
-use App\Core\Models\Legal\LegalProfile;
-use App\Core\Models\Legal\LegalWhatsApp;
 use App\Core\Models\User\Legal\Legal;
+use App\Core\Models\User\Legal\LegalMail;
+use App\Core\Models\User\Legal\LegalPayment;
+use App\Core\Models\User\Legal\LegalProfile;
+use App\Core\Models\User\Legal\LegalWhatsApp;
 use App\Core\Models\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
 use Illuminate\Database\QueryException;
@@ -17,10 +17,12 @@ class CreateTest extends TestCase
 {
     public function testSignUpSuccess()
     {
-        $user = Legal::new(
+        $user = Legal::createNew(
             $email = new Email('legal@example.com'),
             $password = new Password('password'),
         );
+
+        $user = Legal::findOrFail($user->id);
 
         $this->assertEquals($email->getValue(), $user->username);
         $this->assertEquals($email->getValue(), $user->email);
@@ -47,15 +49,17 @@ class CreateTest extends TestCase
 
     public function testAlreadyExistsEmail()
     {
-        Legal::new(
-            new Email('legal@example.com'),
-            new Password('password'),
-        );
+        $email = 'legal@example.com';
+
+        Legal::factory()->state([
+            'email' => $email,
+            'username' => $email
+        ])->create();
 
         $this->expectException(QueryException::class);
         $this->expectExceptionMessageMatches('/Duplicate entry|unique constraint|already exists/i');
 
-        Legal::new(
+        Legal::createNew(
             new Email('legal@example.com'),
             new Password('password'),
         );
