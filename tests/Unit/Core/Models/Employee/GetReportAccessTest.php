@@ -4,7 +4,7 @@ namespace Tests\Unit\Core\Models\Employee;
 
 use App\Core\Models\Employee\Employee;
 use App\Core\Models\Employee\EmployeeReportAccess;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Exceptions\EntityNotFoundException;
 use Tests\TestCase;
 
 class GetReportAccessTest extends TestCase
@@ -13,7 +13,7 @@ class GetReportAccessTest extends TestCase
     {
         $employee = Employee::factory()->create();
 
-        $this->expectException(ModelNotFoundException::class);
+        $this->expectException(EntityNotFoundException::class);
 
         $employee->getReportAccess(999);
     }

@@ -79,10 +79,7 @@ class ChangePasswordTest extends TestCase
 
     private function createUser(): Phys
     {
-        return Phys::createNew(
-            new Email('test@test.com'),
-            new Password('password')
-        );
+        return Phys::factory()->create();
     }
 
     private function getRoute(): string

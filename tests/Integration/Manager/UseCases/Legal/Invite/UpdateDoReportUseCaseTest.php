@@ -4,8 +4,8 @@ namespace Integration\Manager\UseCases\Legal\Invite;
 
 use App\Core\Finder\EmployeeFinder;
 use App\Core\Models\Invite\Invite;
+use App\Exceptions\EntityNotFoundException;
 use App\Manager\UseCases\Legal\Invite\UpdateDoReportUseCase;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Tests\TestCase;
 
 class UpdateDoReportUseCaseTest extends TestCase
@@ -22,7 +22,7 @@ class UpdateDoReportUseCaseTest extends TestCase
     {
         $invite = Invite::factory()->withEmployee()->withWait()->create();
 
-        $this->expectException(ModelNotFoundException::class);
+        $this->expectException(EntityNotFoundException::class);
         $this->expectExceptionMessage('Отправленная заявка не найдена.');
 
         $this->useCase->execute($invite->legal, $invite->id, 1);

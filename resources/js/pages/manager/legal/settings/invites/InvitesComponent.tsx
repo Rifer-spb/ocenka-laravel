@@ -25,8 +25,8 @@ export default function({ currentTab, invites } : IProps) {
         router.patch(route(`${baseUrl}/${id}/confirm`));
     };
 
-    const handleComplete = (id: number) => {
-        router.patch(route(`${baseUrl}/${id}/complete`));
+    const handleClose = (id: number) => {
+        router.patch(route(`${baseUrl}/${id}/close`));
     };
 
     const handleUpdateDoReport = (id: number, accessId: number) => {
@@ -75,7 +75,7 @@ export default function({ currentTab, invites } : IProps) {
                         handleReSend={handleReSend}
                         handleCancel={handleCancel}
                         handleConfirm={handleConfirm}
-                        handleComplete={handleComplete}
+                        handleClose={handleClose}
                         handleUpdateDoReport={handleUpdateDoReport}
                         handleUpdateWriteReport={handleUpdateWriteReport}
                         handleUpdateRide={handleUpdateRide}

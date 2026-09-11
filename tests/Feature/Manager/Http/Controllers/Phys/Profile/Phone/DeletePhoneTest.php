@@ -3,8 +3,6 @@
 namespace Feature\Manager\Http\Controllers\Phys\Profile\Phone;
 
 use App\Core\Models\User\Phys\Phys;
-use App\Core\Models\User\ValueObjects\Password;
-use App\Core\ValueObjects\Email;
 use App\Core\ValueObjects\NationalPhone;
 use Tests\TestCase;
 
@@ -41,11 +39,6 @@ class DeletePhoneTest extends TestCase
 
     private function createUser(): Phys
     {
-        $user = Phys::createNew(
-            new Email('test@test.com'),
-            new Password('password')
-        );
-
-        return $user;
+        return Phys::factory()->create();
     }
 }

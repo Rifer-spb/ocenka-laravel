@@ -4,7 +4,6 @@ namespace App\Core\Finder;
 
 use App\Core\Models\Employee\Employee;
 use App\Core\Models\Invite\Invite;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EmployeeFinder
 {
@@ -16,7 +15,7 @@ class EmployeeFinder
         ])->first();
 
         if (! $employee) {
-            throw new ModelNotFoundException('Сотрудник не найден.');
+            throw new \RuntimeException('Сотрудник не найден.');
         }
 
         return $employee;

@@ -7,10 +7,10 @@ type Props = {
     handleReSend: Function;
     handleCancel: Function;
     handleConfirm: Function;
-    handleComplete: Function;
+    handleClose: Function;
 }
 
-export default function ({ id, currentTab, handleReSend, handleCancel, handleConfirm, handleComplete } : Props) {
+export default function ({ id, currentTab, handleReSend, handleCancel, handleConfirm, handleClose } : Props) {
     return (
         <>
             <div className="btn-group">
@@ -45,7 +45,7 @@ export default function ({ id, currentTab, handleReSend, handleCancel, handleCon
                         <Button
                             type="button"
                             className="btn btn-danger"
-                            onClick={() => handleComplete(id)}
+                            onClick={() => handleClose(id)}
                         >Завершить</Button>
                     </>
                 ) : ''}

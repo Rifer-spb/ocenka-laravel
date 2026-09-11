@@ -18,6 +18,8 @@ class ConfirmUseCase
      * @param int $inviteId
      * @return void
      * @throws \Throwable
+     *
+     * @see \Integration\Manager\UseCases\Legal\Invite\ConfirmUseCaseTest
      */
     public function execute(Legal $legal, int $inviteId): void
     {

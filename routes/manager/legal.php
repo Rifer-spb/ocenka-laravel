@@ -25,7 +25,7 @@ Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
                 Route::post('re-send', 'reSend')->name('reSend');
                 Route::patch('cancel', 'cancel')->name('cancel');
                 Route::patch('confirm', 'confirm')->name('confirm');
-                Route::patch('complete', 'complete')->name('complete');
+                Route::patch('close', 'close')->name('close');
                 Route::patch('do-report/{accessId}', 'updateDoReport')->name('updateDoReport');
                 Route::patch('write-report/{accessId}', 'updateWriteReport')->name('updateWriteReport');
                 Route::patch('ride', 'updateRide')->name('updateRide');

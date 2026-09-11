@@ -17,6 +17,8 @@ class ResendUseCase
      * @param int $inviteId
      * @return void
      * @throws \Exception
+     *
+     * @see \Integration\Manager\UseCases\Legal\Invite\ResendUseCaseTest
      */
     public function execute(Legal $legal, int $inviteId): void
     {

@@ -11,9 +11,9 @@ use App\Manager\Http\Requests\Legal\Invite\UpdateWorkRateRequest;
 use App\Manager\UseCases\Legal\Invite\ConfirmUseCase;
 use App\Manager\UseCases\Legal\Invite\CreateUseCase;
 use App\Manager\UseCases\Legal\Invite\GetPageDataUseCase;
-use App\Manager\UseCases\Legal\Invite\RefuseUseCase;
+use App\Manager\UseCases\Legal\Invite\CancelUseCase;
 use App\Manager\UseCases\Legal\Invite\ResendUseCase;
-use App\Manager\UseCases\Legal\Invite\RevokeUseCase;
+use App\Manager\UseCases\Legal\Invite\CloseUseCase;
 use App\Manager\UseCases\Legal\Invite\UpdateDoReportUseCase;
 use App\Manager\UseCases\Legal\Invite\UpdateManagerUseCase;
 use App\Manager\UseCases\Legal\Invite\UpdateRideUseCase;
@@ -31,6 +31,13 @@ class InviteController extends AbstractController
         return Inertia::render('manager/legal/settings/invites/index', $view);
     }
 
+    /**
+     * @param CreateRequest $request
+     * @param CreateUseCase $useCase
+     * @return RedirectResponse
+     * @throws \Exception
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\CreateUseCaseTest
+     */
     public function create(CreateRequest $request, CreateUseCase $useCase)
     {
         $useCase->execute($this->getUser(), new Email($request->email));
@@ -38,6 +45,13 @@ class InviteController extends AbstractController
         return back()->with('success', 'Заявка успешно отправлена');
     }
 
+    /**
+     * @param Invite $invite
+     * @param ResendUseCase $useCase
+     * @return RedirectResponse
+     * @throws \Exception
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\ResendUseCaseTest
+     */
     public function reSend(Invite $invite, ResendUseCase $useCase)
     {
         $useCase->execute($this->getUser(), $invite->id);
@@ -47,8 +61,9 @@ class InviteController extends AbstractController
 
     /**
      * @throws \Throwable
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\CancelUseCaseTest
      */
-    public function cancel(Invite $invite, RefuseUseCase $useCase)
+    public function cancel(Invite $invite, CancelUseCase $useCase)
     {
         $useCase->execute($this->getUser(), $invite->id);
 
@@ -57,8 +72,8 @@ class InviteController extends AbstractController
 
     /**
      * @return RedirectResponse
-     *
      * @throws \Throwable
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\ConfirmUseCaseTest
      */
     public function confirm(Invite $invite, ConfirmUseCase $useCase)
     {
@@ -69,16 +84,23 @@ class InviteController extends AbstractController
 
     /**
      * @return RedirectResponse
-     *
      * @throws \Throwable
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\CloseUseCaseTest
      */
-    public function complete(Invite $invite, RevokeUseCase $useCase)
+    public function close(Invite $invite, CloseUseCase $useCase)
     {
         $useCase->execute($this->getUser(), $invite->id);
 
-        return back()->with('success', 'Заявка успешно подтверждена');
+        return back()->with('success', 'Заявка успешно завершена');
     }
 
+    /**
+     * @param Invite $invite
+     * @param int $accessId
+     * @param UpdateDoReportUseCase $useCase
+     * @return RedirectResponse
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateDoReportUseCaseTest
+     */
     public function updateDoReport(Invite $invite, int $accessId, UpdateDoReportUseCase $useCase)
     {
         $useCase->execute($this->getUser(), $invite->id, $accessId);
@@ -86,6 +108,13 @@ class InviteController extends AbstractController
         return back()->with('success', 'Успешно обновлено');
     }
 
+    /**
+     * @param Invite $invite
+     * @param int $accessId
+     * @param UpdateWriteReportUseCase $useCase
+     * @return RedirectResponse
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateWriteReportUseCaseTest
+     */
     public function updateWriteReport(Invite $invite, int $accessId, UpdateWriteReportUseCase $useCase)
     {
         $useCase->execute($this->getUser(), $invite->id, $accessId);
@@ -95,6 +124,7 @@ class InviteController extends AbstractController
 
     /**
      * @throws \Throwable
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateRideUseCaseTest
      */
     public function updateRide(Invite $invite, UpdateRideUseCase $useCase)
     {
@@ -108,6 +138,7 @@ class InviteController extends AbstractController
      * @param UpdateManagerUseCase $useCase
      * @return RedirectResponse
      * @throws \Throwable
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateManagerUseCaseTest
      */
     public function updateManager(Invite $invite, UpdateManagerUseCase $useCase)
     {
@@ -122,6 +153,7 @@ class InviteController extends AbstractController
      * @param UpdateWorkRateUseCase $useCase
      * @return RedirectResponse
      * @throws \Throwable
+     * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateWorkRateUseCaseTest
      */
     public function updateWorkRate(Invite $invite, UpdateWorkRateRequest $request, UpdateWorkRateUseCase $useCase)
     {

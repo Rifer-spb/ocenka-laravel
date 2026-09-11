@@ -3,7 +3,7 @@
 namespace App\Core\Finder\User;
 
 use App\Core\Models\User\Phys\Phys;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Exceptions\EntityNotFoundException;
 
 class PhysFinder
 {
@@ -12,7 +12,7 @@ class PhysFinder
         $user = Phys::where('username', $username)->first();
 
         if (! $user) {
-            throw new ModelNotFoundException("Физ.лицо с username {$username} не найдено.");
+            throw new EntityNotFoundException("Физ.лицо с username {$username} не найдено.");
         }
 
         return $user;

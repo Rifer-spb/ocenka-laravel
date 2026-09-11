@@ -7,6 +7,7 @@ use App\Core\Models\Direction;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
+use App\Exceptions\EntityNotFoundException;
 use Database\Factories\Core\Models\Employee\EmployeeFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -75,7 +76,11 @@ class Employee extends AbstractEntity
      */
     public function getReportAccess(int $id): EmployeeReportAccess
     {
-        return $this->reportAccess->findOrFail($id);
+        if (!$access = $this->reportAccess->find($id)) {
+            throw new EntityNotFoundException('Права отчета не найдены.');
+        }
+
+        return $access;
     }
 
     /**

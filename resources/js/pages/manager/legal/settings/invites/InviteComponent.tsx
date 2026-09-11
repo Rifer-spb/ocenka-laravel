@@ -3,7 +3,6 @@ import {IInviteTab} from "@/components/app/manager/legal/inviteTabs/types";
 import ButtonsComponent from './ButtonsComponent';
 import CheckboxItem from "@/components/app/CheckboxItem";
 import {Input} from "@/components/ui/input";
-import {useEffect, useState} from "react";
 
 interface IProps {
     currentTab: IInviteTab;
@@ -11,7 +10,7 @@ interface IProps {
     handleReSend: Function;
     handleCancel: Function;
     handleConfirm: Function;
-    handleComplete: Function;
+    handleClose: Function;
     handleUpdateDoReport: Function;
     handleUpdateWriteReport: Function;
     handleUpdateRide: Function;
@@ -25,7 +24,7 @@ export default function({
     handleReSend,
     handleCancel,
     handleConfirm,
-    handleComplete,
+    handleClose,
     handleUpdateDoReport,
     handleUpdateWriteReport,
     handleUpdateRide,
@@ -93,7 +92,7 @@ export default function({
                     handleReSend={handleReSend}
                     handleConfirm={handleConfirm}
                     handleCancel={handleCancel}
-                    handleComplete={handleComplete}
+                    handleClose={handleClose}
                 />
             </div>
         </div>

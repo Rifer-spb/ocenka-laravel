@@ -7,7 +7,7 @@ use App\Manager\Finders\InviteFinder;
 use App\Manager\Services\InviteService;
 use Illuminate\Support\Facades\DB;
 
-class RevokeUseCase
+class CloseUseCase
 {
     public function __construct(
         private InviteService $inviteService,
@@ -18,6 +18,7 @@ class RevokeUseCase
      * @param int $inviteId
      * @return void
      * @throws \Throwable
+     * @see \Integration\Manager\UseCases\Legal\Invite\CloseUseCaseTest
      */
     public function execute(Legal $legal, int $inviteId): void
     {

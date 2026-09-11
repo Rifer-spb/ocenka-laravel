@@ -19,6 +19,8 @@ class CreateUseCase
      * @param Email $email
      * @return void
      * @throws \Exception
+     *
+     * @see \Integration\Manager\UseCases\Legal\Invite\CreateUseCaseTest
      */
     public function execute(Legal $legal, Email $email): void
     {

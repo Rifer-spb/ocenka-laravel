@@ -9,8 +9,8 @@ use App\Core\Models\Invite\InviteTab;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\User;
+use App\Exceptions\EntityNotFoundException;
 use App\Manager\Helpers\InviteHelper;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class InviteFinder
 {
@@ -39,7 +39,7 @@ class InviteFinder
         ])->first();
 
         if (! $model) {
-            throw new ModelNotFoundException('Отправленная заявка не найдена.');
+            throw new EntityNotFoundException('Отправленная заявка не найдена.');
         }
 
         return $model;
@@ -54,7 +54,7 @@ class InviteFinder
         ])->first();
 
         if (! $model) {
-            throw new ModelNotFoundException('Отправленная заявка не найдена.');
+            throw new EntityNotFoundException('Отправленная заявка не найдена.');
         }
 
         return $model;
@@ -69,7 +69,7 @@ class InviteFinder
         ])->first();
 
         if (! $model) {
-            throw new ModelNotFoundException('Отправленная заявка не найдена.');
+            throw new EntityNotFoundException('Отправленная заявка не найдена.');
         }
 
         return $model;

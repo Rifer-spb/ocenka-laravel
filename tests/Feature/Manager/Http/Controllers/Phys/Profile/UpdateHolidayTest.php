@@ -3,8 +3,6 @@
 namespace Feature\Manager\Http\Controllers\Phys\Profile;
 
 use App\Core\Models\User\Phys\Phys;
-use App\Core\Models\User\ValueObjects\Password;
-use App\Core\ValueObjects\Email;
 use Tests\TestCase;
 
 class UpdateHolidayTest extends TestCase
@@ -52,10 +50,7 @@ class UpdateHolidayTest extends TestCase
 
     private function createUser(): Phys
     {
-        return Phys::createNew(
-            new Email('test@test.com'),
-            new Password('password')
-        );
+        return Phys::factory()->withProfile()->create();
     }
 
     private function getRoute(): string
