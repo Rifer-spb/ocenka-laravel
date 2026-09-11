@@ -16,6 +16,9 @@ return new class extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->unsignedInteger('id')->autoIncrement();
 
+            $table->unsignedInteger('invite_id')->unique();
+            $table->foreign('invite_id')->references('id')->on('invites')->onDelete('restrict');
+
             $table->unsignedInteger('legal_id');
             $table->foreign('legal_id')->references('id')->on('users')->onDelete('cascade');
 
@@ -25,6 +28,8 @@ return new class extends Migration
             $table->boolean('is_manager')->default(false);
             $table->unsignedTinyInteger('work_rate')->default(0);
             $table->boolean('can_ride')->default(false);
+            $table->boolean('can_registry')->default(false);
+            $table->boolean('can_call')->default(false);
 
             $table->unique(['legal_id', 'phys_id']);
         });

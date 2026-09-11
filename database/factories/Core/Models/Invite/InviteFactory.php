@@ -71,6 +71,7 @@ class InviteFactory extends Factory
         return $this->afterCreating(function (Invite $i) {
             return Employee::factory()
                 ->state([
+                    'invite_id' => $i->id,
                     'phys_id' => $i->phys_id,
                     'legal_id' => $i->legal_id,
                 ])

@@ -4,6 +4,7 @@ namespace Database\Factories\Core\Models\Employee;
 
 use App\Core\Models\Employee\Employee;
 use App\Core\Models\Employee\EmployeeReportAccess;
+use App\Core\Models\Invite\Invite;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,6 +24,7 @@ class EmployeeFactory extends Factory
     public function definition(): array
     {
         return [
+            'invite_id' => Invite::factory(),
             'phys_id' => Phys::factory(),
             'legal_id' => Legal::factory(),
         ];

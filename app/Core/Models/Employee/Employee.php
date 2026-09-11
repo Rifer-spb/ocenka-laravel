@@ -15,11 +15,14 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $id
+ * @property int $invite_id
  * @property int $legal_id
  * @property int $phys_id
  * @property bool $is_manager
  * @property int $work_rate
  * @property bool $can_ride
+ * @property bool $can_registry
+ * @property bool $can_call
  * @property Legal $legal
  * @property Phys $phys
  * @property Collection|EmployeeReportAccess[] $reportAccess
@@ -33,6 +36,7 @@ class Employee extends AbstractEntity
     protected $fillable = [
         'phys_id',
         'legal_id',
+        'invite_id',
     ];
 
     protected function casts(): array
@@ -40,6 +44,8 @@ class Employee extends AbstractEntity
         return [
             'can_ride' => 'boolean',
             'is_manager' => 'boolean',
+            'can_call' => 'boolean',
+            'can_registry' => 'boolean',
         ];
     }
 
@@ -52,6 +58,7 @@ class Employee extends AbstractEntity
     public static function createNew(Invite $invite): self
     {
         $employee = self::create([
+            'invite_id' => $invite->id,
             'legal_id' => $invite->legal_id,
             'phys_id' => $invite->phys_id,
         ]);

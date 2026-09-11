@@ -11,17 +11,18 @@ type Props = {
 
 export default function({ invites, currentTab } : Props) {
     const route = useManagerRoute();
+    const baseUrl = 'settings/invites';
 
     const handleReSend = (id: number) => {
-        router.post(route(`settings/legals/re-send/${id}`));
+        router.patch(route(`${baseUrl}/${id}/re-send`));
     };
 
     const handleCancel = (id: number) => {
-        router.post(route(`settings/legals/cancel/${id}`));
+        router.patch(route(`${baseUrl}/${id}/cancel`));
     };
 
     const handleConfirm = (id: number) => {
-        router.post(route(`settings/legals/confirm/${id}`));
+        router.patch(route(`${baseUrl}/${id}/confirm`));
     };
 
     return (
