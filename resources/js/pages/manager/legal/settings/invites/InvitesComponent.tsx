@@ -26,7 +26,9 @@ export default function({ currentTab, invites } : IProps) {
     };
 
     const handleClose = (id: number) => {
-        router.patch(route(`${baseUrl}/${id}/close`));
+        if (confirm('Уверены что хотите завершить связь с сотрудником?')) {
+            router.patch(route(`${baseUrl}/${id}/close`));
+        }
     };
 
     const handleUpdateDoReport = (id: number, accessId: number) => {
