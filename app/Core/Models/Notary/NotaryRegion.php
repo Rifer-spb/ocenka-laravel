@@ -14,4 +14,16 @@ use App\Core\Models\AbstractEntity;
 class NotaryRegion extends AbstractEntity
 {
     protected $table = 'notary_regions';
+
+    public static function createNew(): self
+    {
+        return self::create([
+            'notariat_region_id'
+        ]);
+    }
+
+    public static function findByGroupName(string $name): ?self
+    {
+        return self::where('group_name', $name)->first();
+    }
 }

@@ -12,5 +12,8 @@ use App\Core\Models\AbstractEntity;
  */
 class NotaryEmail extends AbstractEntity
 {
+    protected $fillable = [
+        'email',
+    ];
     protected $table = 'notary_emails';
 }

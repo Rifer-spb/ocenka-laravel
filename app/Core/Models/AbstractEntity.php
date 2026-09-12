@@ -10,6 +10,8 @@ abstract class AbstractEntity extends Model
     use EloquentDocMethods;
     use HasFactory;
 
+    public $timestamps = false;
+
     public static function getTableName(): string
     {
         return (new static())->getTable();

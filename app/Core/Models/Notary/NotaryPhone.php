@@ -11,5 +11,9 @@ use App\Core\Models\AbstractEntity;
  */
 class NotaryPhone extends AbstractEntity
 {
+    protected $fillable = [
+        'notary_id',
+        'phone',
+    ];
     protected $table = 'notary_phones';
 }

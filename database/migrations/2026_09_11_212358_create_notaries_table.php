@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('data_notariat_id')->unique();
+            $table->unsignedInteger('notariat_notary_id')->unique();
 
             $table->unsignedInteger('region_id');
             $table->foreign('region_id')->references('id')->on('notary_regions')->onDelete('restrict');
