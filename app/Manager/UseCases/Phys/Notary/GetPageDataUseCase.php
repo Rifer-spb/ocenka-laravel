@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Manager\UseCases\Phys\Notary;
+
+use App\Core\Models\Notary\Notary;
+use App\Core\Models\Notary\NotaryEmail;
+use App\Core\Models\Notary\NotaryPhone;
+use App\Core\Models\User\Phys\Phys;
+use App\Manager\Http\Requests\Phys\Notary\SearchRequest;
+use Illuminate\Pagination\LengthAwarePaginator;
+
+class GetPageDataUseCase
+{
+    public function execute(Phys $phys, SearchRequest $request): array
+    {
+        return [
+            'notaries' => $this->searchNotaries($request)
+        ];
+    }
+
+    private function searchNotaries(SearchRequest $request): LengthAwarePaginator
+    {
+        return Notary::query()
+            ->with(['region', 'phones', 'emails'])
+            ->when($request->region_id, fn ($q) => $q->where('region_id', $request->region_id))
+            ->when($request->name, fn ($q) => $q->where('name', 'like', "%{$request->name}%"))
+            ->when($request->address, fn ($q) => $q->where('address', 'like', "%{$request->address}%"))
+            ->when($request->email, fn ($q) => $q->where('email', $request->email))
+            ->when($request->isWork, fn ($q) => $q->where('is_work', 1))
+            ->paginate(perPage: $request->limit)
+            ->through(fn (Notary $notary) => $this->getNotary($notary));
+    }
+
+    private function getNotary(Notary $notary): array
+    {
+        return [
+            'id' => $notary->id,
+            'region' => [
+                'name' => $notary->region->name,
+            ],
+            'name' => $notary->name,
+            'address' => $notary->address,
+            'comment' => $notary->comment,
+            'phones' => $notary->phones->map(fn (NotaryPhone $p) => ['phone' => $p->phone])->all(),
+            'emails' => $notary->emails->map(fn (NotaryEmail $e) => ['email' => $e->email])->all(),
+        ];
+    }
+}
