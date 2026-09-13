@@ -16,7 +16,7 @@ class GetPageDataUseCase
     public function execute(User $user, InviteTab $tab): array
     {
         return [
-            'tabs' => InviteHelper::getTabs(),
+            'staticTabs' => InviteHelper::getTabs(),
             'counts' => InviteFinder::getCounts($user),
             'invites' => $this->searchInvites($user, $tab)
         ];

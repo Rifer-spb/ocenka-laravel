@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Notariat\ScanNotaries;
 
 use App\Core\Models\Notariat\Notariat;
+use App\Core\Validators\RequestValidator;
 use Illuminate\Console\Command;
 
 class ScanNotariesCommand extends Command
@@ -19,7 +20,7 @@ class ScanNotariesCommand extends Command
         $parseUrl = $this->notariat->getCurrentNotaryUrl();
         $currentNotariatId = $this->notariat->current_notary_scan_id;
 
-        if (!RequestHeaderValidator::validate($parseUrl)) {
+        if (!RequestValidator::isResponseCode($parseUrl, 200)) {
             $this->notariat->incrementCurrentNotaryScanId();
             $this->warn("Пропущен ID {$currentNotariatId}, невалидный ответ.");
             return self::SUCCESS;

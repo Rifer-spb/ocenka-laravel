@@ -17,7 +17,7 @@ class GetPageDataUseCase
     public function execute(Legal $legal, InviteSearchRequest $request): array
     {
         return [
-            'tabs' => InviteHelper::getTabs(),
+            'staticTabs' => InviteHelper::getTabs(),
             'counts' => InviteFinder::getCounts($legal),
             'invites' => $this->search($legal, $request),
         ];

@@ -2,6 +2,7 @@
 
 namespace App\Manager\UseCases\Phys\Notary;
 
+use App\Core\Helpers\PhoneHelper;
 use App\Core\Models\Notary\Notary;
 use App\Core\Models\Notary\NotaryEmail;
 use App\Core\Models\Notary\NotaryPhone;
@@ -41,7 +42,7 @@ class GetPageDataUseCase
             'name' => $notary->name,
             'address' => $notary->address,
             'comment' => $notary->comment,
-            'phones' => $notary->phones->map(fn (NotaryPhone $p) => ['phone' => $p->phone])->all(),
+            'phones' => $notary->phones->map(fn (NotaryPhone $p) => ['phone' => PhoneHelper::toViewFormat($p->phone)])->all(),
             'emails' => $notary->emails->map(fn (NotaryEmail $e) => ['email' => $e->email])->all(),
         ];
     }

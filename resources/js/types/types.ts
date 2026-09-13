@@ -1,3 +1,10 @@
+export type TPaginationLinks = {
+    url: string | null;
+    label: string;
+    page: number | null;
+    active: boolean;
+}
+
 export type TPaginated<T> = {
     current_page: number;
     data: T[];
@@ -5,12 +12,7 @@ export type TPaginated<T> = {
     from: number | null;
     last_page: number;
     last_page_url: string;
-    links: Array<{
-        url: string | null;
-        label: string;
-        page: number | null;
-        active: boolean;
-    }>;
+    links: TPaginationLinks[];
     next_page_url: string | null;
     path: string;
     per_page: number;

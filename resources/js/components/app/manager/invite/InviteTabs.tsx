@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './InviteTabsComponent.css';
+import './InviteTabs.css';
 import { IInviteTab } from "./types";
 import { useEffect } from 'react';
 

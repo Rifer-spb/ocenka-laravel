@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Console\Commands\Notariat\ScanNotaries;
+namespace App\Core\Validators;
 
-class RequestHeaderValidator
+class RequestValidator
 {
-    public static function validate(string $parseUrl): bool
+    public static function isResponseCode(string $url, int $code): bool
     {
-        $requestHeader = @get_headers($parseUrl);
+        $requestHeader = @get_headers($url);
 
         if ($requestHeader === false) {
             return false;
@@ -19,6 +19,6 @@ class RequestHeaderValidator
             }
         }
 
-        return $responseCode == 200;
+        return $responseCode == $code;
     }
 }

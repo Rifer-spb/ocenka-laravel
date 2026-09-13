@@ -24,4 +24,13 @@ class PhoneHelper
 
         return $phone;
     }
+
+    public static function toViewFormat(string|int $phone): string
+    {
+        if (strlen((string) $phone) == 11) {
+            preg_match('/(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})/', (string) $phone, $matches);
+            return '+' . $matches[1] . ' (' . $matches[2] . ') ' . $matches[3] . '-' . $matches[4] . '-' . $matches[5];
+        }
+        return (string) $phone;
+    }
 }

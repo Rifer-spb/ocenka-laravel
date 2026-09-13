@@ -1,5 +1,5 @@
 import { Head } from '@inertiajs/react';
-import AppearanceTabs from '@/components/appearance-tabs';
+import AppearanceTabs from '@/components/appearance-staticTabs';
 import Heading from '@/components/heading';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';

@@ -2,7 +2,7 @@ import InviteComponent from './InviteComponent';
 import { IInviteItem } from './types';
 import { useManagerRoute } from '@/hooks/useManagerRoute';
 import { router } from '@inertiajs/react';
-import {IInviteTab} from "@/components/app/manager/legal/inviteTabs/types";
+import {IInviteTab} from "@/components/app/manager/legal/invite/types";
 
 interface IProps {
     currentTab: IInviteTab

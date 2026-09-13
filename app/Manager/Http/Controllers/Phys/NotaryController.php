@@ -9,10 +9,20 @@ use Inertia\Inertia;
 
 class NotaryController extends AbstractController
 {
-    public function view(SearchRequest $request, GetPageDataUseCase $useCase)
+    public function viewIndex(SearchRequest $request, GetPageDataUseCase $useCase)
     {
         $result = $useCase->execute($this->getUser(), $request);
 
-        return Inertia::render('manager/phys/notaries/index', $result);
+        return Inertia::render('manager/phys/notaries/pages/index/index', $result);
+    }
+
+    public function viewExport()
+    {
+        return Inertia::render('manager/phys/notaries/pages/export/index');
+    }
+
+    public function viewRegionExport()
+    {
+        return Inertia::render('manager/phys/notaries/pages/regionExport/index');
     }
 }

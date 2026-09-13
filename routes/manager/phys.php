@@ -34,6 +34,8 @@ Route::prefix('phys')->name('phys.')->middleware('auth')->group(function () {
     });
 
     Route::prefix('notaries')->name('notaries.')->controller(NotaryController::class)->group(function () {
-        Route::get('/', 'view')->name('index');
+        Route::get('/', 'viewIndex')->name('index');
+        Route::get('export', 'viewExport')->name('export');
+        Route::get('region-export', 'viewRegionExport')->name('regionExport');
     });
 });
