@@ -1,5 +1,5 @@
 import { IInviteItem } from './types';
-import {IInviteTab} from "@/components/app/manager/legal/invite/types";
+import {IInviteTab} from "@/components/app/manager/invite/types";
 import ButtonsComponent from './ButtonsComponent';
 import CheckboxItem from "@/components/app/CheckboxItem";
 import {Input} from "@/components/ui/input";

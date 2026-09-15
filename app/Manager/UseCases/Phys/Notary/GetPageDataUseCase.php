@@ -6,15 +6,15 @@ use App\Core\Helpers\PhoneHelper;
 use App\Core\Models\Notary\Notary;
 use App\Core\Models\Notary\NotaryEmail;
 use App\Core\Models\Notary\NotaryPhone;
-use App\Core\Models\User\Phys\Phys;
 use App\Manager\Http\Requests\Phys\Notary\SearchRequest;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class GetPageDataUseCase
 {
-    public function execute(Phys $phys, SearchRequest $request): array
+    public function execute(SearchRequest $request): array
     {
         return [
+            'filter' => $request->validated(),
             'notaries' => $this->searchNotaries($request)
         ];
     }
@@ -26,8 +26,8 @@ class GetPageDataUseCase
             ->when($request->region_id, fn ($q) => $q->where('region_id', $request->region_id))
             ->when($request->name, fn ($q) => $q->where('name', 'like', "%{$request->name}%"))
             ->when($request->address, fn ($q) => $q->where('address', 'like', "%{$request->address}%"))
-            ->when($request->email, fn ($q) => $q->where('email', $request->email))
-            ->when($request->isWork, fn ($q) => $q->where('is_work', 1))
+            ->when($request->email, fn ($q) => $q->whereRelation('emails', 'email', $request->email))
+            ->where('is_work', !$request->notWork)
             ->paginate(perPage: $request->limit)
             ->through(fn (Notary $notary) => $this->getNotary($notary));
     }

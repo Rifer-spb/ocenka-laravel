@@ -11,7 +11,7 @@ class NotaryController extends AbstractController
 {
     public function viewIndex(SearchRequest $request, GetPageDataUseCase $useCase)
     {
-        $result = $useCase->execute($this->getUser(), $request);
+        $result = $useCase->execute($request);
 
         return Inertia::render('manager/phys/notaries/pages/index/index', $result);
     }

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Link } from "@inertiajs/react";
-import { useManagerRoute } from "@/hooks/useManagerRoute";
+import { useManagerRoute } from "@/hooks/useAppRoute";
 
 export default function SignIn() {
     const route = useManagerRoute();

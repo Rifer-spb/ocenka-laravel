@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class AbstractEntity extends Model
 {
-    use EloquentDocMethods;
     use HasFactory;
 
     public $timestamps = false;

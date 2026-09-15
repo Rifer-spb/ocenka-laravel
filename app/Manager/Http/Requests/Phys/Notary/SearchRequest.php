@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property null|integer $region_id
  * @property null|string $name
  * @property null|string $address
- * @property bool $isWork
+ * @property bool $notWork
  * @property string $email
  */
 class SearchRequest extends FormRequest
@@ -26,8 +26,15 @@ class SearchRequest extends FormRequest
             'region_id' => 'nullable|integer|exists:notary_regions,id',
             'name' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
-            'isWork' => 'boolean',
             'email' => 'nullable|string|email|max:255',
+            'notWork' => 'boolean',
+        ];
+    }
+
+    protected function defaults(): array
+    {
+        return [
+            'notWork' => false,
         ];
     }
 }

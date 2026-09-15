@@ -1,5 +1,5 @@
 import {Button} from "@/components/ui/button";
-import {IInviteTab} from "@/components/app/manager/legal/invite/types";
+import {IInviteTab} from "@/components/app/manager/invite/types";
 
 type Props = {
     id: number;

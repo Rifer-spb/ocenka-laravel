@@ -3,7 +3,7 @@ import './styles.css';
 import FormComponent from './FormComponent';
 import InvitesComponent from "./InvitesComponent";
 import InviteTabsComponent from "@/components/app/manager/invite/InviteTabs";
-import {useManagerRoute} from "@/hooks/useManagerRoute";
+import {useManagerRoute} from "@/hooks/useAppRoute";
 import {IInviteTab} from "@/components/app/manager/invite/types";
 import {router} from "@inertiajs/react";
 import {IInviteItem} from "./types";

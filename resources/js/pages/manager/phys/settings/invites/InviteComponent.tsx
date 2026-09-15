@@ -1,6 +1,6 @@
 import { IInviteItem } from './types';
 import ButtonsComponent from "./ButtonsComponent";
-import {IInviteTab} from "@/components/app/manager/legal/invite/types";
+import {IInviteTab} from "@/components/app/manager/invite/types";
 
 interface IProps {
     currentTab: IInviteTab

@@ -2,7 +2,7 @@ import { Link } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
 import { TAuth } from "@/types";
 import styles from './appUserHeaderLogout.module.css';
-import { useManagerRoute } from "@/hooks/useManagerRoute";
+import { useManagerRoute } from "@/hooks/useAppRoute";
 
 export default function () {
     const { auth } = usePage<{ auth: TAuth }>().props;

@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import InputError from "@/components/input-error";
 import { IPhones } from "./account.types";
-import { useManagerRoute } from "@/hooks/useManagerRoute";
+import { useManagerRoute } from "@/hooks/useAppRoute";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 

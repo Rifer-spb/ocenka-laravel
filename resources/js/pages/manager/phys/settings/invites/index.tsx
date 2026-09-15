@@ -2,7 +2,7 @@ import AppLayout from '@/layouts/appManagerLayout';
 import FormComponent from "./FormComponent";
 import { IInviteTab } from '@/components/app/manager/invite/types';
 import InviteTabsComponent from "@/components/app/manager/invite/InviteTabs";
-import { useManagerRoute } from "@/hooks/useManagerRoute";
+import { useManagerRoute } from "@/hooks/useAppRoute";
 import InvitesComponent from './InvitesComponent';
 import { IInviteItem } from './types';
 import './styles.css';

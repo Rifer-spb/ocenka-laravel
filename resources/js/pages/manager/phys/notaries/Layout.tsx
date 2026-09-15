@@ -2,16 +2,19 @@ import AppLayout from '@/layouts/appManagerLayout';
 import StaticTabs from '@/components/app/manager/common/staticTabs/StaticTabs';
 import {ReactNode, useState} from "react";
 import { TStaticTabLink } from "@/components/app/manager/common/staticTabs/types";
+import {useManagerRoute} from "@/hooks/useAppRoute";
 
 type TProps = {
     children: ReactNode;
 };
 
 export default function ({ children } : TProps) {
+    const route = useManagerRoute();
+
     const [tabItems] = useState<TStaticTabLink[]>([
-        { url: '/manager/phys/notaries', name: 'Список' },
-        { url: '/manager/phys/notaries/export', name: 'Выгрузка' },
-        { url: '/manager/phys/notaries/region-export', name: 'Выгрузка по регионам' },
+        { url: route('notaries'), name: 'Список' },
+        { url: route('notaries/export'), name: 'Выгрузка' },
+        { url: route('notaries/region-export'), name: 'Выгрузка по регионам' },
     ]);
 
     return (

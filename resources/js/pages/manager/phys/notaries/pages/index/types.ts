@@ -1,3 +1,10 @@
+export type TFilter = {
+    name?: string;
+    address?: string;
+    email?: string;
+    notWork: boolean;
+}
+
 export type TNotary = {
     id: number;
     region: { name: string };
