@@ -1,6 +1,7 @@
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import InputError from "@/components/input-error";
+import InputError from "@/components/app/form/InputError";
+import * as React from "react";
+import {useQueryParams} from "@/hooks/useQueryParams";
 
 type TProps = {
     name: string;
@@ -9,7 +10,6 @@ type TProps = {
     label?: string;
     placeholder?: string;
     disabled?: boolean;
-    value?: string
 }
 
 export default ({
@@ -19,22 +19,26 @@ export default ({
     label,
     placeholder = '',
     disabled = false,
-    value
 } : TProps) => {
+    const queryParams = useQueryParams();
+    const selected = queryParams[name];
+
     return (
         <div className="form-group">
-            <Label htmlFor={name}>{label}</Label>
-            <Input
+            {label && <Label htmlFor={name}>{label}</Label>}
+            <input
                 id={name}
                 name={name}
                 type={type}
+                data-slot="input"
+                className='form-control'
                 required
                 style={{backgroundColor: '#fff'}}
                 placeholder={placeholder}
                 disabled={disabled}
-                defaultValue={value}
+                defaultValue={selected ?? ''}
             />
-            <InputError className="error" message={error}/>
+            <InputError message={error} />
         </div>
     );
 }

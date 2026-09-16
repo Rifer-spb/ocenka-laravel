@@ -1,20 +1,21 @@
 import { TPaginated } from '@/types/types';
-import {TFilter, TNotary} from './types';
+import {TNotary} from './types';
 import Layout from '../../Layout';
 import FilterForm from "@/pages/manager/phys/notaries/pages/index/FilterForm";
 import Notary from "@/pages/manager/phys/notaries/pages/index/Notary";
 import Pagination from "@/components/app/manager/common/pagination/Pagination";
+import './index.css';
 
 type TProps = {
-    filter: TFilter;
+    regions: Record<number, string>;
     notaries: TPaginated<TNotary>;
 };
 
-export default function ({ filter, notaries } : TProps) {
+export default function ({ regions, notaries } : TProps) {
     return (
         <Layout>
-            <div className={'notaries'}>
-                <FilterForm filter={filter}/>
+            <div className='notaries'>
+                <FilterForm regions={regions} />
                 {notaries.data.length ? (
                     <>
                         <div className="table">

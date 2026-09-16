@@ -1,10 +1,10 @@
-import {Form} from '@inertiajs/react';
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
-import InputError from "@/components/input-error";
 import { update } from "@/routes/manager/phys/settings/account/name";
 import {Button} from "@/components/ui/button";
 import {IProfile} from "./account.types";
+import InputError from "@/components/app/form/InputError";
+import AppForm from "@/components/app/form/AppForm";
 
 interface IProps {
     profile: IProfile;
@@ -14,7 +14,7 @@ export default function ({ profile }: IProps) {
     return (
         <section style={{maxWidth: '500px'}}>
             <h2>Мои данные</h2>
-            <Form {...update.form()}>
+            <AppForm {...update.form()}>
                 {({errors}) => (
                     <>
                         <div className="form-group">
@@ -30,7 +30,7 @@ export default function ({ profile }: IProps) {
                                 className="form-control"
                                 defaultValue={profile.first_name ?? undefined}
                             />
-                            <InputError message={errors.firstName} className="error"/>
+                            <InputError message={errors.firstName} />
                         </div>
                         <div className="form-group">
                             <Label htmlFor="secondName">Имя</Label>
@@ -45,7 +45,7 @@ export default function ({ profile }: IProps) {
                                 className="form-control"
                                 defaultValue={profile.second_name ?? undefined}
                             />
-                            <InputError message={errors.secondName} className="error"/>
+                            <InputError message={errors.secondName} />
                         </div>
                         <div className="form-group">
                             <Label htmlFor="lastName">Отчество</Label>
@@ -60,7 +60,7 @@ export default function ({ profile }: IProps) {
                                 className="form-control"
                                 defaultValue={profile.last_name ?? undefined}
                             />
-                            <InputError message={errors.lastName} className="error"/>
+                            <InputError message={errors.lastName} />
                         </div>
                         <div className="form-group">
                             <Button
@@ -71,7 +71,7 @@ export default function ({ profile }: IProps) {
                         </div>
                     </>
                 )}
-            </Form>
+            </AppForm>
         </section>
     );
 }

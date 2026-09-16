@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "@inertiajs/react";
-import InputError from "@/components/input-error";
+import InputError from "@/components/app/form/InputError";
 import { router } from "@inertiajs/react";
 import {usePage} from "@inertiajs/react";
 
@@ -48,7 +48,7 @@ export default function ({holiday_from, holiday_to}: IProps) {
                     onSelect={(date: Date | null) => handleDateChange('holidayFrom', date)}
                     className="form-control"
                 />
-                <InputError message={errors.holidayFrom} className="error"/>
+                <InputError message={errors.holidayFrom} />
             </div>
             <div className="form-group">
                 <Label>До</Label>
@@ -62,7 +62,7 @@ export default function ({holiday_from, holiday_to}: IProps) {
                     onSelect={(date: Date | null) => handleDateChange('holidayTo', date)}
                     className="form-control"
                 />
-                <InputError message={errors.holidayTo} className="error"/>
+                <InputError message={errors.holidayTo} />
             </div>
         </section>
     );

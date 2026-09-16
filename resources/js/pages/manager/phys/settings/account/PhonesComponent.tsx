@@ -1,12 +1,13 @@
-import { Form } from "@inertiajs/react";
+import AppForm from "@/components/app/form/AppForm";
 import { create } from "@/routes/manager/phys/settings/account/phones";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import InputError from "@/components/input-error";
+import InputError from "@/components/app/form/InputError";
 import { IPhones } from "./account.types";
 import { useManagerRoute } from "@/hooks/useAppRoute";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {Form} from "@inertiajs/react";
 
 interface IProps {
     phones: IPhones[];
@@ -18,7 +19,7 @@ export default function ({ phones }: IProps) {
     return (
         <section className="phones">
             <h2>Номера телефонов</h2>
-            <Form {...create.form()} resetOnSuccess={true}>
+            <AppForm {...create.form()} resetOnSuccess={true}>
                 {({ errors }) => (
                     <div className="form-group">
                         <div className="input-group">
@@ -37,10 +38,10 @@ export default function ({ phones }: IProps) {
                                 <Button className="btn btn-success" type="submit">Добавить</Button>
                             </div>
                         </div>
-                        <InputError message={errors.phone} className="error" />
+                        <InputError message={errors.phone} />
                     </div>
                 )}
-            </Form>
+            </AppForm>
             <div className="phones">
                 {phones.map((item, index) => (
                     <Form

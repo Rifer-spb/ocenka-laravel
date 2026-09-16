@@ -1,6 +1,6 @@
 import { Label } from "@/components/ui/label";
-import InputError from "@/components/input-error";
 import Checkbox from "./Checkbox";
+import InputError from "../../../../jsOld/components/input-error";
 
 type TOption = {
     label: string;
@@ -24,7 +24,7 @@ export default ({ name, error, label, options } : TProps) => {
                     label={item.label}
                 />
             )}
-            <InputError className="error" message={error}/>
+            <InputError message={error}/>
         </div>
     );
 }

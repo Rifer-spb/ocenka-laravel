@@ -1,0 +1,16 @@
+.notaries .filter-form {
+    margin-bottom: 20px;
+}
+
+.notaries .filter-form .td {
+    vertical-align: middle;
+    padding-right: 10px;
+}
+
+.notaries .filter-form .td label {
+    margin-bottom: 0;
+}
+
+.notaries .filter-form .td .form-group-checkbox input {
+    margin-right: 5px;
+}

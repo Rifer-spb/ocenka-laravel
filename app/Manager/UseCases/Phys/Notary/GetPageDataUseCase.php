@@ -2,6 +2,7 @@
 
 namespace App\Manager\UseCases\Phys\Notary;
 
+use App\Core\Finder\Notary\NotaryRegionFinder;
 use App\Core\Helpers\PhoneHelper;
 use App\Core\Models\Notary\Notary;
 use App\Core\Models\Notary\NotaryEmail;
@@ -14,8 +15,8 @@ class GetPageDataUseCase
     public function execute(SearchRequest $request): array
     {
         return [
-            'filter' => $request->validated(),
-            'notaries' => $this->searchNotaries($request)
+            'regions' => NotaryRegionFinder::getList(),
+            'notaries' => $this->searchNotaries($request),
         ];
     }
 
@@ -23,7 +24,7 @@ class GetPageDataUseCase
     {
         return Notary::query()
             ->with(['region', 'phones', 'emails'])
-            ->when($request->region_id, fn ($q) => $q->where('region_id', $request->region_id))
+            ->when($request->regionId, fn ($q) => $q->where('region_id', $request->regionId))
             ->when($request->name, fn ($q) => $q->where('name', 'like', "%{$request->name}%"))
             ->when($request->address, fn ($q) => $q->where('address', 'like', "%{$request->address}%"))
             ->when($request->email, fn ($q) => $q->whereRelation('emails', 'email', $request->email))
