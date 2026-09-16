@@ -10,9 +10,4 @@ class NotaryRegionFinder
     {
         return NotaryRegion::pluck('name', 'id')->all();
     }
-
-    public static function getFirstId(): int
-    {
-        return NotaryRegion::first()->id;
-    }
 }
