@@ -10,6 +10,7 @@ type TProps = {
     options: Record<number, string>;
     showDefaultOption?: boolean;
     defaultOptionName?: string;
+    defaultRegionValue?: string|number;
 }
 
 export default ({
@@ -19,7 +20,8 @@ export default ({
     disabled = false,
     options,
     showDefaultOption = true,
-    defaultOptionName
+    defaultOptionName,
+    defaultRegionValue
 } : TProps) => {
     const queryParams = useQueryParams();
     const selected = queryParams[name];
@@ -31,7 +33,7 @@ export default ({
                 name={name}
                 className='form-control'
                 disabled={disabled}
-                defaultValue={selected || ''}
+                defaultValue={selected ?? defaultRegionValue ?? ''}
             >
                 {showDefaultOption && <option value=''>
                     {defaultOptionName ? defaultOptionName : 'Выберите из списка' }

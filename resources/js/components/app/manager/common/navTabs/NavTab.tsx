@@ -1,9 +1,9 @@
-import { TStaticTabLink } from "./types";
+import { TNavTabLink } from "./types";
 import { Link } from '@inertiajs/react';
 
 type TProps = {
     url: string;
-    item: TStaticTabLink;
+    item: TNavTabLink;
 }
 
 export default function ({ url, item } : TProps) {

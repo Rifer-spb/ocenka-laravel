@@ -6,16 +6,22 @@ import Select from "@/components/app/form/Select";
 
 type TProps = {
     regions: Record<number, string>;
+    defaultRegionId: number;
 }
 
-export default function ({ regions } : TProps) {
+export default function ({ regions, defaultRegionId } : TProps) {
     return (
         <Form {...index.form()} onChange={true}>
             {({ errors }) => (
                 <div className='filter-form table'>
                     <div className='tr'>
                         <div className='td'>
-                            <Select name='regionId' options={regions} defaultOptionName='Выберите регион'/>
+                            <Select
+                                name='regionId'
+                                options={regions}
+                                defaultOptionName='Выберите регион'
+                                defaultRegionValue={defaultRegionId}
+                            />
                         </div>
                         <div className='td'>
                             <Input name='name' placeholder='ФИО' error={errors.name}/>

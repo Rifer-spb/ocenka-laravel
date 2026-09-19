@@ -10,4 +10,9 @@ class NotaryRegionFinder
     {
         return NotaryRegion::pluck('name', 'id')->all();
     }
+
+    public static function findByGroupName(string $name): ?NotaryRegion
+    {
+        return NotaryRegion::where('group_name', $name)->first();
+    }
 }

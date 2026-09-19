@@ -1,7 +1,7 @@
 import { Form } from "@inertiajs/react";
 import {TCompany, TType} from "./types";
 import {Label} from "@/components/ui/label";
-import InputError from "@/components/input-error";
+import InputError from "@/components/app/form/InputError";
 import { Button } from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import { update } from "@/routes/manager/legal/settings/account/company";

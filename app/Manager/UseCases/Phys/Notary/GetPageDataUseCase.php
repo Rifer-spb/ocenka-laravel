@@ -7,6 +7,7 @@ use App\Core\Helpers\PhoneHelper;
 use App\Core\Models\Notary\Notary;
 use App\Core\Models\Notary\NotaryEmail;
 use App\Core\Models\Notary\NotaryPhone;
+use App\Core\Models\Notary\NotaryRegion;
 use App\Manager\Http\Requests\Phys\Notary\SearchRequest;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -17,6 +18,7 @@ class GetPageDataUseCase
         return [
             'regions' => NotaryRegionFinder::getList(),
             'notaries' => $this->searchNotaries($request),
+            'defaultRegionId' => NotaryRegion::ID_SAINT_PETERSBURG,
         ];
     }
 
@@ -30,6 +32,8 @@ class GetPageDataUseCase
             ->when($request->email, fn ($q) => $q->whereRelation('emails', 'email', $request->email))
             ->where('is_work', !$request->notWork)
             ->paginate(perPage: $request->limit)
+            ->withQueryString()
+            ->appends(['regionId' => $request->regionId ?? ''])
             ->through(fn (Notary $notary) => $this->getNotary($notary));
     }
 
@@ -40,7 +44,7 @@ class GetPageDataUseCase
             'region' => [
                 'name' => $notary->region->name,
             ],
-            'name' => $notary->name,
+            'name' => "$notary->name (NotariatID: $notary->notariat_notary_id)",
             'address' => $notary->address,
             'comment' => $notary->comment,
             'phones' => $notary->phones->map(fn (NotaryPhone $p) => ['phone' => PhoneHelper::toViewFormat($p->phone)])->all(),

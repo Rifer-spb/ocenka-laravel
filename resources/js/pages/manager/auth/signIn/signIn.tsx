@@ -2,7 +2,7 @@ import AppLayout from "@/layouts/appManagerLayout";
 import { Form, Head } from '@inertiajs/react';
 import styles from "./signIn.module.css";
 import { signIn } from "@/routes/manager/auth";
-import InputError from "@/components/input-error";
+import InputError from "@/components/app/form/InputError";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -33,7 +33,7 @@ export default function SignIn() {
                                     placeholder="email@example.com"
                                     className="form-control"
                                 />
-                                <InputError message={errors.email} className="error"/>
+                                <InputError message={errors.email} />
                             </div>
                             <div className={styles.formGroup}>
                                 <Label htmlFor="password">Пароль</Label>
@@ -48,7 +48,7 @@ export default function SignIn() {
                                     placeholder="Password"
                                     className="form-control"
                                 />
-                                <InputError message={errors.password} className="error"/>
+                                <InputError message={errors.password} />
                             </div>
                             <div className={styles.formGroup}>
                                 <p className={styles.p}><Link href={route('auth/lostpass', false)}>Забыли пароль?</Link></p>

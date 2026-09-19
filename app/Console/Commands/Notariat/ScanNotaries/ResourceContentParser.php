@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Notariat\ScanNotaries;
 
+use App\Core\Finder\Notary\NotaryRegionFinder;
 use App\Core\Helpers\PhoneHelper;
 use App\Core\Helpers\StringHelper;
 use App\Core\Models\Notary\NotaryRegion;
@@ -59,7 +60,7 @@ class ResourceContentParser
 
         $regionName = StringHelper::replaceQuotes($elements->item(0)->textContent);
 
-        return NotaryRegion::findByGroupName($regionName);
+        return NotaryRegionFinder::findByGroupName($regionName);
     }
 
     private static function parseIsNotWork(\DOMXPath $xpath): bool
@@ -70,7 +71,9 @@ class ResourceContentParser
             return false;
         }
 
-        return trim($elements->item(0)->textContent) === 'Не действует';
+        $text = self::cleanRow($elements->item(0)->textContent);
+
+        return mb_stripos($text, 'Не действует') !== false;
     }
 
     private static function parseName(\DOMXPath $xpath): ?string
@@ -81,72 +84,114 @@ class ResourceContentParser
             return null;
         }
 
-        return strip_tags(trim($elements->item(0)->textContent));
+        return self::cleanRow($elements->item(0)->textContent);
     }
 
     private static function parseAddress(\DOMXPath $xpath): ?string
     {
-        $infoBlock = self::getInfoBlock($xpath, 0);
+        $block = self::findInfoBlockByHeader($xpath, 'Адрес');
 
-        return $infoBlock ? strip_tags(trim($infoBlock->childNodes->item(1)->textContent)) : null;
+        if (!$block) {
+            return null;
+        };
+
+        $p = $xpath->query('.//p', $block)->item(0);
+
+        return $p ? self::cleanRow($p->textContent) : null;
     }
 
     private static function parsePhones(\DOMXPath $xpath): array
     {
-        $infoBlock = self::getInfoBlock($xpath, 1);
+        $block = self::findInfoBlockByHeader($xpath, 'Телефон');
 
-        if (!$infoBlock) {
+        if (!$block) {
             return [];
         }
 
-        $phone = PhoneHelper::parseToNationalFormat(strip_tags($infoBlock->childNodes->item(1)->textContent));
+        $links = $xpath->query('.//a[starts-with(@href, "tel:")]', $block);
 
-        if (!$phone) {
-            return [];
+        $phones = [];
+
+        foreach ($links as $link) {
+            $phone = PhoneHelper::parseToNationalFormat(
+                self::cleanRow($link->textContent)
+            );
+
+            if ($phone) {
+                $phones[] = $phone;
+            }
         }
 
-        return [$phone];
+        return $phones;
     }
 
     private static function parseEmails(\DOMXPath $xpath): array
     {
-        $infoBlock = self::getInfoBlock($xpath, 2);
+        $block = self::findInfoBlockByHeader($xpath, 'Электронная почта');
 
-        if (!$infoBlock) {
+        if (!$block) {
             return [];
         }
 
-        $email = strip_tags(trim($infoBlock->childNodes->item(1)->textContent));
+        $links = $xpath->query('.//a[starts-with(@href, "mailto:")]', $block);
+        $emails = [];
 
-        return EmailValidator::isEmail($email) ? [$email] : [];
+        foreach ($links as $link) {
+            $email = str_replace('mailto:', '', $link->getAttribute('href'));
+            $email = trim(urldecode($email));
+
+            if (EmailValidator::isEmail($email)) {
+                $emails[] = $email;
+            }
+        }
+
+        return $emails;
     }
 
     private static function parseSite(\DOMXPath $xpath): ?string
     {
-        $infoBlock = self::getInfoBlock($xpath, 3);
+        $link = $xpath->query("//a[@id='site_link']")->item(0);
 
-        if (!$infoBlock) {
+        if (!$link) {
             return null;
         }
 
-        $text = strip_tags(trim($infoBlock->childNodes->item(1)->textContent));
+        $href = trim($link->getAttribute('href'));
 
-        return ResourceValidator::isResource($text) ? $text : null;
-    }
-
-    private static function getInfoBlock(\DOMXPath $xpath, int $index): ?\DOMNode
-    {
-        $infoElements = self::queryByClass($xpath, 'info');
-
-        if (!$infoElements->length) {
+        if ($href === '') {
             return null;
         }
 
-        return $infoElements->item(0)->childNodes->item($index);
+        return ResourceValidator::isResource($href) ? $href : null;
     }
 
     private static function queryByClass(\DOMXPath $xpath, string $className): \DOMNodeList
     {
         return $xpath->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' {$className} ')]");
+    }
+
+    private static function cleanRow(string $value): string
+    {
+        return strip_tags(trim($value));
+    }
+
+    private static function findInfoBlockByHeader(\DOMXPath $xpath, string $headerText): ?\DOMNode
+    {
+        $blocks = $xpath->query(
+            "//*[contains(concat(' ', normalize-space(@class), ' '), ' info__block ')]"
+        );
+
+        foreach ($blocks as $block) {
+            $header = $xpath->query(
+                ".//*[contains(concat(' ', normalize-space(@class), ' '), ' info__block-header-text ')]",
+                $block
+            )->item(0);
+
+            if ($header && self::cleanRow($header->textContent) === $headerText) {
+                return $block;
+            }
+        }
+
+        return null;
     }
 }

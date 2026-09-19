@@ -1,7 +1,7 @@
 import AppLayout from '@/layouts/appManagerLayout';
-import StaticTabs from '@/components/app/manager/common/staticTabs/StaticTabs';
+import NavTabs from '@/components/app/manager/common/navTabs/NavTabs';
 import {ReactNode, useState} from "react";
-import { TStaticTabLink } from "@/components/app/manager/common/staticTabs/types";
+import { TNavTabLink } from "@/components/app/manager/common/navTabs/types";
 import {useManagerRoute} from "@/hooks/useAppRoute";
 
 type TProps = {
@@ -11,7 +11,7 @@ type TProps = {
 export default function ({ children } : TProps) {
     const route = useManagerRoute();
 
-    const [tabItems] = useState<TStaticTabLink[]>([
+    const [tabItems] = useState<TNavTabLink[]>([
         { url: route('notaries'), name: 'Список' },
         { url: route('notaries/export'), name: 'Выгрузка' },
         { url: route('notaries/region-export'), name: 'Выгрузка по регионам' },
@@ -19,10 +19,8 @@ export default function ({ children } : TProps) {
 
     return (
         <AppLayout>
-            <div>
-                <h1>Нотариусы</h1>
-                <StaticTabs items={tabItems}>{children}</StaticTabs>
-            </div>
+            <h1>Нотариусы</h1>
+            <NavTabs items={tabItems}>{children}</NavTabs>
         </AppLayout>
     );
 }

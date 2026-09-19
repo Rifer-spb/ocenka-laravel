@@ -1,6 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import InputError from "@/components/input-error";
+import InputError from "@/components/app/form/InputError";
 import { Button } from "@/components/ui/button";
 import { create } from "@/routes/manager/legal/settings/invites";
 import { Form } from "@inertiajs/react";
@@ -19,7 +19,7 @@ export default function() {
                             required
                             style={{backgroundColor: '#fff'}}
                         />
-                        <InputError className="error" message={errors.email}/>
+                        <InputError message={errors.email}/>
                     </div>
                     <div className="form-group">
                         <Button className="btn btn-success" type="submit">Отправить заявку</Button>

@@ -1,4 +1,4 @@
-export type TStaticTabLink = {
+export type TNavTabLink = {
     url: string;
     name: string;
 }

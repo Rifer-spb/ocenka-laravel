@@ -1,13 +1,13 @@
-.tabs ul {
+.tabs>ul {
     list-style: none;
 }
 
-.tabs ul li {
+.tabs>ul>li {
     float: left;
     border-right: 1px solid #325363;
 }
 
-.tabs ul li a {
+.tabs>ul>li>a {
     font-size: 14px;
     display: block;
     padding: 15px 20px;
@@ -16,11 +16,11 @@
     color: #fff;
 }
 
-.tabs ul li.active {
+.tabs>ul>li.active {
     border-right: none;
 }
 
-.tabs ul li.active a {
+.tabs>ul>li.active a {
     background-color: #fff;
     color: #506d7b;
 }

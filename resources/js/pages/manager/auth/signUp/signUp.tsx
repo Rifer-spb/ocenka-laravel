@@ -2,7 +2,7 @@ import AppLayout from "@/layouts/appManagerLayout";
 import { Form, Head } from '@inertiajs/react';
 import styles from "./signUp.module.css";
 import { signUp } from "@/routes/manager/auth";
-import InputError from "@/components/input-error";
+import InputError from "@/components/app/form/InputError";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Radio } from "@/components/ui/radio";
@@ -30,7 +30,7 @@ export default function SignUp() {
                                     placeholder="email@example.com"
                                     className="form-control"
                                 />
-                                <InputError message={errors.email} className="error" />
+                                <InputError message={errors.email} />
                             </div>
                             <div className={styles.formGroup}>
                                 <Label htmlFor="password">Придумайте пароль</Label>
@@ -45,7 +45,7 @@ export default function SignUp() {
                                     placeholder="Password"
                                     className="form-control"
                                 />
-                                <InputError message={errors.password} className="error" />
+                                <InputError message={errors.password} />
                             </div>
                             <div className={styles.formGroup}>
                                 <div>

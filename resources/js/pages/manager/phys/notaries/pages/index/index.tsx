@@ -9,13 +9,14 @@ import './index.css';
 type TProps = {
     regions: Record<number, string>;
     notaries: TPaginated<TNotary>;
+    defaultRegionId: number;
 };
 
-export default function ({ regions, notaries } : TProps) {
+export default function ({ regions, notaries, defaultRegionId } : TProps) {
     return (
         <Layout>
             <div className='notaries'>
-                <FilterForm regions={regions} />
+                <FilterForm regions={regions} defaultRegionId={defaultRegionId} />
                 {notaries.data.length ? (
                     <>
                         <div className="table">
@@ -29,7 +30,7 @@ export default function ({ regions, notaries } : TProps) {
                             </div>
                             {notaries.data.map((notary, index) => <Notary key={index} notary={notary}/>)}
                         </div>
-                        <Pagination links={notaries.links}/>
+                        <Pagination meta={notaries}/>
                     </>
                 ) : <div>Нотариусов не найдено</div>}
             </div>
