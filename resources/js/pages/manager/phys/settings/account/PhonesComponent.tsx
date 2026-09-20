@@ -1,4 +1,4 @@
-import AppForm from "@/components/app/form/AppForm";
+import InertiaForm from "@/components/app/form/InertiaForm";
 import { create } from "@/routes/manager/phys/settings/account/phones";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -19,7 +19,7 @@ export default function ({ phones }: IProps) {
     return (
         <section className="phones">
             <h2>Номера телефонов</h2>
-            <AppForm {...create.form()} resetOnSuccess={true}>
+            <InertiaForm {...create.form()} resetOnSuccess={true}>
                 {({ errors }) => (
                     <div className="form-group">
                         <div className="input-group">
@@ -41,7 +41,7 @@ export default function ({ phones }: IProps) {
                         <InputError message={errors.phone} />
                     </div>
                 )}
-            </AppForm>
+            </InertiaForm>
             <div className="phones">
                 {phones.map((item, index) => (
                     <Form

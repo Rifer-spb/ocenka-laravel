@@ -2,6 +2,7 @@
 
 namespace App\Manager\Http\Requests\Phys\Notary;
 
+use App\Core\Models\Notary\NotaryRegion;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -18,6 +19,13 @@ class SearchRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'regionId' => $this->input('regionId', NotaryRegion::ID_SAINT_PETERSBURG),
+        ]);
     }
 
     public function rules(): array

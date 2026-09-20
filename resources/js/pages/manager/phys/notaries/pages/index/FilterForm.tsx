@@ -1,8 +1,8 @@
-import Input from "@/components/app/form/Input";
-import Checkbox from "@/components/app/form/Checkbox";
+import InputGroup from "@/components/app/form/InputGroup";
+import CheckboxGroup from "@/components/app/form/CheckboxGroup";
 import { index } from "@/routes/manager/phys/notaries";
-import Form from "@/components/app/form/AppForm";
-import Select from "@/components/app/form/Select";
+import InertiaForm from "@/components/app/form/InertiaForm";
+import SelectGroup from "@/components/app/form/SelectGroup";
 
 type TProps = {
     regions: Record<number, string>;
@@ -11,33 +11,33 @@ type TProps = {
 
 export default function ({ regions, defaultRegionId } : TProps) {
     return (
-        <Form {...index.form()} onChange={true}>
-            {({ errors }) => (
+        <InertiaForm {...index.form()} onChange={true}>
+            {({ errors, fromQuery }) => (
                 <div className='filter-form table'>
                     <div className='tr'>
                         <div className='td'>
-                            <Select
+                            <SelectGroup
                                 name='regionId'
                                 options={regions}
-                                defaultOptionName='Выберите регион'
-                                defaultRegionValue={defaultRegionId}
+                                placeholder='Выберите регион'
+                                defaultValue={fromQuery('regionId') ?? defaultRegionId}
                             />
                         </div>
                         <div className='td'>
-                            <Input name='name' placeholder='ФИО' error={errors.name}/>
+                            <InputGroup name='name' placeholder='ФИО' error={errors.name} defaultValue={fromQuery('name')}/>
                         </div>
                         <div className='td'>
-                            <Input name='address' placeholder='Адрес' error={errors.address}/>
+                            <InputGroup name='address' placeholder='Адрес' error={errors.address} defaultValue={fromQuery('address')}/>
                         </div>
                         <div className='td'>
-                            <Input name='email' placeholder='E-mail' error={errors.email}/>
+                            <InputGroup name='email' placeholder='E-mail' error={errors.email} defaultValue={fromQuery('email')}/>
                         </div>
                         <div className='td'>
-                            <Checkbox name='notWork' label='Показывать недействующих'/>
+                            <CheckboxGroup name='notWork' label='Показывать недействующих' defaultChecked={fromQuery('notWork') === '1'}/>
                         </div>
                     </div>
                 </div>
             )}
-        </Form>
+        </InertiaForm>
     );
 }

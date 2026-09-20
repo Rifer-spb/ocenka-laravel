@@ -138,7 +138,7 @@ class Employee extends AbstractEntity
 
     public function reportAccess(): HasMany|EmployeeReportAccess
     {
-        return $this->hasMany(EmployeeReportAccess::class, 'employee_id', 'id');
+        return $this->hasMany(EmployeeReportAccess::class, 'employee_id', 'id')->orderBy('id');
     }
 
     public function legal(): HasOne|Legal
