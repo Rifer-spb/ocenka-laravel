@@ -1,10 +1,11 @@
 import { TNotary } from './types';
 
 type TProps = {
-    notary: TNotary
+    notary: TNotary;
+    editHandle: Function;
 }
 
-export default function ({ notary } : TProps) {
+export default function ({ notary, editHandle } : TProps) {
     return (
         <div className="tr tr-default">
             <div className="td name">{notary.name}</div>
@@ -16,7 +17,9 @@ export default function ({ notary } : TProps) {
                 {notary.emails.map((email, index) => <div key={index}>{email.email}</div>)}
             </div>
             <div className="td comment">{notary.comment}</div>
-            <div className="td actions"></div>
+            <div className="td actions">
+                <button type='button' onClick={() => editHandle(notary.id)}>edit</button>
+            </div>
         </div>
     )
 }

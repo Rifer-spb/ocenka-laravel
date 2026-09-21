@@ -2,11 +2,17 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import InputError from "@/components/app/form/InputError";
 
+type TOption = {
+    value: string | number;
+    label: string;
+    disabled?: boolean;
+};
+
 type TProps = React.ComponentProps<'select'> & {
     name: string;
-    options: Record<string | number, string>;
+    options: TOption[] | Record<string | number, string>;
     label?: string;
-    errorText?: string;
+    error?: string;
     placeholder?: string | false;
 };
 
@@ -14,13 +20,17 @@ export default function SelectGroup({
     name,
     options,
     label,
-    errorText,
+    error,
     id,
     className,
     placeholder = 'Выберите из списка',
     ...props
 }: TProps) {
     const selectId = id ?? name;
+
+    const list: TOption[] = Array.isArray(options)
+        ? options
+        : Object.entries(options).map(([value, label]) => ({ value, label }));
 
     return (
         <div className="form-group">
@@ -34,11 +44,13 @@ export default function SelectGroup({
             >
                 {placeholder !== false && <option value="">{placeholder}</option>}
 
-                {Object.entries(options).map(([value, text]) => (
-                    <option key={value} value={value}>{text}</option>
+                {list.map((option) => (
+                    <option key={option.value} value={option.value} disabled={option.disabled}>
+                        {option.label}
+                    </option>
                 ))}
             </select>
-            <InputError message={errorText} />
+            <InputError message={error} />
         </div>
     );
 }

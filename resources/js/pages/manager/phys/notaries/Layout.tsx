@@ -10,7 +10,6 @@ type TProps = {
 
 export default function ({ children } : TProps) {
     const route = useManagerRoute();
-
     const [tabItems] = useState<TNavTabLink[]>([
         { url: route('notaries'), name: 'Список' },
         { url: route('notaries/export'), name: 'Выгрузка' },

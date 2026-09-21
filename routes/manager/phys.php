@@ -37,5 +37,7 @@ Route::prefix('phys')->name('phys.')->middleware('auth')->group(function () {
         Route::get('/', 'viewIndex')->name('index');
         Route::get('export', 'viewExport')->name('export');
         Route::get('region-export', 'viewRegionExport')->name('regionExport');
+        Route::get('{notary}', 'getNotary')->name('getNotary');
+        Route::patch('{notary}', 'updateNotary')->name('updateNotary');
     });
 });
