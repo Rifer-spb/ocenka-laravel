@@ -4,10 +4,14 @@ namespace App\Manager\Http\Controllers\Phys;
 
 use App\Core\Http\Controllers\AbstractController;
 use App\Core\Models\Notary\Notary;
+use App\Core\ValueObjects\Email;
+use App\Core\ValueObjects\Site;
 use App\Manager\Http\Requests\Phys\Notary\SearchRequest;
 use App\Manager\Http\Requests\Phys\Notary\UpdateRequest;
 use App\Manager\UseCases\Phys\Notary\GetNotaryUseCase;
 use App\Manager\UseCases\Phys\Notary\GetPageDataUseCase;
+use App\Manager\UseCases\Phys\Notary\UpdateUseCase;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
 class NotaryController extends AbstractController
@@ -36,8 +40,23 @@ class NotaryController extends AbstractController
         return response()->json($notary);
     }
 
-    public function updateNotary(Notary $notary, UpdateRequest $request)
+    /**
+     * @param Notary $notary
+     * @param UpdateRequest $request
+     * @param UpdateUseCase $useCase
+     * @return RedirectResponse
+     * @throws \Throwable
+     */
+    public function updateNotary(Notary $notary, UpdateRequest $request, UpdateUseCase $useCase)
     {
+        $useCase->execute(
+            $notary->id,
+            array_map(fn(string $email) => new Email($email), $request->emails),
+            $request->site ? new Site($request->site) : null,
+            $request->useDigitalReport,
+            $request->comment
+        );
+
         return back()->with('success', 'Успешно обновлено');
     }
 }

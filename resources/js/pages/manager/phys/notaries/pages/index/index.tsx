@@ -8,7 +8,7 @@ import './index.css';
 import {useState} from "react";
 import Modal from "@/components/app/manager/common/modal/Modal";
 import EditForm from "@/pages/manager/phys/notaries/pages/index/EditForm";
-import {getRequest} from "@/api";
+import {getRequest} from "@/utils/api";
 import { getNotary } from "@/routes/manager/phys/notaries";
 
 type TProps = {

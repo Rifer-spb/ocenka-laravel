@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {router, usePage} from "@inertiajs/react";
 import { useQueryParams } from "@/hooks/hooks";
 
@@ -14,8 +14,10 @@ type TProps = {
 }
 
 export default function InertiaForm({ method, action, children, onChange, onSuccess, onError, resetOnSuccess = false, style } : TProps)  {
-    const { errors } = usePage().props as { errors: Record<string, string> };
     const query = useQueryParams();
+    const { errors: serverErrors } = usePage().props as { errors: Record<string, string> };
+    const [dismissed, setDismissed] = useState(false);
+    const errors = dismissed ? {} : serverErrors;
 
     const fromQuery = (key: string): string | undefined => {
         const v = query[key];
@@ -50,12 +52,20 @@ export default function InertiaForm({ method, action, children, onChange, onSucc
             onSuccess: (page) => {
                 if (resetOnSuccess) {
                     form.reset();
+                    setDismissed(true);
                 }
                 onSuccess?.(page);
             },
-            onError,
+            onError: (errors) => {
+                setDismissed(false);
+                onError?.(errors);
+            },
         });
     };
+
+    useEffect(() => {
+        setDismissed(true);
+    }, []);
 
     return (
         <form

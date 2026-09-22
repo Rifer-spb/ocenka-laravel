@@ -1,6 +1,7 @@
 import * as React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/utils";
 import InputError from "@/components/app/form/InputError";
+import {useId, useState, useRef} from "react";
 
 type TProps = Omit<React.ComponentProps<'input'>,
 'name' | 'value' | 'defaultValue' | 'onChange' | 'id'
@@ -24,16 +25,16 @@ export default function MultiInputGroup({
     value,
     defaultValue,
     onChange,
-    minItems = 1,
+    minItems,
     maxItems,
     className,
     ...props
 }: TProps) {
-    const baseId = React.useId();
+    const baseId = useId();
     const isControlled = value !== undefined;
 
-    const nextId = React.useRef(0);
-    const [rows, setRows] = React.useState(() =>
+    const nextId = useRef(0);
+    const [rows, setRows] = useState(() =>
         (defaultValue?.length ? defaultValue : ['']).map((v) => ({ id: nextId.current++, value: v }))
     );
 
@@ -42,7 +43,7 @@ export default function MultiInputGroup({
         : rows.map((r) => ({ key: r.id, value: r.value }));
 
     const canAdd = maxItems === undefined || items.length < maxItems;
-    const canRemove = items.length > minItems;
+    const canRemove = minItems === undefined || items.length > minItems;
 
     const handleAdd = () => {
         if (isControlled) {
@@ -68,12 +69,12 @@ export default function MultiInputGroup({
         <div className="form-group multi-input">
             <div className="multi-input-header">
                 {label && <label htmlFor={`${baseId}-0`}>{label}</label>}
-                {canAdd && (<a href='#' onClick={handleAdd}>[+]</a>)}
+                {canAdd && (<a href='#' onClick={handleAdd} style={{ marginLeft: '5px', textDecoration: "none"}}>[+]</a>)}
             </div>
 
             {items.map((item, index) => (
-                <div key={item.key} className="multi-input-row">
-                    <div className="multi-input-field">
+                <div key={item.key} className="multi-input-row" style={{marginBottom: 10}}>
+                    <div className="multi-input-field" style={{position: "relative"}}>
                         <input
                             id={`${baseId}-${index}`}
                             name={`${name}[]`}
@@ -84,9 +85,17 @@ export default function MultiInputGroup({
                                 : {defaultValue: item.value})}
                             {...props}
                         />
-                        <InputError message={itemErrors?.[index]}/>
+                        {canRemove && (<a href='#' onClick={() => handleRemove(index, item.key)} style={{
+                            position: "absolute",
+                            right: 11,
+                            top: 11,
+                            textDecoration: "none",
+                            fontSize: "1.2rem",
+                            color: "#4c4c4c"
+                        }}>×</a>)}
                     </div>
-                    {canRemove && (<a href='#' onClick={() => handleRemove(index, item.key)}>×</a>)}
+
+                    <InputError message={itemErrors?.[index]}/>
                 </div>
             ))}
 

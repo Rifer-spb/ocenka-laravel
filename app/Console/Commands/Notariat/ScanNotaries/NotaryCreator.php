@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Notariat\ScanNotaries;
 
 use App\Core\Models\Notary\Notary;
+use App\Core\ValueObjects\Email;
 use Illuminate\Support\Facades\DB;
 
 class NotaryCreator
@@ -16,7 +17,7 @@ class NotaryCreator
     public static function createOrUpdate(int $notariatId, NotaryParseResult $result): void
     {
         DB::transaction(function () use ($notariatId, $result) {
-            $notary = Notary::findByNotaryId($notariatId);
+            $notary = Notary::findByNotariatId($notariatId);
 
             if (!$notary) {
                 $notary = Notary::createNew(
@@ -45,7 +46,7 @@ class NotaryCreator
                     continue;
                 }
 
-                $notary->addEmail($email);
+                $notary->addEmail(new Email($email));
             }
 
             $notary->is_work = !$result->isNotWork;

@@ -2,11 +2,15 @@
 
 namespace App\Manager\Http\Requests\Phys\Notary;
 
-use App\Core\Models\Notary\NotaryRegion;
+use App\Core\Models\Notary\NotaryEmail;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 /**
-
+ * @property string[] $emails
+ * @property string $site
+ * @property int $useDigitalReport
+ * @property string $comment
  */
 class UpdateRequest extends FormRequest
 {
@@ -29,23 +33,29 @@ class UpdateRequest extends FormRequest
 
     public function rules(): array
     {
+        $notary = $this->route('notary');
+
         return [
-            'emails' => ['array', 'min:1', 'max:10'],
-            'emails.*' => ['string', 'email', 'max:255'],
+            'emails' => ['array'],
+            'emails.*' => [
+                'string',
+                'email',
+                'max:255',
+                Rule::unique(NotaryEmail::getTableName(), 'email')
+                    ->ignore($notary->id, 'notary_id')
+            ],
             'site' => ['nullable', 'string', 'url', 'max:255'],
             'useDigitalReport' => ['nullable', 'boolean'],
             'comment' => ['nullable', 'string', 'max:2000'],
         ];
     }
 
-    public function attributes(): array
+    public function messages(): array
     {
         return [
-            'emails' => 'E-mail',
-            'emails.*' => 'E-mail',
-            'site' => 'сайт',
-            'useDigitalReport' => 'приём электронного отчёта',
-            'comment' => 'комментарий',
+            'emails.*.email' => 'Введите корректный e-mail',
+            'emails.*.unique' => 'Такой e-mail уже существует у другого нотариуса',
+            'site.url' => 'Некорректный адрес сайта'
         ];
     }
 }

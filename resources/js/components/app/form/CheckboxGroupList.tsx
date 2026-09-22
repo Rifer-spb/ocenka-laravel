@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/utils";
 import InputError from "@/components/app/form/InputError";
 
 type TOption = {
@@ -13,8 +13,8 @@ type TProps = Omit<React.ComponentProps<'input'>, 'type' | 'value' | 'defaultVal
     options: TOption[];
     label?: string;
     error?: string;
-    value?: (string | number)[];         // управляемый режим
-    defaultValue?: (string | number)[];  // неуправляемый режим
+    value?: (string | number)[];
+    defaultValue?: (string | number)[];
     onChange?: (value: string[]) => void;
 };
 

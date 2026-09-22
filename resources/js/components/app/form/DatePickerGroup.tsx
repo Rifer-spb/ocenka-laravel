@@ -1,7 +1,8 @@
 import * as React from "react";
 import DatePicker, { DatePickerProps } from "react-datepicker";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/utils";
 import InputError from "@/components/app/form/InputError";
+import {useId} from "react";
 
 type TPickerProps = Pick<
 DatePickerProps,
@@ -35,7 +36,7 @@ export default function DatePickerGroup({
     onChange,
     ...props
 }: TProps) {
-    const id = React.useId();
+    const id = useId();
 
     return (
         <div className='form-group'>

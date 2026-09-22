@@ -3,6 +3,8 @@
 namespace App\Core\Models\Notary;
 
 use App\Core\Models\AbstractEntity;
+use App\Core\ValueObjects\Email;
+use App\Core\ValueObjects\Site;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -52,7 +54,7 @@ class Notary extends AbstractEntity
         return $notary;
     }
 
-    public static function findByNotaryId(int $notariatId): ?self
+    public static function findByNotariatId(int $notariatId): ?self
     {
         return self::where('notariat_notary_id', $notariatId)->first();
     }
@@ -79,16 +81,29 @@ class Notary extends AbstractEntity
         return $model;
     }
 
-    public function addEmail(string $email): NotaryEmail
+    public function addEmail(Email $email): NotaryEmail
     {
-        if ($this->hasEmail($email)) {
+        if ($this->hasEmail($email->getValue())) {
             throw new \DomainException('Такой e-mail уже добавлен.');
         }
 
-        $model = $this->emails()->create(['email' => $email]);
+        $model = $this->emails()->create(['email' => $email->getValue()]);
         $this->syncCollection('emails', $model);
 
         return $model;
+    }
+
+    public function edit(array $emails, ?Site $site, ?bool $useDigitalReport, ?string $comment): void
+    {
+        $this->emails()->delete();
+
+        foreach ($emails as $email) {
+            $this->addEmail($email);
+        }
+
+        $this->site = $site?->getValue();
+        $this->use_digital_report = $useDigitalReport;
+        $this->comment = $comment;
     }
 
     private function syncCollection(string $relationName, Model $model): void

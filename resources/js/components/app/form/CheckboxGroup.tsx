@@ -9,6 +9,9 @@ type TProps = Omit<React.ComponentProps<'input'>, 'type'> & {
     labelPosition?: 'left' | 'right';
 };
 
+const LabelComponent = ({ label } : {label: string})  =>
+    <span className='label'>{label}</span>;
+
 export default function CheckboxGroup({
     name,
     label,
@@ -20,16 +23,16 @@ export default function CheckboxGroup({
     return (
         <div className='form-group'>
             <label>
-                {label && labelPosition === 'left' && <span className='label'>{label}</span>}
+                {label && labelPosition === 'left' && <LabelComponent label={label}/>}
                 <input
                     name={name}
                     type="checkbox"
                     className={className}
                     {...props}
                 />
-                {label && labelPosition === 'right' && <span className='label'>{label}</span>}
+                {label && labelPosition === 'right' && <LabelComponent label={label}/>}
             </label>
-            <InputError message={error} />
+            <InputError message={error}/>
         </div>
     );
 }
