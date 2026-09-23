@@ -10,6 +10,7 @@ import Modal from "@/components/app/manager/common/modal/Modal";
 import EditForm from "@/pages/manager/phys/notaries/pages/index/EditForm";
 import {getRequest} from "@/utils/api";
 import { getNotary } from "@/routes/manager/phys/notaries";
+import { exportSearch } from "@/routes/manager/phys/notaries";
 
 type TProps = {
     regions: Record<number, string>;
@@ -20,6 +21,7 @@ type TProps = {
 export default function ({ regions, notaries, defaultRegionId } : TProps) {
     const [isShowEditModal, setIsShowEditModal] = useState<boolean>(false);
     const [currentNotary, setCurrentNotary] = useState<TCurrentNotary | null>(null);
+    const exportLink = `${exportSearch.url()}${window.location.search}`;
 
     const handleEditNotary = (id: number) => {
         setCurrentNotary(null);
@@ -37,8 +39,11 @@ export default function ({ regions, notaries, defaultRegionId } : TProps) {
                 <FilterForm regions={regions} defaultRegionId={defaultRegionId} />
                 {notaries.data.length ? (
                     <>
+                        <ul className='search-actions'>
+                            <li><a href={exportLink}>Экспорт в csv</a></li>
+                        </ul>
                         <div className="table">
-                            <div className="tr tr-default">
+                        <div className="tr tr-default">
                                 <div className="th align-center">ФИО</div>
                                 <div className="th align-center">Адрес</div>
                                 <div className="th align-center">Телефон</div>

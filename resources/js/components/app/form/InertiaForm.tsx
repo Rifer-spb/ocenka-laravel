@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {router, usePage} from "@inertiajs/react";
 import { useQueryParams } from "@/hooks/hooks";
+import { collectFormData } from "@/utils/form";
 
 type TProps = {
     method: 'get' | 'post' | 'put' | 'patch' | 'delete';
@@ -30,20 +31,7 @@ export default function InertiaForm({ method, action, children, onChange, onSucc
         }
 
         const form = e.currentTarget;
-        const data: Record<string, any> = {};
-
-        for (const [key, value] of new FormData(form).entries()) {
-            if (key.endsWith('[]')) {
-                const k = key.slice(0, -2);
-                (data[k] ??= []).push(value);
-            } else {
-                data[key] = value;
-            }
-        }
-
-        form.querySelectorAll('input[type="checkbox"][name]:not([name$="[]"])').forEach((el: any) => {
-            data[el.name] = el.checked ? '1' : '0';
-        });
+        const data = collectFormData(form);
 
         router[method](action, data, {
             preserveState: true,

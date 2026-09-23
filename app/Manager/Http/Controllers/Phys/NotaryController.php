@@ -8,6 +8,7 @@ use App\Core\ValueObjects\Email;
 use App\Core\ValueObjects\Site;
 use App\Manager\Http\Requests\Phys\Notary\SearchRequest;
 use App\Manager\Http\Requests\Phys\Notary\UpdateRequest;
+use App\Manager\UseCases\Phys\Notary\ExportSearchUseCase;
 use App\Manager\UseCases\Phys\Notary\GetNotaryUseCase;
 use App\Manager\UseCases\Phys\Notary\GetPageDataUseCase;
 use App\Manager\UseCases\Phys\Notary\UpdateUseCase;
@@ -58,5 +59,10 @@ class NotaryController extends AbstractController
         );
 
         return back()->with('success', 'Успешно обновлено');
+    }
+
+    public function exportSearch(SearchRequest $request, ExportSearchUseCase $useCase)
+    {
+        return $useCase->execute($request);
     }
 }

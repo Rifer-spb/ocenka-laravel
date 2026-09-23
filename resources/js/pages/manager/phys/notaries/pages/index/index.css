@@ -1,5 +1,5 @@
 .notaries .filter-form {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .notaries .filter-form .td {
@@ -14,3 +14,17 @@
 .notaries .filter-form .td .form-group-checkbox input {
     margin-right: 5px;
 }
+
+.notaries .search-actions {
+    margin-bottom: 10px;
+    list-style: none;
+}
+
+.notaries .search-actions a {
+    text-decoration: none;
+}
+
+.notaries .search-actions a:hover {
+    text-decoration: underline;
+}
+
