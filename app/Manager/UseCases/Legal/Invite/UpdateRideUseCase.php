@@ -3,8 +3,8 @@
 namespace App\Manager\UseCases\Legal\Invite;
 
 use App\Core\Finder\EmployeeFinder;
+use App\Core\Finder\InviteFinder;
 use App\Core\Models\User\Legal\Legal;
-use App\Manager\Finders\InviteFinder;
 
 class UpdateRideUseCase
 {

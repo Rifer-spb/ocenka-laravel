@@ -63,6 +63,10 @@ class NotaryController extends AbstractController
 
     public function exportSearch(SearchRequest $request, ExportSearchUseCase $useCase)
     {
-        return $useCase->execute($request);
+        $csvFile = $useCase->execute($request);
+
+        return response()
+            ->download($csvFile->getPath(), 'Нотариусы.csv')
+            ->deleteFileAfterSend();
     }
 }

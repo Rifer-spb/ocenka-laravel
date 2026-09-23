@@ -3,20 +3,20 @@
 namespace App\Core\Infrastructure;
 
 use Illuminate\Support\Str;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class CsvFile
 {
+    public const EXTENSION = 'csv';
+
     private string $path;
 
     public function __construct(string $path)
     {
-        if (!is_file($path)) {
-            throw new \RuntimeException("Csv файл {$path} не найден.");
+        if (! is_file($path)) {
+            throw new \RuntimeException("Файл {$path} не найден.");
         }
-        if (strtolower(pathinfo($path, PATHINFO_EXTENSION)) !== 'csv') {
-            throw new \InvalidArgumentException("Файл {$path} не является CSV.");
-        }
+
+        FileValidator::validateExtension($path, self::EXTENSION);
 
         $this->path = $path;
     }
@@ -25,16 +25,9 @@ class CsvFile
     {
         $rows = $labels ? array_merge([$labels], $rows) : $rows;
 
-        if ($filepath !== null) {
-            $filepath = basename(str_replace('\\', '/', $filepath));
-            if ($filepath === '' || $filepath === '.' || $filepath === '..') {
-                throw new \InvalidArgumentException("Недопустимое имя файла.");
-            }
-            if (!preg_match('/\.csv$/i', $filepath)) {
-                $filepath = rtrim($filepath, '.') . '.csv';
-            }
-        } else {
-            $filepath = FolderPath::getTemp((string) Str::ulid() . '.csv');
+        if(! $filepath) {
+            $filename = Str::ulid() . '.' . self::EXTENSION;
+            $filepath = FolderPath::getTemp($filename);
         }
 
         CsvWriter::write($filepath, $rows);
@@ -49,16 +42,17 @@ class CsvFile
 
     public function getSize(): int
     {
-        return filesize($this->path);
+        $size = @filesize($this->path);
+
+        if ($size === false) {
+            throw new \RuntimeException("Не удалось получить размер файла {$this->path}.");
+        }
+
+        return $size;
     }
 
     public function delete(): bool
     {
         return unlink($this->path);
-    }
-
-    public function toResponse(string $downloadName): BinaryFileResponse
-    {
-        return response()->download($this->path, $downloadName)->deleteFileAfterSend();
     }
 }

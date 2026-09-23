@@ -2,22 +2,25 @@
 
 namespace App\Console\Commands\Notariat\ScanNotaries;
 
+use App\Core\Finder\Notary\NotaryFinder;
+use App\Core\Models\Notary\NotariatId;
 use App\Core\Models\Notary\Notary;
 use App\Core\ValueObjects\Email;
+use App\Core\ValueObjects\NationalPhone;
 use Illuminate\Support\Facades\DB;
 
 class NotaryCreator
 {
     /**
-     * @param int $notariatId
+     * @param NotariatId $notariatId
      * @param NotaryParseResult $result
      * @return void
      * @throws \Throwable
      */
-    public static function createOrUpdate(int $notariatId, NotaryParseResult $result): void
+    public static function createOrUpdate(NotariatId $notariatId, NotaryParseResult $result): void
     {
         DB::transaction(function () use ($notariatId, $result) {
-            $notary = Notary::findByNotariatId($notariatId);
+            $notary = NotaryFinder::findByNotariatId($notariatId->getValue());
 
             if (!$notary) {
                 $notary = Notary::createNew(
@@ -25,7 +28,7 @@ class NotaryCreator
                     $result->region,
                     $result->name,
                     $result->address,
-                    $result->phones
+                    array_map(fn($p) => new NationalPhone($p), $result->phones),
                 );
             } else {
                 $notary->region_id = $result->region->id;
@@ -37,7 +40,7 @@ class NotaryCreator
                         continue;
                     }
 
-                    $notary->addPhone($phone);
+                    $notary->addPhone(new NationalPhone($phone));
                 }
             }
 

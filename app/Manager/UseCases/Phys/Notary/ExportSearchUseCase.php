@@ -5,11 +5,10 @@ namespace App\Manager\UseCases\Phys\Notary;
 use App\Core\Infrastructure\CsvFile;
 use App\Core\Models\Notary\Notary;
 use App\Manager\Http\Requests\Phys\Notary\SearchRequest;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExportSearchUseCase
 {
-    public function execute(SearchRequest $request): BinaryFileResponse
+    public function execute(SearchRequest $request): CsvFile
     {
         $rows = $this->search($request);
 
@@ -24,7 +23,7 @@ class ExportSearchUseCase
             'Комментарий',
         ];
 
-        return CsvFile::create($rows, $labels)->toResponse('Нотариусы.csv');
+        return CsvFile::create($rows, $labels);
     }
 
     private function search(SearchRequest $request): array

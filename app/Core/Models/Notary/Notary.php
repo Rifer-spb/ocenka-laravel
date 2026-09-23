@@ -4,6 +4,7 @@ namespace App\Core\Models\Notary;
 
 use App\Core\Models\AbstractEntity;
 use App\Core\ValueObjects\Email;
+use App\Core\ValueObjects\NationalPhone;
 use App\Core\ValueObjects\Site;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -38,10 +39,19 @@ class Notary extends AbstractEntity
     ];
     protected $table = 'notaries';
 
-    public static function createNew(int $notariatId, NotaryRegion $region, string $name, string $address, array $phones): self
+    /**
+     * @param NotariatId $notariatId
+     * @param NotaryRegion $region
+     * @param string $name
+     * @param string $address
+     * @param array $phones
+     * @return self
+     * @see \Tests\Unit\Core\Models\Notary\CreateTest
+     */
+    public static function createNew(NotariatId $notariatId, NotaryRegion $region, string $name, string $address, array $phones): self
     {
         $notary = self::create([
-            'notariat_notary_id' => $notariatId,
+            'notariat_notary_id' => $notariatId->getValue(),
             'region_id' => $region->id,
             'name' => $name,
             'address' => $address
@@ -54,11 +64,6 @@ class Notary extends AbstractEntity
         return $notary;
     }
 
-    public static function findByNotariatId(int $notariatId): ?self
-    {
-        return self::where('notariat_notary_id', $notariatId)->first();
-    }
-
     public function hasPhone(int|string $phone): bool
     {
         return $this->phones->contains('phone', $phone);
@@ -69,13 +74,13 @@ class Notary extends AbstractEntity
         return $this->emails->contains('email', $email);
     }
 
-    public function addPhone(int|string $phone): NotaryPhone
+    public function addPhone(NationalPhone $phone): NotaryPhone
     {
-        if ($this->hasPhone($phone)) {
+        if ($this->hasPhone($phone->getValue())) {
             throw new \DomainException('Такой номер телефона уже добавлен.');
         }
 
-        $model = $this->phones()->create(['phone' => $phone]);
+        $model = $this->phones()->create(['phone' => $phone->getValue()]);
         $this->syncCollection('phones', $model);
 
         return $model;

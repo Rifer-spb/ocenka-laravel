@@ -2,6 +2,9 @@
 
 namespace App\Core\ValueObjects;
 
+/**
+ * @see \Tests\Unit\Core\ValueObjects\SiteTest
+ */
 class Site
 {
     private string $value;

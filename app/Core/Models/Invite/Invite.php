@@ -2,11 +2,11 @@
 
 namespace App\Core\Models\Invite;
 
+use App\Core\Finder\InviteFinder;
 use App\Core\Models\AbstractEntity;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Phys\Phys;
 use App\Core\Models\User\User;
-use App\Manager\Finders\InviteFinder;
 use Carbon\Carbon;
 use Database\Factories\Core\Models\Invite\InviteFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;

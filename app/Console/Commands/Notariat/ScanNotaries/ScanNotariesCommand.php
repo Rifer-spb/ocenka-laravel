@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Notariat\ScanNotaries;
 
 use App\Core\Models\Notariat\Notariat;
+use App\Core\Models\Notary\NotariatId;
 use App\Core\Validators\RequestValidator;
 use Illuminate\Console\Command;
 
@@ -30,7 +31,8 @@ class ScanNotariesCommand extends Command
             $result = ResourceContentParser::parse($parseUrl);
 
             if ($result !== null && $result->isReadyForInsertToDb()) {
-                NotaryCreator::createOrUpdate($currentNotariatId, $result);
+                NotaryCreator::createOrUpdate(new NotariatId($currentNotariatId), $result);
+
                 $this->info("✓ Нотариус (NotariatNotaryID={$currentNotariatId}) сохранён: {$result->name}");
             } else {
                 $this->warn("Данные для NotariatNotaryID={$currentNotariatId} неполные, пропущен.");

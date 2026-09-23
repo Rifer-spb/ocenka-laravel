@@ -4,24 +4,30 @@ namespace App\Core\Infrastructure;
 
 class CsvWriter
 {
-    public static function write(string $path, array $rows, string $delimiter = ';'): CsvFile
+    public static function write(string $path, array $rows, string $delimiter = ';'): void
     {
+        FileValidator::validateExtension($path, 'csv');
+
         if (! $rows) {
-            throw new \RuntimeException('Не переданы строки для csv.');
+            throw new \InvalidArgumentException('Не переданы строки для csv.');
         }
 
-        $file = fopen($path, 'w');
+        $file = @fopen($path, 'w');
 
-        foreach ($rows as $fields) {
-            foreach ($fields as $key => $field) {
-                $fields[$key] = self::toCharset((string) ($field ?? ''));
+        if ($file === false) {
+            throw new \RuntimeException("Не удалось открыть {$path} для записи.");
+        }
+
+        try {
+            foreach ($rows as $fields) {
+                foreach ($fields as $key => $field) {
+                    $fields[$key] = self::toCharset((string) ($field ?? ''));
+                }
+                fputcsv($file, $fields, $delimiter);
             }
-            fputcsv($file, $fields, $delimiter);
+        } finally {
+            fclose($file);
         }
-
-        fclose($file);
-
-        return new CsvFile($path);
     }
 
     private static function toCharset(string $value, string $from = 'UTF-8', string $to = 'Windows-1251'): string
