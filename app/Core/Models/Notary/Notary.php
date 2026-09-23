@@ -6,6 +6,7 @@ use App\Core\Models\AbstractEntity;
 use App\Core\ValueObjects\Email;
 use App\Core\ValueObjects\NationalPhone;
 use App\Core\ValueObjects\Site;
+use Database\Factories\Core\Models\Notary\NotaryFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,6 +29,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property NotaryRegion $region
  * @property Collection|NotaryPhone[] $phones
  * @property Collection|NotaryEmail[] $emails
+ *
+ * @method static NotaryFactory factory
  */
 class Notary extends AbstractEntity
 {
