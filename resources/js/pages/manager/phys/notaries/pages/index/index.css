@@ -28,3 +28,7 @@
     text-decoration: underline;
 }
 
+.notaries .th.phones {
+    min-width: 165px;
+}
+

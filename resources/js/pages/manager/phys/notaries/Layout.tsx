@@ -12,8 +12,8 @@ export default function ({ children } : TProps) {
     const route = useManagerRoute();
     const [tabItems] = useState<TNavTabLink[]>([
         { url: route('notaries'), name: 'Список' },
-        { url: route('notaries/export'), name: 'Выгрузка' },
-        { url: route('notaries/region-export'), name: 'Выгрузка по регионам' },
+        { url: route('notaries/export'), name: 'Месячная выгрузка заказов по регионам' },
+        { url: route('notaries/region-export'), name: 'Месячная выгрузка нотариусов по регионам' },
     ]);
 
     return (

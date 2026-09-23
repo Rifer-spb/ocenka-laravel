@@ -46,7 +46,7 @@ export default function ({ regions, notaries, defaultRegionId } : TProps) {
                         <div className="tr tr-default">
                                 <div className="th align-center">ФИО</div>
                                 <div className="th align-center">Адрес</div>
-                                <div className="th align-center">Телефон</div>
+                                <div className="th align-center phones">Телефон</div>
                                 <div className="th align-center">E-mails</div>
                                 <div className="th align-center">Комментарий</div>
                                 <div className="th edit"></div>

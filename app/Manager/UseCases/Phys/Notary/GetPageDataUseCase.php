@@ -25,7 +25,7 @@ class GetPageDataUseCase
     private function searchNotaries(SearchRequest $request): LengthAwarePaginator
     {
         return Notary::query()
-            ->select(['id', 'region_id', 'name', 'address', 'comment'])
+            ->select(['id', 'notariat_notary_id', 'region_id', 'name', 'address', 'comment'])
             ->with(['region:id,name', 'phones:notary_id,phone', 'emails:notary_id,email'])
             ->when($request->regionId, fn ($q) => $q->where('region_id', $request->regionId))
             ->when($request->name, fn ($q) => $q->where('name', 'like', "%{$request->name}%"))
