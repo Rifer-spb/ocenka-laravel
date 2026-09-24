@@ -1,0 +1,31 @@
+.tabs>ul {
+    list-style: none;
+}
+
+.tabs>ul>li {
+    float: left;
+    border-right: 1px solid #325363;
+}
+
+.tabs>ul>li>a {
+    font-size: 14px;
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    background-color: #506d7b;
+    color: #fff;
+}
+
+.tabs>ul>li.active {
+    border-right: none;
+}
+
+.tabs>ul>li.active a {
+    background-color: #fff;
+    color: #506d7b;
+}
+
+.tabs .tabs-content {
+    padding: 20px;
+    background-color: #FFFFFF;
+}

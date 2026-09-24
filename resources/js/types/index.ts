@@ -1,8 +1,5 @@
-export type * from './Auth';
-export type * from './navigation';
-export type * from './ui';
-
-import type { TAuth } from './Auth';
+export type * from './auth';
+import type { TAuth } from './auth';
 
 export type Flash = {
     success?: string | null;

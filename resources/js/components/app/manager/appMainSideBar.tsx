@@ -3,7 +3,7 @@ import {usePage} from "@inertiajs/react";
 import {TAuth} from "@/types";
 import {useEffect, useState} from "react";
 import { Link } from "@inertiajs/react";
-import { useManagerRoute } from "@/hooks/useManagerRoute";
+import { useManagerRoute } from "@/hooks/useAppRoute";
 
 interface MenuItem {
     route: string;

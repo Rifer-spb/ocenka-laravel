@@ -2,8 +2,8 @@
 
 namespace App\Manager\UseCases\Phys\Invite;
 
+use App\Core\Finder\InviteFinder;
 use App\Core\Models\User\Phys\Phys;
-use App\Manager\Finders\InviteFinder;
 use App\Manager\Services\InviteService;
 use Illuminate\Support\Facades\DB;
 

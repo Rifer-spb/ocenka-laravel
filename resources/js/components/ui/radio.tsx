@@ -1,6 +1,6 @@
 // components/ui/radio.tsx
 import * as React from "react"
-import { cn } from "@/lib/utils"
+import { cn } from "@/utils/utils"
 
 const Radio = React.forwardRef<
     HTMLInputElement,

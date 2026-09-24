@@ -4,7 +4,6 @@ namespace App\Manager\Http\Controllers\Phys;
 
 use App\Core\Http\Controllers\AbstractController;
 use App\Core\Models\Invite\Invite;
-use App\Core\Models\Invite\InviteTab;
 use App\Core\ValueObjects\Email;
 use App\Manager\Http\Requests\InviteSearchRequest;
 use App\Manager\Http\Requests\Phys\Invite\CreateRequest;
@@ -12,7 +11,6 @@ use App\Manager\UseCases\Phys\Invite\ConfirmUseCase;
 use App\Manager\UseCases\Phys\Invite\CancelUseCase;
 use App\Manager\UseCases\Phys\Invite\CreateUseCase;
 use App\Manager\UseCases\Phys\Invite\ResendUseCase;
-use App\Manager\UseCases\Phys\Invite\CloseUseCase;
 use App\Manager\UseCases\Phys\Invite\GetPageDataUseCase;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -21,7 +19,7 @@ class InviteController extends AbstractController
 {
     public function view(InviteSearchRequest $request, GetPageDataUseCase $useCase)
     {
-        $result = $useCase->execute($this->getUser(), InviteTab::from($request->type));
+        $result = $useCase->execute($this->getUser(), $request);
 
         return Inertia::render('manager/phys/settings/invites/index', $result);
     }

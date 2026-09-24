@@ -1,5 +1,5 @@
 import { Link } from "@inertiajs/react";
-import {useManagerRoute} from "@/hooks/useManagerRoute";
+import {useManagerRoute} from "@/hooks/useAppRoute";
 
 export default function () {
     const route = useManagerRoute();

@@ -1,8 +1,8 @@
 import InviteComponent from './InviteComponent';
 import { IInviteItem } from './types';
-import { useManagerRoute } from '@/hooks/useManagerRoute';
+import { useManagerRoute } from '@/hooks/useAppRoute';
 import { router } from '@inertiajs/react';
-import {IInviteTab} from "@/components/app/manager/legal/inviteTabs/types";
+import {IInviteTab} from "@/components/app/manager/invite/types";
 
 type Props = {
     invites: IInviteItem[];

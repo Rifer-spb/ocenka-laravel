@@ -8,42 +8,24 @@ use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\Invite\InviteStatus;
 use App\Core\Models\Invite\InviteTab;
 use App\Core\Models\User\User;
-use App\Manager\Finders\InviteFinder;
 use App\Manager\Helpers\InviteHelper;
+use App\Manager\Http\Requests\InviteSearchRequest;
+use App\Manager\ReadServices\InviteReadService;
 
 class GetPageDataUseCase
 {
-    public function execute(User $user, InviteTab $tab): array
+    public function execute(User $user, InviteSearchRequest $request): array
     {
         return [
             'tabs' => InviteHelper::getTabs(),
-            'counts' => InviteFinder::getCounts($user),
-            'invites' => $this->searchInvites($user, $tab)
+            'counts' => InviteReadService::getCounts($user),
+            'invites' => $this->searchInvites($user, $request)
         ];
     }
 
-    private function searchInvites(User $user, InviteTab $tab): array
+    private function searchInvites(User $user, InviteSearchRequest $request): array
     {
-        $allRequests = Invite::where('phys_id', $user->id);
-
-        match ($tab) {
-            InviteTab::INBOX => $allRequests->where([
-                'for' => InviteForWho::PHYS,
-                'status' => InviteStatus::WAIT->value,
-            ]),
-            InviteTab::OUTBOX => $allRequests->where([
-                'for' => InviteForWho::LEGAL,
-                'status' => InviteStatus::WAIT->value,
-            ]),
-            InviteTab::ACTIVE => $allRequests->where([
-                'status' => InviteStatus::ACTIVE->value,
-            ]),
-            InviteTab::COMPLETE => $allRequests->where([
-                'status' => InviteStatus::COMPLETE->value,
-            ]),
-        };
-
-        $invites = $allRequests->get()->all();
+        $invites = InviteReadService::querySearch($user, InviteTab::from($request->type))->get()->all();
 
         return array_map(fn (Invite $m) => $this->getInviteArray($m), $invites);
     }

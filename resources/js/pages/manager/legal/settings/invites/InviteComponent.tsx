@@ -1,10 +1,10 @@
 import { IInviteItem } from './types';
-import {IInviteTab} from "@/components/app/manager/legal/inviteTabs/types";
+import {IInviteTab} from "@/components/app/manager/invite/types";
 import ButtonsComponent from './ButtonsComponent';
-import CheckboxItem from "@/components/app/CheckboxItem";
-import {Input} from "@/components/ui/input";
+import CheckboxGroup from "@/components/app/form/CheckboxGroup";
+import InputGroup from "@/components/app/form/InputGroup";
 
-interface IProps {
+type IProps = {
     currentTab: IInviteTab;
     invite: IInviteItem;
     handleReSend: Function;
@@ -16,7 +16,7 @@ interface IProps {
     handleUpdateRide: Function;
     handleUpdateManager: Function;
     handleUpdateWorkRate: Function;
-}
+};
 
 export default function({
     currentTab,
@@ -42,45 +42,49 @@ export default function({
                 <>
                     <div className="td access">
                         {invite.employee.access.report.map(
-                            item => <CheckboxItem
+                            item => <CheckboxGroup
                                 key={item.id}
-                                labelName={item.name}
+                                name='doReport'
+                                label={item.name}
                                 checked={item.do}
-                                handler={() => handleUpdateDoReport(invite.id, item.id)}
+                                onChange={() => handleUpdateDoReport(invite.id, item.id)}
+                                labelPosition='left'
                             />
                         )}
                     </div>
                     <div className="td access">
                         {invite.employee.access.report.map(
-                            item => <CheckboxItem
+                            item => <CheckboxGroup
                                 key={item.id}
-                                labelName={item.name}
+                                name='writeReport'
+                                label={item.name}
                                 checked={item.write}
-                                handler={() => handleUpdateWriteReport(invite.id, item.id)}
+                                onChange={() => handleUpdateWriteReport(invite.id, item.id)}
+                                labelPosition='left'
                             />
                         )}
                     </div>
                     <div className="td access">
-                        <CheckboxItem
+                        <CheckboxGroup
+                            name='ride'
                             checked={invite.employee.access.ride}
-                            handler={() => handleUpdateRide(invite.id)}
+                            onChange={() => handleUpdateRide(invite.id)}
                         />
                     </div>
                     <div className="td is_manager">
-                        <CheckboxItem
+                        <CheckboxGroup
+                            name='isManager'
                             checked={invite.employee.isManager}
-                            handler={() => handleUpdateManager(invite.id)}
+                            onChange={() => handleUpdateManager(invite.id)}
                         />
                     </div>
                     <div className="td work_rate">
-                        <Input
-                            id="is_manager"
-                            name="is_manager"
+                        <InputGroup
                             type="text"
+                            name="workRate"
                             required
-                            value={invite.employee.workRate ?? ''}
+                            defaultValue={invite.employee.workRate ?? ''}
                             onChange={(e) => handleUpdateWorkRate(invite.id, e.target.value)}
-                            style={{backgroundColor: '#fff'}}
                         />
                     </div>
                 </>

@@ -1,8 +1,8 @@
 import AppLayout from '@/layouts/appManagerLayout';
 import FormComponent from "./FormComponent";
-import { IInviteTab } from '@/components/app/manager/legal/inviteTabs/types';
-import InviteTabsComponent from "@/components/app/manager/legal/inviteTabs/InviteTabsComponent";
-import { useManagerRoute } from "@/hooks/useManagerRoute";
+import { IInviteTab } from '@/components/app/manager/invite/types';
+import InviteTabsComponent from "@/components/app/manager/invite/InviteTabs";
+import { useManagerRoute } from "@/hooks/useAppRoute";
 import InvitesComponent from './InvitesComponent';
 import { IInviteItem } from './types';
 import './styles.css';
@@ -31,7 +31,7 @@ export default function ({ tabs, counts, invites } : TProps) {
                 <h1>Установленные связи с юр. лицами</h1>
                 <FormComponent />
                 <InviteTabsComponent tabs={tabs} counts={counts} handleEvent={handleSelectTab}>
-                    {({ currentTab }) => (<InvitesComponent currentTab={currentTab} invites={invites} />)}
+                    {({ currentTab }) => <InvitesComponent currentTab={currentTab} invites={invites} />}
                 </InviteTabsComponent>
             </div>
         </AppLayout>

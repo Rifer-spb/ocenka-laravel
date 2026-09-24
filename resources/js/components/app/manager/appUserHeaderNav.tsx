@@ -3,7 +3,7 @@ import {Link, usePage} from "@inertiajs/react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faBars } from '@fortawesome/free-solid-svg-icons';
 import styles from './appUserHeaderNav.module.css';
-import {useManagerRoute} from "@/hooks/useManagerRoute";
+import {useManagerRoute} from "@/hooks/useAppRoute";
 
 export default function () {
     const { auth } = usePage<{ auth: TAuth }>().props;
