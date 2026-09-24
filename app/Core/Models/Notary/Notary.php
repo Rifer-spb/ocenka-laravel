@@ -67,16 +67,31 @@ class Notary extends AbstractEntity
         return $notary;
     }
 
+    /**
+     * @param int|string $phone
+     * @return bool
+     * @see \Tests\Unit\Core\Models\Notary\HasPhoneTest
+     */
     public function hasPhone(int|string $phone): bool
     {
         return $this->phones->contains('phone', $phone);
     }
 
+    /**
+     * @param string $email
+     * @return bool
+     * @see \Tests\Unit\Core\Models\Notary\HasEmailTest
+     */
     public function hasEmail(string $email): bool
     {
         return $this->emails->contains('email', $email);
     }
 
+    /**
+     * @param NationalPhone $phone
+     * @return NotaryPhone
+     * @see \Tests\Unit\Core\Models\Notary\AddPhoneTest
+     */
     public function addPhone(NationalPhone $phone): NotaryPhone
     {
         if ($this->hasPhone($phone->getValue())) {
@@ -89,6 +104,11 @@ class Notary extends AbstractEntity
         return $model;
     }
 
+    /**
+     * @param Email $email
+     * @return NotaryEmail
+     * @see \Tests\Unit\Core\Models\Notary\AddEmailTest
+     */
     public function addEmail(Email $email): NotaryEmail
     {
         if ($this->hasEmail($email->getValue())) {
@@ -101,6 +121,14 @@ class Notary extends AbstractEntity
         return $model;
     }
 
+    /**
+     * @param array $emails
+     * @param Site|null $site
+     * @param bool|null $useDigitalReport
+     * @param string|null $comment
+     * @return void
+     * @see \Tests\Unit\Core\Models\Notary\EditTest
+     */
     public function edit(array $emails, ?Site $site, ?bool $useDigitalReport, ?string $comment): void
     {
         $this->emails()->delete();

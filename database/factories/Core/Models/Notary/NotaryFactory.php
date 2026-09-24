@@ -3,6 +3,7 @@
 namespace Database\Factories\Core\Models\Notary;
 
 use App\Core\Models\Notary\Notary;
+use App\Core\Models\Notary\NotaryEmail;
 use App\Core\Models\Notary\NotaryPhone;
 use App\Core\Models\Notary\NotaryRegion;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -38,6 +39,18 @@ class NotaryFactory extends Factory
                 ->state([
                     'notary_id' => $n->id,
                     'phone' => $phone,
+                ])
+                ->create();
+        });
+    }
+
+    public function withEmail(string $email): static
+    {
+        return $this->afterCreating(function (Notary $n) use ($email) {
+            return NotaryEmail::factory()
+                ->state([
+                    'notary_id' => $n->id,
+                    'email' => $email,
                 ])
                 ->create();
         });

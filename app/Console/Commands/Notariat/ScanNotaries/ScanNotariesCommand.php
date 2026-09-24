@@ -7,6 +7,9 @@ use App\Core\Models\Notary\NotariatId;
 use App\Core\Validators\RequestValidator;
 use Illuminate\Console\Command;
 
+/**
+ * @see \Tests\Integration\Console\Commands\ScanNotaries\ScanNotariesTest
+ */
 class ScanNotariesCommand extends Command
 {
     protected $signature = 'notariat:scan';

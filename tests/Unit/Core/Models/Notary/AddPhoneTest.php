@@ -3,6 +3,7 @@
 namespace Tests\Unit\Core\Models\Notary;
 
 use App\Core\Models\Notary\Notary;
+use App\Core\Models\Notary\NotaryPhone;
 use App\Core\ValueObjects\NationalPhone;
 use Tests\TestCase;
 
@@ -30,6 +31,9 @@ class AddPhoneTest extends TestCase
 
         $notary->refresh();
 
-        $this->assertTrue($notary->hasPhone($phone));
+        $this->assertDatabaseHas(NotaryPhone::class, [
+            'notary_id' => $notary->id,
+            'phone' => $phone,
+        ]);
     }
 }
