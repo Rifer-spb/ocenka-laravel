@@ -1,7 +1,7 @@
-import { Form } from "@inertiajs/react";
+import InertiaForm from "@/components/app/form/inertia/InertiaForm";
 import {TCompany, TType} from "./types";
 import {Label} from "@/components/ui/label";
-import InputError from "@/components/input-error";
+import InputError from "@/components/app/form/InputError";
 import { Button } from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import { update } from "@/routes/manager/legal/settings/account/company";
@@ -17,7 +17,7 @@ export default function ({ types, company } : { types: TType[], company: TCompan
     return (
         <section className="company">
             <h2>Компания</h2>
-            <Form {...update.form()}>
+            <InertiaForm {...update.form()}>
                 {({ errors }) => (
                     <>
                         <div className="form-group">
@@ -99,7 +99,7 @@ export default function ({ types, company } : { types: TType[], company: TCompan
                         </div>
                     </>
                 )}
-            </Form>
+            </InertiaForm>
         </section>
     );
 };

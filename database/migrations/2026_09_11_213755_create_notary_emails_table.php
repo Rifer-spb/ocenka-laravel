@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    private string $tableName = 'notary_emails';
+
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create($this->tableName, function (Blueprint $table) {
+            $table->id();
+            $table->unsignedInteger('notary_id');
+            $table->foreign('notary_id')->references('id')->on('notaries')->onDelete('cascade');
+            $table->string('email')->unique();
+            $table->boolean('use_for_notify')->default(false);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists($this->tableName);
+    }
+};

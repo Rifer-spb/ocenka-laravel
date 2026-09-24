@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class AbstractEntity extends Model
 {
-    use EloquentDocMethods;
     use HasFactory;
+    use ModelHelperMethods;
+
+    public $timestamps = false;
 
     public static function getTableName(): string
     {

@@ -1,0 +1,34 @@
+.notaries .filter-form {
+    margin-bottom: 10px;
+}
+
+.notaries .filter-form .td {
+    vertical-align: middle;
+    padding-right: 10px;
+}
+
+.notaries .filter-form .td label {
+    margin-bottom: 0;
+}
+
+.notaries .filter-form .td .form-group-checkbox input {
+    margin-right: 5px;
+}
+
+.notaries .search-actions {
+    margin-bottom: 10px;
+    list-style: none;
+}
+
+.notaries .search-actions a {
+    text-decoration: none;
+}
+
+.notaries .search-actions a:hover {
+    text-decoration: underline;
+}
+
+.notaries .th.phones {
+    min-width: 165px;
+}
+

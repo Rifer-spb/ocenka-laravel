@@ -1,6 +1,7 @@
 <?php
 
 use App\Manager\Http\Controllers\Phys\InviteController;
+use App\Manager\Http\Controllers\Phys\NotaryController;
 use App\Manager\Http\Controllers\Phys\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,5 +31,15 @@ Route::prefix('phys')->name('phys.')->middleware('auth')->group(function () {
                 Route::patch('confirm', 'confirm')->name('confirm');
             });
         });
+    });
+
+    Route::prefix('notaries')->name('notaries.')->controller(NotaryController::class)->group(function () {
+        Route::get('/', 'viewIndex')->name('index');
+        Route::get('export-search', 'exportSearch')->name('exportSearch');
+        Route::get('export', 'viewExport')->name('export');
+        Route::get('region-export', 'viewRegionExport')->name('regionExport');
+
+        Route::get('{notary}', 'getNotary')->name('getNotary');
+        Route::patch('{notary}', 'updateNotary')->name('updateNotary');
     });
 });

@@ -49,12 +49,13 @@
     text-align: center;
 }
 
-.invites .td.access .checkbox-item {
+.invites .td.access .form-group {
     display: inline-block;
     width: 33%;
+    margin-bottom: 0;
 }
 
-.invites .td.access .checkbox-item label {
+.invites .td.access .form-group .label {
     font-weight: normal;
     display: block;
     margin-bottom: 2px;

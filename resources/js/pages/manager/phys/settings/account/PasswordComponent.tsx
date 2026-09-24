@@ -1,43 +1,33 @@
-import { Form } from "@inertiajs/react";
-import { Input } from "@/components/ui/input";
-import InputError from "@/components/input-error";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+import Button from "@/components/app/form/Button";
 import { update } from "@/routes/manager/phys/settings/account/password";
+import InertiaForm from "@/components/app/form/InertiaForm";
+import InputGroup from "@/components/app/form/InputGroup";
 
 export default () => (
     <section style={{ maxWidth: '400px' }}>
         <h2>Изменение пароля</h2>
-        <Form {...update.form()}>
+        <InertiaForm {...update.form()} resetOnSuccess={true}>
             {({ errors }) => (
                 <>
-                    <div className="form-group">
-                        <Label htmlFor="oldPassword">Старый пароль</Label>
-                        <Input
-                            id="oldPassword"
-                            name="oldPassword"
-                            type="password"
-                            tabIndex={1}
-                            className="form-control"
-                        />
-                        <InputError message={errors.oldPassword} className="error"/>
-                    </div>
-                    <div className="form-group">
-                        <Label htmlFor="newPassword">Новый пароль</Label>
-                        <Input
-                            id="newPassword"
-                            name="newPassword"
-                            type="password"
-                            tabIndex={2}
-                            className="form-control"
-                        />
-                        <InputError message={errors.newPassword} className="error"/>
-                    </div>
-                    <div className="form-group">
-                        <Button className="btn btn-success" type="submit">Сохранить</Button>
-                    </div>
+                    <InputGroup
+                        label='Старый пароль'
+                        id="oldPassword"
+                        name="oldPassword"
+                        type="password"
+                        tabIndex={1}
+                        error={errors.oldPassword}
+                    />
+                    <InputGroup
+                        label='Новый пароль'
+                        id="newPassword"
+                        name="newPassword"
+                        type="password"
+                        tabIndex={2}
+                        error={errors.newPassword}
+                    />
+                    <Button className="btn-success" type="submit">Сохранить</Button>
                 </>
             )}
-        </Form>
+        </InertiaForm>
     </section>
 );

@@ -7,10 +7,11 @@ use App\Core\Models\Employee\EmployeeReportAccess;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\Invite\InviteStatus;
+use App\Core\Models\Invite\InviteTab;
 use App\Core\Models\User\Legal\Legal;
-use App\Manager\Finders\InviteFinder;
 use App\Manager\Helpers\InviteHelper;
 use App\Manager\Http\Requests\InviteSearchRequest;
+use App\Manager\ReadServices\InviteReadService;
 
 class GetPageDataUseCase
 {
@@ -18,35 +19,19 @@ class GetPageDataUseCase
     {
         return [
             'tabs' => InviteHelper::getTabs(),
-            'counts' => InviteFinder::getCounts($legal),
+            'counts' => InviteReadService::getCounts($legal),
             'invites' => $this->search($legal, $request),
         ];
     }
 
     public function search(Legal $user, InviteSearchRequest $request): array
     {
-        $allRequests = Invite::where('legal_id', $user->id)->with([
-            'legal.profile',
-            'phys.profile',
-            'phys.employee.reportAccess.direction',
-        ]);
-
-        match ($request->type) {
-            'inbox' => $allRequests->where([
-                'for' => InviteForWho::LEGAL->value,
-                'status' => InviteStatus::WAIT->value,
-            ]),
-            'outbox' => $allRequests->where([
-                'for' => InviteForWho::PHYS->value,
-                'status' => InviteStatus::WAIT->value,
-            ]),
-            'active' => $allRequests->where([
-                'status' => InviteStatus::ACTIVE->value,
-            ]),
-            'complete' => $allRequests->where([
-                'status' => InviteStatus::COMPLETE->value,
-            ]),
-        };
+        $allRequests = InviteReadService::querySearch($user, InviteTab::from($request->type))
+            ->with([
+                'legal.profile',
+                'phys.profile',
+                'phys.employee.reportAccess.direction',
+            ]);
 
         return array_map(function (Invite $model) {
             $status = InviteStatus::tryFrom($model->status);
