@@ -141,6 +141,11 @@ class Employee extends AbstractEntity
         $this->can_registry = !$this->can_registry;
     }
 
+    public function switchCanCallAccess(): void
+    {
+        $this->can_call = !$this->can_call;
+    }
+
     public function reportAccess(): HasMany|EmployeeReportAccess
     {
         return $this->hasMany(EmployeeReportAccess::class, 'employee_id', 'id')->orderBy('id');

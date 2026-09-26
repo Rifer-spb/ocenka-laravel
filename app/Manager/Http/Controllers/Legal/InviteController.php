@@ -4,9 +4,11 @@ namespace App\Manager\Http\Controllers\Legal;
 
 use App\Core\Finder\User\PhysFinder;
 use App\Core\Http\Controllers\AbstractController;
+use App\Core\Models\Employee\Employee;
 use App\Core\Models\Invite\Invite;
 use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\User\Phys\Phys;
+use App\Core\Services\EmployeeService;
 use App\Core\Services\InviteService;
 use App\Core\ValueObjects\Email;
 use App\Manager\Http\Requests\InviteSearchRequest;
@@ -29,7 +31,8 @@ use Inertia\Inertia;
 class InviteController extends AbstractController
 {
     public function __construct(
-        private InviteService $service
+        private InviteService $inviteService,
+        private EmployeeService $employeeService,
     )
     {
     }
@@ -51,21 +54,22 @@ class InviteController extends AbstractController
     {
         $phys = PhysFinder::getByUsername($request->email);
 
-        $this->service->create($this->getUser(), $phys, InviteForWho::PHYS);
+        $this->inviteService->create($this->getUser(), $phys, InviteForWho::PHYS);
 
         return back()->with('success', 'Заявка успешно отправлена');
     }
 
     /**
      * @param Invite $invite
-     * @param ResendUseCase $useCase
      * @return RedirectResponse
      * @throws \Exception
      * @see \Feature\Manager\Http\Controllers\Legal\Invite\ResendUseCaseTest
      */
-    public function reSend(Invite $invite, ResendUseCase $useCase)
+    public function reSend(Invite $invite)
     {
-        $useCase->execute($this->getUser(), $invite->id);
+        $this->authorize('belongsTo', $invite);
+
+        $this->inviteService->reSendEmail($invite);
 
         return back()->with('success', 'Заявка успешно отправлена повторно');
     }
@@ -74,9 +78,11 @@ class InviteController extends AbstractController
      * @throws \Throwable
      * @see \Feature\Manager\Http\Controllers\Legal\Invite\CancelUseCaseTest
      */
-    public function cancel(Invite $invite, CancelUseCase $useCase)
+    public function cancel(Invite $invite)
     {
-        $useCase->execute($this->getUser(), $invite->id);
+        $this->authorize('belongsTo', $invite);
+
+        $this->inviteService->cancel($invite);
 
         return back()->with('success', 'Заявка успешно отменена');
     }
@@ -86,9 +92,11 @@ class InviteController extends AbstractController
      * @throws \Throwable
      * @see \Feature\Manager\Http\Controllers\Legal\Invite\ConfirmUseCaseTest
      */
-    public function confirm(Invite $invite, ConfirmUseCase $useCase)
+    public function confirm(Invite $invite)
     {
-        $useCase->execute($this->getUser(), $invite->id);
+        $this->authorize('belongsTo', $invite);
+
+        $this->inviteService->confirm($invite);
 
         return back()->with('success', 'Заявка успешно подтверждена');
     }
@@ -98,25 +106,24 @@ class InviteController extends AbstractController
      * @throws \Throwable
      * @see \Feature\Manager\Http\Controllers\Legal\Invite\CloseUseCaseTest
      */
-    public function close(Invite $invite, CloseUseCase $useCase)
+    public function close(Invite $invite)
     {
         $this->authorize('belongsTo', $invite);
 
-        $useCase->execute($this->getUser(), $invite->id);
+        $this->inviteService->close($invite);
 
         return back()->with('success', 'Заявка успешно завершена');
     }
 
     /**
-     * @param Invite $invite
+     * @param Employee $employee
      * @param int $accessId
-     * @param UpdateDoReportUseCase $useCase
      * @return RedirectResponse
      * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateDoReportUseCaseTest
      */
-    public function updateDoReport(Invite $invite, int $accessId, UpdateDoReportUseCase $useCase)
+    public function updateDoReport(Employee $employee, int $accessId)
     {
-        $useCase->execute($this->getUser(), $invite->id, $accessId);
+        $this->employeeService->switchDoReportAccess($employee, $accessId);
 
         return back()->with('success', 'Успешно обновлено');
     }
@@ -128,7 +135,7 @@ class InviteController extends AbstractController
      * @return RedirectResponse
      * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateWriteReportUseCaseTest
      */
-    public function updateWriteReport(Invite $invite, int $accessId, UpdateWriteReportUseCase $useCase)
+    public function updateWriteReport(Employee $employee, int $accessId, UpdateWriteReportUseCase $useCase)
     {
         $useCase->execute($this->getUser(), $invite->id, $accessId);
 

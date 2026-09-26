@@ -64,7 +64,16 @@ class InviteService
         });
     }
 
-    public function sendEmail(Invite $invite): void
+    public function reSendEmail(Invite $invite): void
+    {
+        if (! $invite->isWait()) {
+            throw new \DomainException('Заявка не в статуса ожидания.');
+        }
+
+        $this->sendEmail($invite);
+    }
+
+    private function sendEmail(Invite $invite): void
     {
         SendInviteMailJob::dispatch($invite);
     }
