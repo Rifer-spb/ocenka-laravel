@@ -4,6 +4,7 @@ namespace App\Core\Models\User\Legal;
 
 use App\Core\Models\LegalType;
 use App\Core\Models\User\Legal\Dto\Company;
+use App\Core\Models\User\Legal\ValueObjects\RegistryTemplate;
 use App\Core\Models\User\Role;
 use App\Core\Models\User\User;
 use App\Core\Models\User\ValueObjects\Password;
@@ -59,6 +60,13 @@ class Legal extends User
     {
         $profile = $this->profile;
         $profile->updateCompany($type, $company);
+        $profile->saveOrFail();
+    }
+
+    public function updateRegistryTemplate(RegistryTemplate $template): void
+    {
+        $profile = $this->profile;
+        $profile->registry_template = $template->getValue();
         $profile->saveOrFail();
     }
 

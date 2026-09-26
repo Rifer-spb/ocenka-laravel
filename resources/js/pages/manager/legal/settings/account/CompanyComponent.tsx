@@ -1,4 +1,4 @@
-import InertiaForm from "@/components/app/form/inertia/InertiaForm";
+import InertiaForm from "@/components/app/form/InertiaForm";
 import {TCompany, TType} from "./types";
 import {Label} from "@/components/ui/label";
 import InputError from "@/components/app/form/InputError";

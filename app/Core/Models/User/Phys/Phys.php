@@ -118,11 +118,6 @@ class Phys extends User
         $this->profile->updateHoliday($holiday);
     }
 
-    public function getFullName(): string
-    {
-        return $this->profile->full_name ?? $this->username;
-    }
-
     public function getName(): string
     {
         return ! empty($this->profile->full_name)

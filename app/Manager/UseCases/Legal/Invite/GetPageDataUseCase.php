@@ -5,7 +5,6 @@ namespace App\Manager\UseCases\Legal\Invite;
 use App\Core\Helpers\DateHelper;
 use App\Core\Models\Employee\EmployeeReportAccess;
 use App\Core\Models\Invite\Invite;
-use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\Invite\InviteStatus;
 use App\Core\Models\Invite\InviteTab;
 use App\Core\Models\User\Legal\Legal;
@@ -63,7 +62,7 @@ class GetPageDataUseCase
         $reportAccesses = $employee->reportAccess;
 
         return [
-            'name' => $phys->getFullName(),
+            'name' => $phys->getName(),
             'access' => [
                 'ride' => $employee->can_ride,
                 'report' => $reportAccesses->map(fn (EmployeeReportAccess $a) => [

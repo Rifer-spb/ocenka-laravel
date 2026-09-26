@@ -58,6 +58,7 @@ export default function () {
             return [
                 {route: route('settings/account'), name: 'Аккаунт'},
                 {route: route('settings/invites'), name: 'Приглашения'},
+                {route: route('settings/registry'), name: 'Договора'},
             ];
         }
 

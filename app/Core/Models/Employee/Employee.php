@@ -136,6 +136,11 @@ class Employee extends AbstractEntity
         $this->is_manager = !$this->is_manager;
     }
 
+    public function switchCanRegistryAccess(): void
+    {
+        $this->can_registry = !$this->can_registry;
+    }
+
     public function reportAccess(): HasMany|EmployeeReportAccess
     {
         return $this->hasMany(EmployeeReportAccess::class, 'employee_id', 'id')->orderBy('id');

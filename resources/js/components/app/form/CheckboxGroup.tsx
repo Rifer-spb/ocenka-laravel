@@ -2,7 +2,7 @@ import * as React from "react";
 import InputError from "@/components/app/form/InputError";
 
 type TProps = Omit<React.ComponentProps<'input'>, 'type'> & {
-    name: string;
+    name?: string;
     label?: string;
     error?: string;
     className?: string;

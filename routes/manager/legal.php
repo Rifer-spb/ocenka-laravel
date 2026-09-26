@@ -2,6 +2,7 @@
 
 use App\Manager\Http\Controllers\Legal\InviteController;
 use App\Manager\Http\Controllers\Legal\ProfileController;
+use App\Manager\Http\Controllers\Legal\RegistryController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -32,6 +33,12 @@ Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
                 Route::patch('manager', 'updateManager')->name('updateManager');
                 Route::patch('work-rate', 'updateWorkRate')->name('updateWorkRate');
             });
+        });
+
+        Route::prefix('registry')->name('registry.')->controller(RegistryController::class)->group(function () {
+            Route::get('/', 'view')->name('index');
+            Route::patch('template', 'updateTemplate')->name('updateTemplate');
+            Route::patch('access/{employee}', 'updateAccess')->name('updateAccess');
         });
     });
 });
