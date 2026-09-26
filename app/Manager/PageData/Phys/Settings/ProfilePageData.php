@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Manager\UseCases\Phys\Profile;
+namespace App\Manager\PageData\Phys\Settings;
 
 use App\Core\Models\User\Phys\Phys;
 
-class GetPageDataUseCase
+class ProfilePageData
 {
     public function execute(Phys $phys): array
     {

@@ -8,16 +8,16 @@ use App\Core\ValueObjects\Email;
 use App\Core\ValueObjects\Site;
 use App\Manager\Http\Requests\Phys\Notary\SearchRequest;
 use App\Manager\Http\Requests\Phys\Notary\UpdateRequest;
+use App\Manager\PageData\Phys\NotaryPageData;
 use App\Manager\UseCases\Phys\Notary\ExportSearchUseCase;
 use App\Manager\UseCases\Phys\Notary\GetNotaryUseCase;
-use App\Manager\UseCases\Phys\Notary\GetPageDataUseCase;
 use App\Manager\UseCases\Phys\Notary\UpdateUseCase;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
 class NotaryController extends AbstractController
 {
-    public function viewIndex(SearchRequest $request, GetPageDataUseCase $useCase)
+    public function viewIndex(SearchRequest $request, NotaryPageData $useCase)
     {
         $result = $useCase->execute($request);
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Manager\UseCases\Legal\Profile;
+namespace App\Manager\PageData\Legal\Settings;
 
 use App\Core\Models\LegalType;
 use App\Core\Models\User\Legal\Legal;
 use App\Core\Models\User\Legal\LegalProfile;
 
-class GetPageDataUseCase
+class ProfilePageData
 {
     public function execute(Legal $legal): array
     {

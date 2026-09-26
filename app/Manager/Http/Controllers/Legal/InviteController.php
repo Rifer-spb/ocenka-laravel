@@ -2,29 +2,39 @@
 
 namespace App\Manager\Http\Controllers\Legal;
 
+use App\Core\Finder\User\PhysFinder;
 use App\Core\Http\Controllers\AbstractController;
 use App\Core\Models\Invite\Invite;
+use App\Core\Models\Invite\InviteForWho;
+use App\Core\Models\User\Phys\Phys;
+use App\Core\Services\InviteService;
 use App\Core\ValueObjects\Email;
 use App\Manager\Http\Requests\InviteSearchRequest;
 use App\Manager\Http\Requests\Legal\Invite\CreateRequest;
 use App\Manager\Http\Requests\Legal\Invite\UpdateWorkRateRequest;
+use App\Manager\PageData\Legal\Settings\InvitePageData;
+use App\Manager\UseCases\Legal\Employee\UpdateDoReportUseCase;
+use App\Manager\UseCases\Legal\Employee\UpdateManagerUseCase;
+use App\Manager\UseCases\Legal\Employee\UpdateRideUseCase;
+use App\Manager\UseCases\Legal\Employee\UpdateWorkRateUseCase;
+use App\Manager\UseCases\Legal\Employee\UpdateWriteReportUseCase;
+use App\Manager\UseCases\Legal\Invite\CancelUseCase;
+use App\Manager\UseCases\Legal\Invite\CloseUseCase;
 use App\Manager\UseCases\Legal\Invite\ConfirmUseCase;
 use App\Manager\UseCases\Legal\Invite\CreateUseCase;
-use App\Manager\UseCases\Legal\Invite\GetPageDataUseCase;
-use App\Manager\UseCases\Legal\Invite\CancelUseCase;
 use App\Manager\UseCases\Legal\Invite\ResendUseCase;
-use App\Manager\UseCases\Legal\Invite\CloseUseCase;
-use App\Manager\UseCases\Legal\Invite\UpdateDoReportUseCase;
-use App\Manager\UseCases\Legal\Invite\UpdateManagerUseCase;
-use App\Manager\UseCases\Legal\Invite\UpdateRideUseCase;
-use App\Manager\UseCases\Legal\Invite\UpdateWorkRateUseCase;
-use App\Manager\UseCases\Legal\Invite\UpdateWriteReportUseCase;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
 class InviteController extends AbstractController
 {
-    public function view(InviteSearchRequest $request, GetPageDataUseCase $useCase)
+    public function __construct(
+        private InviteService $service
+    )
+    {
+    }
+
+    public function view(InviteSearchRequest $request, InvitePageData $useCase)
     {
         $view = $useCase->execute($this->getUser(), $request);
 
@@ -33,14 +43,15 @@ class InviteController extends AbstractController
 
     /**
      * @param CreateRequest $request
-     * @param CreateUseCase $useCase
      * @return RedirectResponse
      * @throws \Exception
      * @see \Feature\Manager\Http\Controllers\Legal\Invite\CreateUseCaseTest
      */
-    public function create(CreateRequest $request, CreateUseCase $useCase)
+    public function create(CreateRequest $request)
     {
-        $useCase->execute($this->getUser(), new Email($request->email));
+        $phys = PhysFinder::getByUsername($request->email);
+
+        $this->service->create($this->getUser(), $phys, InviteForWho::PHYS);
 
         return back()->with('success', 'Заявка успешно отправлена');
     }
@@ -89,6 +100,8 @@ class InviteController extends AbstractController
      */
     public function close(Invite $invite, CloseUseCase $useCase)
     {
+        $this->authorize('belongsTo', $invite);
+
         $useCase->execute($this->getUser(), $invite->id);
 
         return back()->with('success', 'Заявка успешно завершена');

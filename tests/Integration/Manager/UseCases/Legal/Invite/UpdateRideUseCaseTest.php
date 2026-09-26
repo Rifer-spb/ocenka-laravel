@@ -5,7 +5,7 @@ namespace Integration\Manager\UseCases\Legal\Invite;
 use App\Core\Finder\EmployeeFinder;
 use App\Core\Models\EntityNotFoundException;
 use App\Core\Models\Invite\Invite;
-use App\Manager\UseCases\Legal\Invite\UpdateRideUseCase;
+use App\Manager\UseCases\Legal\Employee\UpdateRideUseCase;
 use Tests\TestCase;
 
 class UpdateRideUseCaseTest extends TestCase

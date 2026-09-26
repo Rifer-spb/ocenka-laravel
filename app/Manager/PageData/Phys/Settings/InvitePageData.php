@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Manager\UseCases\Phys\Invite;
+namespace App\Manager\PageData\Phys\Settings;
 
 use App\Core\Helpers\DateHelper;
 use App\Core\Models\Invite\Invite;
-use App\Core\Models\Invite\InviteForWho;
 use App\Core\Models\Invite\InviteStatus;
 use App\Core\Models\Invite\InviteTab;
 use App\Core\Models\User\User;
@@ -12,7 +11,7 @@ use App\Manager\Helpers\InviteHelper;
 use App\Manager\Http\Requests\InviteSearchRequest;
 use App\Manager\ReadServices\InviteReadService;
 
-class GetPageDataUseCase
+class InvitePageData
 {
     public function execute(User $user, InviteSearchRequest $request): array
     {

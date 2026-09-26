@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Manager\UseCases\Legal\Registry;
+namespace App\Manager\PageData\Legal\Settings;
 
 use App\Core\Finder\EmployeeFinder;
 use App\Core\Models\User\Legal\Legal;
 
-class GetPageDataUseCase
+class RegistryPageData
 {
     public function execute(Legal $legal): array
     {

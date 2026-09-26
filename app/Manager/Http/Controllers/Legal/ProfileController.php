@@ -7,14 +7,14 @@ use App\Core\Models\User\Legal\Dto\Company;
 use App\Core\Models\User\ValueObjects\Password;
 use App\Manager\Http\Requests\ChangePasswordRequest;
 use App\Manager\Http\Requests\Legal\Profile\UpdateCompanyRequest;
-use App\Manager\UseCases\Legal\Profile\GetPageDataUseCase;
+use App\Manager\Queries\Legal\Settings\ProfilePageData;
 use App\Manager\UseCases\Legal\Profile\UpdateCompanyUseCase;
 use App\Manager\UseCases\User\ChangePasswordUseCase;
 use Inertia\Inertia;
 
 class ProfileController extends AbstractController
 {
-    public function view(GetPageDataUseCase $useCase)
+    public function view(ProfilePageData $useCase)
     {
         $params = $useCase->execute($this->getUser());
 

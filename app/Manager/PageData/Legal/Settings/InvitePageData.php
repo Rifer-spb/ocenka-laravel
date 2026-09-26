@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager\UseCases\Legal\Invite;
+namespace App\Manager\PageData\Legal\Settings;
 
 use App\Core\Helpers\DateHelper;
 use App\Core\Models\Employee\EmployeeReportAccess;
@@ -12,7 +12,7 @@ use App\Manager\Helpers\InviteHelper;
 use App\Manager\Http\Requests\InviteSearchRequest;
 use App\Manager\ReadServices\InviteReadService;
 
-class GetPageDataUseCase
+class InvitePageData
 {
     public function execute(Legal $legal, InviteSearchRequest $request): array
     {

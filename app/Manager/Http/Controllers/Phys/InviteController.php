@@ -7,17 +7,17 @@ use App\Core\Models\Invite\Invite;
 use App\Core\ValueObjects\Email;
 use App\Manager\Http\Requests\InviteSearchRequest;
 use App\Manager\Http\Requests\Phys\Invite\CreateRequest;
-use App\Manager\UseCases\Phys\Invite\ConfirmUseCase;
+use App\Manager\PageData\Phys\Settings\InvitePageData;
 use App\Manager\UseCases\Phys\Invite\CancelUseCase;
+use App\Manager\UseCases\Phys\Invite\ConfirmUseCase;
 use App\Manager\UseCases\Phys\Invite\CreateUseCase;
 use App\Manager\UseCases\Phys\Invite\ResendUseCase;
-use App\Manager\UseCases\Phys\Invite\GetPageDataUseCase;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
 class InviteController extends AbstractController
 {
-    public function view(InviteSearchRequest $request, GetPageDataUseCase $useCase)
+    public function view(InviteSearchRequest $request, InvitePageData $useCase)
     {
         $result = $useCase->execute($this->getUser(), $request);
 

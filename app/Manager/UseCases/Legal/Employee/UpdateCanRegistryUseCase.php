@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Manager\UseCases\Legal\Registry;
+namespace App\Manager\UseCases\Legal\Employee;
 
 use App\Core\Finder\EmployeeFinder;
 use App\Core\Models\User\Legal\Legal;
 
-class UpdateAccessUseCase
+class UpdateCanRegistryUseCase
 {
     public function execute(Legal $legal, int $employeeId): void
     {

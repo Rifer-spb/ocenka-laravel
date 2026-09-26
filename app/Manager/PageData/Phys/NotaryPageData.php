@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager\UseCases\Phys\Notary;
+namespace App\Manager\PageData\Phys;
 
 use App\Core\Finder\Notary\NotaryRegionFinder;
 use App\Core\Helpers\PhoneHelper;
@@ -11,7 +11,7 @@ use App\Core\Models\Notary\NotaryRegion;
 use App\Manager\Http\Requests\Phys\Notary\SearchRequest;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class GetPageDataUseCase
+class NotaryPageData
 {
     public function execute(SearchRequest $request): array
     {

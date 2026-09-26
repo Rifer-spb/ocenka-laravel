@@ -6,14 +6,14 @@ use App\Core\Http\Controllers\AbstractController;
 use App\Core\Models\Employee\Employee;
 use App\Core\Models\User\Legal\ValueObjects\RegistryTemplate;
 use App\Manager\Http\Requests\Legal\Registry\UpdateTemplateRequest;
-use App\Manager\UseCases\Legal\Registry\GetPageDataUseCase;
-use App\Manager\UseCases\Legal\Registry\UpdateAccessUseCase;
-use App\Manager\UseCases\Legal\Registry\UpdateTemplateUseCase;
+use App\Manager\Queries\Legal\Settings\RegistryPageData;
+use App\Manager\UseCases\Legal\Employee\UpdateCanRegistryUseCase;
+use App\Manager\UseCases\Legal\Profile\UpdateTemplateUseCase;
 use Inertia\Inertia;
 
 class RegistryController extends AbstractController
 {
-    public function view(GetPageDataUseCase $useCase)
+    public function view(RegistryPageData $useCase)
     {
         $result = $useCase->execute($this->getUser());
 
@@ -27,7 +27,7 @@ class RegistryController extends AbstractController
         return back()->with(['success' => 'Успешно сохранено']);
     }
 
-    public function updateAccess(Employee $employee, UpdateAccessUseCase $useCase)
+    public function updateAccess(Employee $employee, UpdateCanRegistryUseCase $useCase)
     {
         $useCase->execute($this->getUser(), $employee->id);
 
