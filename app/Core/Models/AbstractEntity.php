@@ -16,4 +16,11 @@ abstract class AbstractEntity extends Model
     {
         return (new static())->getTable();
     }
+
+    protected function syncCollection(string $relationName, Model $model): void
+    {
+        if ($this->relationLoaded($relationName)) {
+            $this->{$relationName}->push($model);
+        }
+    }
 }

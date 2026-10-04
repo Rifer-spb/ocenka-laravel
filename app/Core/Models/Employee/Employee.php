@@ -94,26 +94,28 @@ class Employee extends AbstractEntity
      * @param int $id
      * @return void
      *
+     * @throws \Throwable
      * @see \Tests\Unit\Core\Models\Employee\SwitchAccessTest
      */
     public function switchDoReportAccess(int $id): void
     {
         $access = $this->getReportAccess($id);
         $access->do = !$access->do;
-        $access->save();
+        $access->saveOrFail();
     }
 
     /**
      * @param int $id
      * @return void
      *
+     * @throws \Throwable
      * @see \Tests\Unit\Core\Models\Employee\SwitchAccessTest
      */
     public function switchWriteReportAccess(int $id): void
     {
         $access = $this->getReportAccess($id);
         $access->write = !$access->write;
-        $access->save();
+        $access->saveOrFail();
     }
 
     /**

@@ -142,13 +142,6 @@ class Notary extends AbstractEntity
         $this->comment = $comment;
     }
 
-    private function syncCollection(string $relationName, Model $model): void
-    {
-        if ($this->relationLoaded($relationName)) {
-            $this->{$relationName}->push($model);
-        }
-    }
-
     public function region(): BelongsTo
     {
         return $this->belongsTo(NotaryRegion::class);

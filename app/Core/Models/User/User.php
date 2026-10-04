@@ -2,10 +2,12 @@
 
 namespace App\Core\Models\User;
 
+use App\Core\Models\ModelHelperMethods;
 use App\Core\Models\User\ValueObjects\Password;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @property int $id
@@ -22,6 +24,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     use HasFactory;
+    use ModelHelperMethods;
 
     protected $table = 'users';
 
@@ -68,6 +71,15 @@ class User extends Authenticatable
     public function isNotary(): bool
     {
         return $this->role === Role::NOTARY->value;
+    }
+
+    public function changePassword(Password $oldPassword, Password $newPassword): void
+    {
+        if (! Hash::check($oldPassword->getValue(), $this->password)) {
+            throw new \DomainException('Неверный текущий пароль.');
+        }
+
+        $this->updatePassword($newPassword);
     }
 
     /**

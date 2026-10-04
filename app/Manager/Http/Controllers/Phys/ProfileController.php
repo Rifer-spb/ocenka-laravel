@@ -9,39 +9,34 @@ use App\Core\Models\User\ValueObjects\FirstName;
 use App\Core\Models\User\ValueObjects\LastName;
 use App\Core\Models\User\ValueObjects\Password;
 use App\Core\Models\User\ValueObjects\SecondName;
+use App\Core\Services\PhysProfileService;
+use App\Core\Services\UserService;
 use App\Core\ValueObjects\NationalPhone;
 use App\Manager\Http\Requests\ChangePasswordRequest;
 use App\Manager\Http\Requests\Phys\Profile\AddPhoneRequest;
 use App\Manager\Http\Requests\Phys\Profile\UpdateHolidayRequest;
 use App\Manager\Http\Requests\Phys\Profile\UpdateNameRequest;
-use App\Manager\PageData\Phys\Settings\ProfilePageData;
-use App\Manager\UseCases\Phys\Profile\Phone;
-use App\Manager\UseCases\Phys\Profile\UpdateHolidayUseCase;
-use App\Manager\UseCases\Phys\Profile\UpdateNameUseCase;
-use App\Manager\UseCases\User\ChangePasswordUseCase;
 use Illuminate\Http\RedirectResponse;
-use Inertia\Inertia;
 
 class ProfileController extends AbstractController
 {
-    public function view(ProfilePageData $useCase)
+    public function __construct(
+        private UserService $userService,
+        private PhysProfileService $profileService
+    )
     {
-        $params = $useCase->execute($this->getUser());
-
-        return Inertia::render('manager/phys/settings/account/index', $params);
     }
 
     /**
      * @param UpdateNameRequest $request
-     * @param UpdateNameUseCase $useCase
      * @return RedirectResponse
      *
      * Тесты @see \Feature\Manager\Http\Controllers\Phys\Profile\UpdateNameTest
      */
-    public function updateName(UpdateNameRequest $request, UpdateNameUseCase $useCase): RedirectResponse
+    public function updateName(UpdateNameRequest $request): RedirectResponse
     {
-        $useCase->execute(
-            $this->getUser(),
+        $this->profileService->updateName(
+            $this->getUserId(),
             new FirstName($request->firstName),
             new SecondName($request->secondName),
             new LastName($request->lastName),
@@ -52,16 +47,15 @@ class ProfileController extends AbstractController
 
     /**
      * @param AddPhoneRequest $request
-     * @param Phone\AddUseCase $useCase
      * @return RedirectResponse
      *
      * Тесты @see \Feature\Manager\Http\Controllers\Phys\Profile\Phone\AddPhoneTest
      */
-    public function addPhone(AddPhoneRequest $request, Phone\AddUseCase $useCase)
+    public function addPhone(AddPhoneRequest $request)
     {
-        $useCase->execute(
-            $this->getUser(),
-            new NationalPhone($request->phone)
+        $this->profileService->addPhone(
+            $this->getUserId(),
+            new NationalPhone($request->phone),
         );
 
         return back()->with('success', 'Успешно обновлено');
@@ -69,48 +63,45 @@ class ProfileController extends AbstractController
 
     /**
      * @param PhysPhone $phone
-     * @param Phone\DeleteUseCase $useCase
      * @return RedirectResponse
      *
      * Тесты @see \Feature\Manager\Http\Controllers\Phys\Profile\Phone\DeletePhoneTest
      */
-    public function deletePhone(PhysPhone $phone, Phone\DeleteUseCase $useCase)
+    public function deletePhone(PhysPhone $phone)
     {
-        $useCase->execute($this->getUser(), $phone->id);
+        $this->profileService->deletePhone($this->getUserId(), $phone->id);
 
         return back()->with('success', 'Успешно удалено');
     }
 
     /**
      * @param UpdateHolidayRequest $request
-     * @param UpdateHolidayUseCase $useCase
      * @return RedirectResponse
      *
      * Тесты @see \Feature\Manager\Http\Controllers\Phys\Profile\UpdateHolidayTest
      */
-    public function updateHoliday(UpdateHolidayRequest $request, UpdateHolidayUseCase $useCase)
+    public function updateHoliday(UpdateHolidayRequest $request)
     {
         $holiday = new Holiday($request->holidayFrom, $request->holidayTo);
 
-        $useCase->execute($this->getUser(), $holiday);
+        $this->profileService->updateHoliday($this->getUserId(), $holiday);
 
         return back()->with('success', 'Успешно обновлено');
     }
 
     /**
      * @param ChangePasswordRequest $request
-     * @param ChangePasswordUseCase $useCase
      * @return RedirectResponse
      * @throws \Throwable
      *
      * Тесты @see \Feature\Manager\Http\Controllers\User\ChangePasswordTest
      */
-    public function changePassword(ChangePasswordRequest $request, ChangePasswordUseCase $useCase)
+    public function changePassword(ChangePasswordRequest $request)
     {
-        $useCase->execute(
-            $this->getUser(),
+        $this->userService->changePassword(
+            $this->getUserId(),
             new Password($request->oldPassword),
-            new Password($request->newPassword)
+            new Password($request->newPassword),
         );
 
         return back()->with('success', 'Пароль успешно изменен');

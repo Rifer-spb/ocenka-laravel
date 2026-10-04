@@ -83,7 +83,10 @@ class Phys extends User
             throw new \DomainException("Номер телефона {$phone->getValue()} уже добавлен.");
         }
 
-        return $this->phones()->create(['phone' => $phone->getValue()]);
+        $phone = $this->phones()->create(['phone' => $phone->getValue()]);
+        $this->syncCollection('phones', $phone);
+
+        return $phone;
     }
 
     public function hasPhone(int|string $phone): bool

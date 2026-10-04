@@ -3,6 +3,10 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
     plugins: [
@@ -37,5 +41,16 @@ export default defineConfig({
     },
     esbuild: {
         jsx: 'automatic',
+    },
+    resolve: {
+        alias: {
+            '@common': path.resolve(__dirname, 'resources/js/common'),
+            '@manager': path.resolve(__dirname, 'resources/js/manager'),
+            '@managerRoutes': path.resolve(__dirname, 'resources/js/common/wayfinder/routes/manager'),
+            '@client': path.resolve(__dirname, 'resources/js/client'),
+            '@clientRoutes': path.resolve(__dirname, 'resources/js/common/wayfinder/routes/client'),
+            '@notary': path.resolve(__dirname, 'resources/js/notary'),
+            '@notaryRoutes': path.resolve(__dirname, 'resources/js/common/wayfinder/routes/notary'),
+        },
     },
 });

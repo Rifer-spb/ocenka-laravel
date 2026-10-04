@@ -6,39 +6,93 @@ use App\Core\Models\Employee\Employee;
 
 class EmployeeService
 {
-    public function switchDoReportAccess(Employee $employee, int $accessId): void
+    /**
+     * @param int $employeeId
+     * @param int $accessId
+     * @return void
+     * @throws \Throwable
+     */
+    public function updateDoReportAccess(int $employeeId, int $accessId): void
     {
+        $employee = $this->getEmployeeId($employeeId);
         $employee->switchDoReportAccess($accessId);
     }
 
-    public function switchWriteReportAccess(Employee $employee, int $accessId): void
+    /**
+     * @param int $employeeId
+     * @param int $accessId
+     * @return void
+     * @throws \Throwable
+     */
+    public function switchWriteReportAccess(int $employeeId, int $accessId): void
     {
+        $employee = $this->getEmployeeId($employeeId);
         $employee->switchWriteReportAccess($accessId);
     }
 
-    public function switchRideAccess(Employee $employee): void
+    /**
+     * @param int $employeeId
+     * @return void
+     * @throws \Throwable
+     */
+    public function switchRideAccess(int $employeeId): void
     {
+        $employee = $this->getEmployeeId($employeeId);
         $employee->switchRideAccess();
+        $employee->saveOrFail();
     }
 
-    public function switchIsManagerAccess(Employee $employee): void
+    /**
+     * @param int $employeeId
+     * @return void
+     * @throws \Throwable
+     */
+    public function switchIsManagerAccess(int $employeeId): void
     {
+        $employee = $this->getEmployeeId($employeeId);
         $employee->switchIsManagerAccess();
+        $employee->saveOrFail();
     }
 
-    public function updateWorkRate(Employee $employee, string $value): void
+    /**
+     * @param int $employeeId
+     * @param string $value
+     * @return void
+     * @throws \Throwable
+     */
+    public function updateWorkRate(int $employeeId, string $value): void
     {
+        $employee = $this->getEmployeeId($employeeId);
         $employee->work_rate = $value;
         $employee->saveOrFail();
     }
 
-    public function switchCanRegistryAccess(Employee $employee): void
+    /**
+     * @param int $employeeId
+     * @return void
+     * @throws \Throwable
+     */
+    public function switchCanRegistryAccess(int $employeeId): void
     {
+        $employee = $this->getEmployeeId($employeeId);
         $employee->switchCanRegistryAccess();
+        $employee->saveOrFail();
     }
 
-    public function switchCanCallAccess(Employee $employee): void
+    /**
+     * @param int $employeeId
+     * @return void
+     * @throws \Throwable
+     */
+    public function switchCanCallAccess(int $employeeId): void
     {
+        $employee = $this->getEmployeeId($employeeId);
         $employee->switchCanCallAccess();
+        $employee->saveOrFail();
+    }
+
+    private function getEmployeeId(int $id): Employee
+    {
+        return Employee::findOrFail($id);
     }
 }
