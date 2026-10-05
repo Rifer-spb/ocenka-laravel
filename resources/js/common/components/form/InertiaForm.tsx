@@ -6,15 +6,16 @@ import { collectFormData } from "@common/utils/form";
 type TProps = {
     method: 'get' | 'post' | 'put' | 'patch' | 'delete';
     action: string;
-    children: (args: any) => React.ReactNode;
+    children: React.ReactNode | ((args: any) => React.ReactNode);
     onChange?: boolean;
     onSuccess?: (page: any) => void;
     onError?: (errors: Record<string, string>) => void;
     resetOnSuccess?: boolean;
     style?: object;
+    className?: string;
 }
 
-export default function InertiaForm({ method, action, children, onChange, onSuccess, onError, resetOnSuccess = false, style } : TProps)  {
+export default function InertiaForm({ method, action, children, onChange, onSuccess, onError, resetOnSuccess = false, style, className } : TProps)  {
     const query = useQueryParams();
     const { errors: serverErrors } = usePage().props as { errors: Record<string, string> };
     const [dismissed, setDismissed] = useState(false);
@@ -61,8 +62,9 @@ export default function InertiaForm({ method, action, children, onChange, onSucc
             action={action}
             {...(onChange ? { onChange: handleSubmit } : { onSubmit: handleSubmit })}
             style={style}
+            className={className}
         >
-            {children({ errors, fromQuery })}
+            {typeof children === 'function' ? children({ errors, fromQuery }) : children}
         </form>
     );
 }

@@ -1,4 +1,4 @@
-import { TPaginated } from '@common/types/types';
+import {TPaginated, TSelectOptions} from '@common/types/types';
 import {TCurrentNotary, TNotary} from './types';
 import Layout from '../../Layout';
 import FilterForm from "./FilterForm";
@@ -12,7 +12,7 @@ import {getRequest} from "@common/utils/api";
 import { getNotary, exportSearch } from "@managerRoutes/phys/notaries";
 
 type TProps = {
-    regions: Record<number, string>;
+    regions: TSelectOptions;
     notaries: TPaginated<TNotary>;
     defaultRegionId: number;
 };

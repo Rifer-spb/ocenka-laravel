@@ -1,9 +1,3 @@
-export type TType = {
-    id: number;
-    name: string;
-    shortName: string;
-}
-
 export type TCompany = {
     typeId: number | null;
     fullName: string | null;

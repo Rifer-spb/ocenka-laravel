@@ -3,12 +3,13 @@ import EmailComponent from './EmailComponent';
 import {usePage} from "@inertiajs/react";
 import {SharedData} from "@manager/types";
 import './index.css';
-import { TType, TCompany } from "./types";
+import { TCompany } from "./types";
 import CompanyComponent from "./CompanyComponent";
 import PasswordComponent from "./PasswordComponent";
+import {TSelectOptions} from "@common/types/types";
 
 type TProps = {
-    types: TType[];
+    types: TSelectOptions;
     company: TCompany;
 }
 

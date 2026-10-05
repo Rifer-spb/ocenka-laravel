@@ -1,11 +1,12 @@
-import InputGroup from "@/components/app/form/InputGroup";
-import CheckboxGroup from "@/components/app/form/CheckboxGroup";
-import { index } from "@/routes/manager/phys/notaries";
-import InertiaForm from "@/components/app/form/InertiaForm";
-import SelectGroup from "@/components/app/form/SelectGroup";
+import InputGroup from "@common/components/form/InputGroup";
+import CheckboxGroup from "@common/components/form/CheckboxGroup";
+import { index } from "@managerRoutes/phys/notaries";
+import InertiaForm from "@common/components/form/InertiaForm";
+import SelectGroup from "@common/components/form/SelectGroup";
+import {TSelectOptions} from "@common/types/types";
 
 type TProps = {
-    regions: Record<number, string>;
+    regions: TSelectOptions;
     defaultRegionId: number;
 }
 

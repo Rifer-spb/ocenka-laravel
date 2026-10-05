@@ -1,12 +1,22 @@
 import * as React from "react";
 import {cn} from "@common/utils/utils";
 
-type TProps = {
-    type: 'submit' | 'button' | 'reset';
+type TBaseProps = {
     className?: string;
     children: React.ReactNode;
-}
+    disabled?: boolean;
+};
 
-export default function Button({ type, className, children}: TProps) {
-  return (<button type={type} className={cn('btn', className)}>{children}</button>)
+type TButtonProps =
+    | (TBaseProps & { type: 'button'; onClick?: React.MouseEventHandler<HTMLButtonElement> })
+    | (TBaseProps & { type: 'submit' | 'reset'; onClick?: never });
+
+export default function Button(props: TButtonProps) {
+    const { type, className = 'btn-primary', children, ...rest } = props;
+
+    return (
+        <button type={type} className={cn('btn', className)} {...rest}>
+            {children}
+        </button>
+    );
 }

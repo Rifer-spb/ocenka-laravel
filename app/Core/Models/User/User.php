@@ -2,6 +2,7 @@
 
 namespace App\Core\Models\User;
 
+use App\Core\Models\AbstractEntityTrait;
 use App\Core\Models\ModelHelperMethods;
 use App\Core\Models\User\ValueObjects\Password;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,6 +26,7 @@ class User extends Authenticatable
     use Notifiable;
     use HasFactory;
     use ModelHelperMethods;
+    use AbstractEntityTrait;
 
     protected $table = 'users';
 

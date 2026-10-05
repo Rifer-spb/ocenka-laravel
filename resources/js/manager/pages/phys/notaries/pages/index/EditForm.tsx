@@ -1,11 +1,11 @@
-import InertiaForm from "@/components/app/form/InertiaForm";
-import MultiInputGroup from "@/components/app/form/MultiInputGroup";
-import { updateNotary } from "@/routes/manager/phys/notaries";
-import {TCurrentNotary} from "@/pages/manager/phys/notaries/pages/index/types";
-import InputGroup from "@/components/app/form/InputGroup";
-import SelectGroup from "@/components/app/form/SelectGroup";
-import TextareaGroup from "@/components/app/form/TextareaGroup";
-import Button from "@/components/app/form/Button";
+import InertiaForm from "@common/components/form/InertiaForm";
+import MultiInputGroup from "@common/components/form/MultiInputGroup";
+import { updateNotary } from "@managerRoutes/phys/notaries";
+import {TCurrentNotary} from "./types";
+import InputGroup from "@common/components/form/InputGroup";
+import SelectGroup from "@common/components/form/SelectGroup";
+import TextareaGroup from "@common/components/form/TextareaGroup";
+import Button from "@common/components/form/Button";
 
 type TProps = {
     notary: TCurrentNotary;
@@ -54,7 +54,7 @@ export default function EditForm({ notary }: TProps) {
                         defaultValue={notary.comment}
                         error={errors.comment}
                     />
-                    <Button type='submit' className='btn-primary'>Сохранить</Button>
+                    <Button type='submit'>Сохранить</Button>
                 </>
             )}
         </InertiaForm>

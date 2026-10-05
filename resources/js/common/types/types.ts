@@ -23,3 +23,11 @@ export type TPaginationMeta = {
 export type TPaginated<T> = TPaginationMeta & {
     data: T[];
 };
+
+type TSelectOption = {
+    value: string | number;
+    label: string;
+    disabled?: boolean;
+};
+
+export type TSelectOptions = TSelectOption[] | Record<string | number, string>;

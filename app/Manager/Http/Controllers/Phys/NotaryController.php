@@ -4,6 +4,7 @@ namespace App\Manager\Http\Controllers\Phys;
 
 use App\Core\Http\Controllers\AbstractController;
 use App\Core\Models\Notary\Notary;
+use App\Core\Services\NotaryService;
 use App\Core\ValueObjects\Email;
 use App\Core\ValueObjects\Site;
 use App\Manager\Http\Requests\Phys\Notary\SearchRequest;
@@ -11,12 +12,17 @@ use App\Manager\Http\Requests\Phys\Notary\UpdateRequest;
 use App\Manager\PageData\Phys\NotaryPageData;
 use App\Manager\UseCases\Phys\Notary\ExportSearchUseCase;
 use App\Manager\UseCases\Phys\Notary\GetNotaryUseCase;
-use App\Manager\UseCases\Phys\Notary\UpdateUseCase;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
 class NotaryController extends AbstractController
 {
+    public function __construct(
+        private NotaryService $service
+    )
+    {
+    }
+
     public function viewIndex(SearchRequest $request, NotaryPageData $useCase)
     {
         $result = $useCase->execute($request);
@@ -44,13 +50,12 @@ class NotaryController extends AbstractController
     /**
      * @param Notary $notary
      * @param UpdateRequest $request
-     * @param UpdateUseCase $useCase
      * @return RedirectResponse
      * @throws \Throwable
      */
-    public function updateNotary(Notary $notary, UpdateRequest $request, UpdateUseCase $useCase)
+    public function updateNotary(Notary $notary, UpdateRequest $request)
     {
-        $useCase->execute(
+        $this->service->update(
             $notary->id,
             array_map(fn(string $email) => new Email($email), $request->emails),
             $request->site ? new Site($request->site) : null,

@@ -2,6 +2,7 @@
 
 namespace App\Manager\Http\PageControllers\Legal\Settings;
 
+use App\Core\Finder\LegalTypeFinder;
 use App\Core\Http\Controllers\AbstractController;
 use App\Core\Models\LegalType;
 use App\Core\Models\User\Legal\LegalProfile;
@@ -20,20 +21,9 @@ class AccountPageController extends AbstractController
         $profile = $this->getUser()->profile;
 
         return [
-            'types' => $this->getTypes(),
+            'types' => LegalTypeFinder::getList(),
             'company' => $this->getCompany($profile),
         ];
-    }
-
-    private function getTypes(): array
-    {
-        return array_map(function (array $type) {
-            return [
-                'id' => $type['id'],
-                'name' => $type['name'],
-                'shortName' => $type['short_name'],
-            ];
-        }, LegalType::all()->toArray());
     }
 
     private function getCompany(LegalProfile $profile): array

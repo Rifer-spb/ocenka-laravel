@@ -9,11 +9,4 @@ namespace App\Core\Models;
  */
 class LegalType extends AbstractEntity
 {
-    /**
-     * @return LegalType[]
-     */
-    public static function getAll(): array
-    {
-        return self::all()->all();
-    }
 }

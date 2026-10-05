@@ -1,101 +1,94 @@
 import InertiaForm from "@common/components/form/InertiaForm";
-import {TCompany, TType} from "./types";
-import {Label} from "@common/components/ui/label";
-import InputError from "@common/components/form/InputError";
-import { Button } from "@common/components/ui/button";
-import {Input} from "@common/components/ui/input";
+import {TCompany} from "./types";
 import { update } from "@managerRoutes/legal/profile/company";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useState } from "react";
+import SelectGroup from "@common/components/form/SelectGroup";
+import { TSelectOptions } from "@common/types/types";
+import InputGroup from "@common/components/form/InputGroup";
+import DatePickerGroup from "@common/components/form/DatePickerGroup";
+import Button from "@common/components/form/Button";
 
-export default function ({ types, company } : { types: TType[], company: TCompany }) {
-    const [dateOgrn, setDateOgrn] = useState<Date | null>(
-        company.dateOgrn ? new Date(company.dateOgrn) : null
-    );
-
+export default function ({ types, company } : { types: TSelectOptions, company: TCompany }) {
     return (
         <section className="company">
             <h2>Компания</h2>
             <InertiaForm {...update.form()}>
                 {({ errors }) => (
                     <>
-                        <div className="form-group">
-                            <Label>Организационная форма</Label>
-                            <select
-                                name="typeId"
-                                defaultValue={company.typeId ?? ''}
-                                className="form-control"
-                            >
-                                <option value="">Выберите тип</option>
-                                {types.map(type => (
-                                    <option key={type.id} value={type.id}>
-                                        {type.name}
-                                    </option>
-                                ))}
-                            </select>
-                            <InputError message={errors.type}/>
-                        </div>
-                        <div className="form-group">
-                            <Label>Полное наименование</Label>
-                            <Input type="text" name="fullName" defaultValue={company.fullName ?? undefined}/>
-                            <InputError message={errors.fullName}/>
-                        </div>
-                        <div className="form-group">
-                            <Label>Краткое наименование</Label>
-                            <Input type="text" name="shortName" defaultValue={company.shortName ?? undefined}/>
-                            <InputError message={errors.shortName}/>
-                        </div>
-                        <div className="form-group">
-                            <Label>Краткое название (аббревиатура)</Label>
-                            <Input type="text" name="abbr" defaultValue={company.abbr ?? undefined}/>
-                            <InputError message={errors.abbr}/>
-                        </div>
-                        <div className="form-group">
-                            <Label>Местонахождение</Label>
-                            <Input type="text" name="address" defaultValue={company.address ?? undefined}/>
-                            <InputError message={errors.address}/>
-                        </div>
+                        <SelectGroup
+                            label='Организационная форма'
+                            name="typeId"
+                            options={types}
+                            placeholder='Выберите тип'
+                            error={errors.type}
+                            defaultValue={company.typeId ?? ''}
+                        />
+                        <InputGroup
+                            label='Полное наименование'
+                            name='fullName'
+                            defaultValue={company.fullName ?? undefined}
+                            error={errors.fullName}
+                        />
+                        <InputGroup
+                            label='Краткое наименование'
+                            name='shortName'
+                            defaultValue={company.shortName ?? undefined}
+                            error={errors.shortName}
+                        />
+                        <InputGroup
+                            label='Аббревиатура'
+                            name='abbr'
+                            defaultValue={company.abbr ?? undefined}
+                            error={errors.abbr}
+                        />
+                        <InputGroup
+                            label='Местонахождение'
+                            name='address'
+                            defaultValue={company.address ?? undefined}
+                            error={errors.address}
+                        />
                         <div className="form-group">
                             <div className="row">
                                 <div className="col-sm-6">
-                                    <Label>ИНН</Label>
-                                    <Input type="text" name="inn" defaultValue={company.inn ?? undefined}/>
-                                    <InputError message={errors.inn}/>
-                                </div>
-                                <div className="col-sm-6">
-                                    <Label>КПП</Label>
-                                    <Input type="text" name="kpp" defaultValue={company.kpp ?? undefined}/>
-                                    <InputError message={errors.kpp}/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <div className="row">
-                                <div className="col-sm-6">
-                                    <Label>ОРГН</Label>
-                                    <Input type="text" name="ogrn" defaultValue={company.ogrn ?? undefined}/>
-                                    <InputError message={errors.ogrn}/>
-                                </div>
-                                <div className="col-sm-6">
-                                    <Label>Дата присвоения ОРГН</Label>
-                                    <DatePicker
-                                        name="dateOgrn"
-                                        selected={dateOgrn}
-                                        placeholderText="Выберите дату"
-                                        showMonthDropdown
-                                        dropdownMode="select"
-                                        dateFormat="dd.MM.yyyy"
-                                        showMonthYearDropdown={true}
-                                        className="form-control"
-                                        onSelect={(date: Date | null) => setDateOgrn(date)}
+                                    <InputGroup
+                                        label='ИНН'
+                                        name='inn'
+                                        defaultValue={company.inn ?? undefined}
+                                        error={errors.inn}
                                     />
-                                    <InputError message={errors.dateOgrn}/>
+                                </div>
+                                <div className="col-sm-6">
+                                    <InputGroup
+                                        label='КПП'
+                                        name='kpp'
+                                        defaultValue={company.kpp ?? undefined}
+                                        error={errors.kpp}
+                                    />
                                 </div>
                             </div>
                         </div>
                         <div className="form-group">
-                            <Button type="submit" className="btn btn-primary">Сохранить</Button>
+                            <div className="row">
+                                <div className="col-sm-6">
+                                    <InputGroup
+                                        label='ОРГН'
+                                        name='ogrn'
+                                        defaultValue={company.ogrn ?? undefined}
+                                        error={errors.ogrn}
+                                    />
+                                </div>
+                                <div className="col-sm-6">
+                                    <DatePickerGroup
+                                        label='Дата присвоения ОРГН'
+                                        name='dateOgrn'
+                                        defaultValue={company.dateOgrn}
+                                        error={errors.dateOgrn}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <Button type='submit'>Сохранить</Button>
                         </div>
                     </>
                 )}

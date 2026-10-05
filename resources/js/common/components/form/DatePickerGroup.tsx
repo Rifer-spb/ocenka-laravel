@@ -2,7 +2,7 @@ import * as React from "react";
 import DatePicker, { DatePickerProps } from "react-datepicker";
 import { cn } from "@common/utils/utils";
 import InputError from "@common/components/form/InputError";
-import {useId} from "react";
+import {useId, useState} from "react";
 
 type TPickerProps = Pick<
 DatePickerProps,
@@ -23,8 +23,9 @@ type TProps = TPickerProps & {
     label?: string;
     error?: string;
     className?: string;
-    value: Date | null;
-    onChange: (date: Date | null) => void;
+    value?: Date | null;
+    defaultValue?: Date | null;
+    onChange?: (date: Date | null) => void;
 };
 
 export default function DatePickerGroup({
@@ -33,10 +34,22 @@ export default function DatePickerGroup({
     error,
     className,
     value,
+    defaultValue = null,
     onChange,
     ...props
 }: TProps) {
     const id = useId();
+    const isControlled = value !== undefined;
+    const [internalValue, setInternalValue] = useState<Date | null>(defaultValue);
+
+    const selected = isControlled ? value : internalValue;
+
+    const handleChange = (date: Date | null) => {
+        if (!isControlled) {
+            setInternalValue(date);
+        }
+        onChange?.(date);
+    };
 
     return (
         <div className='form-group'>
@@ -44,8 +57,8 @@ export default function DatePickerGroup({
             <DatePicker
                 id={id}
                 name={name}
-                selected={value}
-                onChange={(date: Date | null) => onChange(date)}
+                selected={selected}
+                onChange={handleChange}
                 placeholderText='Выберите дату'
                 dateFormat='dd.MM.yyyy'
                 showMonthDropdown

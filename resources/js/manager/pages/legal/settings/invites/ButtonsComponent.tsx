@@ -1,4 +1,4 @@
-import {Button} from "@common/components/ui/button";
+import Button from "@common/components/form/Button";
 import {IInviteTab} from "@manager/components/invite/types";
 
 type Props = {
@@ -18,12 +18,11 @@ export default function ({ id, currentTab, handleReSend, handleCancel, handleCon
                     <>
                         <Button
                             type="button"
-                            className="btn btn-primary"
                             onClick={() => handleCancel(id)}
                         >Отклонить</Button>
                         <Button
                             type="button"
-                            className="btn btn-success"
+                            className="btn-success"
                             onClick={() => handleConfirm(id)}
                         >Подтвердить</Button>
                     </>
@@ -31,12 +30,11 @@ export default function ({ id, currentTab, handleReSend, handleCancel, handleCon
                     <>
                         <Button
                             type="button"
-                            className="btn btn-success"
+                            className="btn-success"
                             onClick={() => handleReSend(id)}
                         >Повторить</Button>
                         <Button
                             type="button"
-                            className="btn btn-primary"
                             onClick={() => handleCancel(id)}
                         >Отозвать</Button>
                     </>
@@ -44,7 +42,7 @@ export default function ({ id, currentTab, handleReSend, handleCancel, handleCon
                     <>
                         <Button
                             type="button"
-                            className="btn btn-danger"
+                            className="btn-danger"
                             onClick={() => handleClose(id)}
                         >Завершить</Button>
                     </>
