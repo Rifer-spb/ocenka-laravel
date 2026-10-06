@@ -8,8 +8,6 @@ class LegalTypeReadService
 {
     public function getList(): array
     {
-        $types = LegalTypeFinder::getAll();
-
-        return collect($types)->pluck('name', 'id')->all();
+        return LegalTypeFinder::getAll()->pluck('name', 'id')->all();
     }
 }

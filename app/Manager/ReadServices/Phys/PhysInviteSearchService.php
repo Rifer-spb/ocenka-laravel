@@ -16,15 +16,18 @@ class PhysInviteSearchService
     {
         $invites = PhysInviteQuery::searchQuery($phys, InviteTab::from($request->type));
 
-        return array_map(function (Invite $model) {
-            return [
-                'id' => $model->id,
-                'legal' => $this->getLegal($model),
-                'status' => $this->getStatus($model),
-                'created_at' => DateHelper::toDatetime($model->created_at),
-                'completed_at' => DateHelper::toDatetime($model->completed_at),
-            ];
-        }, $invites->get()->all());
+        return $invites->get()->map($this->getInvite(...))->all();
+    }
+
+    private function getInvite(Invite $model): array
+    {
+        return [
+            'id' => $model->id,
+            'legal' => $this->getLegal($model),
+            'status' => $this->getStatus($model),
+            'created_at' => DateHelper::toDatetime($model->created_at),
+            'completed_at' => DateHelper::toDatetime($model->completed_at),
+        ];
     }
 
     private function getLegal(Invite $model): array

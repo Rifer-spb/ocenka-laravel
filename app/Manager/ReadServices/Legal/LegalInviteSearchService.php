@@ -17,16 +17,19 @@ class LegalInviteSearchService
     {
         $invites = LegalInviteQuery::searchQuery($legal, InviteTab::from($request->type));
 
-        return array_map(function (Invite $model) {
-            return [
-                'id' => $model->id,
-                'phys' => $this->getPhys($model),
-                'status' => $this->getStatus($model),
-                'employee' => $this->getEmployee($model),
-                'created_at' => DateHelper::toDatetime($model->created_at),
-                'completed_at' => DateHelper::toDatetime($model->completed_at),
-            ];
-        }, $invites->get()->all());
+        return $invites->get()->map($this->getInvite(...))->all();
+    }
+
+    private function getInvite(Invite $model): array
+    {
+        return [
+            'id' => $model->id,
+            'phys' => $this->getPhys($model),
+            'status' => $this->getStatus($model),
+            'employee' => $this->getEmployee($model),
+            'created_at' => DateHelper::toDatetime($model->created_at),
+            'completed_at' => DateHelper::toDatetime($model->completed_at),
+        ];
     }
 
     private function getPhys(Invite $model): array
