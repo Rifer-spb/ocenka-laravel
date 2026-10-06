@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Core\Models\Notary;
 
-use App\Core\Models\Notary\Notary;
-use App\Core\Models\Notary\NotaryPhone;
+use App\Core\Entities\Notary\Notary;
+use App\Core\Entities\Notary\NotaryPhone;
 use App\Core\ValueObjects\NationalPhone;
 use Tests\TestCase;
 

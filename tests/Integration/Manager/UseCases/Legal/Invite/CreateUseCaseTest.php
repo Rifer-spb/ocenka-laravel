@@ -2,12 +2,12 @@
 
 namespace Integration\Manager\UseCases\Legal\Invite;
 
-use App\Core\Models\EntityNotFoundException;
-use App\Core\Models\Invite\Invite;
-use App\Core\Models\Invite\InviteForWho;
-use App\Core\Models\Invite\InviteStatus;
-use App\Core\Models\User\Legal\Legal;
-use App\Core\Models\User\Phys\Phys;
+use App\Core\Entities\EntityNotFoundException;
+use App\Core\Entities\Invite\Invite;
+use App\Core\Entities\Invite\InviteForWho;
+use App\Core\Entities\Invite\InviteStatus;
+use App\Core\Entities\User\Legal\Legal;
+use App\Core\Entities\User\Phys\Phys;
 use App\Core\ValueObjects\Email;
 use App\Manager\UseCases\Legal\Invite\CreateUseCase;
 use Tests\TestCase;

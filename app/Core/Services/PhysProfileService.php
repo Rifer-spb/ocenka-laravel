@@ -2,11 +2,12 @@
 
 namespace App\Core\Services;
 
-use App\Core\Models\User\Phys\Phys;
-use App\Core\Models\User\Phys\ValueObjects\Holiday;
-use App\Core\Models\User\ValueObjects\FirstName;
-use App\Core\Models\User\ValueObjects\LastName;
-use App\Core\Models\User\ValueObjects\SecondName;
+use App\Core\Entities\User\Phys\Phys;
+use App\Core\Entities\User\Phys\ValueObjects\Holiday;
+use App\Core\Entities\User\ValueObjects\FirstName;
+use App\Core\Entities\User\ValueObjects\LastName;
+use App\Core\Entities\User\ValueObjects\SecondName;
+use App\Core\Finders\PhysFinder;
 use App\Core\ValueObjects\NationalPhone;
 
 class PhysProfileService
@@ -37,6 +38,6 @@ class PhysProfileService
 
     private function getPhys(int $id): Phys
     {
-        return Phys::findOrFail($id);
+        return PhysFinder::getById($id);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Feature\Manager\Http\Controllers\User;
 
-use App\Core\Models\User\Role;
-use App\Core\Models\User\User;
+use App\Core\Entities\User\Role;
+use App\Core\Entities\User\User;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 

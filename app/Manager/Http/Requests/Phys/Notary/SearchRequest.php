@@ -2,7 +2,7 @@
 
 namespace App\Manager\Http\Requests\Phys\Notary;
 
-use App\Core\Models\Notary\NotaryRegion;
+use App\Core\Entities\Notary\NotaryRegion;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**

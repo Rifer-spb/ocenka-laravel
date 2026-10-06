@@ -2,15 +2,21 @@
 
 namespace App\Manager\Http\PageControllers\Legal\Settings;
 
-use App\Core\Finder\LegalTypeFinder;
 use App\Core\Http\Controllers\AbstractController;
-use App\Core\Models\LegalType;
-use App\Core\Models\User\Legal\LegalProfile;
+use App\Core\ReadServices\LegalTypeReadService;
+use App\Manager\ReadServices\Legal\LegalProfileReadService;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class AccountPageController extends AbstractController
 {
+    public function __construct(
+        private LegalTypeReadService $typeReadService,
+        private LegalProfileReadService $profileReadService
+    )
+    {
+    }
+
     public function __invoke(): Response
     {
         return Inertia::render('manager/legal/settings/account/index', $this->getData());
@@ -18,26 +24,11 @@ class AccountPageController extends AbstractController
 
     private function getData(): array
     {
-        $profile = $this->getUser()->profile;
+        $legal = $this->getUser();
 
         return [
-            'types' => LegalTypeFinder::getList(),
-            'company' => $this->getCompany($profile),
-        ];
-    }
-
-    private function getCompany(LegalProfile $profile): array
-    {
-        return [
-            'typeId' => $profile->type_id,
-            'fullName' => $profile->full_name,
-            'shortName' => $profile->short_name,
-            'abbr' => $profile->abbr,
-            'address' => $profile->address,
-            'dateOgrn' => $profile->date_ogrn,
-            'inn' => $profile->inn,
-            'kpp' => $profile->kpp,
-            'ogrn' => $profile->ogrn,
+            'types' => $this->typeReadService->getList(),
+            'company' => $this->profileReadService->getCompany($legal),
         ];
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Core\Models\User;
 
-use App\Core\Models\User\Phys\Phys;
-use App\Core\Models\User\ValueObjects\Password;
+use App\Core\Entities\User\Phys\Phys;
+use App\Core\Entities\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;

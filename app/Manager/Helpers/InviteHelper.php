@@ -2,8 +2,8 @@
 
 namespace App\Manager\Helpers;
 
-use App\Core\Models\Invite\InviteStatus;
-use App\Core\Models\Invite\InviteTab;
+use App\Core\Entities\Invite\InviteStatus;
+use App\Core\Entities\Invite\InviteTab;
 
 class InviteHelper
 {

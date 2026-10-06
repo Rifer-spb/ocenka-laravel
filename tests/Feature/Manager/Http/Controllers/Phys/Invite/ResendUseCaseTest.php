@@ -3,7 +3,7 @@
 namespace Feature\Manager\Http\Controllers\Phys\Invite;
 
 use App\Core\Jobs\SendMailJob;
-use App\Core\Models\Invite\Invite;
+use App\Core\Entities\Invite\Invite;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 

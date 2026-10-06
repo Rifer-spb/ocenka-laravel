@@ -3,12 +3,12 @@
 namespace App\Manager\Http\Controllers\Phys;
 
 use App\Core\Http\Controllers\AbstractController;
-use App\Core\Models\User\Phys\PhysPhone;
-use App\Core\Models\User\Phys\ValueObjects\Holiday;
-use App\Core\Models\User\ValueObjects\FirstName;
-use App\Core\Models\User\ValueObjects\LastName;
-use App\Core\Models\User\ValueObjects\Password;
-use App\Core\Models\User\ValueObjects\SecondName;
+use App\Core\Entities\User\Phys\PhysPhone;
+use App\Core\Entities\User\Phys\ValueObjects\Holiday;
+use App\Core\Entities\User\ValueObjects\FirstName;
+use App\Core\Entities\User\ValueObjects\LastName;
+use App\Core\Entities\User\ValueObjects\Password;
+use App\Core\Entities\User\ValueObjects\SecondName;
 use App\Core\Services\PhysProfileService;
 use App\Core\Services\UserService;
 use App\Core\ValueObjects\NationalPhone;

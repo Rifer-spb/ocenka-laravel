@@ -2,7 +2,7 @@
 
 namespace Feature\Manager\Http\Controllers\Phys\Profile;
 
-use App\Core\Models\User\Phys\Phys;
+use App\Core\Entities\User\Phys\Phys;
 use Tests\TestCase;
 
 class UpdateNameTest extends TestCase

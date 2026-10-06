@@ -2,8 +2,8 @@
 
 namespace Database\Factories\Core\Models\Employee;
 
-use App\Core\Models\Direction;
-use App\Core\Models\Employee\EmployeeReportAccess;
+use App\Core\Entities\Direction;
+use App\Core\Entities\Employee\EmployeeReportAccess;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

@@ -2,8 +2,8 @@
 
 namespace Integration\Manager\UseCases\Phys\Invite;
 
-use App\Core\Models\EntityNotFoundException;
-use App\Core\Models\Invite\Invite;
+use App\Core\Entities\EntityNotFoundException;
+use App\Core\Entities\Invite\Invite;
 use App\Manager\UseCases\Phys\Invite\CancelUseCase;
 use Tests\TestCase;
 

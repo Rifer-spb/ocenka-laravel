@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Core\Models\Employee;
 
-use App\Core\Models\Employee\Employee;
+use App\Core\Entities\Employee\Employee;
 use Tests\TestCase;
 
 class SwitchAccessTest extends TestCase

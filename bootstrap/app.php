@@ -2,7 +2,7 @@
 
 use App\Core\Http\Middleware\HandleAppearance;
 use App\Core\Http\Middleware\HandleInertiaRequests;
-use App\Core\Models\User\Role;
+use App\Core\Entities\User\Role;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;

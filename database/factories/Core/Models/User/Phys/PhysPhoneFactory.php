@@ -2,7 +2,7 @@
 
 namespace Database\Factories\Core\Models\User\Phys;
 
-use App\Core\Models\User\Phys\PhysPhone;
+use App\Core\Entities\User\Phys\PhysPhone;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

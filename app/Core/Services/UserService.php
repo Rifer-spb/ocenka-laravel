@@ -2,13 +2,14 @@
 
 namespace App\Core\Services;
 
+use App\Core\Finders\UserFinder;
 use App\Core\Jobs\SendMailJob;
 use App\Core\Mails\User\SignUpManagerMail;
-use App\Core\Models\User\Legal\Legal;
-use App\Core\Models\User\Phys\Phys;
-use App\Core\Models\User\Role;
-use App\Core\Models\User\User;
-use App\Core\Models\User\ValueObjects\Password;
+use App\Core\Entities\User\Legal\Legal;
+use App\Core\Entities\User\Phys\Phys;
+use App\Core\Entities\User\Role;
+use App\Core\Entities\User\User;
+use App\Core\Entities\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +24,7 @@ class UserService
      */
     public function changePassword(int $userId, Password $oldPassword, Password $newPassword): void
     {
-        $user = User::findOrFail($userId);
+        $user = UserFinder::getById($userId);
         $user->changePassword($oldPassword, $newPassword);
         $user->saveOrFail();
     }

@@ -2,7 +2,7 @@
 
 namespace App\Core\Mails\Invite;
 
-use App\Core\Models\User\User;
+use App\Core\Entities\User\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Attachment;

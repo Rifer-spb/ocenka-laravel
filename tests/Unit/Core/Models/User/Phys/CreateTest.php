@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Core\Models\User\Phys;
 
-use App\Core\Models\User\Phys\Phys;
-use App\Core\Models\User\Phys\PhysProfile;
-use App\Core\Models\User\ValueObjects\Password;
+use App\Core\Entities\User\Phys\Phys;
+use App\Core\Entities\User\Phys\PhysProfile;
+use App\Core\Entities\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;

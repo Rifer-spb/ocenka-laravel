@@ -2,8 +2,8 @@
 
 namespace Database\Factories\Core\Models\User\Legal;
 
-use App\Core\Models\User\Legal\Legal;
-use App\Core\Models\User\Role;
+use App\Core\Entities\User\Legal\Legal;
+use App\Core\Entities\User\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 

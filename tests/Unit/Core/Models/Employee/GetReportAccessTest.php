@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Core\Models\Employee;
 
-use App\Core\Models\Employee\Employee;
-use App\Core\Models\Employee\EmployeeReportAccess;
-use App\Core\Models\EntityNotFoundException;
+use App\Core\Entities\Employee\Employee;
+use App\Core\Entities\Employee\EmployeeReportAccess;
+use App\Core\Entities\EntityNotFoundException;
 use Tests\TestCase;
 
 class GetReportAccessTest extends TestCase

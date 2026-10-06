@@ -2,10 +2,10 @@
 
 namespace Database\Factories\Core\Models\User\Phys;
 
-use App\Core\Models\User\Phys\Phys;
-use App\Core\Models\User\Phys\PhysPhone;
-use App\Core\Models\User\Phys\PhysProfile;
-use App\Core\Models\User\Role;
+use App\Core\Entities\User\Phys\Phys;
+use App\Core\Entities\User\Phys\PhysPhone;
+use App\Core\Entities\User\Phys\PhysProfile;
+use App\Core\Entities\User\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;

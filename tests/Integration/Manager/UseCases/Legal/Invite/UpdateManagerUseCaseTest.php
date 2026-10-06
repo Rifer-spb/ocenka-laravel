@@ -2,9 +2,9 @@
 
 namespace Integration\Manager\UseCases\Legal\Invite;
 
-use App\Core\Finder\EmployeeFinder;
-use App\Core\Models\EntityNotFoundException;
-use App\Core\Models\Invite\Invite;
+use App\Core\Finders\EmployeeFinder;
+use App\Core\Entities\EntityNotFoundException;
+use App\Core\Entities\Invite\Invite;
 use App\Manager\UseCases\Legal\Employee\UpdateManagerUseCase;
 use Tests\TestCase;
 

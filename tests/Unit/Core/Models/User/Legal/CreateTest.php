@@ -2,12 +2,12 @@
 
 namespace Tests\Unit\Core\Models\User\Legal;
 
-use App\Core\Models\User\Legal\Legal;
-use App\Core\Models\User\Legal\LegalMail;
-use App\Core\Models\User\Legal\LegalPayment;
-use App\Core\Models\User\Legal\LegalProfile;
-use App\Core\Models\User\Legal\LegalWhatsApp;
-use App\Core\Models\User\ValueObjects\Password;
+use App\Core\Entities\User\Legal\Legal;
+use App\Core\Entities\User\Legal\LegalMail;
+use App\Core\Entities\User\Legal\LegalPayment;
+use App\Core\Entities\User\Legal\LegalProfile;
+use App\Core\Entities\User\Legal\LegalWhatsApp;
+use App\Core\Entities\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;

@@ -5,7 +5,7 @@ namespace Tests\Unit\Core\Models\User\Phys\ValueObjects;
 use Carbon\Carbon;
 use Tests\TestCase;
 use InvalidArgumentException;
-use App\Core\Models\User\Phys\ValueObjects\Holiday;
+use App\Core\Entities\User\Phys\ValueObjects\Holiday;
 
 class HolidayTest extends TestCase
 {

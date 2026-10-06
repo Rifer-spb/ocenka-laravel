@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Core\Models\User\Phys\Phone;
 
-use App\Core\Models\User\Phys\Phys;
+use App\Core\Entities\User\Phys\Phys;
 use App\Core\ValueObjects\NationalPhone;
 use Tests\TestCase;
 

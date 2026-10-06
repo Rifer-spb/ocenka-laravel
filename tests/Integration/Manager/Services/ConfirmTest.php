@@ -2,8 +2,8 @@
 
 namespace Integration\Manager\Services;
 
-use App\Core\Models\Employee\Employee;
-use App\Core\Models\Invite\Invite;
+use App\Core\Entities\Employee\Employee;
+use App\Core\Entities\Invite\Invite;
 use App\Manager\Services\InviteService;
 use Tests\TestCase;
 

@@ -4,6 +4,9 @@ use App\Manager\Http\Controllers\Phys\InviteController;
 use App\Manager\Http\Controllers\Phys\NotaryController;
 use App\Manager\Http\Controllers\Phys\ProfileController;
 use App\Manager\Http\PageControllers\Phys\HomePageController;
+use App\Manager\Http\PageControllers\Phys\Notaries\NotariesExportPageController;
+use App\Manager\Http\PageControllers\Phys\Notaries\NotariesExportRegionPageController;
+use App\Manager\Http\PageControllers\Phys\Notaries\NotariesPageController;
 use App\Manager\Http\PageControllers\Phys\Settings\AccountPageController;
 use App\Manager\Http\PageControllers\Phys\Settings\InvitePageController;
 use App\Manager\Http\PageControllers\Phys\Settings\SettingsPageController;
@@ -18,6 +21,10 @@ Route::prefix('phys')->name('phys.')->middleware('auth')->group(function () {
         Route::get('account', AccountPageController::class)->name('account');
         Route::get('invites', InvitePageController::class)->name('invites');
     });
+
+    Route::get('notaries', NotariesPageController::class)->name('notaries');
+    Route::get('notaries/export', NotariesExportPageController::class)->name('notariesExport');
+    Route::get('notaries/region-export', NotariesExportRegionPageController::class)->name('notariesRegionExport');
 
     //Controllers
     Route::prefix('profile')->name('profile.')->controller(ProfileController::class)->group(function () {
@@ -39,11 +46,7 @@ Route::prefix('phys')->name('phys.')->middleware('auth')->group(function () {
     });
 
     Route::prefix('notaries')->name('notaries.')->controller(NotaryController::class)->group(function () {
-        Route::get('/', 'viewIndex')->name('index');
         Route::get('export-search', 'exportSearch')->name('exportSearch');
-        Route::get('export', 'viewExport')->name('export');
-        Route::get('region-export', 'viewRegionExport')->name('regionExport');
-
         Route::get('{notary}', 'getNotary')->name('getNotary');
         Route::patch('{notary}', 'updateNotary')->name('updateNotary');
     });

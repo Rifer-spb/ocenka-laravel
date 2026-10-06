@@ -2,19 +2,28 @@
 
 namespace App\Core\Services;
 
-use App\Core\Models\Notary\Notary;
-use App\Core\ValueObjects\Site;
+use App\Core\Entities\Notary\Notary;
+use App\Core\Entities\Notary\NotaryUpdateData;
+use App\Core\Finders\NotaryFinder;
 use Illuminate\Support\Facades\DB;
 
 class NotaryService
 {
-    public function update(int $notaryId, array $emails, ?Site $site, ?bool $useDigitalReport, ?string $comment): void
+    /**
+     * @throws \Throwable
+     */
+    public function update(int $notaryId, NotaryUpdateData $updateData): void
     {
-        $notary = Notary::findOrFail($notaryId);
+        $notary = $this->getNotary($notaryId);
 
-        DB::transaction(function () use ($notary, $emails, $site, $useDigitalReport, $comment) {
-            $notary->edit($emails, $site, $useDigitalReport, $comment);
+        DB::transaction(function () use ($notary, $updateData) {
+            $notary->edit($updateData);
             $notary->saveOrFail();
         });
+    }
+
+    private function getNotary(int $id): Notary
+    {
+        return NotaryFinder::getById($id);
     }
 }

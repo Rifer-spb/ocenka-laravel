@@ -2,8 +2,8 @@
 
 namespace App\Manager\Http\Controllers\Legal;
 
+use App\Core\Entities\Employee\Employee;
 use App\Core\Http\Controllers\AbstractController;
-use App\Core\Models\Employee\Employee;
 use App\Core\Services\EmployeeService;
 use App\Manager\Http\Requests\Legal\Invite\UpdateWorkRateRequest;
 use Illuminate\Http\RedirectResponse;

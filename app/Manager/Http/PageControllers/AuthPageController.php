@@ -3,9 +3,9 @@
 namespace App\Manager\Http\PageControllers;
 
 use App\Core\Http\Controllers\AbstractAuthController;
-use App\Core\Models\User\Role;
-use App\Core\Models\User\User;
-use App\Core\Models\User\ValueObjects\Password;
+use App\Core\Entities\User\Role;
+use App\Core\Entities\User\User;
+use App\Core\Entities\User\ValueObjects\Password;
 use App\Core\Services\UserService;
 use App\Core\ValueObjects\Email;
 use App\Manager\Http\Requests\Auth\SignInRequest;

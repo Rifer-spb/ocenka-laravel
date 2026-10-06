@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Core\Models\Notary;
 
-use App\Core\Models\Notary\Notary;
+use App\Core\Entities\Notary\Notary;
 use Tests\TestCase;
 
 class HasEmailTest extends TestCase

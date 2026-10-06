@@ -2,8 +2,8 @@
 
 namespace Database\Factories\Core\Models\Notary;
 
-use App\Core\Models\Notary\Notary;
-use App\Core\Models\Notary\NotaryEmail;
+use App\Core\Entities\Notary\Notary;
+use App\Core\Entities\Notary\NotaryEmail;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class NotaryEmailFactory extends Factory

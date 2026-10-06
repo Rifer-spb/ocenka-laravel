@@ -3,9 +3,9 @@
 namespace Integration\Manager\UseCases\User;
 
 use App\Core\Jobs\SendMailJob;
-use App\Core\Models\User\Role;
-use App\Core\Models\User\User;
-use App\Core\Models\User\ValueObjects\Password;
+use App\Core\Entities\User\Role;
+use App\Core\Entities\User\User;
+use App\Core\Entities\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
 use App\Manager\UseCases\User\SignUpUseCase;
 use Illuminate\Support\Facades\Hash;

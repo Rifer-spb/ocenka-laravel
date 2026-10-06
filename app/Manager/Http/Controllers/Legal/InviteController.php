@@ -3,7 +3,7 @@
 namespace App\Manager\Http\Controllers\Legal;
 
 use App\Core\Http\Controllers\AbstractController;
-use App\Core\Models\Invite\Invite;
+use App\Core\Entities\Invite\Invite;
 use App\Core\Services\InviteService;
 use App\Core\ValueObjects\Email;
 use App\Manager\Http\Requests\Legal\Invite\CreateRequest;

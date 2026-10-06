@@ -2,14 +2,15 @@
 
 namespace App\Core\Services;
 
-use App\Core\Finder\EmployeeFinder;
-use App\Core\Finder\User\LegalFinder;
-use App\Core\Finder\User\PhysFinder;
-use App\Core\Models\Employee\Employee;
-use App\Core\Models\Invite\Invite;
-use App\Core\Models\Invite\InviteForWho;
-use App\Core\Models\User\Legal\Legal;
-use App\Core\Models\User\Phys\Phys;
+use App\Core\Entities\Employee\Employee;
+use App\Core\Entities\Invite\Invite;
+use App\Core\Entities\Invite\InviteForWho;
+use App\Core\Entities\User\Legal\Legal;
+use App\Core\Entities\User\Phys\Phys;
+use App\Core\Finders\EmployeeFinder;
+use App\Core\Finders\InviteFinder;
+use App\Core\Finders\LegalFinder;
+use App\Core\Finders\PhysFinder;
 use App\Core\ValueObjects\Email;
 use App\Manager\Jobs\Invite\SendInviteMailJob;
 use Illuminate\Support\Facades\DB;
@@ -18,15 +19,15 @@ class InviteService
 {
     public function createForPhys(int $legalId, Email $email): void
     {
-        $legal = Legal::findOrFail($legalId);
+        $legal = LegalFinder::getById($legalId);
         $phys = PhysFinder::getByUsername($email->getValue());
 
         $this->create($legal, $phys, InviteForWho::PHYS);
     }
 
-    public function createForLegal(int $legalId, Email $email): void
+    public function createForLegal(int $physId, Email $email): void
     {
-        $phys = Phys::findOrFail($legalId);
+        $phys = PhysFinder::getById($physId);
         $legal = LegalFinder::getByUsername($email->getValue());
 
         $this->create($legal, $phys, InviteForWho::LEGAL);
@@ -39,7 +40,7 @@ class InviteService
      */
     public function cancel(int $inviteId): void
     {
-        $invite = $this->getInvite($inviteId);
+        $invite = InviteFinder::getById($inviteId);
 
         if (! $invite->isWait()) {
             throw new \DomainException('Заявка должна быть в статусе ожидания.');
@@ -55,7 +56,7 @@ class InviteService
      */
     public function close(int $inviteId): void
     {
-        $invite = $this->getInvite($inviteId);
+        $invite = InviteFinder::getById($inviteId);
 
         DB::transaction(function () use ($invite) {
             $invite->complete();
@@ -73,7 +74,7 @@ class InviteService
      */
     public function confirm(int $inviteId): void
     {
-        $invite = $this->getInvite($inviteId);
+        $invite = InviteFinder::getById($inviteId);
 
         DB::transaction(function () use ($invite) {
             $invite->confirm();
@@ -85,7 +86,7 @@ class InviteService
 
     public function reSendEmail(int $inviteId): void
     {
-        $invite = $this->getInvite($inviteId);
+        $invite = InviteFinder::getById($inviteId);
 
         if (! $invite->isWait()) {
             throw new \DomainException('Заявка не в статуса ожидания.');
@@ -103,10 +104,5 @@ class InviteService
     private function sendEmail(Invite $invite): void
     {
         SendInviteMailJob::dispatch($invite);
-    }
-
-    private function getInvite(int $inviteId): Invite
-    {
-        return Invite::findOrFail($inviteId);
     }
 }

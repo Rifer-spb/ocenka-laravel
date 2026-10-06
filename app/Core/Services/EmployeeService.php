@@ -2,7 +2,7 @@
 
 namespace App\Core\Services;
 
-use App\Core\Models\Employee\Employee;
+use App\Core\Finders\EmployeeFinder;
 
 class EmployeeService
 {
@@ -14,7 +14,7 @@ class EmployeeService
      */
     public function updateDoReportAccess(int $employeeId, int $accessId): void
     {
-        $employee = $this->getEmployeeId($employeeId);
+        $employee = EmployeeFinder::getById($employeeId);
         $employee->switchDoReportAccess($accessId);
     }
 
@@ -26,7 +26,7 @@ class EmployeeService
      */
     public function switchWriteReportAccess(int $employeeId, int $accessId): void
     {
-        $employee = $this->getEmployeeId($employeeId);
+        $employee = EmployeeFinder::getById($employeeId);
         $employee->switchWriteReportAccess($accessId);
     }
 
@@ -37,7 +37,7 @@ class EmployeeService
      */
     public function switchRideAccess(int $employeeId): void
     {
-        $employee = $this->getEmployeeId($employeeId);
+        $employee = EmployeeFinder::getById($employeeId);
         $employee->switchRideAccess();
         $employee->saveOrFail();
     }
@@ -49,7 +49,7 @@ class EmployeeService
      */
     public function switchIsManagerAccess(int $employeeId): void
     {
-        $employee = $this->getEmployeeId($employeeId);
+        $employee = EmployeeFinder::getById($employeeId);
         $employee->switchIsManagerAccess();
         $employee->saveOrFail();
     }
@@ -62,7 +62,7 @@ class EmployeeService
      */
     public function updateWorkRate(int $employeeId, string $value): void
     {
-        $employee = $this->getEmployeeId($employeeId);
+        $employee = EmployeeFinder::getById($employeeId);
         $employee->work_rate = $value;
         $employee->saveOrFail();
     }
@@ -74,7 +74,7 @@ class EmployeeService
      */
     public function switchCanRegistryAccess(int $employeeId): void
     {
-        $employee = $this->getEmployeeId($employeeId);
+        $employee = EmployeeFinder::getById($employeeId);
         $employee->switchCanRegistryAccess();
         $employee->saveOrFail();
     }
@@ -86,13 +86,8 @@ class EmployeeService
      */
     public function switchCanCallAccess(int $employeeId): void
     {
-        $employee = $this->getEmployeeId($employeeId);
+        $employee = EmployeeFinder::getById($employeeId);
         $employee->switchCanCallAccess();
         $employee->saveOrFail();
-    }
-
-    private function getEmployeeId(int $id): Employee
-    {
-        return Employee::findOrFail($id);
     }
 }

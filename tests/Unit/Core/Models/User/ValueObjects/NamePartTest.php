@@ -3,7 +3,7 @@
 namespace Tests\Unit\Core\Models\User\ValueObjects;
 
 use InvalidArgumentException;
-use App\Core\Models\User\ValueObjects\FirstName;
+use App\Core\Entities\User\ValueObjects\FirstName;
 use Tests\TestCase;
 
 class NamePartTest extends TestCase

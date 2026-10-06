@@ -3,9 +3,9 @@
 namespace App\Manager\Http\Controllers\Legal;
 
 use App\Core\Http\Controllers\AbstractController;
-use App\Core\Models\User\Legal\Dto\Company;
-use App\Core\Models\User\Legal\ValueObjects\RegistryTemplate;
-use App\Core\Models\User\ValueObjects\Password;
+use App\Core\Entities\User\Legal\Dto\Company;
+use App\Core\Entities\User\Legal\ValueObjects\RegistryTemplate;
+use App\Core\Entities\User\ValueObjects\Password;
 use App\Core\Services\LegalProfileService;
 use App\Core\Services\UserService;
 use App\Manager\Http\Requests\ChangePasswordRequest;

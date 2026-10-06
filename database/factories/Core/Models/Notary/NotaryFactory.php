@@ -2,10 +2,10 @@
 
 namespace Database\Factories\Core\Models\Notary;
 
-use App\Core\Models\Notary\Notary;
-use App\Core\Models\Notary\NotaryEmail;
-use App\Core\Models\Notary\NotaryPhone;
-use App\Core\Models\Notary\NotaryRegion;
+use App\Core\Entities\Notary\Notary;
+use App\Core\Entities\Notary\NotaryEmail;
+use App\Core\Entities\Notary\NotaryPhone;
+use App\Core\Entities\Notary\NotaryRegion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

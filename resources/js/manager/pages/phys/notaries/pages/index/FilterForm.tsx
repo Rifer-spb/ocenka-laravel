@@ -1,6 +1,6 @@
 import InputGroup from "@common/components/form/InputGroup";
 import CheckboxGroup from "@common/components/form/CheckboxGroup";
-import { index } from "@managerRoutes/phys/notaries";
+import { notaries } from "@managerRoutes/phys";
 import InertiaForm from "@common/components/form/InertiaForm";
 import SelectGroup from "@common/components/form/SelectGroup";
 import {TSelectOptions} from "@common/types/types";
@@ -12,7 +12,7 @@ type TProps = {
 
 export default function ({ regions, defaultRegionId } : TProps) {
     return (
-        <InertiaForm {...index.form()} onChange={true}>
+        <InertiaForm {...notaries.form()} onChange={true}>
             {({ errors, fromQuery }) => (
                 <div className='filter-form table'>
                     <div className='tr'>

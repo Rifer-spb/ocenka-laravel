@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Core\Models\Employee;
 
-use App\Core\Models\Direction;
-use App\Core\Models\Employee\Employee;
-use App\Core\Models\Employee\EmployeeReportAccess;
-use App\Core\Models\Invite\Invite;
+use App\Core\Entities\Direction;
+use App\Core\Entities\Employee\Employee;
+use App\Core\Entities\Employee\EmployeeReportAccess;
+use App\Core\Entities\Invite\Invite;
 use Tests\TestCase;
 
 class CreateTest extends TestCase

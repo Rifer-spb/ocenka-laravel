@@ -2,7 +2,7 @@
 
 namespace Database\Factories\Core\Models;
 
-use App\Core\Models\Direction;
+use App\Core\Entities\Direction;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

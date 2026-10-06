@@ -2,11 +2,11 @@
 
 namespace Database\Factories\Core\Models\Employee;
 
-use App\Core\Models\Employee\Employee;
-use App\Core\Models\Employee\EmployeeReportAccess;
-use App\Core\Models\Invite\Invite;
-use App\Core\Models\User\Legal\Legal;
-use App\Core\Models\User\Phys\Phys;
+use App\Core\Entities\Employee\Employee;
+use App\Core\Entities\Employee\EmployeeReportAccess;
+use App\Core\Entities\Invite\Invite;
+use App\Core\Entities\User\Legal\Legal;
+use App\Core\Entities\User\Phys\Phys;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

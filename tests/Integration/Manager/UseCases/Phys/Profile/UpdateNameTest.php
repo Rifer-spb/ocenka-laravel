@@ -2,10 +2,10 @@
 
 namespace Integration\Manager\UseCases\Phys\Profile;
 
-use App\Core\Models\User\Phys\Phys;
-use App\Core\Models\User\ValueObjects\FirstName;
-use App\Core\Models\User\ValueObjects\LastName;
-use App\Core\Models\User\ValueObjects\SecondName;
+use App\Core\Entities\User\Phys\Phys;
+use App\Core\Entities\User\ValueObjects\FirstName;
+use App\Core\Entities\User\ValueObjects\LastName;
+use App\Core\Entities\User\ValueObjects\SecondName;
 use App\Manager\UseCases\Phys\Profile\UpdateNameUseCase;
 use Tests\TestCase;
 

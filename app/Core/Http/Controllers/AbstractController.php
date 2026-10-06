@@ -2,11 +2,11 @@
 
 namespace App\Core\Http\Controllers;
 
-use App\Core\Models\User\Client\Client;
-use App\Core\Models\User\Legal\Legal;
-use App\Core\Models\User\Notary\NotaryUser;
-use App\Core\Models\User\Phys\Phys;
-use App\Core\Models\User\User;
+use App\Core\Entities\User\Client\Client;
+use App\Core\Entities\User\Legal\Legal;
+use App\Core\Entities\User\Notary\NotaryUser;
+use App\Core\Entities\User\Phys\Phys;
+use App\Core\Entities\User\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
 

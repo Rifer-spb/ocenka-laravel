@@ -3,8 +3,8 @@
 namespace Integration\Manager\UseCases\Legal\Invite;
 
 use App\Core\Jobs\SendMailJob;
-use App\Core\Models\EntityNotFoundException;
-use App\Core\Models\Invite\Invite;
+use App\Core\Entities\EntityNotFoundException;
+use App\Core\Entities\Invite\Invite;
 use App\Manager\UseCases\Legal\Invite\ResendUseCase;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;

@@ -2,8 +2,8 @@
 
 namespace Feature\Manager\Http\Controllers\Legal\Invite;
 
-use App\Core\Models\Invite\Invite;
-use App\Core\Models\User\Legal\Legal;
+use App\Core\Entities\Invite\Invite;
+use App\Core\Entities\User\Legal\Legal;
 use Tests\TestCase;
 
 class CancelUseCaseTest extends TestCase

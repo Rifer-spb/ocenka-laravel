@@ -4,7 +4,7 @@ namespace App\Manager\Jobs\Invite;
 
 use App\Core\Jobs\SendMailJob;
 use App\Core\Mails\Invite\SendInviteMail;
-use App\Core\Models\Invite\Invite;
+use App\Core\Entities\Invite\Invite;
 
 class SendInviteMailJob
 {

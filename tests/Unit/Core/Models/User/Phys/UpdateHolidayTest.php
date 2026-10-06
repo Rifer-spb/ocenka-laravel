@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Core\Models\User\Phys;
 
-use App\Core\Models\User\Phys\Phys;
-use App\Core\Models\User\Phys\ValueObjects\Holiday;
+use App\Core\Entities\User\Phys\Phys;
+use App\Core\Entities\User\Phys\ValueObjects\Holiday;
 use Tests\TestCase;
 
 class UpdateHolidayTest extends TestCase
