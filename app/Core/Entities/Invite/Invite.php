@@ -2,13 +2,14 @@
 
 namespace App\Core\Entities\Invite;
 
+use App\Core\Entities\Employee\Employee;
 use App\Core\Finders\InviteFinder;
 use App\Core\Entities\AbstractEntity;
 use App\Core\Entities\User\Legal\Legal;
 use App\Core\Entities\User\Phys\Phys;
 use App\Core\Entities\User\User;
 use Carbon\Carbon;
-use Database\Factories\Core\Models\Invite\InviteFactory;
+use Database\Factories\Core\Entities\Invite\InviteFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string|Carbon $completed_at
  * @property Legal $legal
  * @property Phys $phys
+ * @property Employee $employee
  *
  * @method static InviteFactory factory
  */
@@ -28,19 +30,13 @@ class Invite extends AbstractEntity
 {
     public $timestamps = false;
 
-    protected $fillable = [
-        'phys_id',
-        'legal_id',
-        'for',
-        'status',
-    ];
-
     /**
      * @param Phys $phys
      * @param Legal $legal
      * @param InviteForWho $for
      * @return self
      *
+     * @throws \Throwable
      * @see \Tests\Unit\Core\Models\Invite\InviteCreateTest
      */
     public static function createNew(Phys $phys, Legal $legal, InviteForWho $for): self
@@ -53,12 +49,14 @@ class Invite extends AbstractEntity
             throw new \DomainException('Связь с указанным уже установлена.');
         }
 
-        return self::create([
-            'phys_id' => $phys->id,
-            'legal_id' => $legal->id,
-            'for' => $for->value,
-            'status' => InviteStatus::WAIT->value,
-        ]);
+        $invite = new self();
+        $invite->phys_id = $phys->id;
+        $invite->legal_id = $legal->id;
+        $invite->for = $for->value;
+        $invite->status = InviteStatus::WAIT->value;
+        $invite->saveOrFail();
+
+        return $invite;
     }
 
     /**
@@ -168,5 +166,10 @@ class Invite extends AbstractEntity
     public function phys(): HasOne|Phys
     {
         return $this->hasOne(Phys::class, 'id', 'phys_id');
+    }
+
+    public function employee(): HasOne|Employee
+    {
+        return $this->hasOne(Employee::class, 'invite_id', 'id');
     }
 }

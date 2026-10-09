@@ -8,7 +8,7 @@ use App\Core\Entities\User\ValueObjects\FirstName;
 use App\Core\Entities\User\ValueObjects\LastName;
 use App\Core\Entities\User\ValueObjects\SecondName;
 use Carbon\Carbon;
-use Database\Factories\Core\Models\User\Phys\PhysProfileFactory;
+use Database\Factories\Core\Entities\User\Phys\PhysProfileFactory;
 
 /**
  * @property int $id

@@ -9,7 +9,7 @@ use App\Core\Entities\User\Role;
 use App\Core\Entities\User\User;
 use App\Core\Entities\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
-use Database\Factories\Core\Models\User\Legal\LegalFactory;
+use Database\Factories\Core\Entities\User\Legal\LegalFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;

@@ -2,7 +2,7 @@
 
 namespace App\Core\Entities;
 
-use Database\Factories\Core\Models\DirectionFactory;
+use Database\Factories\Core\Entities\DirectionFactory;
 
 /**
  * @property int $id

@@ -4,7 +4,7 @@ namespace App\Core\Entities\User\Phys;
 
 use App\Core\Helpers\StringHelper;
 use App\Core\Entities\AbstractEntity;
-use Database\Factories\Core\Models\User\Phys\PhysPhoneFactory;
+use Database\Factories\Core\Entities\User\Phys\PhysPhoneFactory;
 
 /**
  * @property int $id

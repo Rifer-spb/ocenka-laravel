@@ -7,6 +7,7 @@ use App\Core\Http\Controllers\AbstractController;
 use App\Core\Services\EmployeeService;
 use App\Manager\Http\Requests\Legal\Invite\UpdateWorkRateRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class EmployeeController extends AbstractController
 {
@@ -14,6 +15,7 @@ class EmployeeController extends AbstractController
         private EmployeeService $service
     )
     {
+        $this->middleware($this->checkOwn(...));
     }
 
     /**
@@ -21,13 +23,10 @@ class EmployeeController extends AbstractController
      * @param int $accessId
      * @return RedirectResponse
      * @throws \Throwable
-     * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateDoReportUseCaseTest
      */
     public function updateDoReport(Employee $employee, int $accessId)
     {
-        $this->checkEmployeeAccess($employee);
-
-        $this->service->updateDoReportAccess($employee->id, $accessId);
+        $this->service->switchDoReportAccess($employee->id, $accessId);
 
         return back()->with('success', 'Успешно обновлено');
     }
@@ -37,12 +36,9 @@ class EmployeeController extends AbstractController
      * @param int $accessId
      * @return RedirectResponse
      * @throws \Throwable
-     * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateWriteReportUseCaseTest
      */
     public function updateWriteReport(Employee $employee, int $accessId)
     {
-        $this->checkEmployeeAccess($employee);
-
         $this->service->switchWriteReportAccess($employee->id, $accessId);
 
         return back()->with('success', 'Успешно обновлено');
@@ -50,12 +46,9 @@ class EmployeeController extends AbstractController
 
     /**
      * @throws \Throwable
-     * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateRideUseCaseTest
      */
     public function updateRide(Employee $employee)
     {
-        $this->checkEmployeeAccess($employee);
-
         $this->service->switchRideAccess($employee->id);
 
         return back()->with('success', 'Успешно обновлено');
@@ -65,12 +58,9 @@ class EmployeeController extends AbstractController
      * @param Employee $employee
      * @return RedirectResponse
      * @throws \Throwable
-     * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateManagerUseCaseTest
      */
     public function updateManager(Employee $employee)
     {
-        $this->checkEmployeeAccess($employee);
-
         $this->service->switchIsManagerAccess($employee->id);
 
         return back()->with('success', 'Успешно обновлено');
@@ -81,13 +71,10 @@ class EmployeeController extends AbstractController
      * @param UpdateWorkRateRequest $request
      * @return RedirectResponse
      * @throws \Throwable
-     * @see \Feature\Manager\Http\Controllers\Legal\Invite\UpdateWorkRateUseCaseTest
      */
     public function updateWorkRate(Employee $employee, UpdateWorkRateRequest $request)
     {
-        $this->checkEmployeeAccess($employee);
-
-        $this->service->updateWorkRate($employee->id, $request->work_rate);
+        $this->service->updateWorkRate($employee->id, $request->value);
 
         return back()->with('success', 'Успешно обновлено');
     }
@@ -99,8 +86,6 @@ class EmployeeController extends AbstractController
      */
     public function updateCall(Employee $employee)
     {
-        $this->checkEmployeeAccess($employee);
-
         $this->service->switchCanCallAccess($employee->id);
 
         return back()->with(['success' => 'Успешно сохранено']);
@@ -113,17 +98,22 @@ class EmployeeController extends AbstractController
      */
     public function updateRegistry(Employee $employee)
     {
-        $this->checkEmployeeAccess($employee);
-
         $this->service->switchCanRegistryAccess($employee->id);
 
         return back()->with(['success' => 'Успешно сохранено']);
     }
 
-    private function checkEmployeeAccess(Employee $employee): void
+    private function checkOwn(Request $request, \Closure $next)
     {
-        if ($employee->legal_id !== $this->getUserId()) {
+        /** @var Employee $employee */
+        $employee = $request->route('employee');
+
+        $isOwner = $employee->legal_id == $this->getUserId();
+
+        if (! $isOwner) {
             abort(404);
         }
+
+        return $next($request);
     }
 }

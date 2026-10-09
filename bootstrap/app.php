@@ -23,12 +23,12 @@ return Application::configure(basePath: dirname(__DIR__))
             AddLinkHeadersForPreloadedAssets::class,
         ]);
 
-        $middleware->redirectGuestsTo('/manager/auth/sign-in');
+        $middleware->redirectGuestsTo('/auth/sign-in');
 
         $middleware->redirectUsersTo(function (Request $request) {
             return match ($request->user()->role) {
-                Role::PHYS->value => '/manager/phys/home',
-                Role::LEGAL->value => 'manager/legal/home',
+                Role::PHYS->value => '/phys/home',
+                Role::LEGAL->value => 'legal/home',
                 Role::CLIENT->value => '/client/home',
                 Role::NOTARY->value => '/notary/home'
             };

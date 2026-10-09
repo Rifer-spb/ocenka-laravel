@@ -4,7 +4,7 @@ namespace App\Core\Entities\Employee;
 
 use App\Core\Entities\AbstractEntity;
 use App\Core\Entities\Direction;
-use Database\Factories\Core\Models\Employee\EmployeeReportAccessFactory;
+use Database\Factories\Core\Entities\Employee\EmployeeReportAccessFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -22,13 +22,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class EmployeeReportAccess extends AbstractEntity
 {
     public $timestamps = false;
-
-    protected $fillable = [
-        'direction_id',
-        'phys_id',
-        'legal_id',
-        'employee_id',
-    ];
 
     protected function casts(): array
     {

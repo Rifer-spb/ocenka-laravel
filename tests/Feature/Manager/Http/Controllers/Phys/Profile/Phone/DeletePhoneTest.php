@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Manager\Http\Controllers\Phys\Profile\Phone;
+namespace Tests\Feature\Manager\Http\Controllers\Phys\Profile\Phone;
 
 use App\Core\Entities\User\Phys\Phys;
 use App\Core\ValueObjects\NationalPhone;
@@ -34,7 +34,7 @@ class DeletePhoneTest extends TestCase
 
     private function getRoute(int $id): string
     {
-        return route('manager.phys.settings.account.phones.delete', ['phone' => $id]);
+        return route('manager.phys.profile.phones.delete', ['phone' => $id]);
     }
 
     private function createUser(): Phys

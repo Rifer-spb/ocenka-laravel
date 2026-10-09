@@ -16,11 +16,4 @@ class NotaryRegion extends AbstractEntity
     protected $table = 'notary_regions';
 
     const ID_SAINT_PETERSBURG = 63;
-
-    public static function createNew(): self
-    {
-        return self::create([
-            'notariat_region_id'
-        ]);
-    }
 }

@@ -12,12 +12,13 @@ use App\Manager\Http\Requests\Phys\Notary\SearchRequest;
 use App\Manager\Http\Requests\Phys\Notary\UpdateRequest;
 use App\Manager\ReadServices\Phys\PhysNotaryReadService;
 use App\Manager\ReadServices\Phys\PhysNotaryExportService;
+use App\Manager\Services\Phys\PhysNotaryService;
 use Illuminate\Http\RedirectResponse;
 
 class NotaryController extends AbstractController
 {
     public function __construct(
-        private NotaryService $service,
+        private PhysNotaryService $service,
         private PhysNotaryReadService $readService,
         private PhysNotaryExportService $exportService,
     )

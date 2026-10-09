@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Manager\Http\Controllers\Phys\Profile;
+namespace Tests\Feature\Manager\Http\Controllers\Phys\Profile;
 
 use App\Core\Entities\User\Phys\Phys;
 use Tests\TestCase;
@@ -55,6 +55,6 @@ class UpdateHolidayTest extends TestCase
 
     private function getRoute(): string
     {
-        return route('manager.phys.settings.account.holiday.update');
+        return route('manager.phys.profile.holiday.update');
     }
 }

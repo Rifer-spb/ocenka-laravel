@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Manager\Http\Controllers\Phys\Profile\Phone;
+namespace Tests\Feature\Manager\Http\Controllers\Phys\Profile\Phone;
 
 use App\Core\Entities\User\Phys\Phys;
 use App\Core\ValueObjects\NationalPhone;
@@ -52,7 +52,7 @@ class AddPhoneTest extends TestCase
 
     private function getRoute(): string
     {
-        return route('manager.phys.settings.account.phones.create');
+        return route('manager.phys.profile.phones.create');
     }
 
     private function createUser(): Phys

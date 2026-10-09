@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Manager\Http\Controllers\User;
+namespace Tests\Feature\Manager\Http\Controllers\User;
 
 use App\Core\Jobs\SendMailJob;
 use App\Core\Entities\User\Role;

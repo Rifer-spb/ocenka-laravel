@@ -8,6 +8,7 @@ use App\Core\Services\InviteService;
 use App\Core\ValueObjects\Email;
 use App\Manager\Http\Requests\Legal\Invite\CreateRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class InviteController extends AbstractController
 {
@@ -15,14 +16,13 @@ class InviteController extends AbstractController
         private InviteService $inviteService
     )
     {
-        $this->middleware('can:own,invite');
+        $this->middleware($this->checkOwner(...))->except('create');
     }
 
     /**
      * @param CreateRequest $request
      * @return RedirectResponse
      * @throws \Exception
-     * @see \Feature\Manager\Http\Controllers\Legal\Invite\CreateUseCaseTest
      */
     public function create(CreateRequest $request)
     {
@@ -38,7 +38,6 @@ class InviteController extends AbstractController
      * @param Invite $invite
      * @return RedirectResponse
      * @throws \Exception
-     * @see \Feature\Manager\Http\Controllers\Legal\Invite\ResendUseCaseTest
      */
     public function reSend(Invite $invite)
     {
@@ -49,7 +48,6 @@ class InviteController extends AbstractController
 
     /**
      * @throws \Throwable
-     * @see \Feature\Manager\Http\Controllers\Legal\Invite\CancelUseCaseTest
      */
     public function cancel(Invite $invite)
     {
@@ -61,7 +59,6 @@ class InviteController extends AbstractController
     /**
      * @return RedirectResponse
      * @throws \Throwable
-     * @see \Feature\Manager\Http\Controllers\Legal\Invite\ConfirmUseCaseTest
      */
     public function confirm(Invite $invite)
     {
@@ -73,12 +70,23 @@ class InviteController extends AbstractController
     /**
      * @return RedirectResponse
      * @throws \Throwable
-     * @see \Feature\Manager\Http\Controllers\Legal\Invite\CloseUseCaseTest
      */
     public function close(Invite $invite)
     {
         $this->inviteService->close($invite->id);
 
         return back()->with('success', 'Заявка успешно завершена');
+    }
+
+    private function checkOwner(Request $request, \Closure $next)
+    {
+        /** @var Invite $invite */
+        $invite = $request->route('invite');
+
+        if ($invite->legal_id != $this->getUserId()) {
+            abort(404);
+        }
+
+        return $next($request);
     }
 }

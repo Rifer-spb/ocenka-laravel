@@ -3,7 +3,7 @@
 namespace App\Core\Entities\Notary;
 
 use App\Core\Entities\AbstractEntity;
-use Database\Factories\Core\Models\Notary\NotaryEmailFactory;
+use Database\Factories\Core\Entities\Notary\NotaryEmailFactory;
 
 /**
  * @property int $id
@@ -15,9 +15,5 @@ use Database\Factories\Core\Models\Notary\NotaryEmailFactory;
  */
 class NotaryEmail extends AbstractEntity
 {
-    protected $fillable = [
-        'email',
-        'notary_id'
-    ];
     protected $table = 'notary_emails';
 }

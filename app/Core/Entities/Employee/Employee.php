@@ -8,7 +8,7 @@ use App\Core\Entities\EntityNotFoundException;
 use App\Core\Entities\Invite\Invite;
 use App\Core\Entities\User\Legal\Legal;
 use App\Core\Entities\User\Phys\Phys;
-use Database\Factories\Core\Models\Employee\EmployeeFactory;
+use Database\Factories\Core\Entities\Employee\EmployeeFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -33,12 +33,6 @@ class Employee extends AbstractEntity
 {
     public $timestamps = false;
 
-    protected $fillable = [
-        'phys_id',
-        'legal_id',
-        'invite_id',
-    ];
-
     protected function casts(): array
     {
         return [
@@ -53,23 +47,24 @@ class Employee extends AbstractEntity
      * @param Invite $invite
      * @return self
      *
+     * @throws \Throwable
      * @see \Tests\Unit\Core\Models\Employee\CreateTest
      */
     public static function createNew(Invite $invite): self
     {
-        $employee = self::create([
-            'invite_id' => $invite->id,
-            'legal_id' => $invite->legal_id,
-            'phys_id' => $invite->phys_id,
-        ]);
+        $employee = new self();
+        $employee->invite_id = $invite->id;
+        $employee->legal_id = $invite->legal_id;
+        $employee->phys_id = $invite->phys_id;
+        $employee->saveOrFail();
 
         foreach (Direction::all() as $direction) {
-            EmployeeReportAccess::create([
-                'employee_id' => $employee->id,
-                'phys_id' => $invite->phys_id,
-                'legal_id' => $invite->legal_id,
-                'direction_id' => $direction->id,
-            ]);
+            $access = $employee->reportAccess()->make();
+            $access->employee_id = $employee->id;
+            $access->phys_id = $employee->phys_id;
+            $access->legal_id = $employee->legal_id;
+            $access->direction_id = $direction->id;
+            $access->saveOrFail();
         }
 
         return $employee;

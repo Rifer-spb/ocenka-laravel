@@ -5,7 +5,8 @@ namespace App\Core\Entities\Notary;
 use App\Core\Entities\AbstractEntity;
 use App\Core\ValueObjects\Email;
 use App\Core\ValueObjects\NationalPhone;
-use Database\Factories\Core\Models\Notary\NotaryFactory;
+use App\Core\ValueObjects\Site;
+use Database\Factories\Core\Entities\Notary\NotaryFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -124,36 +125,24 @@ class Notary extends AbstractEntity
         return $model;
     }
 
-    /**
-     * @param NotaryUpdateData $data
-     * @return void
-     * @throws \Throwable
-     * @see \Tests\Unit\Core\Models\Notary\EditTest
-     */
-    public function edit(NotaryUpdateData $data): void
+    public function removeAllEmails(): void
     {
-        if (! $data->hasData()) {
-            throw new \DomainException('Нет полей для изменения.');
-        }
+        $this->emails()->delete();
+    }
 
-        if ($data->hasEmails()) {
-            $this->emails()->delete();
-            foreach ($data->emails as $email) {
-                $this->addEmail($email);
-            }
-        }
+    public function setSite(?Site $site): void
+    {
+        $this->site = $site;
+    }
 
-        if ($data->hasSite()) {
-            $this->site = $data->site?->getValue();
-        }
+    public function setUseDigitalReport(?bool $value): void
+    {
+        $this->use_digital_report = $value;
+    }
 
-        if ($data->hasUseDigitalReport()) {
-            $this->use_digital_report = $data->useDigitalReport;
-        }
-
-        if ($data->hasComment()) {
-            $this->comment = $data->comment ?: null;
-        }
+    public function setComment(?string $comment): void
+    {
+        $this->comment = !$comment ? null : $comment;
     }
 
     public function region(): BelongsTo

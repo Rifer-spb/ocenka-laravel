@@ -12,7 +12,7 @@ class EmployeeService
      * @return void
      * @throws \Throwable
      */
-    public function updateDoReportAccess(int $employeeId, int $accessId): void
+    public function switchDoReportAccess(int $employeeId, int $accessId): void
     {
         $employee = EmployeeFinder::getById($employeeId);
         $employee->switchDoReportAccess($accessId);

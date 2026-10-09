@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Manager\Http\Controllers\User;
+namespace Tests\Feature\Manager\Http\Controllers\User;
 
 use App\Core\Entities\User\Role;
 use App\Core\Entities\User\User;
