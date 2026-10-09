@@ -21,6 +21,9 @@ class ProfileController extends AbstractController
     {
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function updateCompany(UpdateCompanyRequest $request)
     {
         $this->profileService->updateCompany(
@@ -55,6 +58,9 @@ class ProfileController extends AbstractController
         return back()->with('success', 'Пароль успешно изменен');
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function updateRegistryTemplate(UpdateTemplateRequest $request)
     {
         $this->profileService->updateRegistryTemplate(
@@ -62,6 +68,6 @@ class ProfileController extends AbstractController
             new RegistryTemplate($request->template)
         );
 
-        return back()->with(['success' => 'Успешно сохранено']);
+        return back()->with(['success' => 'Успешно обновлено']);
     }
 }

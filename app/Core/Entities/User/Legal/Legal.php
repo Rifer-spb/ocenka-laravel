@@ -56,6 +56,9 @@ class Legal extends User
             : $this->username;
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function updateCompany(LegalType $type, Company $company): void
     {
         $profile = $this->profile;
@@ -63,6 +66,9 @@ class Legal extends User
         $profile->saveOrFail();
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function updateRegistryTemplate(RegistryTemplate $template): void
     {
         $profile = $this->profile;

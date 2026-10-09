@@ -3,6 +3,7 @@
 namespace Database\Factories\Core\Entities\User\Legal;
 
 use App\Core\Entities\User\Legal\Legal;
+use App\Core\Entities\User\Legal\LegalProfile;
 use App\Core\Entities\User\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -30,5 +31,10 @@ class LegalFactory extends Factory
             'role' => Role::LEGAL->value,
             'email_verify_token' => Str::random(60),
         ];
+    }
+
+    public function withProfile(): static
+    {
+        return $this->afterCreating(fn (Legal $l) => LegalProfile::factory()->create(['id' => $l->id]));
     }
 }
