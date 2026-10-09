@@ -88,7 +88,7 @@ class EmployeeController extends AbstractController
     {
         $this->service->switchCanCallAccess($employee->id);
 
-        return back()->with(['success' => 'Успешно сохранено']);
+        return back()->with(['success' => 'Успешно обновлено']);
     }
 
     /**
@@ -100,7 +100,7 @@ class EmployeeController extends AbstractController
     {
         $this->service->switchCanRegistryAccess($employee->id);
 
-        return back()->with(['success' => 'Успешно сохранено']);
+        return back()->with(['success' => 'Успешно обновлено']);
     }
 
     private function checkOwn(Request $request, \Closure $next)

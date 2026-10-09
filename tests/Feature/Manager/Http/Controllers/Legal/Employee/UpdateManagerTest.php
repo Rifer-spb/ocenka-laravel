@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Manager\Http\Controllers\Legal\Employee;
 
-use App\Core\Entities\Invite\Invite;
+use App\Core\Entities\Employee\Employee;
 use App\Core\Entities\User\Legal\Legal;
 use Tests\TestCase;
 
@@ -11,21 +11,37 @@ class UpdateManagerTest extends TestCase
     public function testWithAnotherInviteId()
     {
         $legal = $this->getLegal();
-        $invite = Invite::factory()->withEmployee()->create();
+        $employee = Employee::factory()->create();
+        $route = $this->getRoute($employee);
 
-        $response = $this->actingAs($legal)->patch($this->getRoute($invite));
+        $response = $this->actingAs($legal)->patch($route);
         $response->assertStatus(404);
     }
 
-    public function testSuccess()
+    public function testSuccessTrue()
     {
-        $invite = Invite::factory()->withActive()->withEmployee()->create();
-        $response = $this->actingAs($invite->legal)->patch($this->getRoute($invite));
-        $invite->refresh();
+        $employee = Employee::factory()->create();
+        $route = $this->getRoute($employee);
+
+        $response = $this->actingAs($employee->legal)->patch($route);
+        $employee->refresh();
 
         $response->assertSessionHas(['success' => 'Успешно обновлено']);
 
-        $this->assertTrue($invite->phys->employee->is_manager);
+        $this->assertTrue($employee->is_manager);
+    }
+
+    public function testSuccessFalse()
+    {
+        $employee = Employee::factory()->create(['is_manager' => true]);
+        $route = $this->getRoute($employee);
+
+        $response = $this->actingAs($employee->legal)->patch($route);
+        $employee->refresh();
+
+        $response->assertSessionHas(['success' => 'Успешно обновлено']);
+
+        $this->assertFalse($employee->is_manager);
     }
 
     private function getLegal(): Legal
@@ -33,10 +49,10 @@ class UpdateManagerTest extends TestCase
         return Legal::factory()->create();
     }
 
-    private function getRoute(Invite $invite): string
+    private function getRoute(Employee $employee): string
     {
         return route('manager.legal.employees.updateManager', [
-            'employee' => $invite->employee->id
+            'employee' => $employee->id
         ]);
     }
 }

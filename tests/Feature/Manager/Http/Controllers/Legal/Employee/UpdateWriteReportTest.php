@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Manager\Http\Controllers\Legal\Employee;
 
-use App\Core\Entities\Invite\Invite;
+use App\Core\Entities\Employee\Employee;
 use App\Core\Entities\User\Legal\Legal;
 use Tests\TestCase;
 
@@ -11,21 +11,37 @@ class UpdateWriteReportTest extends TestCase
     public function testWithAnotherInviteId()
     {
         $legal = $this->getLegal();
-        $invite = Invite::factory()->withEmployee()->create();
+        $employee = Employee::factory()->withReportAccess()->create();
+        $route = $this->getRoute($employee);
 
-        $response = $this->actingAs($legal)->patch($this->getRoute($invite));
+        $response = $this->actingAs($legal)->patch($route);
         $response->assertStatus(404);
     }
 
-    public function testSuccess()
+    public function testSuccessTrue()
     {
-        $invite = Invite::factory()->withActive()->withEmployee()->create();
-        $response = $this->actingAs($invite->legal)->patch($this->getRoute($invite));
-        $invite->refresh();
+        $employee = Employee::factory()->withReportAccess()->create();
+        $route = $this->getRoute($employee);
+
+        $response = $this->actingAs($employee->legal)->patch($route);
+        $employee->refresh();
 
         $response->assertSessionHas(['success' => 'Успешно обновлено']);
 
-        $this->assertTrue($invite->phys->employee->reportAccess[0]->write);
+        $this->assertTrue($employee->reportAccess[0]->write);
+    }
+
+    public function testSuccessFalse()
+    {
+        $employee = Employee::factory()->withReportAccess(['write' => true])->create();
+        $route = $this->getRoute($employee);
+
+        $response = $this->actingAs($employee->legal)->patch($route);
+        $employee->refresh();
+
+        $response->assertSessionHas(['success' => 'Успешно обновлено']);
+
+        $this->assertFalse($employee->reportAccess[0]->write);
     }
 
     private function getLegal(): Legal
@@ -33,11 +49,11 @@ class UpdateWriteReportTest extends TestCase
         return Legal::factory()->create();
     }
 
-    private function getRoute(Invite $invite): string
+    private function getRoute(Employee $employee): string
     {
         return route('manager.legal.employees.updateWriteReport', [
-            'employee' => $invite->employee->id,
-            'accessId' => $invite->phys->employee->reportAccess[0]->id
+            'employee' => $employee->id,
+            'accessId' => $employee->reportAccess[0]->id
         ]);
     }
 }

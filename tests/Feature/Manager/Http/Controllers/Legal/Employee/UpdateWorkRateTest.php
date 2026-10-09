@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Manager\Http\Controllers\Legal\Employee;
 
-use App\Core\Entities\Invite\Invite;
+use App\Core\Entities\Employee\Employee;
 use App\Core\Entities\User\Legal\Legal;
 use Tests\TestCase;
 
@@ -11,28 +11,33 @@ class UpdateWorkRateTest extends TestCase
     public function testWithAnotherInviteId()
     {
         $legal = $this->getLegal();
-        $invite = Invite::factory()->withEmployee()->create();
+        $employee = Employee::factory()->create();
+        $route = $this->getRoute($employee);
 
-        $response = $this->actingAs($legal)->patch($this->getRoute($invite));
+        $response = $this->actingAs($legal)->patch($route);
         $response->assertStatus(404);
     }
 
     public function testRequired()
     {
-        $invite = Invite::factory()->withActive()->withEmployee()->create();
-        $response = $this->actingAs($invite->legal)->patch($this->getRoute($invite), [
+        $employee = Employee::factory()->create();
+        $route = $this->getRoute($employee);
+
+        $response = $this->actingAs($employee->legal)->patch($route, [
             'value' => ''
         ]);
-        $invite->refresh();
+        $employee->refresh();
 
         $response->assertSessionHas(['success' => 'Успешно обновлено']);
-        $this->assertEquals(0, $invite->phys->employee->work_rate);
+        $this->assertEquals(0, $employee->work_rate);
     }
 
     public function testInteger()
     {
-        $invite = Invite::factory()->withActive()->withEmployee()->create();
-        $response = $this->actingAs($invite->legal)->patch($this->getRoute($invite), [
+        $employee = Employee::factory()->create();
+        $route = $this->getRoute($employee);
+
+        $response = $this->actingAs($employee->legal)->patch($route, [
             'value' => 'value'
         ]);
 
@@ -41,8 +46,10 @@ class UpdateWorkRateTest extends TestCase
 
     public function testMin()
     {
-        $invite = Invite::factory()->withActive()->withEmployee()->create();
-        $response = $this->actingAs($invite->legal)->patch($this->getRoute($invite), [
+        $employee = Employee::factory()->create();
+        $route = $this->getRoute($employee);
+
+        $response = $this->actingAs($employee->legal)->patch($route, [
             'value' => -5
         ]);
 
@@ -51,14 +58,16 @@ class UpdateWorkRateTest extends TestCase
 
     public function testSuccess()
     {
-        $invite = Invite::factory()->withActive()->withEmployee()->create();
-        $response = $this->actingAs($invite->legal)->patch($this->getRoute($invite), [
+        $employee = Employee::factory()->create();
+        $route = $this->getRoute($employee);
+
+        $response = $this->actingAs($employee->legal)->patch($route, [
             'value' => $value = 9
         ]);
-        $invite->refresh();
+        $employee->refresh();
 
         $response->assertSessionHas(['success' => 'Успешно обновлено']);
-        $this->assertEquals($value, $invite->phys->employee->work_rate);
+        $this->assertEquals($value, $employee->work_rate);
     }
 
     private function getLegal(): Legal
@@ -66,10 +75,10 @@ class UpdateWorkRateTest extends TestCase
         return Legal::factory()->create();
     }
 
-    private function getRoute(Invite $invite): string
+    private function getRoute(Employee $employee): string
     {
         return route('manager.legal.employees.updateWorkRate', [
-            'employee' => $invite->employee->id
+            'employee' => $employee->id
         ]);
     }
 }

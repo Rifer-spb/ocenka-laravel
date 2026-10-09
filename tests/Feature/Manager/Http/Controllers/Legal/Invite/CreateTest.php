@@ -13,8 +13,9 @@ class CreateTest extends TestCase
     public function testRequire()
     {
         $user = $this->getLegal();
+        $route = $this->getRoute();
 
-        $response = $this->actingAs($user)->post($this->getRoute(), [
+        $response = $this->actingAs($user)->post($route, [
             'email' => ''
         ]);
 
@@ -26,8 +27,9 @@ class CreateTest extends TestCase
     public function testInvalidEmail()
     {
         $user = $this->getLegal();
+        $route = $this->getRoute();
 
-        $response = $this->actingAs($user)->post($this->getRoute(), [
+        $response = $this->actingAs($user)->post($route, [
             'email' => 'invalid-email'
         ]);
 
@@ -39,8 +41,9 @@ class CreateTest extends TestCase
     public function testNotExists()
     {
         $user = $this->getLegal();
+        $route = $this->getRoute();
 
-        $response = $this->actingAs($user)->post($this->getRoute(), [
+        $response = $this->actingAs($user)->post($route, [
             'email' => 'not-exist@email.ru'
         ]);
 
@@ -53,8 +56,9 @@ class CreateTest extends TestCase
     {
         $legal = $this->getLegal();
         $phys = Phys::factory()->create();
+        $route = $this->getRoute();
 
-        $response = $this->actingAs($legal)->post($this->getRoute(), [
+        $response = $this->actingAs($legal)->post($route, [
             'email' => $phys->email,
         ]);
 
