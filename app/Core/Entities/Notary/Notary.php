@@ -132,7 +132,7 @@ class Notary extends AbstractEntity
 
     public function setSite(?Site $site): void
     {
-        $this->site = $site;
+        $this->site = $site?->getValue();
     }
 
     public function setUseDigitalReport(?bool $value): void

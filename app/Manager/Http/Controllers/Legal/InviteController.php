@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class InviteController extends AbstractController
 {
     public function __construct(
-        private InviteService $inviteService
+        private InviteService $service
     )
     {
         $this->middleware($this->checkOwner(...))->except('create');
@@ -26,7 +26,7 @@ class InviteController extends AbstractController
      */
     public function create(CreateRequest $request)
     {
-        $this->inviteService->createForPhys(
+        $this->service->createForPhys(
             $this->getUserId(),
             new Email($request->email)
         );
@@ -41,7 +41,7 @@ class InviteController extends AbstractController
      */
     public function reSend(Invite $invite)
     {
-        $this->inviteService->reSendEmail($invite->id);
+        $this->service->reSendEmail($invite->id);
 
         return back()->with('success', 'Заявка успешно отправлена повторно');
     }
@@ -51,7 +51,7 @@ class InviteController extends AbstractController
      */
     public function cancel(Invite $invite)
     {
-        $this->inviteService->cancel($invite->id);
+        $this->service->cancel($invite->id);
 
         return back()->with('success', 'Заявка успешно отменена');
     }
@@ -62,7 +62,7 @@ class InviteController extends AbstractController
      */
     public function confirm(Invite $invite)
     {
-        $this->inviteService->confirm($invite->id);
+        $this->service->confirm($invite->id);
 
         return back()->with('success', 'Заявка успешно подтверждена');
     }
@@ -73,7 +73,7 @@ class InviteController extends AbstractController
      */
     public function close(Invite $invite)
     {
-        $this->inviteService->close($invite->id);
+        $this->service->close($invite->id);
 
         return back()->with('success', 'Заявка успешно завершена');
     }

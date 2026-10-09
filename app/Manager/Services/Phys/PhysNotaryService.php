@@ -27,7 +27,7 @@ class PhysNotaryService
                 $notary->addEmail($email);
             }
 
-            $notary->setSite($updateData->site?->getValue());
+            $notary->setSite($updateData->site);
             $notary->setUseDigitalReport($updateData->useDigitalReport);
             $notary->setComment($updateData->comment);
 

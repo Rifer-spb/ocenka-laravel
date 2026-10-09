@@ -30,8 +30,6 @@ class ProfileController extends AbstractController
     /**
      * @param UpdateNameRequest $request
      * @return RedirectResponse
-     *
-     * Тесты @see \Feature\Manager\Http\Controllers\Phys\Profile\UpdateNameTest
      */
     public function updateName(UpdateNameRequest $request): RedirectResponse
     {
@@ -48,8 +46,6 @@ class ProfileController extends AbstractController
     /**
      * @param AddPhoneRequest $request
      * @return RedirectResponse
-     *
-     * Тесты @see \Feature\Manager\Http\Controllers\Phys\Profile\Phone\AddPhoneTest
      */
     public function addPhone(AddPhoneRequest $request)
     {
@@ -64,8 +60,6 @@ class ProfileController extends AbstractController
     /**
      * @param PhysPhone $phone
      * @return RedirectResponse
-     *
-     * Тесты @see \Feature\Manager\Http\Controllers\Phys\Profile\Phone\DeletePhoneTest
      */
     public function deletePhone(PhysPhone $phone)
     {
@@ -77,8 +71,6 @@ class ProfileController extends AbstractController
     /**
      * @param UpdateHolidayRequest $request
      * @return RedirectResponse
-     *
-     * Тесты @see \Feature\Manager\Http\Controllers\Phys\Profile\UpdateHolidayTest
      */
     public function updateHoliday(UpdateHolidayRequest $request)
     {
@@ -93,8 +85,6 @@ class ProfileController extends AbstractController
      * @param ChangePasswordRequest $request
      * @return RedirectResponse
      * @throws \Throwable
-     *
-     * Тесты @see \Feature\Manager\Http\Controllers\User\ChangePasswordTest
      */
     public function changePassword(ChangePasswordRequest $request)
     {

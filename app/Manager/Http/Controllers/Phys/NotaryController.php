@@ -5,7 +5,6 @@ namespace App\Manager\Http\Controllers\Phys;
 use App\Core\Entities\Notary\Notary;
 use App\Core\Entities\Notary\NotaryUpdateData;
 use App\Core\Http\Controllers\AbstractController;
-use App\Core\Services\NotaryService;
 use App\Core\ValueObjects\Email;
 use App\Core\ValueObjects\Site;
 use App\Manager\Http\Requests\Phys\Notary\SearchRequest;
