@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\Notariat\ScanNotaries;
 
-use App\Core\Models\Notariat\Notariat;
-use App\Core\Models\Notary\NotariatId;
+use App\Core\Entities\Notariat\Notariat;
+use App\Core\Entities\Notary\NotariatId;
 use App\Core\Validators\RequestValidator;
 use Illuminate\Console\Command;
 

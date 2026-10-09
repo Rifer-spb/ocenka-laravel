@@ -23,7 +23,10 @@ test:
 	docker exec -it ocenka_laravel_php php artisan test
 
 wg:
-	docker exec -it ocenka_laravel_php php artisan wayfinder:generate --with-form
+	docker exec -it ocenka_laravel_php php artisan config:clear
+	docker exec -it ocenka_laravel_php php artisan cache:clear
+	docker exec -it ocenka_laravel_php php artisan route:clear
+	docker exec -it ocenka_laravel_php php artisan wayfinder:generate --with-form --path=resources/js/common/wayfinder
 
 chown:
 	sudo chown -R $USER:$USER /home/rifer/PhpstormProjects/ocenka-laravel/database/migrations

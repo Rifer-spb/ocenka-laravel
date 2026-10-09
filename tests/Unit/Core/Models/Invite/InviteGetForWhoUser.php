@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Core\Models\Invite;
 
-use App\Core\Models\Invite\Invite;
+use App\Core\Entities\Invite\Invite;
 use Tests\TestCase;
 
 class InviteGetForWhoUser extends TestCase

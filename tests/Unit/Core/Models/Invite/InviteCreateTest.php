@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Core\Models\Invite;
 
-use App\Core\Models\Invite\Invite;
-use App\Core\Models\Invite\InviteForWho;
-use App\Core\Models\User\Legal\Legal;
-use App\Core\Models\User\Phys\Phys;
+use App\Core\Entities\Invite\Invite;
+use App\Core\Entities\Invite\InviteForWho;
+use App\Core\Entities\User\Legal\Legal;
+use App\Core\Entities\User\Phys\Phys;
 use Tests\TestCase;
 
 class InviteCreateTest extends TestCase

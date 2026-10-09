@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands\Notariat\ScanNotaries;
 
-use App\Core\Finder\Notary\NotaryRegionFinder;
+use App\Core\Entities\Notary\NotaryRegion;
+use App\Core\Finders\NotaryRegionFinder;
 use App\Core\Helpers\PhoneHelper;
 use App\Core\Helpers\StringHelper;
-use App\Core\Models\Notary\NotaryRegion;
 use App\Core\Validators\EmailValidator;
 use App\Core\Validators\ResourceValidator;
 

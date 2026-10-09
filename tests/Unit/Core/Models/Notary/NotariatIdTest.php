@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Core\Models\Notary;
 
-use App\Core\Models\Notary\NotariatId;
+use App\Core\Entities\Notary\NotariatId;
 use Tests\TestCase;
 
 class NotariatIdTest extends TestCase

@@ -1,15 +1,15 @@
 <?php
 
-use App\Manager\Http\Controllers\AuthController;
-use App\Manager\Http\Controllers\DefaultController;
+use App\Manager\Http\PageControllers\AuthPageController;
+use App\Manager\Http\PageControllers\IndexPageController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [DefaultController::class, 'home'])->name('default.home');
+Route::get('/', IndexPageController::class)->name('default.home');
 
-Route::prefix('manager')->name('manager.')->group(function () {
-    Route::get('home', [DefaultController::class, 'home'])->name('home')->middleware('guest');
+Route::name('manager.')->group(function () {
+    Route::get('home', IndexPageController::class)->name('home')->middleware('guest');
 
-    Route::prefix('auth')->name('auth.')->controller(AuthController::class)->group(function () {
+    Route::prefix('auth')->name('auth.')->controller(AuthPageController::class)->group(function () {
         Route::get('sign-up', 'viewSignUp')->name('viewSignUp')->middleware('guest');
         Route::post('sign-up', 'signUp')->name('signUp')->middleware('guest');
         Route::post('logout', 'logout')->name('logout')->middleware('auth');

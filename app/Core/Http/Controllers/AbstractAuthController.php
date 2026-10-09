@@ -2,7 +2,7 @@
 
 namespace App\Core\Http\Controllers;
 
-use App\Core\Models\User\User;
+use App\Core\Entities\User\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

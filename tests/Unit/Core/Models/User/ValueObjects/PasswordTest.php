@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Core\Models\User\ValueObjects;
 
-use App\Core\Models\User\ValueObjects\Password;
+use App\Core\Entities\User\ValueObjects\Password;
 use Tests\TestCase;
 use InvalidArgumentException;
 

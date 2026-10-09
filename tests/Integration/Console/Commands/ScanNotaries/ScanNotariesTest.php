@@ -2,8 +2,8 @@
 
 namespace Tests\Integration\Console\Commands\ScanNotaries;
 
-use App\Core\Models\Notariat\Notariat;
-use App\Core\Models\Notary\Notary;
+use App\Core\Entities\Notariat\Notariat;
+use App\Core\Entities\Notary\Notary;
 use Tests\TestCase;
 
 class ScanNotariesTest extends TestCase

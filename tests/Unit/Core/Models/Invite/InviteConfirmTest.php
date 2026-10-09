@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Core\Models\Invite;
 
-use App\Core\Models\Invite\Invite;
-use App\Core\Models\Invite\InviteStatus;
+use App\Core\Entities\Invite\Invite;
+use App\Core\Entities\Invite\InviteStatus;
 use Tests\TestCase;
 
 class InviteConfirmTest extends TestCase

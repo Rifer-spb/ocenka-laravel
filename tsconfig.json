@@ -109,7 +109,14 @@
         "skipLibCheck": true /* Skip type checking all .d.ts files. */,
         "baseUrl": ".",
         "paths": {
-            "@/*": ["./resources/js/*"]
+            "@/*": ["./resources/js/*"],
+            "@common/*": ["./resources/js/common/*"],
+            "@manager/*": ["./resources/js/manager/*"],
+            "@managerRoutes/*": ["./resources/js/common/wayfinder/routes/manager/*"],
+            "@client/*": ["./resources/js/client/*"],
+            "@clientRoutes/*": ["./resources/js/common/wayfinder/routes/client/*"],
+            "@notary/*": ["./resources/js/notary/*"],
+            "@notaryRoutes/*": ["./resources/js/common/wayfinder/routes/notary/*"]
         },
         "jsx": "react-jsx"
     },
