@@ -125,24 +125,20 @@ class Notary extends AbstractEntity
         return $model;
     }
 
-    public function removeAllEmails(): void
+    /**
+     * @throws \Throwable
+     */
+    public function edit(NotaryUpdateData $data): void
     {
         $this->emails()->delete();
-    }
 
-    public function setSite(?Site $site): void
-    {
-        $this->site = $site?->getValue();
-    }
+        foreach ($data->emails as $email) {
+            $this->addEmail($email);
+        }
 
-    public function setUseDigitalReport(?bool $value): void
-    {
-        $this->use_digital_report = $value;
-    }
-
-    public function setComment(?string $comment): void
-    {
-        $this->comment = !$comment ? null : $comment;
+        $this->site = $data->site?->getValue();
+        $this->use_digital_report = $data->useDigitalReport;
+        $this->comment = !$data->comment ? null : $data->comment;
     }
 
     public function region(): BelongsTo

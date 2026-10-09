@@ -12,23 +12,27 @@ class ConfirmTest extends TestCase
     {
         $phys = $this->getPhys();
         $invite = Invite::factory()->create();
+        $route = $this->getRoute($invite);
 
-        $response = $this->actingAs($phys)->patch($this->getRoute($invite->id));
+        $response = $this->actingAs($phys)->patch($route);
         $response->assertStatus(404);
     }
 
     public function testInvalidStatus()
     {
         $invite = Invite::factory()->withActive()->create();
+        $route = $this->getRoute($invite);
 
-        $response = $this->actingAs($invite->phys)->patch($this->getRoute($invite->id));
+        $response = $this->actingAs($invite->phys)->patch($route);
         $response->assertSessionHas(['error' => 'Заявка должна быть в статусе ожидания.']);
     }
 
     public function testSuccess()
     {
         $invite = Invite::factory()->withWait()->create();
-        $response = $this->actingAs($invite->phys)->patch($this->getRoute($invite->id));
+        $route = $this->getRoute($invite);
+
+        $response = $this->actingAs($invite->phys)->patch($route);
         $invite->refresh();
 
         $response->assertSessionHas(['success' => 'Заявка успешно подтверждена']);
@@ -40,8 +44,8 @@ class ConfirmTest extends TestCase
         return Phys::factory()->create();
     }
 
-    private function getRoute(int $id): string
+    private function getRoute(Invite $invite): string
     {
-        return route('manager.phys.invites.confirm', ['invite' => $id]);
+        return route('manager.phys.invites.confirm', ['invite' => $invite->id]);
     }
 }

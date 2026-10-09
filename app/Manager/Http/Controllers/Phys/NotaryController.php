@@ -5,19 +5,19 @@ namespace App\Manager\Http\Controllers\Phys;
 use App\Core\Entities\Notary\Notary;
 use App\Core\Entities\Notary\NotaryUpdateData;
 use App\Core\Http\Controllers\AbstractController;
+use App\Core\Services\NotaryService;
 use App\Core\ValueObjects\Email;
 use App\Core\ValueObjects\Site;
 use App\Manager\Http\Requests\Phys\Notary\SearchRequest;
 use App\Manager\Http\Requests\Phys\Notary\UpdateRequest;
-use App\Manager\ReadServices\Phys\PhysNotaryReadService;
 use App\Manager\ReadServices\Phys\PhysNotaryExportService;
-use App\Manager\Services\Phys\PhysNotaryService;
+use App\Manager\ReadServices\Phys\PhysNotaryReadService;
 use Illuminate\Http\RedirectResponse;
 
 class NotaryController extends AbstractController
 {
     public function __construct(
-        private PhysNotaryService $service,
+        private NotaryService $service,
         private PhysNotaryReadService $readService,
         private PhysNotaryExportService $exportService,
     )

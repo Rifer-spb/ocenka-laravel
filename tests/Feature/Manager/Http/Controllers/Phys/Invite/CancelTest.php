@@ -8,27 +8,23 @@ use Tests\TestCase;
 
 class CancelTest extends TestCase
 {
-    public function testWithAnotherInviteId()
-    {
-        $phys = $this->getPhys();
-        $invite = Invite::factory()->create();
-
-        $response = $this->actingAs($phys)->patch($this->getRoute($invite->id));
-        $response->assertStatus(404);
-    }
+    use CommonTrait;
 
     public function testInvalidStatus()
     {
         $invite = Invite::factory()->withActive()->create();
+        $route = $this->getRoute($invite);
 
-        $response = $this->actingAs($invite->phys)->patch($this->getRoute($invite->id));
+        $response = $this->actingAs($invite->phys)->patch($route);
         $response->assertSessionHas(['error' => 'Заявка должна быть в статусе ожидания.']);
     }
 
     public function testSuccess()
     {
         $invite = Invite::factory()->withWait()->create();
-        $response = $this->actingAs($invite->phys)->patch($this->getRoute($invite->id));
+        $route = $this->getRoute($invite);
+
+        $response = $this->actingAs($invite->phys)->patch($route);
 
         $response->assertSessionHas(['success' => 'Заявка успешно отменена']);
         $this->assertDatabaseMissing(Invite::getTableName(), ['id' => $invite->id]);
@@ -39,8 +35,8 @@ class CancelTest extends TestCase
         return Phys::factory()->create();
     }
 
-    private function getRoute(int $id): string
+    private function getRoute(Invite $invite): string
     {
-        return route('manager.phys.invites.cancel', ['invite' => $id]);
+        return route('manager.phys.invites.cancel', ['invite' => $invite->id]);
     }
 }
