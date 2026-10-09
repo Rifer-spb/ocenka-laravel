@@ -19,4 +19,17 @@ class EmployeeReadService
 
         return array_map($callback, $employees);
     }
+
+    public function getAllCallAccess(): array
+    {
+        $employees = EmployeeFinder::getAll();
+
+        $callback = fn (Employee $e) => [
+            'id' => $e->id,
+            'name' => $e->phys->getName(),
+            'value' => $e->can_call
+        ];
+
+        return array_map($callback, $employees);
+    }
 }
