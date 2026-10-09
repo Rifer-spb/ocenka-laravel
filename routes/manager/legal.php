@@ -5,6 +5,7 @@ use App\Manager\Http\Controllers\Legal\InviteController;
 use App\Manager\Http\Controllers\Legal\ProfileController;
 use App\Manager\Http\PageControllers\Legal\HomePageController;
 use App\Manager\Http\PageControllers\Legal\Settings\AccountPageController;
+use App\Manager\Http\PageControllers\Legal\Settings\CallPageController;
 use App\Manager\Http\PageControllers\Legal\Settings\InvitePageController;
 use App\Manager\Http\PageControllers\Legal\Settings\RegistryPageController;
 use App\Manager\Http\PageControllers\Legal\Settings\SettingsPageController;
@@ -19,6 +20,7 @@ Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
         Route::get('account', AccountPageController::class)->name('account');
         Route::get('invites', InvitePageController::class)->name('invites');
         Route::get('registry', RegistryPageController::class)->name('registry');
+        Route::get('call', CallPageController::class)->name('call');
     });
 
     //Controllers

@@ -1,0 +1,10 @@
+.call section {
+    background-color: #ffffff;
+    padding: 20px;
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+.call .template .info {
+    margin-bottom: 10px;
+}
