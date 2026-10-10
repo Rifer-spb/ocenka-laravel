@@ -2,7 +2,7 @@
 
 namespace App\Core\Services;
 
-use App\Core\Entities\User\Legal\Dto\Company;
+use App\Core\Entities\User\Legal\ValueObjects\Company;
 use App\Core\Entities\User\Legal\ValueObjects\RegistryTemplate;
 use App\Core\Finders\LegalFinder;
 use App\Core\Finders\LegalTypeFinder;

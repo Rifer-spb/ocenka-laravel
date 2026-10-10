@@ -4,6 +4,10 @@ namespace App\Manager\Http\Requests\Legal\Call\CommentTemplate;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @property string $name
+ * @property string $text
+ */
 class TemplateRequest extends FormRequest
 {
     public function authorize(): bool

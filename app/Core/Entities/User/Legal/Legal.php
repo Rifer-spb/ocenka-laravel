@@ -4,7 +4,7 @@ namespace App\Core\Entities\User\Legal;
 
 use App\Core\Attributes\TestClass;
 use App\Core\Entities\LegalType;
-use App\Core\Entities\User\Legal\Dto\Company;
+use App\Core\Entities\User\Legal\ValueObjects\Company;
 use App\Core\Entities\User\Legal\ValueObjects\RegistryTemplate;
 use App\Core\Entities\User\Role;
 use App\Core\Entities\User\User;
@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 use Tests\Unit\Core\Entities\User\Legal\CreateTest;
+use Tests\Unit\Core\Entities\User\Legal\GetNameTest;
+use Tests\Unit\Core\Entities\User\Legal\UpdateCompanyTest;
 
 /**
  * @property LegalProfile $profile
@@ -50,6 +52,7 @@ class Legal extends User
         return $user;
     }
 
+    #[TestClass(GetNameTest::class)]
     public function getName(): string
     {
         return ! empty($this->profile->short_name)
@@ -60,6 +63,7 @@ class Legal extends User
     /**
      * @throws \Throwable
      */
+    #[TestClass(UpdateCompanyTest::class)]
     public function updateCompany(LegalType $type, Company $company): void
     {
         $profile = $this->profile;

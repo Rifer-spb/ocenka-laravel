@@ -3,6 +3,8 @@
 namespace App\Core\Services\Call;
 
 use App\Core\Entities\Call\CommentTemplate\CallCommentTemplate;
+use App\Core\Entities\Call\CommentTemplate\Name;
+use App\Core\Entities\Call\CommentTemplate\Text;
 use App\Core\Finders\CallCommentTemplateFinder;
 use App\Core\Finders\LegalFinder;
 
@@ -11,7 +13,7 @@ class CallCommentTemplateService
     /**
      * @throws \Throwable
      */
-    public function create(int $legalId, string $name, string $text): void
+    public function create(int $legalId, Name $name, Text $text): void
     {
         $legal = LegalFinder::getById($legalId);
 
@@ -20,12 +22,12 @@ class CallCommentTemplateService
 
     /**
      * @param int $templateId
-     * @param string $name
-     * @param string $text
+     * @param Name $name
+     * @param Text $text
      * @return void
      * @throws \Throwable
      */
-    public function update(int $templateId, string $name, string $text): void
+    public function update(int $templateId, Name $name, Text $text): void
     {
         $template = CallCommentTemplateFinder::getById($templateId);
         $template->edit($name, $text);

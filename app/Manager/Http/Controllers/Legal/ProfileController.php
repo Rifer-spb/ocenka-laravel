@@ -2,10 +2,10 @@
 
 namespace App\Manager\Http\Controllers\Legal;
 
-use App\Core\Http\Controllers\AbstractController;
-use App\Core\Entities\User\Legal\Dto\Company;
+use App\Core\Entities\User\Legal\ValueObjects\Company;
 use App\Core\Entities\User\Legal\ValueObjects\RegistryTemplate;
 use App\Core\Entities\User\ValueObjects\Password;
+use App\Core\Http\Controllers\AbstractController;
 use App\Core\Services\LegalProfileService;
 use App\Core\Services\UserService;
 use App\Manager\Http\Requests\ChangePasswordRequest;

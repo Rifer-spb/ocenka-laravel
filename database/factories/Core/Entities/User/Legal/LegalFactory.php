@@ -33,8 +33,10 @@ class LegalFactory extends Factory
         ];
     }
 
-    public function withProfile(): static
+    public function withProfile(array $state = []): static
     {
-        return $this->afterCreating(fn (Legal $l) => LegalProfile::factory()->create(['id' => $l->id]));
+        return $this->afterCreating(
+            fn (Legal $l) => LegalProfile::factory()->create(['id' => $l->id, ...$state])
+        );
     }
 }

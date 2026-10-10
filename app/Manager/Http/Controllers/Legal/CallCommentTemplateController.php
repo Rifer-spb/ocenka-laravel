@@ -3,6 +3,8 @@
 namespace App\Manager\Http\Controllers\Legal;
 
 use App\Core\Entities\Call\CommentTemplate\CallCommentTemplate;
+use App\Core\Entities\Call\CommentTemplate\Name;
+use App\Core\Entities\Call\CommentTemplate\Text;
 use App\Core\Http\Controllers\AbstractController;
 use App\Core\Services\Call\CallCommentTemplateService;
 use App\Manager\Http\Requests\Legal\Call\CommentTemplate\TemplateRequest;
@@ -25,7 +27,11 @@ class CallCommentTemplateController extends AbstractController
      */
     public function create(TemplateRequest $request)
     {
-        $this->service->create($this->getUserId(), ...$request->validated());
+        $this->service->create(
+            $this->getUserId(),
+            new Name($request->name),
+            new Text($request->text),
+        );
 
         return back()->with('success', 'Успешно добавлено');
     }
@@ -38,7 +44,11 @@ class CallCommentTemplateController extends AbstractController
      */
     public function update(CallCommentTemplate $template, TemplateRequest $request)
     {
-        $this->service->update($template->id, ...$request->validated());
+        $this->service->update(
+            $template->id,
+            new Name($request->name),
+            new Text($request->text),
+        );
 
         return back()->with('success', 'Успешно обновлено');
     }
