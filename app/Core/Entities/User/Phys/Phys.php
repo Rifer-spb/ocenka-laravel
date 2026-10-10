@@ -38,19 +38,20 @@ class Phys extends User
      * @param Email $email
      * @param Password $password
      * @return self
-    */
+     * @throws \Throwable
+     */
     #[TestClass(CreateTest::class)]
     public static function createNew(Email $email, Password $password): self
     {
-        $user = parent::create([
-            'username' => $email->getValue(),
-            'email' => $email->getValue(),
-            'password' => $password->getValue(),
-            'role' => Role::PHYS->value,
-            'email_verify_token' => Str::random(60),
-        ]);
+        $user = new self();
+        $user->username = $email->getValue();
+        $user->email = $email->getValue();
+        $user->password = $password->getValue();
+        $user->role = Role::PHYS->value;
+        $user->email_verify_token = Str::random(60);
+        $user->saveOrFail();
 
-        PhysProfile::create(['id' => $user->id]);
+        $user->profile()->make()->saveOrFail();
 
         return $user;
     }

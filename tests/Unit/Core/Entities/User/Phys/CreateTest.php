@@ -15,6 +15,10 @@ use Tests\TestCase;
 #[CoversMethod(Phys::class, 'createNew')]
 class CreateTest extends TestCase
 {
+    /**
+     * @return void
+     * @throws \Throwable
+     */
     public function testSignUpSuccess()
     {
         $user = Phys::createNew(
