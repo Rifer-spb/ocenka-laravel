@@ -5,8 +5,10 @@ namespace Tests\Integration\Core\Services\Invite;
 use App\Core\Entities\EntityNotFoundException;
 use App\Core\Entities\Invite\Invite;
 use App\Core\Services\InviteService;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(InviteService::class, 'cancel')]
 class CancelTest extends TestCase
 {
     private InviteService $service;

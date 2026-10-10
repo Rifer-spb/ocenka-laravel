@@ -5,8 +5,10 @@ namespace Tests\Integration\Core\Services\Employee;
 use App\Core\Entities\Employee\Employee;
 use App\Core\Entities\EntityNotFoundException;
 use App\Core\Services\EmployeeService;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(EmployeeService::class, 'switchDoReportAccess')]
 class UpdateDoReportTest extends TestCase
 {
     private EmployeeService $service;

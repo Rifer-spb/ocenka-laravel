@@ -7,8 +7,10 @@ use App\Core\Entities\User\ValueObjects\FirstName;
 use App\Core\Entities\User\ValueObjects\LastName;
 use App\Core\Entities\User\ValueObjects\SecondName;
 use App\Core\Services\PhysProfileService;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(PhysProfileService::class, 'updateName')]
 class UpdateNameTest extends TestCase
 {
     private PhysProfileService $service;
@@ -20,6 +22,9 @@ class UpdateNameTest extends TestCase
         $this->service = app(PhysProfileService::class);
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function testWithAllFilled()
     {
         $user = $this->createUser();
@@ -38,9 +43,13 @@ class UpdateNameTest extends TestCase
         $this->assertEquals($user->profile->last_name, $lastName);
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function testWithAllEmpty()
     {
         $user = $this->createUser();
+
         $user->updateName(
             new FirstName('FirstName'),
             new SecondName('SecondName'),

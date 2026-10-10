@@ -1,11 +1,14 @@
 <?php
 
-namespace Feature\Manager\Http\Controllers\Legal\Employee;
+namespace Tests\Feature\Manager\Http\Controllers\Legal\Employee;
 
 use App\Core\Entities\Employee\Employee;
 use App\Core\Entities\User\Legal\Legal;
+use App\Manager\Http\Controllers\Legal\EmployeeController;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(EmployeeController::class,'updateCall')]
 class UpdateCanCallTest extends TestCase
 {
     public function testWithAnotherInviteId()
