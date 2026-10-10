@@ -32,22 +32,23 @@ class Legal extends User
      * @param Email $email
      * @param Password $password
      * @return self
+     * @throws \Throwable
      */
     #[TestClass(CreateTest::class)]
     public static function createNew(Email $email, Password $password): self
     {
-        $user = parent::create([
-            'username' => $email->getValue(),
-            'email' => $email->getValue(),
-            'password' => $password->getValue(),
-            'role' => Role::LEGAL->value,
-            'email_verify_token' => Str::random(60),
-        ]);
+        $user = new self();
+        $user->username = $email->getValue();
+        $user->email = $email->getValue();
+        $user->password = $password->getValue();
+        $user->role = Role::LEGAL->value;
+        $user->email_verify_token = Str::random(60);
+        $user->saveOrFail();
 
-        LegalProfile::create(['id' => $user->id]);
-        LegalPayment::create(['id' => $user->id]);
-        LegalMail::create(['id' => $user->id]);
-        LegalWhatsApp::create(['id' => $user->id]);
+        $user->profile()->make()->saveOrFail();
+        $user->payment()->make()->saveOrFail();
+        $user->mail()->make()->saveOrFail();
+        $user->whatsApp()->make()->saveOrFail();
 
         return $user;
     }

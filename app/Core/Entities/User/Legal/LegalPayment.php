@@ -15,7 +15,4 @@ use App\Core\Entities\AbstractEntity;
 class LegalPayment extends AbstractEntity
 {
     public $timestamps = false;
-    protected $fillable = [
-        'id',
-    ];
 }

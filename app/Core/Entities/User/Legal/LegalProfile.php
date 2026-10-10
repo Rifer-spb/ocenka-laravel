@@ -31,10 +31,6 @@ class LegalProfile extends AbstractEntity
 {
     public $timestamps = false;
 
-    protected $fillable = [
-        'id',
-    ];
-
     protected $casts = [
         'date_ogrn' => 'date',
     ];
