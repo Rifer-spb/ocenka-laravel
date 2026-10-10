@@ -7,6 +7,7 @@ use App\Core\Entities\User\Phys\ValueObjects\Holiday;
 use App\Core\Entities\User\ValueObjects\FirstName;
 use App\Core\Entities\User\ValueObjects\LastName;
 use App\Core\Entities\User\ValueObjects\SecondName;
+use App\Core\Helpers\UserHelper;
 use Carbon\Carbon;
 use Database\Factories\Core\Entities\User\Phys\PhysProfileFactory;
 
@@ -45,6 +46,15 @@ class PhysProfile extends AbstractEntity
     {
         $this->holiday_from = $holiday->getFromString();
         $this->holiday_to = $holiday->getToString();
+    }
+
+    public function getShortFullName(): ?string
+    {
+        if (empty($this->full_name)) {
+            return null;
+        }
+
+        return UserHelper::getShortName($this->full_name);
     }
 
     public function getHolidayFromAttribute($value): ?string

@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
 use Tests\Unit\Core\Entities\User\Legal\CreateTest;
 use Tests\Unit\Core\Entities\User\Legal\GetNameTest;
 use Tests\Unit\Core\Entities\User\Legal\UpdateCompanyTest;
+use Tests\Unit\Core\Entities\User\Legal\UpdateRegistryTemplateTest;
 
 /**
  * @property LegalProfile $profile
@@ -69,6 +70,7 @@ class Legal extends User
     /**
      * @throws \Throwable
      */
+    #[TestClass(UpdateRegistryTemplateTest::class)]
     public function updateRegistryTemplate(RegistryTemplate $template): void
     {
         $profile = $this->profile;

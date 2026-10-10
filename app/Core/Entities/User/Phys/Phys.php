@@ -3,6 +3,7 @@
 namespace App\Core\Entities\User\Phys;
 
 use App\Core\Attributes\TestClass;
+use App\Core\Entities\EntityNotFoundException;
 use App\Core\Helpers\UserHelper;
 use App\Core\Entities\Employee\Employee;
 use App\Core\Entities\User\Phys\ValueObjects\Holiday;
@@ -18,16 +19,19 @@ use Database\Factories\Core\Entities\User\Phys\PhysFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 use Tests\Unit\Core\Entities\User\Phys\CreateTest;
+use Tests\Unit\Core\Entities\User\Phys\GetNameTest;
 use Tests\Unit\Core\Entities\User\Phys\Phone\AddPhoneTest;
 use Tests\Unit\Core\Entities\User\Phys\Phone\DeletePhoneTest;
+use Tests\Unit\Core\Entities\User\Phys\Phone\GetPhoneByValueTest;
+use Tests\Unit\Core\Entities\User\Phys\Phone\HasPhoneTest;
 use Tests\Unit\Core\Entities\User\Phys\UpdateHolidayTest;
 use Tests\Unit\Core\Entities\User\Phys\UpdateNameTest;
 
 /**
  * @property PhysProfile $profile
- * @property PhysPhone[] $phones
+ * @property Collection|PhysPhone[] $phones
  * @property Employee $employee
  *
  * @method static PhysFactory factory()
@@ -94,6 +98,7 @@ class Phys extends User
         return $phoneEntity;
     }
 
+    #[TestClass(HasPhoneTest::class)]
     public function hasPhone(int|string $phone): bool
     {
         return $this->phones()->where('phone', $phone)->exists();
@@ -109,9 +114,16 @@ class Phys extends User
         $this->phones()->findOrFail($id)->delete();
     }
 
+    #[TestClass(GetPhoneByValueTest::class)]
     public function getPhoneByValue(string $value): PhysPhone
     {
-        return $this->phones()->where('phone', $value)->firstOrFail();
+        $phone = $this->phones()->where('phone', $value)->first();
+
+        if (! $phone) {
+           throw new EntityNotFoundException('Телефон не найден.');
+        }
+
+        return $phone;
     }
 
     /**
@@ -127,11 +139,12 @@ class Phys extends User
         $profile->saveOrFail();
     }
 
+    #[TestClass(GetNameTest::class)]
     public function getName(): string
     {
-        return ! empty($this->profile->full_name)
-            ? UserHelper::getShortName($this->profile->full_name)
-            : $this->username;
+        $name = $this->profile->getShortFullName();
+
+        return !empty($name) ? $name : $this->username;
     }
 
     public function employee(): HasOne
