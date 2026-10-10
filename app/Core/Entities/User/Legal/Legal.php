@@ -37,13 +37,7 @@ class Legal extends User
     #[TestClass(CreateTest::class)]
     public static function createNew(Email $email, Password $password): self
     {
-        $user = new self();
-        $user->username = $email->getValue();
-        $user->email = $email->getValue();
-        $user->password = $password->getValue();
-        $user->role = Role::LEGAL->value;
-        $user->email_verify_token = Str::random(60);
-        $user->saveOrFail();
+        $user = parent::newManager($email, $password, Role::LEGAL);
 
         $user->profile()->make()->saveOrFail();
         $user->payment()->make()->saveOrFail();

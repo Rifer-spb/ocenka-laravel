@@ -6,10 +6,12 @@ use App\Core\Attributes\TestClass;
 use App\Core\Entities\AbstractEntityTrait;
 use App\Core\Entities\ModelHelperMethods;
 use App\Core\Entities\User\ValueObjects\Password;
+use App\Core\ValueObjects\Email;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Tests\Unit\Core\Entities\User\ChangePasswordTest;
 
 /**
@@ -46,6 +48,22 @@ class User extends Authenticatable
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
         ];
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    protected static function newManager(Email $email, Password $password, Role $role): static
+    {
+        $user = new static();
+        $user->username = $email->getValue();
+        $user->email = $email->getValue();
+        $user->password = $password->getValue();
+        $user->role = $role->value;
+        $user->email_verify_token = Str::random(60);
+        $user->saveOrFail();
+
+        return $user;
     }
 
     public function isPhys(): bool
