@@ -4,8 +4,10 @@ namespace Tests\Unit\Core\Entities\Invite;
 
 use App\Core\Entities\Invite\Invite;
 use App\Core\Entities\Invite\InviteStatus;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Invite::class, 'complete')]
 class InviteCompleteTest extends TestCase
 {
     public function testInvalid()

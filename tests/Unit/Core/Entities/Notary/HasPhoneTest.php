@@ -3,8 +3,10 @@
 namespace Tests\Unit\Core\Entities\Notary;
 
 use App\Core\Entities\Notary\Notary;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Notary::class, 'hasPhone')]
 class HasPhoneTest extends TestCase
 {
     public function testFalse()

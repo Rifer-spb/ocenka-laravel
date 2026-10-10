@@ -2,9 +2,10 @@
 
 namespace App\Core\Entities\Notary;
 
-/**
- * @see \Tests\Unit\Core\Models\Notary\NotariatIdTest
- */
+use App\Core\Attributes\TestClass;
+use Tests\Unit\Core\Entities\Notary\NotariatIdTest;
+
+#[TestClass(NotariatIdTest::class)]
 class NotariatId
 {
     private int $value;

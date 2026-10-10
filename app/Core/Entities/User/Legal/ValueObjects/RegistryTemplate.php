@@ -2,6 +2,10 @@
 
 namespace App\Core\Entities\User\Legal\ValueObjects;
 
+use App\Core\Attributes\TestClass;
+use Tests\Unit\Core\Entities\User\Legal\ValueObjects\RegistryTemplateTest;
+
+#[TestClass(RegistryTemplateTest::class)]
 class RegistryTemplate
 {
     private string $value;
@@ -10,7 +14,7 @@ class RegistryTemplate
     {
         $value = trim($value);
 
-        if (!$value) {
+        if ($value === '') {
             throw new \DomainException('Указан пустой шаблон.');
         }
 

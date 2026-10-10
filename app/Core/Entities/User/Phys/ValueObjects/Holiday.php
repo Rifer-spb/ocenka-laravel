@@ -2,12 +2,12 @@
 
 namespace App\Core\Entities\User\Phys\ValueObjects;
 
+use App\Core\Attributes\TestClass;
 use Carbon\Carbon;
 use InvalidArgumentException;
+use Tests\Unit\Core\Entities\User\Phys\ValueObjects\HolidayTest;
 
-/**
- * Тесты @see \Tests\Unit\Core\Models\User\Phys\ValueObjects\HolidayTest
- */
+#[TestClass(HolidayTest::class)]
 class Holiday
 {
     private ?Carbon $from = null;

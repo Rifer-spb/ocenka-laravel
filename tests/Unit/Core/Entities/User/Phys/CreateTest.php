@@ -9,8 +9,10 @@ use App\Core\ValueObjects\Email;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Phys::class, 'createNew')]
 class CreateTest extends TestCase
 {
     public function testSignUpSuccess()

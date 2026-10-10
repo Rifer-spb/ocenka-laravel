@@ -15,10 +15,6 @@ use Database\Factories\Core\Entities\User\Phys\PhysPhoneFactory;
  */
 class PhysPhone extends AbstractEntity
 {
-    protected $fillable = [
-        'phone',
-        'user_id',
-    ];
     public $timestamps = false;
 
     protected $hidden = [

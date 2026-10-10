@@ -2,6 +2,7 @@
 
 namespace App\Core\Entities\User;
 
+use App\Core\Attributes\TestClass;
 use App\Core\Entities\AbstractEntityTrait;
 use App\Core\Entities\ModelHelperMethods;
 use App\Core\Entities\User\ValueObjects\Password;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Tests\Unit\Core\Entities\User\ChangePasswordTest;
 
 /**
  * @property int $id
@@ -75,12 +77,7 @@ class User extends Authenticatable
         $this->updatePassword($newPassword);
     }
 
-    /**
-     * @param Password $password
-     * @return void
-     *
-     * Тесты @see \Tests\Unit\Core\Models\User\ChangePasswordTest
-     */
+    #[TestClass(ChangePasswordTest::class)]
     public function updatePassword(Password $password): void
     {
         $this->password = $password->getValue();

@@ -4,10 +4,16 @@ namespace Tests\Unit\Core\Entities\User\Phys;
 
 use App\Core\Entities\User\Phys\Phys;
 use App\Core\Entities\User\Phys\ValueObjects\Holiday;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Phys::class, 'updateHoliday')]
 class UpdateHolidayTest extends TestCase
 {
+    /**
+     * @return void
+     * @throws \Throwable
+     */
     public function testFilledSuccess()
     {
         $user = $this->createUser();
@@ -18,6 +24,10 @@ class UpdateHolidayTest extends TestCase
         $this->assertEquals($user->profile->holiday_to, $to);
     }
 
+    /**
+     * @return void
+     * @throws \Throwable
+     */
     public function testWithEmpty()
     {
         $user = $this->createUser();
@@ -28,6 +38,10 @@ class UpdateHolidayTest extends TestCase
         $this->assertEmpty($user->profile->holiday_to);
     }
 
+    /**
+     * @return void
+     * @throws \Throwable
+     */
     public function testWithNull()
     {
         $user = $this->createUser();

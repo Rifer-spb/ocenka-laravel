@@ -2,11 +2,11 @@
 
 namespace App\Core\Entities\User\ValueObjects;
 
+use App\Core\Attributes\TestClass;
 use InvalidArgumentException;
+use Tests\Unit\Core\Entities\User\ValueObjects\NamePartTest;
 
-/**
- * Тесты @see \Tests\Unit\Core\Models\User\ValueObjects\NamePartTest
- */
+#[TestClass(NamePartTest::class)]
 abstract class AbstractNamePart
 {
     protected const MAX_LENGTH = 100;

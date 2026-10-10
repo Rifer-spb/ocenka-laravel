@@ -6,10 +6,16 @@ use App\Core\Entities\Notary\Notary;
 use App\Core\Entities\Notary\NotaryUpdateData;
 use App\Core\ValueObjects\Email;
 use App\Core\ValueObjects\Site;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Notary::class, 'edit')]
 class EditTest extends TestCase
 {
+    /**
+     * @return void
+     * @throws \Throwable
+     */
     public function testSuccessFulled()
     {
         $notary = Notary::factory()
@@ -32,6 +38,10 @@ class EditTest extends TestCase
         $this->assertEquals($comment, $notary->comment);
     }
 
+    /**
+     * @return void
+     * @throws \Throwable
+     */
     public function testSuccessWithNotFull()
     {
         $notary = Notary::factory()

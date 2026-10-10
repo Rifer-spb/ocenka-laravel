@@ -28,38 +28,23 @@ use Database\Factories\Core\Entities\User\Phys\PhysProfileFactory;
 class PhysProfile extends AbstractEntity
 {
     protected $table = 'phys_profiles';
-    protected $fillable = [
-        'id',
-        'first_name',
-        'second_name',
-        'last_name',
-        'full_name',
-        'holiday_from',
-        'holiday_to',
-    ];
 
     public function updateName(FirstName $firstName, SecondName $secondName, LastName $lastName): void
     {
-        $this->update([
-            'first_name' => $firstName->getValue(),
-            'second_name' => $secondName->getValue(),
-            'last_name' => $lastName->getValue(),
-            'full_name' => trim("{$firstName->getValue()} {$secondName->getValue()} {$lastName->getValue()}"),
-        ]);
+        $this->first_name = $firstName->getValue();
+        $this->second_name = $secondName->getValue();
+        $this->last_name = $lastName->getValue();
+        $this->full_name = trim("{$firstName->getValue()} {$secondName->getValue()} {$lastName->getValue()}");
     }
 
     /**
      * @param Holiday $holiday
      * @return void
-     *
-     * Тесты @see \Tests\Unit\Core\Models\User\Phys\UpdateHolidayTest
      */
     public function updateHoliday(Holiday $holiday): void
     {
-        $this->update([
-            'holiday_from' => $holiday->getFromString(),
-            'holiday_to' => $holiday->getToString(),
-        ]);
+        $this->holiday_from = $holiday->getFromString();
+        $this->holiday_to = $holiday->getToString();
     }
 
     public function getHolidayFromAttribute($value): ?string

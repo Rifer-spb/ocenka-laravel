@@ -3,10 +3,21 @@
 namespace Tests\Unit\Core\Entities\Employee;
 
 use App\Core\Entities\Employee\Employee;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Employee::class, 'switchDoReportAccess')]
+#[CoversMethod(Employee::class, 'switchWriteReportAccess')]
+#[CoversMethod(Employee::class, 'switchRideAccess')]
+#[CoversMethod(Employee::class, 'switchIsManagerAccess')]
+#[CoversMethod(Employee::class, 'switchCanRegistryAccess')]
+#[CoversMethod(Employee::class, 'switchCanCallAccess')]
 class SwitchAccessTest extends TestCase
 {
+    /**
+     * @return void
+     * @throws \Throwable
+     */
     public function testSwitchDoReportAccess()
     {
         $employee = Employee::factory()->withReportAccess()->create();
@@ -19,6 +30,10 @@ class SwitchAccessTest extends TestCase
         $this->assertFalse($access->do);
     }
 
+    /**
+     * @return void
+     * @throws \Throwable
+     */
     public function testSwitchWriteReportAccess()
     {
         $employee = Employee::factory()->withReportAccess()->create();
@@ -51,5 +66,27 @@ class SwitchAccessTest extends TestCase
 
         $employee->switchIsManagerAccess();
         $this->assertFalse($employee->is_manager);
+    }
+
+    public function testSwitchCanRegistryAccess()
+    {
+        $employee = Employee::factory()->create();
+
+        $employee->switchCanRegistryAccess();
+        $this->assertTrue($employee->can_registry);
+
+        $employee->switchCanRegistryAccess();
+        $this->assertFalse($employee->can_registry);
+    }
+
+    public function testSwitchCanCallAccess()
+    {
+        $employee = Employee::factory()->create();
+
+        $employee->switchCanCallAccess();
+        $this->assertTrue($employee->can_call);
+
+        $employee->switchCanCallAccess();
+        $this->assertFalse($employee->can_call);
     }
 }

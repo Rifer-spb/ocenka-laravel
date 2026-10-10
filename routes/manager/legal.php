@@ -1,5 +1,6 @@
 <?php
 
+use App\Manager\Http\Controllers\Legal\CallCommentTemplateController;
 use App\Manager\Http\Controllers\Legal\EmployeeController;
 use App\Manager\Http\Controllers\Legal\InviteController;
 use App\Manager\Http\Controllers\Legal\ProfileController;
@@ -52,4 +53,13 @@ Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
             Route::patch('registry', 'updateRegistry')->name('updateRegistry');
         });
     });
+
+    Route::prefix('call-templates')
+        ->name('callTemplates.')
+        ->controller(CallCommentTemplateController::class)
+        ->group(function () {
+            Route::post('/', 'create')->name('create');
+            Route::patch('{template}', 'update')->name('update');
+        }
+    );
 });

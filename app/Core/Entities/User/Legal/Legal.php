@@ -2,6 +2,7 @@
 
 namespace App\Core\Entities\User\Legal;
 
+use App\Core\Attributes\TestClass;
 use App\Core\Entities\LegalType;
 use App\Core\Entities\User\Legal\Dto\Company;
 use App\Core\Entities\User\Legal\ValueObjects\RegistryTemplate;
@@ -13,6 +14,7 @@ use Database\Factories\Core\Entities\User\Legal\LegalFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
+use Tests\Unit\Core\Entities\User\Legal\CreateTest;
 
 /**
  * @property LegalProfile $profile
@@ -28,9 +30,8 @@ class Legal extends User
      * @param Email $email
      * @param Password $password
      * @return self
-     *
-     * Тесты @see \Tests\Unit\Core\Models\User\Legal\CreateTest
      */
+    #[TestClass(CreateTest::class)]
     public static function createNew(Email $email, Password $password): self
     {
         $user = parent::create([

@@ -6,10 +6,16 @@ use App\Core\Entities\User\Phys\Phys;
 use App\Core\Entities\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
 use Illuminate\Support\Facades\Hash;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Phys::class, 'updatePassword')]
 class ChangePasswordTest extends TestCase
 {
+    /**
+     * @return void
+     * @throws \Throwable
+     */
     public function testSuccess()
     {
         $user = Phys::createNew(

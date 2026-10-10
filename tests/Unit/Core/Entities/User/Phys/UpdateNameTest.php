@@ -6,8 +6,10 @@ use App\Core\Entities\User\Phys\Phys;
 use App\Core\Entities\User\ValueObjects\FirstName;
 use App\Core\Entities\User\ValueObjects\LastName;
 use App\Core\Entities\User\ValueObjects\SecondName;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Phys::class, 'updateName')]
 class UpdateNameTest extends TestCase
 {
     public function testFilledSuccess()

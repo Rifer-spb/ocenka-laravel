@@ -4,8 +4,10 @@ namespace Tests\Unit\Core\Entities\User\Phys\Phone;
 
 use App\Core\Entities\User\Phys\Phys;
 use App\Core\ValueObjects\NationalPhone;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Phys::class, 'addPhone')]
 class AddPhoneTest extends TestCase
 {
     public function testSuccess()
