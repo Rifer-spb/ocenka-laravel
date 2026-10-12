@@ -4,8 +4,10 @@ namespace App\Manager\Http\Controllers\Legal;
 
 use App\Core\Attributes\TestClass;
 use App\Core\Entities\Employee\Employee;
+use App\Core\Entities\Employee\PhoneExtension;
 use App\Core\Http\Controllers\AbstractController;
 use App\Core\Services\EmployeeService;
+use App\Manager\Http\Requests\Legal\Employee\UpdatePhoneExtensionRequest;
 use App\Manager\Http\Requests\Legal\Invite\UpdateWorkRateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -114,6 +116,16 @@ class EmployeeController extends AbstractController
     public function updateRegistry(Employee $employee)
     {
         $this->service->switchCanRegistryAccess($employee->id);
+
+        return back()->with(['success' => 'Успешно обновлено']);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function updatePhoneExtension(Employee $employee, UpdatePhoneExtensionRequest $request)
+    {
+        $this->service->updatePhoneExtension($employee->id, new PhoneExtension($request->value));
 
         return back()->with(['success' => 'Успешно обновлено']);
     }

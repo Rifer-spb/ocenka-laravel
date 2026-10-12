@@ -3,6 +3,7 @@
 namespace App\Core\Services;
 
 use App\Core\Attributes\TestClass;
+use App\Core\Entities\Employee\PhoneExtension;
 use App\Core\Finders\EmployeeFinder;
 use Tests\Integration\Core\Services\Employee\UpdateDoReportTest;
 use Tests\Integration\Core\Services\Employee\UpdateWriteReportTest;
@@ -103,6 +104,19 @@ class EmployeeService
     {
         $employee = EmployeeFinder::getById($employeeId);
         $employee->switchCanCallAccess();
+        $employee->saveOrFail();
+    }
+
+    /**
+     * @param int $employeeId
+     * @param PhoneExtension $extension
+     * @return void
+     * @throws \Throwable
+     */
+    public function updatePhoneExtension(int $employeeId, PhoneExtension $extension): void
+    {
+        $employee = EmployeeFinder::getById($employeeId);
+        $employee->updatePhoneExtension($extension);
         $employee->saveOrFail();
     }
 }
