@@ -8,9 +8,9 @@ use App\Core\Entities\Call\CommentTemplate\Name;
 use App\Core\Entities\Call\CommentTemplate\Text;
 use App\Core\Finders\CallCommentTemplateFinder;
 use App\Core\Finders\LegalFinder;
-use Tests\Integration\Core\Services\Call\CreateTest;
-use Tests\Integration\Core\Services\Call\DeleteTest;
-use Tests\Integration\Core\Services\Call\UpdateTest;
+use Tests\Integration\Core\Services\Call\CommentTemplate\CreateTest;
+use Tests\Integration\Core\Services\Call\CommentTemplate\DeleteTest;
+use Tests\Integration\Core\Services\Call\CommentTemplate\UpdateTest;
 
 class CallCommentTemplateService
 {

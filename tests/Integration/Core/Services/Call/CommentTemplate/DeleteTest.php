@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Integration\Core\Services\Call;
+namespace Tests\Integration\Core\Services\Call\CommentTemplate;
 
 use App\Core\Entities\Call\CommentTemplate\CallCommentTemplate;
 use App\Core\Services\Call\CallCommentTemplateService;

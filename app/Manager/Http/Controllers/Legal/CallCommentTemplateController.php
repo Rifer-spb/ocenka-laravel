@@ -2,6 +2,7 @@
 
 namespace App\Manager\Http\Controllers\Legal;
 
+use App\Core\Attributes\TestClass;
 use App\Core\Entities\Call\CommentTemplate\CallCommentTemplate;
 use App\Core\Entities\Call\CommentTemplate\Name;
 use App\Core\Entities\Call\CommentTemplate\Text;
@@ -10,6 +11,9 @@ use App\Core\Services\Call\CallCommentTemplateService;
 use App\Manager\Http\Requests\Legal\Call\CommentTemplate\TemplateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Tests\Feature\Manager\Http\Controllers\Legal\Call\CommentTemplate\CreateTest;
+use Tests\Feature\Manager\Http\Controllers\Legal\Call\CommentTemplate\DeleteTest;
+use Tests\Feature\Manager\Http\Controllers\Legal\Call\CommentTemplate\UpdateTest;
 
 class CallCommentTemplateController extends AbstractController
 {
@@ -25,6 +29,7 @@ class CallCommentTemplateController extends AbstractController
      * @return RedirectResponse
      * @throws \Throwable
      */
+    #[TestClass(CreateTest::class)]
     public function create(TemplateRequest $request)
     {
         $this->service->create(
@@ -42,6 +47,7 @@ class CallCommentTemplateController extends AbstractController
      * @return RedirectResponse
      * @throws \Throwable
      */
+    #[TestClass(UpdateTest::class)]
     public function update(CallCommentTemplate $template, TemplateRequest $request)
     {
         $this->service->update(
@@ -56,11 +62,12 @@ class CallCommentTemplateController extends AbstractController
     /**
      * @throws \Throwable
      */
+    #[TestClass(DeleteTest::class)]
     public function delete(CallCommentTemplate $template)
     {
         $this->service->delete($template->id);
 
-        return back()->with('success', 'Успешно обновлено');
+        return back()->with('success', 'Успешно удалено');
     }
 
     private function checkOwn(Request $request, \Closure $next)

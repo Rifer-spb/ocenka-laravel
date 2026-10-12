@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Integration\Core\Services\Call;
+namespace Tests\Integration\Core\Services\Call\CommentTemplate;
 
 use App\Core\Entities\EntityNotFoundException;
 use App\Core\Services\Call\CallCommentTemplateService;
