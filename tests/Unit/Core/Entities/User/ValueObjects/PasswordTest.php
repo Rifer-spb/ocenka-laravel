@@ -3,9 +3,11 @@
 namespace Tests\Unit\Core\Entities\User\ValueObjects;
 
 use App\Core\Entities\User\ValueObjects\Password;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\TestCase;
 use InvalidArgumentException;
 
+#[CoversClass(Password::class)]
 class PasswordTest extends TestCase
 {
     public function testEmpty()

@@ -3,8 +3,10 @@
 namespace Tests\Unit\Core\Entities\Invite;
 
 use App\Core\Entities\Invite\Invite;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Invite::class, 'getForWhoUser')]
 class InviteGetForWhoUser extends TestCase
 {
     public function testForPhys()

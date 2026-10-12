@@ -6,8 +6,10 @@ use App\Core\Entities\Invite\Invite;
 use App\Core\Entities\Invite\InviteForWho;
 use App\Core\Entities\User\Legal\Legal;
 use App\Core\Entities\User\Phys\Phys;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Invite::class, 'createNew')]
 class InviteCreateTest extends TestCase
 {
     public function testSuccessForPhys()

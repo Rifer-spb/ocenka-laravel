@@ -2,6 +2,7 @@
 
 namespace App\Core\Entities\Employee;
 
+use App\Core\Attributes\TestClass;
 use App\Core\Entities\AbstractEntity;
 use App\Core\Entities\Direction;
 use App\Core\Entities\EntityNotFoundException;
@@ -12,6 +13,9 @@ use Database\Factories\Core\Entities\Employee\EmployeeFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Tests\Unit\Core\Entities\Employee\CreateTest;
+use Tests\Unit\Core\Entities\Employee\GetReportAccessTest;
+use Tests\Unit\Core\Entities\Employee\SwitchAccessTest;
 
 /**
  * @property int $id
@@ -46,10 +50,9 @@ class Employee extends AbstractEntity
     /**
      * @param Invite $invite
      * @return self
-     *
      * @throws \Throwable
-     * @see \Tests\Unit\Core\Models\Employee\CreateTest
      */
+    #[TestClass(CreateTest::class)]
     public static function createNew(Invite $invite): self
     {
         $employee = new self();
@@ -73,9 +76,8 @@ class Employee extends AbstractEntity
     /**
      * @param int $id
      * @return EmployeeReportAccess
-     *
-     * @see \Tests\Unit\Core\Models\Employee\GetReportAccessTest
      */
+    #[TestClass(GetReportAccessTest::class)]
     public function getReportAccess(int $id): EmployeeReportAccess
     {
         if (!$access = $this->reportAccess->find($id)) {
@@ -88,10 +90,9 @@ class Employee extends AbstractEntity
     /**
      * @param int $id
      * @return void
-     *
      * @throws \Throwable
-     * @see \Tests\Unit\Core\Models\Employee\SwitchAccessTest
      */
+    #[TestClass(SwitchAccessTest::class)]
     public function switchDoReportAccess(int $id): void
     {
         $access = $this->getReportAccess($id);
@@ -102,10 +103,9 @@ class Employee extends AbstractEntity
     /**
      * @param int $id
      * @return void
-     *
      * @throws \Throwable
-     * @see \Tests\Unit\Core\Models\Employee\SwitchAccessTest
      */
+    #[TestClass(SwitchAccessTest::class)]
     public function switchWriteReportAccess(int $id): void
     {
         $access = $this->getReportAccess($id);
@@ -113,31 +113,25 @@ class Employee extends AbstractEntity
         $access->saveOrFail();
     }
 
-    /**
-     * @return void
-     *
-     * @see \Tests\Unit\Core\Models\Employee\SwitchAccessTest
-     */
+    #[TestClass(SwitchAccessTest::class)]
     public function switchRideAccess(): void
     {
         $this->can_ride = !$this->can_ride;
     }
 
-    /**
-     * @return void
-     *
-     * @see \Tests\Unit\Core\Models\Employee\SwitchAccessTest
-     */
+    #[TestClass(SwitchAccessTest::class)]
     public function switchIsManagerAccess(): void
     {
         $this->is_manager = !$this->is_manager;
     }
 
+    #[TestClass(SwitchAccessTest::class)]
     public function switchCanRegistryAccess(): void
     {
         $this->can_registry = !$this->can_registry;
     }
 
+    #[TestClass(SwitchAccessTest::class)]
     public function switchCanCallAccess(): void
     {
         $this->can_call = !$this->can_call;

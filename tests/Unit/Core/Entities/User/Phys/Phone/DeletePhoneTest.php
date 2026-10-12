@@ -4,8 +4,10 @@ namespace Tests\Unit\Core\Entities\User\Phys\Phone;
 
 use App\Core\Entities\User\Phys\Phys;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Phys::class, 'deletePhone')]
 class DeletePhoneTest extends TestCase
 {
     public function testNotExist()

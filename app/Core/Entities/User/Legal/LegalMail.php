@@ -17,7 +17,4 @@ use App\Core\Entities\AbstractEntity;
 class LegalMail extends AbstractEntity
 {
     public $timestamps = false;
-    protected $fillable = [
-        'id',
-    ];
 }

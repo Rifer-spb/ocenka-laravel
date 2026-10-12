@@ -23,6 +23,7 @@ class InviteController extends AbstractController
      * @param CreateRequest $request
      * @return RedirectResponse
      * @throws \Exception
+     * @throws \Throwable
      */
     public function create(CreateRequest $request)
     {

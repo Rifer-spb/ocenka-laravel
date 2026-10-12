@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Manager\Http\Controllers\Legal\Profile;
+namespace Tests\Feature\Manager\Http\Controllers\Legal\Profile;
 
 use App\Core\Entities\User\Legal\Legal;
 use Tests\TestCase;

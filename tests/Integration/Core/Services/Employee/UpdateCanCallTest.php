@@ -1,12 +1,14 @@
 <?php
 
-namespace Integration\Core\Services\Employee;
+namespace Tests\Integration\Core\Services\Employee;
 
 use App\Core\Entities\Employee\Employee;
 use App\Core\Entities\EntityNotFoundException;
 use App\Core\Services\EmployeeService;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(EmployeeService::class, 'switchCanCallAccess')]
 class UpdateCanCallTest extends TestCase
 {
     private EmployeeService $service;

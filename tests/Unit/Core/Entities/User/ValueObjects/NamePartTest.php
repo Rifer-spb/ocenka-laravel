@@ -2,10 +2,13 @@
 
 namespace Tests\Unit\Core\Entities\User\ValueObjects;
 
+use App\Core\Entities\User\ValueObjects\AbstractNamePart;
 use InvalidArgumentException;
 use App\Core\Entities\User\ValueObjects\FirstName;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\TestCase;
 
+#[CoversClass(AbstractNamePart::class)]
 class NamePartTest extends TestCase
 {
     // ==================== УСПЕШНЫЕ СЦЕНАРИИ ====================

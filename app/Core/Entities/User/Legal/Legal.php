@@ -2,8 +2,9 @@
 
 namespace App\Core\Entities\User\Legal;
 
+use App\Core\Attributes\TestClass;
 use App\Core\Entities\LegalType;
-use App\Core\Entities\User\Legal\Dto\Company;
+use App\Core\Entities\User\Legal\ValueObjects\Company;
 use App\Core\Entities\User\Legal\ValueObjects\RegistryTemplate;
 use App\Core\Entities\User\Role;
 use App\Core\Entities\User\User;
@@ -13,6 +14,10 @@ use Database\Factories\Core\Entities\User\Legal\LegalFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
+use Tests\Unit\Core\Entities\User\Legal\CreateTest;
+use Tests\Unit\Core\Entities\User\Legal\GetNameTest;
+use Tests\Unit\Core\Entities\User\Legal\UpdateCompanyTest;
+use Tests\Unit\Core\Entities\User\Legal\UpdateRegistryTemplateTest;
 
 /**
  * @property LegalProfile $profile
@@ -28,27 +33,22 @@ class Legal extends User
      * @param Email $email
      * @param Password $password
      * @return self
-     *
-     * Тесты @see \Tests\Unit\Core\Models\User\Legal\CreateTest
+     * @throws \Throwable
      */
+    #[TestClass(CreateTest::class)]
     public static function createNew(Email $email, Password $password): self
     {
-        $user = parent::create([
-            'username' => $email->getValue(),
-            'email' => $email->getValue(),
-            'password' => $password->getValue(),
-            'role' => Role::LEGAL->value,
-            'email_verify_token' => Str::random(60),
-        ]);
+        $user = parent::newManager($email, $password, Role::LEGAL);
 
-        LegalProfile::create(['id' => $user->id]);
-        LegalPayment::create(['id' => $user->id]);
-        LegalMail::create(['id' => $user->id]);
-        LegalWhatsApp::create(['id' => $user->id]);
+        $user->profile()->make()->saveOrFail();
+        $user->payment()->make()->saveOrFail();
+        $user->mail()->make()->saveOrFail();
+        $user->whatsApp()->make()->saveOrFail();
 
         return $user;
     }
 
+    #[TestClass(GetNameTest::class)]
     public function getName(): string
     {
         return ! empty($this->profile->short_name)
@@ -59,6 +59,7 @@ class Legal extends User
     /**
      * @throws \Throwable
      */
+    #[TestClass(UpdateCompanyTest::class)]
     public function updateCompany(LegalType $type, Company $company): void
     {
         $profile = $this->profile;
@@ -69,6 +70,7 @@ class Legal extends User
     /**
      * @throws \Throwable
      */
+    #[TestClass(UpdateRegistryTemplateTest::class)]
     public function updateRegistryTemplate(RegistryTemplate $template): void
     {
         $profile = $this->profile;

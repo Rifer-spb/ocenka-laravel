@@ -6,10 +6,16 @@ use App\Core\Entities\Notary\NotariatId;
 use App\Core\Entities\Notary\Notary;
 use App\Core\Entities\Notary\NotaryRegion;
 use App\Core\ValueObjects\NationalPhone;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Notary::class, 'createNew')]
 class CreateTest extends TestCase
 {
+    /**
+     * @return void
+     * @throws \Throwable
+     */
     public function testSuccess()
     {
         $region = NotaryRegion::findOrFail(1);

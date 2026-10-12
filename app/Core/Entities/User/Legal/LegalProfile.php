@@ -4,7 +4,7 @@ namespace App\Core\Entities\User\Legal;
 
 use App\Core\Entities\AbstractEntity;
 use App\Core\Entities\LegalType;
-use App\Core\Entities\User\Legal\Dto\Company;
+use App\Core\Entities\User\Legal\ValueObjects\Company;
 use Database\Factories\Core\Entities\User\Legal\LegalProfileFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -30,10 +30,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class LegalProfile extends AbstractEntity
 {
     public $timestamps = false;
-
-    protected $fillable = [
-        'id',
-    ];
 
     protected $casts = [
         'date_ogrn' => 'date',

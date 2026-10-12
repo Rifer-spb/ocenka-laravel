@@ -2,13 +2,17 @@
 
 namespace App\Core\Entities\User;
 
+use App\Core\Attributes\TestClass;
 use App\Core\Entities\AbstractEntityTrait;
 use App\Core\Entities\ModelHelperMethods;
 use App\Core\Entities\User\ValueObjects\Password;
+use App\Core\ValueObjects\Email;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Tests\Unit\Core\Entities\User\ChangePasswordTest;
 
 /**
  * @property int $id
@@ -46,6 +50,22 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * @throws \Throwable
+     */
+    protected static function newManager(Email $email, Password $password, Role $role): static
+    {
+        $user = new static();
+        $user->username = $email->getValue();
+        $user->email = $email->getValue();
+        $user->password = $password->getValue();
+        $user->role = $role->value;
+        $user->email_verify_token = Str::random(60);
+        $user->saveOrFail();
+
+        return $user;
+    }
+
     public function isPhys(): bool
     {
         return $this->role === Role::PHYS->value;
@@ -75,12 +95,7 @@ class User extends Authenticatable
         $this->updatePassword($newPassword);
     }
 
-    /**
-     * @param Password $password
-     * @return void
-     *
-     * Тесты @see \Tests\Unit\Core\Models\User\ChangePasswordTest
-     */
+    #[TestClass(ChangePasswordTest::class)]
     public function updatePassword(Password $password): void
     {
         $this->password = $password->getValue();

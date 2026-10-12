@@ -5,8 +5,10 @@ namespace Tests\Unit\Core\Entities\Employee;
 use App\Core\Entities\Employee\Employee;
 use App\Core\Entities\Employee\EmployeeReportAccess;
 use App\Core\Entities\EntityNotFoundException;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Employee::class, 'getReportAccess')]
 class GetReportAccessTest extends TestCase
 {
     public function testNotFound()

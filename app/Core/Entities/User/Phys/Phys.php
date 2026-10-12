@@ -2,9 +2,10 @@
 
 namespace App\Core\Entities\User\Phys;
 
+use App\Core\Attributes\TestClass;
+use App\Core\Entities\EntityNotFoundException;
 use App\Core\Helpers\UserHelper;
 use App\Core\Entities\Employee\Employee;
-use App\Core\Entities\Employee\EmployeeReportAccess;
 use App\Core\Entities\User\Phys\ValueObjects\Holiday;
 use App\Core\Entities\User\Role;
 use App\Core\Entities\User\User;
@@ -18,11 +19,19 @@ use Database\Factories\Core\Entities\User\Phys\PhysFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
+use Tests\Unit\Core\Entities\User\Phys\CreateTest;
+use Tests\Unit\Core\Entities\User\Phys\GetNameTest;
+use Tests\Unit\Core\Entities\User\Phys\Phone\AddPhoneTest;
+use Tests\Unit\Core\Entities\User\Phys\Phone\DeletePhoneTest;
+use Tests\Unit\Core\Entities\User\Phys\Phone\GetPhoneByValueTest;
+use Tests\Unit\Core\Entities\User\Phys\Phone\HasPhoneTest;
+use Tests\Unit\Core\Entities\User\Phys\UpdateHolidayTest;
+use Tests\Unit\Core\Entities\User\Phys\UpdateNameTest;
 
 /**
  * @property PhysProfile $profile
- * @property PhysPhone[] $phones
+ * @property Collection|PhysPhone[] $phones
  * @property Employee $employee
  *
  * @method static PhysFactory factory()
@@ -33,20 +42,14 @@ class Phys extends User
      * @param Email $email
      * @param Password $password
      * @return self
-     *
-     * Тесты @see \Tests\Unit\Core\Models\User\Phys\CreateTest
+     * @throws \Throwable
      */
+    #[TestClass(CreateTest::class)]
     public static function createNew(Email $email, Password $password): self
     {
-        $user = parent::create([
-            'username' => $email->getValue(),
-            'email' => $email->getValue(),
-            'password' => $password->getValue(),
-            'role' => Role::PHYS->value,
-            'email_verify_token' => Str::random(60),
-        ]);
+        $user = parent::newManager($email, $password, Role::PHYS);
 
-        PhysProfile::create(['id' => $user->id]);
+        $user->profile()->make()->saveOrFail();
 
         return $user;
     }
@@ -63,32 +66,39 @@ class Phys extends User
      * @param SecondName $secondName
      * @param LastName $lastName
      * @return void
-     *
-     * Тесты @see \Tests\Unit\Core\Models\User\Phys\UpdateNameTest
+     * @throws \Throwable
      */
+    #[TestClass(UpdateNameTest::class)]
     public function updateName(FirstName $firstName, SecondName $secondName, LastName $lastName): void
     {
-        $this->profile->updateName($firstName, $secondName, $lastName);
+        $profile = $this->profile;
+        $profile->updateName($firstName, $secondName, $lastName);
+        $profile->saveOrFail();
     }
 
     /**
      * @param NationalPhone $phone
      * @return PhysPhone
-     *
-     * Тесты @see \Tests\Unit\Core\Models\User\Phys\Phone\AddPhoneTest
+     * @throws \Throwable
      */
+    #[TestClass(AddPhoneTest::class)]
     public function addPhone(NationalPhone $phone): PhysPhone
     {
         if ($this->hasPhone($phone->getValue())) {
             throw new \DomainException("Номер телефона {$phone->getValue()} уже добавлен.");
         }
 
-        $phone = $this->phones()->create(['phone' => $phone->getValue()]);
-        $this->syncCollection('phones', $phone);
+        /** @var PhysPhone $phoneEntity */
+        $phoneEntity = $this->phones()->make();
+        $phoneEntity->phone = $phone->getValue();
+        $phoneEntity->saveOrFail();
 
-        return $phone;
+        $this->syncCollection('phones', $phoneEntity);
+
+        return $phoneEntity;
     }
 
+    #[TestClass(HasPhoneTest::class)]
     public function hasPhone(int|string $phone): bool
     {
         return $this->phones()->where('phone', $phone)->exists();
@@ -97,35 +107,44 @@ class Phys extends User
     /**
      * @param int $id
      * @return void
-     *
-     * Тесты @see \Tests\Unit\Core\Models\User\Phys\Phone\DeletePhoneTest
      */
+    #[TestClass(DeletePhoneTest::class)]
     public function deletePhone(int $id): void
     {
         $this->phones()->findOrFail($id)->delete();
     }
 
+    #[TestClass(GetPhoneByValueTest::class)]
     public function getPhoneByValue(string $value): PhysPhone
     {
-        return $this->phones()->where('phone', $value)->firstOrFail();
+        $phone = $this->phones()->where('phone', $value)->first();
+
+        if (! $phone) {
+           throw new EntityNotFoundException('Телефон не найден.');
+        }
+
+        return $phone;
     }
 
     /**
      * @param Holiday $holiday
      * @return void
-     *
-     * Тесты @see \Tests\Unit\Core\Models\User\Phys\UpdateHolidayTest
+     * @throws \Throwable
      */
+    #[TestClass(UpdateHolidayTest::class)]
     public function updateHoliday(Holiday $holiday): void
     {
-        $this->profile->updateHoliday($holiday);
+        $profile = $this->profile;
+        $profile->updateHoliday($holiday);
+        $profile->saveOrFail();
     }
 
+    #[TestClass(GetNameTest::class)]
     public function getName(): string
     {
-        return ! empty($this->profile->full_name)
-            ? UserHelper::getShortName($this->profile->full_name)
-            : $this->username;
+        $name = $this->profile->getShortFullName();
+
+        return !empty($name) ? $name : $this->username;
     }
 
     public function employee(): HasOne

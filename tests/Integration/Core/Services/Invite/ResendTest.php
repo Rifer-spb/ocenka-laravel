@@ -6,9 +6,11 @@ use App\Core\Entities\Invite\Invite;
 use App\Core\Jobs\SendMailJob;
 use App\Core\Services\InviteService;
 use Illuminate\Support\Facades\Queue;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
-class ResendUseCaseTest extends TestCase
+#[CoversMethod(InviteService::class, 'reSendEmail')]
+class ResendTest extends TestCase
 {
     private InviteService $service;
 

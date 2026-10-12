@@ -5,10 +5,16 @@ namespace Tests\Unit\Core\Entities\Notary;
 use App\Core\Entities\Notary\Notary;
 use App\Core\Entities\Notary\NotaryEmail;
 use App\Core\ValueObjects\Email;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Notary::class, 'addEmail')]
 class AddEmailTest extends TestCase
 {
+    /**
+     * @return void
+     * @throws \Throwable
+     */
     public function testAlreadyExists()
     {
         $notary = Notary::factory()
@@ -21,6 +27,10 @@ class AddEmailTest extends TestCase
         $notary->addEmail(new Email($email));
     }
 
+    /**
+     * @return void
+     * @throws \Throwable
+     */
     public function testSuccess()
     {
         $notary = Notary::factory()->create();
