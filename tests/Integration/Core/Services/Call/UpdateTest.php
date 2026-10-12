@@ -7,10 +7,13 @@ use App\Core\Entities\Call\CommentTemplate\Name;
 use App\Core\Entities\Call\CommentTemplate\Text;
 use App\Core\Services\Call\CallCommentTemplateService;
 use PHPUnit\Framework\Attributes\CoversMethod;
+use Tests\TestCase;
 
 #[CoversMethod(CallCommentTemplateService::class, 'update')]
-class UpdateTest extends AbstractTest
+class UpdateTest extends TestCase
 {
+    use TestTrait;
+
     /**
      * @throws \Throwable
      */

@@ -4,9 +4,8 @@ namespace Tests\Integration\Core\Services\Call;
 
 use App\Core\Entities\EntityNotFoundException;
 use App\Core\Services\Call\CallCommentTemplateService;
-use Tests\TestCase;
 
-abstract class AbstractTest extends TestCase
+trait TestTrait
 {
     protected CallCommentTemplateService $service;
 

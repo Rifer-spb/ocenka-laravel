@@ -9,10 +9,13 @@ use App\Core\Entities\EntityNotFoundException;
 use App\Core\Entities\User\Legal\Legal;
 use App\Core\Services\Call\CallCommentTemplateService;
 use PHPUnit\Framework\Attributes\CoversMethod;
+use Tests\TestCase;
 
 #[CoversMethod(CallCommentTemplateService::class,'create')]
-class CreateTest extends AbstractTest
+class CreateTest extends TestCase
 {
+    use TestTrait;
+
     /**
      * @throws \Throwable
      */

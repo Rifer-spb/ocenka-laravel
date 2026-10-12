@@ -5,10 +5,13 @@ namespace Tests\Integration\Core\Services\Call;
 use App\Core\Entities\Call\CommentTemplate\CallCommentTemplate;
 use App\Core\Services\Call\CallCommentTemplateService;
 use PHPUnit\Framework\Attributes\CoversMethod;
+use Tests\TestCase;
 
 #[CoversMethod(CallCommentTemplateService::class, 'delete')]
-class DeleteTest extends AbstractTest
+class DeleteTest extends TestCase
 {
+    use TestTrait;
+
     /**
      * @throws \Throwable
      */
