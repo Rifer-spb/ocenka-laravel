@@ -19,13 +19,6 @@ class PhysPhoneFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
-    }
-
-    public function withDefault(): static
-    {
-        return $this->state([
-            'phone' => '7' . fake()->numerify('9#########')
-        ]);
+        return ['phone' => '7' . fake()->numerify('9#########')];
     }
 }

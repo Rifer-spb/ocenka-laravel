@@ -12,4 +12,12 @@ trait AbstractEntityTrait
             $this->{$relationName}->push($model);
         }
     }
+
+    protected function unSyncCollection(string $relationName, Model $model): void
+    {
+        if ($this->relationLoaded($relationName)) {
+            $callback = fn (Model $item) => $item->getKey() === $model->getKey();
+            $this->setRelation($relationName, $this->{$relationName}->reject($callback));
+        }
+    }
 }

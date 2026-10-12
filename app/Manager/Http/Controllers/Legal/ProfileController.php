@@ -2,15 +2,19 @@
 
 namespace App\Manager\Http\Controllers\Legal;
 
+use App\Core\Entities\User\Legal\LegalPhone;
 use App\Core\Entities\User\Legal\ValueObjects\Company;
 use App\Core\Entities\User\Legal\ValueObjects\RegistryTemplate;
 use App\Core\Entities\User\ValueObjects\Password;
 use App\Core\Http\Controllers\AbstractController;
 use App\Core\Services\LegalProfileService;
 use App\Core\Services\UserService;
+use App\Core\ValueObjects\NationalPhone;
 use App\Manager\Http\Requests\ChangePasswordRequest;
+use App\Manager\Http\Requests\Legal\Profile\AddPhoneRequest;
 use App\Manager\Http\Requests\Legal\Profile\UpdateCompanyRequest;
 use App\Manager\Http\Requests\Legal\Registry\UpdateTemplateRequest;
+use Illuminate\Http\RedirectResponse;
 
 class ProfileController extends AbstractController
 {
@@ -69,5 +73,30 @@ class ProfileController extends AbstractController
         );
 
         return back()->with(['success' => 'Успешно обновлено']);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function addPhone(AddPhoneRequest $request)
+    {
+        $this->profileService->addPhone(
+            $this->getUserId(),
+            new NationalPhone($request->phone),
+        );
+
+        return back()->with('success', 'Успешно обновлено');
+    }
+
+    /**
+     * @param LegalPhone $phone
+     * @return RedirectResponse
+     * @throws \Throwable
+     */
+    public function deletePhone(LegalPhone $phone)
+    {
+        $this->profileService->deletePhone($this->getUserId(), $phone->id);
+
+        return back()->with('success', 'Успешно удалено');
     }
 }

@@ -30,6 +30,7 @@ class ProfileController extends AbstractController
     /**
      * @param UpdateNameRequest $request
      * @return RedirectResponse
+     * @throws \Throwable
      */
     public function updateName(UpdateNameRequest $request): RedirectResponse
     {
@@ -46,6 +47,7 @@ class ProfileController extends AbstractController
     /**
      * @param AddPhoneRequest $request
      * @return RedirectResponse
+     * @throws \Throwable
      */
     public function addPhone(AddPhoneRequest $request)
     {
@@ -71,6 +73,7 @@ class ProfileController extends AbstractController
     /**
      * @param UpdateHolidayRequest $request
      * @return RedirectResponse
+     * @throws \Throwable
      */
     public function updateHoliday(UpdateHolidayRequest $request)
     {
