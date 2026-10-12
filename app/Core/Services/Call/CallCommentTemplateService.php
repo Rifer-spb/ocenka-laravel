@@ -33,4 +33,15 @@ class CallCommentTemplateService
         $template->edit($name, $text);
         $template->saveOrFail();
     }
+
+    /**
+     * @param int $templateId
+     * @return void
+     * @throws \Throwable
+     */
+    public function delete(int $templateId): void
+    {
+        $template = CallCommentTemplateFinder::getById($templateId);
+        $template->deleteOrFail();
+    }
 }

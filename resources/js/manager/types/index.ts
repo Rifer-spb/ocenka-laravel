@@ -15,3 +15,9 @@ export type SharedData = {
     flash: Flash;
     [key: string]: unknown;
 };
+
+export type TEmployeesAccess = {
+    id: number;
+    name: string;
+    value: boolean;
+}

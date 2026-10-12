@@ -1,10 +1,7 @@
-.call section {
-    background-color: #ffffff;
-    padding: 20px;
-    max-width: 300px;
+.call .templates .new-button {
     margin-bottom: 20px;
 }
 
-.call .template .info {
-    margin-bottom: 10px;
+.call .templates .th.action {
+    width: 240px;
 }

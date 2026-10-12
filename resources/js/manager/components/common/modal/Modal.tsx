@@ -6,23 +6,26 @@ type TProps = {
     widthPercent?: number;
     isShow: boolean;
     onChange: Function;
-    body: React.ReactNode;
+    children: React.ReactNode;
 }
 
-export default function Modal({ title, widthPercent = 33, isShow, onChange, body } : TProps) {
+export default function Modal({ title, widthPercent = 33, isShow, onChange, children } : TProps) {
     const [visible, setVisible] = useState<boolean>(false);
+    const [render, setRender] = useState<boolean>(false);
 
     useEffect(() => {
         if (!isShow) {
             setVisible(false);
+            setTimeout(() => setRender(false), 400);
             return;
         }
 
+        setRender(true);
         const timer = setTimeout(() => setVisible(true), 50);
         return () => clearTimeout(timer);
     }, [isShow]);
 
-    return (
+    return render && (
         <div className={`app-modal-wrapper ${visible ? 'show' : ''}`}>
             <div className='app-modal' style={widthPercent ? {width: `${widthPercent}%`} : undefined}>
                 <div className="app-modal-header">
@@ -31,7 +34,7 @@ export default function Modal({ title, widthPercent = 33, isShow, onChange, body
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div className="app-modal-body">{ body }</div>
+                <div className="app-modal-body">{ children }</div>
             </div>
         </div>
     )

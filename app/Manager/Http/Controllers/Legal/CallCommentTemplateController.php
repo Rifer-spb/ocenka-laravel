@@ -53,6 +53,16 @@ class CallCommentTemplateController extends AbstractController
         return back()->with('success', 'Успешно обновлено');
     }
 
+    /**
+     * @throws \Throwable
+     */
+    public function delete(CallCommentTemplate $template)
+    {
+        $this->service->delete($template->id);
+
+        return back()->with('success', 'Успешно обновлено');
+    }
+
     private function checkOwn(Request $request, \Closure $next)
     {
         /** @var CallCommentTemplate $template */

@@ -1,5 +1,12 @@
-type TEmployees = {
+type TTemplate = {
     id: number;
     name: string;
-    value: boolean;
-}
+    text: string;
+};
+
+type TTemplateForm = {
+    method: 'post' | 'patch';
+    action: string;
+    name: TTemplate['name'];
+    text: TTemplate['text'];
+};

@@ -60,8 +60,9 @@ export default function ({ regions, notaries, defaultRegionId } : TProps) {
                                 title='Редактирование шаблона'
                                 isShow={isShowEditModal}
                                 onChange={setIsShowEditModal}
-                                body={<EditForm notary={currentNotary} />}
-                            />
+                            >
+                                <EditForm notary={currentNotary} />
+                            </Modal>
                         )}
                     </>
                 ) : <div>Нотариусов не найдено</div>}
