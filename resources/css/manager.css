@@ -112,3 +112,10 @@ h2 {
 .align-center {
     text-align: center;
 }
+
+.block-section {
+    background-color: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}

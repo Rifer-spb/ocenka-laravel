@@ -60,6 +60,7 @@ Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
         ->group(function () {
             Route::post('/', 'create')->name('create');
             Route::patch('{template}', 'update')->name('update');
+            Route::delete('{template}', 'delete')->name('delete');
         }
     );
 });

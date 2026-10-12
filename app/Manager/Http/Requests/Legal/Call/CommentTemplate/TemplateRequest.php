@@ -18,7 +18,7 @@ class TemplateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|max:255',
             'text' => 'required|string',
         ];
     }
@@ -27,7 +27,8 @@ class TemplateRequest extends FormRequest
     {
         return [
             'name.required' => 'Необходимо заполнить имя',
-            'text.required' => 'Необходимо заполнить комментарий'
+            'name.max' => 'Максимальная длинна 255 символов',
+            'text.required' => 'Необходимо заполнить текст шаблона'
         ];
     }
 }

@@ -1,14 +1,14 @@
 import AppLayout from "@manager/layouts/appManagerLayout";
 import './styles.css';
 import Template from "./Template";
-import './types';
 import Access from "./Access";
 import {router} from "@inertiajs/react";
 import { updateRegistry } from "@managerRoutes/legal/employees";
+import {TEmployeesAccess} from "@manager/types";
 
 type TProps = {
     template: string;
-    employees: TEmployees[];
+    employees: TEmployeesAccess[];
 };
 
 export default function ({ template, employees } : TProps) {

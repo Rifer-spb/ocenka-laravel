@@ -1,7 +1,8 @@
 import CheckboxGroup from "@common/components/form/CheckboxGroup";
+import {TEmployeesAccess} from "@manager/types";
 
 type TProps = {
-    employees: TEmployees[];
+    employees: TEmployeesAccess[];
     handler: Function;
 }
 

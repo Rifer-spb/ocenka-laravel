@@ -6,6 +6,7 @@ use App\Core\Attributes\TestClass;
 use App\Core\Entities\AbstractEntity;
 use App\Core\Entities\User\Legal\Legal;
 use Database\Factories\Core\Entities\Call\CommentTemplate\CallCommentTemplateFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Tests\Unit\Core\Entities\Call\CommentTemplate\CreateTest;
 use Tests\Unit\Core\Entities\Call\CommentTemplate\EditTest;
 
@@ -14,6 +15,7 @@ use Tests\Unit\Core\Entities\Call\CommentTemplate\EditTest;
  * @property int $legal_id
  * @property string $name
  * @property string $text
+ * @property Legal $legal
  *
  * @method static CallCommentTemplateFactory factory()
  */
@@ -39,5 +41,10 @@ class CallCommentTemplate extends AbstractEntity
     {
         $this->name = $name->getValue();
         $this->text = $text->getValue();
+    }
+
+    public function legal(): HasOne
+    {
+        return $this->hasOne(Legal::class, 'id', 'legal_id');
     }
 }

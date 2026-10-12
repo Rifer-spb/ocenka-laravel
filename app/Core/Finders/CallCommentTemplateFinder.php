@@ -4,6 +4,7 @@ namespace App\Core\Finders;
 
 use App\Core\Entities\Call\CommentTemplate\CallCommentTemplate;
 use App\Core\Entities\EntityNotFoundException;
+use Illuminate\Support\Collection;
 
 class CallCommentTemplateFinder
 {
@@ -16,5 +17,10 @@ class CallCommentTemplateFinder
         }
 
         return $model;
+    }
+
+    public static function getAllByLegal(int $legalId): Collection
+    {
+        return CallCommentTemplate::where('legal_id', $legalId)->orderBy('id')->get();
     }
 }
