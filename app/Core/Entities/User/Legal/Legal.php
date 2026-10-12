@@ -20,6 +20,7 @@ use Tests\Unit\Core\Entities\User\Legal\CreateTest;
 use Tests\Unit\Core\Entities\User\Legal\GetNameTest;
 use Tests\Unit\Core\Entities\User\Legal\Phone\AddPhoneTest;
 use Tests\Unit\Core\Entities\User\Legal\Phone\DeletePhoneTest;
+use Tests\Unit\Core\Entities\User\Legal\Phone\GetPhoneByIdTest;
 use Tests\Unit\Core\Entities\User\Legal\Phone\HasPhoneTest;
 use Tests\Unit\Core\Entities\User\Legal\UpdateCompanyTest;
 use Tests\Unit\Core\Entities\User\Legal\UpdateRegistryTemplateTest;
@@ -111,6 +112,7 @@ class Legal extends User
         return $this->phones->contains('phone', $phone);
     }
 
+    #[TestClass(GetPhoneByIdTest::class)]
     public function getPhoneById(int $id): LegalPhone
     {
         $phone = $this->phones->firstWhere('id', $id);

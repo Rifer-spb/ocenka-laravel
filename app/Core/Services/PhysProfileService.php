@@ -33,6 +33,9 @@ class PhysProfileService
         $phys->addPhone($phone);
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function deletePhone(int $physId, int $phoneId): void
     {
         $phys = $this->getPhys($physId);
