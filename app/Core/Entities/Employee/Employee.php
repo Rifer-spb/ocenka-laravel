@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Tests\Unit\Core\Entities\Employee\CreateTest;
 use Tests\Unit\Core\Entities\Employee\GetReportAccessTest;
 use Tests\Unit\Core\Entities\Employee\SwitchAccessTest;
+use Tests\Unit\Core\Entities\Employee\UpdatePhoneExtensionTest;
 
 /**
  * @property int $id
@@ -138,6 +139,7 @@ class Employee extends AbstractEntity
         $this->can_call = !$this->can_call;
     }
 
+    #[TestClass(UpdatePhoneExtensionTest::class)]
     public function updatePhoneExtension(PhoneExtension $extension): void
     {
         $this->phone_extension = $extension->getValue();

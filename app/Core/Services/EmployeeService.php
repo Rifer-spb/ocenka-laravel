@@ -6,6 +6,7 @@ use App\Core\Attributes\TestClass;
 use App\Core\Entities\Employee\PhoneExtension;
 use App\Core\Finders\EmployeeFinder;
 use Tests\Integration\Core\Services\Employee\UpdateDoReportTest;
+use Tests\Integration\Core\Services\Employee\UpdatePhoneExtensionTest;
 use Tests\Integration\Core\Services\Employee\UpdateWriteReportTest;
 use Tests\Integration\Core\Services\Employee\UpdateCanRideTest;
 use Tests\Integration\Core\Services\Employee\UpdateIsManagerTest;
@@ -113,6 +114,7 @@ class EmployeeService
      * @return void
      * @throws \Throwable
      */
+    #[TestClass(UpdatePhoneExtensionTest::class)]
     public function updatePhoneExtension(int $employeeId, PhoneExtension $extension): void
     {
         $employee = EmployeeFinder::getById($employeeId);
