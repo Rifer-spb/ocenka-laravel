@@ -9,14 +9,17 @@ use Tests\TestCase;
 
 class LogoutTest extends TestCase
 {
+    /**
+     * @throws \Throwable
+     */
     public function testLogout()
     {
-        $user = User::create([
-            'username' => 'exist@example.com',
-            'email' => 'exist@example.com',
-            'password' => Hash::make($password = 'password123'),
-            'role' => Role::LEGAL->value,
-        ]);
+        $user = new User();
+        $user->username = 'exist@example.com';
+        $user->email = 'exist@example.com';
+        $user->password = Hash::make($password = 'password123');
+        $user->role = Role::LEGAL->value;
+        $user->saveOrFail();
 
         $this->post($this->getSignInRoute(), [
             'email' => 'exist@example.com',
