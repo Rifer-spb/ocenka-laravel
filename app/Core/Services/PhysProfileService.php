@@ -10,6 +10,9 @@ use App\Core\Entities\User\ValueObjects\LastName;
 use App\Core\Entities\User\ValueObjects\SecondName;
 use App\Core\Finders\PhysFinder;
 use App\Core\ValueObjects\NationalPhone;
+use Tests\Integration\Core\Services\Phys\Profile\AddPhoneTest;
+use Tests\Integration\Core\Services\Phys\Profile\DeletePhoneTest;
+use Tests\Integration\Core\Services\Phys\Profile\UpdateHolidayTest;
 use Tests\Integration\Core\Services\Phys\Profile\UpdateNameTest;
 
 class PhysProfileService
@@ -27,6 +30,7 @@ class PhysProfileService
     /**
      * @throws \Throwable
      */
+    #[TestClass(AddPhoneTest::class)]
     public function addPhone(int $physId, NationalPhone $phone): void
     {
         $phys = $this->getPhys($physId);
@@ -36,6 +40,7 @@ class PhysProfileService
     /**
      * @throws \Throwable
      */
+    #[TestClass(DeletePhoneTest::class)]
     public function deletePhone(int $physId, int $phoneId): void
     {
         $phys = $this->getPhys($physId);
@@ -45,6 +50,7 @@ class PhysProfileService
     /**
      * @throws \Throwable
      */
+    #[TestClass(UpdateHolidayTest::class)]
     public function updateHoliday(int $physId, Holiday $holiday): void
     {
         $phys = $this->getPhys($physId);

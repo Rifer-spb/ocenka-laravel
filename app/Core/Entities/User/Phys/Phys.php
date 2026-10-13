@@ -4,7 +4,6 @@ namespace App\Core\Entities\User\Phys;
 
 use App\Core\Attributes\TestClass;
 use App\Core\Entities\EntityNotFoundException;
-use App\Core\Helpers\UserHelper;
 use App\Core\Entities\Employee\Employee;
 use App\Core\Entities\User\Phys\ValueObjects\Holiday;
 use App\Core\Entities\User\Role;
@@ -24,7 +23,6 @@ use Tests\Unit\Core\Entities\User\Phys\CreateTest;
 use Tests\Unit\Core\Entities\User\Phys\GetNameTest;
 use Tests\Unit\Core\Entities\User\Phys\Phone\AddPhoneTest;
 use Tests\Unit\Core\Entities\User\Phys\Phone\DeletePhoneTest;
-use Tests\Unit\Core\Entities\User\Phys\Phone\GetPhoneByValueTest;
 use Tests\Unit\Core\Entities\User\Phys\Phone\HasPhoneTest;
 use Tests\Unit\Core\Entities\User\Phys\UpdateHolidayTest;
 use Tests\Unit\Core\Entities\User\Phys\UpdateNameTest;

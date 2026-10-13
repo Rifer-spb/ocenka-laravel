@@ -5,6 +5,7 @@ namespace App\Core\Entities\User\Legal;
 use App\Core\Entities\AbstractEntity;
 use App\Core\Entities\LegalType;
 use App\Core\Entities\User\Legal\ValueObjects\Company;
+use Carbon\CarbonImmutable;
 use Database\Factories\Core\Entities\User\Legal\LegalProfileFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $short_name
  * @property string $abbr
  * @property string $address
- * @property string $date_ogrn
+ * @property string|CarbonImmutable $date_ogrn
  * @property int $inn
  * @property int $kpp
  * @property int $ogrn
@@ -46,6 +47,11 @@ class LegalProfile extends AbstractEntity
         $this->kpp = $company->kpp;
         $this->ogrn = $company->ogrn;
         $this->date_ogrn = $company->dateOgrn;
+    }
+
+    public function getDateOgrnString(): string
+    {
+        return $this->date_ogrn->format('d.m.Y');
     }
 
     public function type(): HasOne|LegalType

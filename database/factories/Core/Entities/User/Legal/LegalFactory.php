@@ -7,6 +7,7 @@ use App\Core\Entities\User\Legal\LegalPhone;
 use App\Core\Entities\User\Legal\LegalProfile;
 use App\Core\Entities\User\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -28,7 +29,7 @@ class LegalFactory extends Factory
         return [
             'username' => $email,
             'email' => $email,
-            'password' => Str::random(8),
+            'password' => Hash::make('password'),
             'role' => Role::LEGAL->value,
             'email_verify_token' => Str::random(60),
         ];

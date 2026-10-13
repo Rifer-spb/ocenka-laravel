@@ -4,8 +4,11 @@ namespace Tests\Feature\Manager\Http\Controllers\Phys\Profile\Phone;
 
 use App\Core\Entities\User\Phys\Phys;
 use App\Core\ValueObjects\NationalPhone;
+use App\Manager\Http\Controllers\Phys\ProfileController;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(ProfileController::class,'deletePhone')]
 class DeletePhoneTest extends TestCase
 {
     public function testNotExist()

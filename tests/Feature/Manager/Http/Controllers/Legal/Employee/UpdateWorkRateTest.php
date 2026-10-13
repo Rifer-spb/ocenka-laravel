@@ -21,20 +21,6 @@ class UpdateWorkRateTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function testRequired()
-    {
-        $employee = Employee::factory()->create();
-        $route = $this->getRoute($employee);
-
-        $response = $this->actingAs($employee->legal)->patch($route, [
-            'value' => ''
-        ]);
-        $employee->refresh();
-
-        $response->assertSessionHas(['success' => 'Успешно обновлено']);
-        $this->assertEquals(0, $employee->work_rate);
-    }
-
     public function testInteger()
     {
         $employee = Employee::factory()->create();
@@ -59,7 +45,7 @@ class UpdateWorkRateTest extends TestCase
         $response->assertSessionHasErrors(['value' => 'Значение не может быть отрицательным']);
     }
 
-    public function testSuccess()
+    public function testSuccessWithValue()
     {
         $employee = Employee::factory()->create();
         $route = $this->getRoute($employee);
@@ -71,6 +57,20 @@ class UpdateWorkRateTest extends TestCase
 
         $response->assertSessionHas(['success' => 'Успешно обновлено']);
         $this->assertEquals($value, $employee->work_rate);
+    }
+
+    public function testSuccessEmpty()
+    {
+        $employee = Employee::factory()->create();
+        $route = $this->getRoute($employee);
+
+        $response = $this->actingAs($employee->legal)->patch($route, [
+            'value' => ''
+        ]);
+        $employee->refresh();
+
+        $response->assertSessionHas(['success' => 'Успешно обновлено']);
+        $this->assertEquals(0, $employee->work_rate);
     }
 
     private function getLegal(): Legal
