@@ -16,6 +16,9 @@ use App\Manager\Http\Requests\Legal\Profile\AddPhoneRequest;
 use App\Manager\Http\Requests\Legal\Profile\UpdateCompanyRequest;
 use App\Manager\Http\Requests\Legal\Registry\UpdateTemplateRequest;
 use Illuminate\Http\RedirectResponse;
+use Tests\Feature\Manager\Http\Controllers\Legal\Profile\ChangePasswordTest;
+use Tests\Feature\Manager\Http\Controllers\Legal\Profile\Phone\AddPhoneTest;
+use Tests\Feature\Manager\Http\Controllers\Legal\Profile\Phone\DeletePhoneTest;
 use Tests\Feature\Manager\Http\Controllers\Legal\Profile\UpdateCompanyTest;
 use Tests\Feature\Manager\Http\Controllers\Legal\Profile\UpdateRegistryTemplateTest;
 
@@ -55,6 +58,7 @@ class ProfileController extends AbstractController
     /**
      * @throws \Throwable
      */
+    #[TestClass(ChangePasswordTest::class)]
     public function changePassword(ChangePasswordRequest $request)
     {
         $this->userService->changePassword(
@@ -83,6 +87,7 @@ class ProfileController extends AbstractController
     /**
      * @throws \Throwable
      */
+    #[TestClass(AddPhoneTest::class)]
     public function addPhone(AddPhoneRequest $request)
     {
         $this->profileService->addPhone(
@@ -98,6 +103,7 @@ class ProfileController extends AbstractController
      * @return RedirectResponse
      * @throws \Throwable
      */
+    #[TestClass(DeletePhoneTest::class)]
     public function deletePhone(LegalPhone $phone)
     {
         $this->profileService->deletePhone($this->getUserId(), $phone->id);

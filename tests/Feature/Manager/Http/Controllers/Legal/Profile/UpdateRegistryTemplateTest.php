@@ -3,8 +3,11 @@
 namespace Tests\Feature\Manager\Http\Controllers\Legal\Profile;
 
 use App\Core\Entities\User\Legal\Legal;
+use App\Manager\Http\Controllers\Legal\ProfileController;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(ProfileController::class,'updateRegistryTemplate')]
 class UpdateRegistryTemplateTest extends TestCase
 {
     public function testRequired()

@@ -3,9 +3,12 @@
 namespace Tests\Feature\Manager\Http\Controllers\Phys\Profile;
 
 use App\Core\Entities\User\Phys\Phys;
+use App\Manager\Http\Controllers\Phys\ProfileController;
 use Illuminate\Support\Facades\Hash;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(ProfileController::class,'changePassword')]
 class ChangePasswordTest extends TestCase
 {
     public function testRequired()
@@ -77,7 +80,9 @@ class ChangePasswordTest extends TestCase
 
     private function createUser(): Phys
     {
-        return Phys::factory()->create();
+        return Phys::factory()->create([
+            'password' => Hash::make('password'),
+        ]);
     }
 
     private function getRoute(): string
