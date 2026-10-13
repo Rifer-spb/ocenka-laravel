@@ -2,44 +2,54 @@
 
 namespace Tests\Unit\Core\Entities\User\Phys\Phone;
 
+use App\Core\Entities\EntityNotFoundException;
 use App\Core\Entities\User\Phys\Phys;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Core\Entities\User\Phys\PhysPhone;
 use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
 #[CoversMethod(Phys::class, 'deletePhone')]
 class DeletePhoneTest extends TestCase
 {
+    /**
+     * @throws \Throwable
+     */
     public function testNotExist()
     {
-        $user = Phys::factory()->create();
-        $this->expectException(ModelNotFoundException::class);
-        $user->deletePhone(999);
+        $phys = Phys::factory()->create();
+        $this->expectException(EntityNotFoundException::class);
+        $phys->deletePhone(999);
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function testSuccess()
     {
-        $user = Phys::factory()
-            ->withPhone(['phone' => $value = '79876543210'])
-            ->create();
+        $phys = Phys::factory()->withPhone()->create();
 
-        $user = Phys::findOrFail($user->id);
-        $phone = $user->getPhoneByValue($value);
-        $user->deletePhone($phone->id);
+        $phone = array_reverse($phys->phones->all())[0];
+        $phys->deletePhone($phone->id);
 
-        $this->assertTrue(!$user->hasPhone($value));
+        $this->assertCount(0, $phys->phones);
+        $this->assertDatabaseMissing(PhysPhone::getTableName(), [
+            'id' => $phone->id,
+        ]);
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function testDeleteByIdFromAnotherUser()
     {
         $user = Phys::factory()->create();
         $anotherUser = Phys::factory()
-            ->withPhone(['phone' => $value = '79876543210'])
+            ->withPhone(['phone' => '79876543210'])
             ->create();
 
-        $anotherUserPhone = $anotherUser->getPhoneByValue($value);
+        $anotherUserPhone = array_reverse($anotherUser->phones->all())[0];
 
-        $this->expectException(ModelNotFoundException::class);
+        $this->expectException(EntityNotFoundException::class);
         $user->deletePhone($anotherUserPhone->id);
     }
 }

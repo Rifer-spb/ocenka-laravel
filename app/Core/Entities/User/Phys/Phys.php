@@ -85,7 +85,7 @@ class Phys extends User
     public function addPhone(NationalPhone $phone): PhysPhone
     {
         if ($this->hasPhone($phone->getValue())) {
-            throw new \DomainException("Номер телефона {$phone->getValue()} уже добавлен.");
+            throw new \DomainException('Номер телефона уже добавлен.');
         }
 
         /** @var PhysPhone $phoneEntity */
@@ -101,29 +101,32 @@ class Phys extends User
     #[TestClass(HasPhoneTest::class)]
     public function hasPhone(int|string $phone): bool
     {
-        return $this->phones()->where('phone', $phone)->exists();
+        return $this->phones->contains('phone', $phone);
+    }
+
+    public function getPhone(int $id): PhysPhone
+    {
+        $phone = $this->phones->firstWhere('id', $id);
+
+        if (! $phone) {
+            throw new EntityNotFoundException('Телефон не найден.');
+        }
+
+        return $phone;
     }
 
     /**
      * @param int $id
      * @return void
+     * @throws \Throwable
      */
     #[TestClass(DeletePhoneTest::class)]
     public function deletePhone(int $id): void
     {
-        $this->phones()->findOrFail($id)->delete();
-    }
+        $phone = $this->getPhone($id);
+        $phone->deleteOrFail();
 
-    #[TestClass(GetPhoneByValueTest::class)]
-    public function getPhoneByValue(string $value): PhysPhone
-    {
-        $phone = $this->phones()->where('phone', $value)->first();
-
-        if (! $phone) {
-           throw new EntityNotFoundException('Телефон не найден.');
-        }
-
-        return $phone;
+        $this->unSyncCollection('phones', $phone);
     }
 
     /**

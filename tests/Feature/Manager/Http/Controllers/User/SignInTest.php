@@ -63,14 +63,17 @@ class SignInTest extends TestCase
         ]);
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function testSuccess()
     {
-        $user = User::create([
-            'username' => 'exist@example.com',
-            'email' => 'exist@example.com',
-            'password' => Hash::make($password = 'password123'),
-            'role' => Role::LEGAL->value,
-        ]);
+        $user = new User();
+        $user->username = 'exist@example.com';
+        $user->email = 'exist@example.com';
+        $user->password = Hash::make($password = 'password123');
+        $user->role = Role::LEGAL->value;
+        $user->saveOrFail();
 
         $response = $this->post($this->getApiRoute(), [
             'email' => 'exist@example.com',

@@ -3,6 +3,7 @@
 namespace Database\Factories\Core\Entities\User\Legal;
 
 use App\Core\Entities\User\Legal\Legal;
+use App\Core\Entities\User\Legal\LegalPhone;
 use App\Core\Entities\User\Legal\LegalProfile;
 use App\Core\Entities\User\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -38,5 +39,14 @@ class LegalFactory extends Factory
         return $this->afterCreating(
             fn (Legal $l) => LegalProfile::factory()->create(['id' => $l->id, ...$state])
         );
+    }
+
+    public function withPhone(array $state = []): static
+    {
+        return $this->afterCreating(function (Legal $l) use ($state) {
+            return LegalPhone::factory()
+                ->state($state)
+                ->create(['legal_id' => $l->id]);
+        });
     }
 }

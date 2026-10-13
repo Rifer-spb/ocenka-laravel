@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Tests\Unit\Core\Entities\Employee\CreateTest;
 use Tests\Unit\Core\Entities\Employee\GetReportAccessTest;
 use Tests\Unit\Core\Entities\Employee\SwitchAccessTest;
+use Tests\Unit\Core\Entities\Employee\UpdatePhoneExtensionTest;
 
 /**
  * @property int $id
@@ -27,6 +28,7 @@ use Tests\Unit\Core\Entities\Employee\SwitchAccessTest;
  * @property bool $can_ride
  * @property bool $can_registry
  * @property bool $can_call
+ * @property null|string $phone_extension Внутренний, добавочный номер сотрудника (101, 102, 103 и т.д.)
  * @property Legal $legal
  * @property Phys $phys
  * @property Collection|EmployeeReportAccess[] $reportAccess
@@ -135,6 +137,12 @@ class Employee extends AbstractEntity
     public function switchCanCallAccess(): void
     {
         $this->can_call = !$this->can_call;
+    }
+
+    #[TestClass(UpdatePhoneExtensionTest::class)]
+    public function updatePhoneExtension(PhoneExtension $extension): void
+    {
+        $this->phone_extension = $extension->getValue();
     }
 
     public function reportAccess(): HasMany|EmployeeReportAccess
