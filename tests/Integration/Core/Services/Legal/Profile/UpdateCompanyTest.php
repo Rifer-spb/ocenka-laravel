@@ -7,8 +7,10 @@ use App\Core\Entities\LegalType;
 use App\Core\Entities\User\Legal\Legal;
 use App\Core\Entities\User\Legal\ValueObjects\Company;
 use App\Core\Services\LegalProfileService;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(LegalProfileService::class, 'updateCompany')]
 class UpdateCompanyTest extends TestCase
 {
     private LegalProfileService $service;
@@ -42,5 +44,62 @@ class UpdateCompanyTest extends TestCase
         $this->expectExceptionMessage('Юр.лицо не найдено.');
 
         $this->service->updateCompany(999, $type->id, $company);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function testInvalidTypeId()
+    {
+        $legal = Legal::factory()->create();
+
+        $company = new Company(
+            '',
+            '',
+            '',
+            '',
+            '',
+            1234567890,
+            1234567890,
+            1234567890,
+        );
+
+        $this->expectException(EntityNotFoundException::class);
+        $this->expectExceptionMessage('Тип юр лица не найден.');
+
+        $this->service->updateCompany($legal->id, 999, $company);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function testSuccess()
+    {
+        $legal = Legal::factory()->withProfile()->create();
+        $type = LegalType::factory()->create();
+
+        $company = new Company(
+            $fullName = 'new-fullName',
+            $shortName = 'new-shortName',
+            $abbr = 'new-addr',
+            $address = 'new-address',
+            $dateOgrn = date('d.m.Y'),
+            $inn = 1234567890,
+            $kpp = 1234567890,
+            $ogrn =1234567890,
+        );
+
+        $this->service->updateCompany($legal->id, $type->id, $company);
+        $legal->refresh();
+
+        $this->assertEquals($type->id, $legal->profile->type_id);
+        $this->assertEquals($fullName, $legal->profile->full_name);
+        $this->assertEquals($shortName, $legal->profile->short_name);
+        $this->assertEquals($abbr, $legal->profile->abbr);
+        $this->assertEquals($address, $legal->profile->address);
+        $this->assertEquals($dateOgrn, $legal->profile->getDateOgrnString());
+        $this->assertEquals($inn, $legal->profile->inn);
+        $this->assertEquals($kpp, $legal->profile->kpp);
+        $this->assertEquals($ogrn, $legal->profile->ogrn);
     }
 }
