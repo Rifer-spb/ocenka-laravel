@@ -12,6 +12,7 @@ use App\Manager\Http\Requests\Legal\Invite\UpdateWorkRateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Tests\Feature\Manager\Http\Controllers\Legal\Employee\UpdateDoReportTest;
+use Tests\Feature\Manager\Http\Controllers\Legal\Employee\UpdatePhoneExtensionTest;
 use Tests\Feature\Manager\Http\Controllers\Legal\Employee\UpdateWriteReportTest;
 use Tests\Feature\Manager\Http\Controllers\Legal\Employee\UpdateCanRideTest;
 use Tests\Feature\Manager\Http\Controllers\Legal\Employee\UpdateManagerTest;
@@ -123,6 +124,7 @@ class EmployeeController extends AbstractController
     /**
      * @throws \Throwable
      */
+    #[TestClass(UpdatePhoneExtensionTest::class)]
     public function updatePhoneExtension(Employee $employee, UpdatePhoneExtensionRequest $request)
     {
         $this->service->updatePhoneExtension($employee->id, new PhoneExtension($request->value));

@@ -9,42 +9,46 @@ use Tests\TestCase;
 #[CoversClass(PhoneExtension::class)]
 class PhoneExtensionTest extends TestCase
 {
-    public function testNullReturnsNull(): void
+    public function testWithNUll(): void
     {
         $extension = new PhoneExtension(null);
 
         $this->assertNull($extension->getValue());
     }
 
-    public function testEmptyStringReturnsNull(): void
+    public function testWithEmptyString(): void
     {
-        $extension = new PhoneExtension('');
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Некорректный добавочный номер.');
 
-        $this->assertNull($extension->getValue());
+        new PhoneExtension('');
     }
 
-    public function testWhitespaceOnlyReturnsNull(): void
+    public function testWithWhitespace(): void
     {
-        $extension = new PhoneExtension('   ');
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Некорректный добавочный номер.');
 
-        $this->assertNull($extension->getValue());
+        new PhoneExtension('   ');
     }
 
-    public function testTabsAndNewlinesReturnNull(): void
+    public function testWithTabsAndNewlines(): void
     {
-        $extension = new PhoneExtension("\t\n\r");
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Некорректный добавочный номер.');
 
-        $this->assertNull($extension->getValue());
+        new PhoneExtension("\t\n\r");
     }
 
-    public function testNonNumericCharactersAreRemoved(): void
+    public function testWithCharacters(): void
     {
-        $extension = new PhoneExtension('abc');
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Некорректный добавочный номер.');
 
-        $this->assertNull($extension->getValue());
+        new PhoneExtension('abc');
     }
 
-    public function testSuccess(): void
+    public function testSuccessWithOnlyNumber(): void
     {
         $extension = new PhoneExtension('123');
 
@@ -58,45 +62,22 @@ class PhoneExtensionTest extends TestCase
         $this->assertEquals('123', $extension->getValue());
     }
 
-    public function testOnlyNumbersExtractedFromLetters(): void
-    {
-        $extension = new PhoneExtension('abc123def45');
-
-        $this->assertEquals('12345', $extension->getValue());
-    }
-
-    public function testMaxLength5Allowed(): void
-    {
-        $extension = new PhoneExtension('12345');
-
-        $this->assertEquals('12345', $extension->getValue());
-    }
-
-    public function testLengthGreaterThan5Throws(): void
+    public function testMaxLength(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Некорректный добавочный номер.');
 
-        new PhoneExtension('123456');
+        new PhoneExtension('12345');
     }
 
-    public function testLengthGreaterThan5ThrowsAfterExtraction(): void
-    {
-        $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage('Некорректный добавочный номер.');
-
-        // После извлечения цифр останется 123456789 (9 символов)
-        new PhoneExtension('+7 (999) 123-45-6789');
-    }
-
-    public function testSingleDigit(): void
+    public function testWithSingleDigit(): void
     {
         $extension = new PhoneExtension('5');
 
         $this->assertEquals('5', $extension->getValue());
     }
 
-    public function testZeroIsPreserved(): void
+    public function testWithZeroString(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Некорректный добавочный номер.');
@@ -104,10 +85,10 @@ class PhoneExtensionTest extends TestCase
         new PhoneExtension('0');
     }
 
-    public function testLeadingZerosArePreserved(): void
+    public function testSuccessWithZeroFirst(): void
     {
-        $extension = new PhoneExtension('00123');
+        $extension = new PhoneExtension('001');
 
-        $this->assertEquals('123', $extension->getValue());
+        $this->assertEquals('001', $extension->getValue());
     }
 }

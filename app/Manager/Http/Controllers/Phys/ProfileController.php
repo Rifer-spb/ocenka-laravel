@@ -62,6 +62,7 @@ class ProfileController extends AbstractController
     /**
      * @param PhysPhone $phone
      * @return RedirectResponse
+     * @throws \Throwable
      */
     public function deletePhone(PhysPhone $phone)
     {

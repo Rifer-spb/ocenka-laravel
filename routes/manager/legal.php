@@ -51,6 +51,7 @@ Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
             Route::patch('work-rate', 'updateWorkRate')->name('updateWorkRate');
             Route::patch('call', 'updateCall')->name('updateCall');
             Route::patch('registry', 'updateRegistry')->name('updateRegistry');
+            Route::patch('phone-extension', 'updatePhoneExtension')->name('updatePhoneExtension');
         });
     });
 

@@ -17,15 +17,14 @@ class UpdatePhoneExtensionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'value' => 'nullable|string|max:5',
+            'value' => ['nullable', 'string', 'regex:/^(?=.*[1-9])\d{1,3}$/'],
         ];
     }
 
     public function messages(): array
     {
         return [
-            'value.required' => 'Поле обязательно к заполнению',
-            'value.max' => 'Значение должно быть не более 5 символов',
+            'value.regex' => 'Значение должно быть от 1 до 3 цифр',
         ];
     }
 }

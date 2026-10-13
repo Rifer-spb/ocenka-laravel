@@ -5,7 +5,7 @@ namespace Tests\Feature\Manager\Http\Controllers\Legal\Profile;
 use App\Core\Entities\User\Legal\Legal;
 use Tests\TestCase;
 
-class UpdateRegistryUpdateTest extends TestCase
+class UpdateRegistryTemplateTest extends TestCase
 {
     public function testRequired()
     {
