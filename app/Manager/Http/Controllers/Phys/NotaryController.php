@@ -2,6 +2,7 @@
 
 namespace App\Manager\Http\Controllers\Phys;
 
+use App\Core\Attributes\TestClass;
 use App\Core\Entities\Notary\Notary;
 use App\Core\Entities\Notary\NotaryUpdateData;
 use App\Core\Http\Controllers\AbstractController;
@@ -13,6 +14,7 @@ use App\Manager\Http\Requests\Phys\Notary\UpdateRequest;
 use App\Manager\ReadServices\Phys\PhysNotaryExportService;
 use App\Manager\ReadServices\Phys\PhysNotaryReadService;
 use Illuminate\Http\RedirectResponse;
+use Tests\Feature\Manager\Http\Controllers\Phys\Notary\UpdateTest;
 
 class NotaryController extends AbstractController
 {
@@ -37,6 +39,7 @@ class NotaryController extends AbstractController
      * @return RedirectResponse
      * @throws \Throwable
      */
+    #[TestClass(UpdateTest::class)]
     public function updateNotary(Notary $notary, UpdateRequest $request)
     {
         $this->service->update(

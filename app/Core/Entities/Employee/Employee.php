@@ -28,7 +28,7 @@ use Tests\Unit\Core\Entities\Employee\UpdatePhoneExtensionTest;
  * @property bool $can_ride
  * @property bool $can_registry
  * @property bool $can_call
- * @property null|string $phone_extension Внутренний, добавочный номер сотрудника (101, 102, 103 и т.д.)
+ * @property null|int $phone_extension Внутренний, добавочный номер сотрудника (101, 102, 103 и т.д.)
  * @property Legal $legal
  * @property Phys $phys
  * @property Collection|EmployeeReportAccess[] $reportAccess

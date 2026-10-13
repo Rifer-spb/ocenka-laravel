@@ -14,15 +14,15 @@ class PhoneExtension
     public function __construct(?string $value)
     {
         if ($value !== null) {
-            $value = trim($value);
             $value = StringHelper::onlyNumbers($value);
+            $intValue = (int)$value;
 
-            if ($value == '0' || strlen($value) > 5) {
+            if ($intValue == 0 || $value > 999) {
                 throw new \DomainException('Некорректный добавочный номер.');
             }
         }
 
-        $this->value = empty($value) ? null : trim($value, '0');
+        $this->value = $value;
     }
 
     public function getValue(): ?string
