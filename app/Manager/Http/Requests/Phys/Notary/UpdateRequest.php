@@ -2,7 +2,7 @@
 
 namespace App\Manager\Http\Requests\Phys\Notary;
 
-use App\Core\Models\Notary\NotaryEmail;
+use App\Core\Entities\Notary\NotaryEmail;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

@@ -1,0 +1,62 @@
+<?php
+
+namespace Tests\Integration\Core\Services\Employee;
+
+use App\Core\Entities\Employee\Employee;
+use App\Core\Entities\EntityNotFoundException;
+use App\Core\Services\EmployeeService;
+use PHPUnit\Framework\Attributes\CoversMethod;
+use Tests\TestCase;
+
+#[CoversMethod(EmployeeService::class, 'switchCanCallAccess')]
+class UpdateCanCallTest extends TestCase
+{
+    private EmployeeService $service;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->service = app(EmployeeService::class);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function testNotFound()
+    {
+        $this->expectException(EntityNotFoundException::class);
+        $this->expectExceptionMessage('Сотрудник не найден.');
+
+        $this->service->switchCanCallAccess(999);
+    }
+
+    /**
+     * @return void
+     * @throws \Throwable
+     */
+    public function testSuccessTrue()
+    {
+        $employee = Employee::factory()->create();
+
+        $this->service->switchCanCallAccess($employee->id);
+        $employee->refresh();
+
+        $this->assertTrue($employee->can_call);
+    }
+
+    /**
+     * @return void
+     * @throws \Throwable
+     */
+    public function testSuccessFalse()
+    {
+        $employee = Employee::factory()->create([
+            'can_call' => true
+        ]);
+
+        $this->service->switchCanCallAccess($employee->id);
+        $employee->refresh();
+
+        $this->assertFalse($employee->can_call);
+    }
+}

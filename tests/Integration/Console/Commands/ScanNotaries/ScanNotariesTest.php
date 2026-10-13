@@ -2,10 +2,13 @@
 
 namespace Tests\Integration\Console\Commands\ScanNotaries;
 
-use App\Core\Models\Notariat\Notariat;
-use App\Core\Models\Notary\Notary;
+use App\Console\Commands\Notariat\ScanNotaries\ScanNotariesCommand;
+use App\Core\Entities\Notariat\Notariat;
+use App\Core\Entities\Notary\Notary;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\TestCase;
 
+#[CoversClass(ScanNotariesCommand::class)]
 class ScanNotariesTest extends TestCase
 {
     private const CANARY_ID = 1;

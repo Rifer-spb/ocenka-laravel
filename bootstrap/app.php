@@ -2,7 +2,7 @@
 
 use App\Core\Http\Middleware\HandleAppearance;
 use App\Core\Http\Middleware\HandleInertiaRequests;
-use App\Core\Models\User\Role;
+use App\Core\Entities\User\Role;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -11,9 +11,6 @@ use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: [
-            __DIR__.'/../routes/manager/manager.php',
-        ],
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
@@ -26,12 +23,12 @@ return Application::configure(basePath: dirname(__DIR__))
             AddLinkHeadersForPreloadedAssets::class,
         ]);
 
-        $middleware->redirectGuestsTo('/manager/auth/sign-in');
+        $middleware->redirectGuestsTo('/auth/sign-in');
 
         $middleware->redirectUsersTo(function (Request $request) {
             return match ($request->user()->role) {
-                Role::PHYS->value => '/manager/phys/home',
-                Role::LEGAL->value => 'manager/legal/home',
+                Role::PHYS->value => '/phys/home',
+                Role::LEGAL->value => 'legal/home',
                 Role::CLIENT->value => '/client/home',
                 Role::NOTARY->value => '/notary/home'
             };

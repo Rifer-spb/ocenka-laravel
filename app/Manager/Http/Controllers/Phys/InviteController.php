@@ -3,74 +3,77 @@
 namespace App\Manager\Http\Controllers\Phys;
 
 use App\Core\Http\Controllers\AbstractController;
-use App\Core\Models\Invite\Invite;
+use App\Core\Entities\Invite\Invite;
+use App\Core\Services\InviteService;
 use App\Core\ValueObjects\Email;
-use App\Manager\Http\Requests\InviteSearchRequest;
 use App\Manager\Http\Requests\Phys\Invite\CreateRequest;
-use App\Manager\UseCases\Phys\Invite\ConfirmUseCase;
-use App\Manager\UseCases\Phys\Invite\CancelUseCase;
-use App\Manager\UseCases\Phys\Invite\CreateUseCase;
-use App\Manager\UseCases\Phys\Invite\ResendUseCase;
-use App\Manager\UseCases\Phys\Invite\GetPageDataUseCase;
 use Illuminate\Http\RedirectResponse;
-use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 class InviteController extends AbstractController
 {
-    public function view(InviteSearchRequest $request, GetPageDataUseCase $useCase)
+    public function __construct(
+        private InviteService $service,
+    )
     {
-        $result = $useCase->execute($this->getUser(), $request);
-
-        return Inertia::render('manager/phys/settings/invites/index', $result);
+        $this->middleware($this->checkOwner(...))->except('create');
     }
 
     /**
      * @throws \Throwable
-     * @see \Feature\Manager\Http\Controllers\Phys\Invite\CreateUseCaseTest
      */
-    public function create(CreateRequest $request, CreateUseCase $useCase)
+    public function create(CreateRequest $request)
     {
-        $useCase->execute($this->getUser(), new Email($request->email));
+        $this->service->createForLegal(
+            $this->getUserId(),
+            new Email($request->email),
+        );
 
         return back()->with('success', 'Заявка успешно отправлена');
     }
 
     /**
      * @param Invite $invite
-     * @param ResendUseCase $useCase
      * @return RedirectResponse
-     * @throws \Exception
-     * @see \Feature\Manager\Http\Controllers\Phys\Invite\ResendUseCaseTest
      */
-    public function reSend(Invite $invite, ResendUseCase $useCase)
+    public function reSend(Invite $invite)
     {
-        $useCase->execute($this->getUser(), $invite->id);
+        $this->service->reSendEmail($invite->id);
 
         return back()->with('success', 'Заявка успешно отправлена повторно');
     }
 
     /**
      * @throws \Throwable
-     * @see \Feature\Manager\Http\Controllers\Phys\Invite\CancelUseCaseTest
      */
-    public function cancel(Invite $invite, CancelUseCase $useCase)
+    public function cancel(Invite $invite)
     {
-        $useCase->execute($this->getUser(), $invite->id);
+        $this->service->cancel($invite->id);
 
         return back()->with('success', 'Заявка успешно отменена');
     }
 
     /**
      * @param Invite $invite
-     * @param ConfirmUseCase $useCase
      * @return RedirectResponse
      * @throws \Throwable
-     * @see \Feature\Manager\Http\Controllers\Phys\Invite\ConfirmUseCaseTest
      */
-    public function confirm(Invite $invite, ConfirmUseCase $useCase)
+    public function confirm(Invite $invite)
     {
-        $useCase->execute($this->getUser(), $invite->id);
+        $this->service->confirm($invite->id);
 
         return back()->with('success', 'Заявка успешно подтверждена');
+    }
+
+    private function checkOwner(Request $request, \Closure $next)
+    {
+        /** @var Invite $invite */
+        $invite = $request->route('invite');
+
+        if ($invite->phys_id != $this->getUserId()) {
+            abort(404);
+        }
+
+        return $next($request);
     }
 }

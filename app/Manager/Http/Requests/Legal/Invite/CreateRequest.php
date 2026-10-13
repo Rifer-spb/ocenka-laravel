@@ -2,7 +2,7 @@
 
 namespace App\Manager\Http\Requests\Legal\Invite;
 
-use App\Core\Models\User\Role;
+use App\Core\Entities\User\Role;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;

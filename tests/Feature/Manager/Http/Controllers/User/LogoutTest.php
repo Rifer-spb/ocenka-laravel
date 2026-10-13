@@ -1,22 +1,25 @@
 <?php
 
-namespace Feature\Manager\Http\Controllers\User;
+namespace Tests\Feature\Manager\Http\Controllers\User;
 
-use App\Core\Models\User\Role;
-use App\Core\Models\User\User;
+use App\Core\Entities\User\Role;
+use App\Core\Entities\User\User;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class LogoutTest extends TestCase
 {
+    /**
+     * @throws \Throwable
+     */
     public function testLogout()
     {
-        $user = User::create([
-            'username' => 'exist@example.com',
-            'email' => 'exist@example.com',
-            'password' => Hash::make($password = 'password123'),
-            'role' => Role::LEGAL->value,
-        ]);
+        $user = new User();
+        $user->username = 'exist@example.com';
+        $user->email = 'exist@example.com';
+        $user->password = Hash::make($password = 'password123');
+        $user->role = Role::LEGAL->value;
+        $user->saveOrFail();
 
         $this->post($this->getSignInRoute(), [
             'email' => 'exist@example.com',

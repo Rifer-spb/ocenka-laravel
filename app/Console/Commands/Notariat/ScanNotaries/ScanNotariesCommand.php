@@ -2,14 +2,14 @@
 
 namespace App\Console\Commands\Notariat\ScanNotaries;
 
-use App\Core\Models\Notariat\Notariat;
-use App\Core\Models\Notary\NotariatId;
+use App\Core\Attributes\TestClass;
+use App\Core\Entities\Notariat\Notariat;
+use App\Core\Entities\Notary\NotariatId;
 use App\Core\Validators\RequestValidator;
 use Illuminate\Console\Command;
+use Tests\Integration\Console\Commands\ScanNotaries\ScanNotariesTest;
 
-/**
- * @see \Tests\Integration\Console\Commands\ScanNotaries\ScanNotariesTest
- */
+#[TestClass(ScanNotariesTest::class)]
 class ScanNotariesCommand extends Command
 {
     protected $signature = 'notariat:scan';

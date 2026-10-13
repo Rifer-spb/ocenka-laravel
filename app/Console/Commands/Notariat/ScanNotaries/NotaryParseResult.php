@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Notariat\ScanNotaries;
 
-use App\Core\Models\Notary\NotaryRegion;
+use App\Core\Entities\Notary\NotaryRegion;
 
 final readonly class NotaryParseResult
 {

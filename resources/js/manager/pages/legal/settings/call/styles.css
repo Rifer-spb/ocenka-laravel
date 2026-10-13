@@ -1,0 +1,7 @@
+.call .templates .new-button {
+    margin-bottom: 20px;
+}
+
+.call .templates .th.action {
+    width: 240px;
+}

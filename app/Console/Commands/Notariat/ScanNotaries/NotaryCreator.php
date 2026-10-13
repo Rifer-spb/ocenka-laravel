@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\Notariat\ScanNotaries;
 
-use App\Core\Finder\Notary\NotaryFinder;
-use App\Core\Models\Notary\NotariatId;
-use App\Core\Models\Notary\Notary;
+use App\Core\Entities\Notary\NotariatId;
+use App\Core\Entities\Notary\Notary;
+use App\Core\Finders\NotaryFinder;
 use App\Core\ValueObjects\Email;
 use App\Core\ValueObjects\NationalPhone;
 use Illuminate\Support\Facades\DB;
