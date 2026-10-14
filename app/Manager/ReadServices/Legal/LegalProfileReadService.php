@@ -3,6 +3,7 @@
 namespace App\Manager\ReadServices\Legal;
 
 use App\Core\Entities\User\Legal\Legal;
+use App\Core\Entities\User\Legal\LegalPhone;
 
 class LegalProfileReadService
 {
@@ -26,5 +27,13 @@ class LegalProfileReadService
     public function getRegistryTemplate(Legal $legal): string
     {
         return $legal->profile->registry_template;
+    }
+
+    public function getAllPhones(Legal $legal): array
+    {
+        return $legal->phones->map(fn (LegalPhone $p) => [
+            'id' => $p->id,
+            'phone' => $p->phone,
+        ])->all();
     }
 }

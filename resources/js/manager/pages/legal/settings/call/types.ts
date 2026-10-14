@@ -10,3 +10,8 @@ type TTemplateForm = {
     name: TTemplate['name'];
     text: TTemplate['text'];
 };
+
+type TPhone = {
+    id: number;
+    phone: string;
+};

@@ -5,3 +5,12 @@
 .call .templates .th.action {
     width: 240px;
 }
+
+.call .phones>form {
+    margin-bottom: 10px;
+}
+
+.call .phones .td {
+    vertical-align: middle;
+    padding: 5px;
+}

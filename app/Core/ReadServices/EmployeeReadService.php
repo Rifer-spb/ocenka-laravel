@@ -7,9 +7,9 @@ use App\Core\Finders\EmployeeFinder;
 
 class EmployeeReadService
 {
-    public function getAllRegistryAccess(): array
+    public function getAllRegistryAccess(int $legalId): array
     {
-        $employees = EmployeeFinder::getAll();
+        $employees = EmployeeFinder::getAllByLegalId($legalId);
 
         $callback = fn (Employee $e) => [
             'id' => $e->id,
@@ -20,9 +20,9 @@ class EmployeeReadService
         return array_map($callback, $employees);
     }
 
-    public function getAllCallAccess(): array
+    public function getAllCallAccess(int $legalId): array
     {
-        $employees = EmployeeFinder::getAll();
+        $employees = EmployeeFinder::getAllByLegalId($legalId);
 
         $callback = fn (Employee $e) => [
             'id' => $e->id,

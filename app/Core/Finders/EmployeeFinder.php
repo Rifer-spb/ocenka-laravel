@@ -33,8 +33,12 @@ class EmployeeFinder
     /**
      * @return Employee[]
      */
-    public static function getAll(): array
+    public static function getAllByLegalId(int $legalId): array
     {
-        return Employee::with(['phys.profile', 'reportAccess'])->orderBy('id')->get()->all();
+        return Employee::with(['phys.profile', 'reportAccess'])
+            ->where('legal_id', $legalId)
+            ->orderBy('id')
+            ->get()
+            ->all();
     }
 }

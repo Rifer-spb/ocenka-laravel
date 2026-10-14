@@ -21,7 +21,7 @@ class RegistryPageController extends AbstractController
     {
         return Inertia::render('manager/legal/settings/registry/index', [
             'template' => $this->profileReadService->getRegistryTemplate($this->getUser()),
-            'employees' => $this->employeeReadService->getAllRegistryAccess()
+            'employees' => $this->employeeReadService->getAllRegistryAccess($this->getUserId())
         ]);
     }
 }
