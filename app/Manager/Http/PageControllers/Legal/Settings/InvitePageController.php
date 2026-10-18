@@ -3,30 +3,23 @@
 namespace App\Manager\Http\PageControllers\Legal\Settings;
 
 use App\Core\Http\Controllers\AbstractController;
-use App\Manager\Helpers\InviteHelper;
 use App\Manager\Http\Requests\InviteSearchRequest;
-use App\Manager\ReadServices\Legal\LegalInviteReadService;
-use App\Manager\ReadServices\Legal\LegalInviteSearchService;
+use App\Manager\PageData\Legal\Settings\Invite\InvitePageData;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class InvitePageController extends AbstractController
 {
     public function __construct(
-        private LegalInviteReadService $inviteReadService,
-        private LegalInviteSearchService $searchService
+        private InvitePageData $pageData
     )
     {
     }
 
     public function __invoke(InviteSearchRequest $request): Response
     {
-        $legal = $this->getUser();
+        $pageData = $this->pageData->build($this->getUser(), $request);
 
-        return Inertia::render('manager/legal/settings/invites/index', [
-            'tabs' => InviteHelper::getTabs(),
-            'counts' => $this->inviteReadService->getCounts($legal),
-            'invites' => $this->searchService->search($legal, $request),
-        ]);
+        return Inertia::render('manager/legal/settings/invites/index', [...$pageData]);
     }
 }

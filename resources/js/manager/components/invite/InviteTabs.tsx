@@ -3,7 +3,7 @@ import './InviteTabs.css';
 import { IInviteTab } from "./types";
 import { useEffect } from 'react';
 
-interface IProps {
+type IProps = {
     children: ((args: any) => React.ReactNode) | React.ReactNode;
     tabs: IInviteTab[];
     counts: any;

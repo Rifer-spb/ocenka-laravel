@@ -3,25 +3,22 @@
 namespace App\Manager\Http\PageControllers\Legal\Settings;
 
 use App\Core\Http\Controllers\AbstractController;
-use App\Core\ReadServices\EmployeeReadService;
-use App\Manager\ReadServices\Legal\LegalProfileReadService;
+use App\Manager\PageData\Legal\Settings\RegistryPageData;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class RegistryPageController extends AbstractController
 {
     public function __construct(
-        private LegalProfileReadService $profileReadService,
-        private EmployeeReadService $employeeReadService
+        private RegistryPageData $pageData
     )
     {
     }
 
     public function __invoke(): Response
     {
-        return Inertia::render('manager/legal/settings/registry/index', [
-            'template' => $this->profileReadService->getRegistryTemplate($this->getUser()),
-            'employees' => $this->employeeReadService->getAllRegistryAccess($this->getUserId())
-        ]);
+        $pageData = $this->pageData->build($this->getUser());
+
+        return Inertia::render('manager/legal/settings/registry/index', [...$pageData]);
     }
 }

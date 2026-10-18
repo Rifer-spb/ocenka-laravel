@@ -11,6 +11,7 @@ use App\Core\Entities\User\Legal\Legal;
 use App\Core\Entities\User\Phys\Phys;
 use Database\Factories\Core\Entities\Employee\EmployeeFactory;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Tests\Unit\Core\Entities\Employee\CreateTest;
@@ -150,13 +151,13 @@ class Employee extends AbstractEntity
         return $this->hasMany(EmployeeReportAccess::class, 'employee_id', 'id')->orderBy('id');
     }
 
-    public function legal(): HasOne|Legal
+    public function legal(): BelongsTo
     {
-        return $this->hasOne(Legal::class, 'id', 'legal_id');
+        return $this->belongsTo(Legal::class, 'legal_id', 'id');
     }
 
-    public function phys(): HasOne|Phys
+    public function phys(): BelongsTo
     {
-        return $this->hasOne(Phys::class, 'id', 'phys_id');
+        return $this->belongsTo(Phys::class, 'phys_id', 'id');
     }
 }

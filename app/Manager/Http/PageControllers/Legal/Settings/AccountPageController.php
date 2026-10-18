@@ -3,32 +3,22 @@
 namespace App\Manager\Http\PageControllers\Legal\Settings;
 
 use App\Core\Http\Controllers\AbstractController;
-use App\Core\ReadServices\LegalTypeReadService;
-use App\Manager\ReadServices\Legal\LegalProfileReadService;
+use App\Manager\PageData\Legal\Settings\AccountPageData;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class AccountPageController extends AbstractController
 {
     public function __construct(
-        private LegalTypeReadService $typeReadService,
-        private LegalProfileReadService $profileReadService
+        private AccountPageData $pageData
     )
     {
     }
 
     public function __invoke(): Response
     {
-        return Inertia::render('manager/legal/settings/account/index', $this->getData());
-    }
+        $pageData = $this->pageData->build($this->getUser());
 
-    private function getData(): array
-    {
-        $legal = $this->getUser();
-
-        return [
-            'types' => $this->typeReadService->getList(),
-            'company' => $this->profileReadService->getCompany($legal),
-        ];
+        return Inertia::render('manager/legal/settings/account/index', [...$pageData]);
     }
 }
