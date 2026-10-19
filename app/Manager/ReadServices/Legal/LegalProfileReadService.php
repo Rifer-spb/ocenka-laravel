@@ -1,30 +1,23 @@
 <?php
 
-namespace App\Manager\PageData\Legal\Settings;
+namespace App\Manager\ReadServices\Legal;
 
-use App\Core\Entities\LegalType;
 use App\Core\Entities\User\Legal\Legal;
+use App\Core\Entities\User\Legal\LegalPhone;
 
-class AccountPageData
+class LegalProfileReadService
 {
-    public function build(Legal $legal): array
+    public function getPhones(Legal $legal): array
     {
-        return [
-            'types' => $this->getTypes(),
-            'company' => $this->getCompany($legal),
+        $callback = fn (LegalPhone $p) => [
+            'id' => $p->id,
+            'phone' => $p->phone,
         ];
+
+        return $legal->phones->map($callback)->all();
     }
 
-    private function getTypes(): array
-    {
-        return LegalType
-            ::orderBy('name')
-            ->get()
-            ->pluck('name', 'id')
-            ->all();
-    }
-
-    private function getCompany(Legal $legal): array
+    public function getCompany(Legal $legal): array
     {
         $profile = $legal->profile;
 
@@ -39,5 +32,10 @@ class AccountPageData
             'kpp' => $profile->kpp,
             'ogrn' => $profile->ogrn,
         ];
+    }
+
+    public function getRegistryTemplate(Legal $legal): string
+    {
+        return $legal->profile->registry_template;
     }
 }

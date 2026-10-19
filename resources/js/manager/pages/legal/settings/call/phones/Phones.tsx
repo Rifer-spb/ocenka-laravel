@@ -2,6 +2,7 @@ import Form from "./Form";
 import Button from "@common/components/form/Button";
 import {router} from "@inertiajs/react";
 import {deletePhone} from "@common/wayfinder/actions/App/Manager/Http/Controllers/Legal/ProfileController";
+import { TPhone } from '../types';
 
 type TProps = {
     phones: TPhone[];

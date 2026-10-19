@@ -1,33 +1,17 @@
 <?php
 
-namespace App\Manager\PageData\Legal\Settings\Invite;
+namespace App\Manager\ReadServices\Legal\Invite;
 
 use App\Core\Entities\Invite\Invite;
 use App\Core\Entities\Invite\InviteForWho;
 use App\Core\Entities\Invite\InviteTab;
 use App\Core\Entities\User\Legal\Legal;
 use App\Manager\Helpers\InviteHelper;
-use App\Manager\Http\Requests\InviteSearchRequest;
 use Illuminate\Support\Facades\DB;
 
-class InvitePageData
+class LegalInviteReadService
 {
-    public function __construct(
-        private InviteSearcher $inviteSearcher
-    )
-    {
-    }
-
-    public function build(Legal $legal, InviteSearchRequest $request): array
-    {
-        return [
-            'tabs' => InviteHelper::getTabs(),
-            'counts' => $this->getCounts($legal),
-            'invites' => $this->inviteSearcher->search($legal, $request),
-        ];
-    }
-
-    private function getCounts(Legal $legal): array
+    public function getCounts(Legal $legal): array
     {
         $inviteTable = Invite::getTableName();
 

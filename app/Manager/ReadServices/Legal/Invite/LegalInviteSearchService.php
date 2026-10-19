@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Manager\PageData\Legal\Settings\Invite;
+namespace App\Manager\ReadServices\Legal\Invite;
 
 use App\Core\Entities\Employee\EmployeeReportAccess;
 use App\Core\Entities\Invite\Invite;
@@ -12,7 +12,7 @@ use App\Core\Helpers\DateHelper;
 use App\Manager\Helpers\InviteHelper;
 use App\Manager\Http\Requests\InviteSearchRequest;
 
-class InviteSearcher
+class LegalInviteSearchService
 {
     public function search(Legal $legal, InviteSearchRequest $request): array
     {

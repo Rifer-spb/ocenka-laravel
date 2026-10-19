@@ -6,6 +6,7 @@ import { create as createTemplate } from "@managerRoutes/legal/callTemplates";
 import { update as updateTemplate } from "@managerRoutes/legal/callTemplates";
 import { deleteMethod as deleteTemplate } from "@managerRoutes/legal/callTemplates";
 import { router } from "@inertiajs/react";
+import { TTemplate, TTemplateForm } from './types';
 
 export default function({ templates } : { templates: TTemplate[] }) {
     const [isShowForm, setIsShowForm] = useState<boolean>(false);

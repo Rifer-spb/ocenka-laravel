@@ -3,14 +3,13 @@ import './styles.css';
 import Access from "./Access";
 import {router} from "@inertiajs/react";
 import { updateCall } from "@managerRoutes/legal/employees";
-import {TEmployeesAccess} from "@manager/types";
 import Templates from "./Templates";
-import './types';
+import { TEmployees, TTemplate, TPhone } from './types';
 import BlockSection from "@manager/components/common/BlockSection";
 import Phones from "./phones/Phones";
 
 type TProps = {
-    employees: TEmployeesAccess[];
+    employees: TEmployees[];
     templates: TTemplate[];
     phones: TPhone[];
 };
