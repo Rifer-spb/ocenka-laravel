@@ -23,7 +23,8 @@ class UpdatePhoneExtensionRequest extends FormRequest
                 'nullable',
                 'string',
                 'regex:/^(?=.*[1-9])\d{1,3}$/',
-                'unique:'.Employee::getTableName().',phone_extension',
+                Rule::unique(Employee::getTableName(), 'phone_extension')
+                    ->where('legal_id', $this->user()->id)
             ],
         ];
     }

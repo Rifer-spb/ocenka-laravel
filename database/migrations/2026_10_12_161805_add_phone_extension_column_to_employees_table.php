@@ -14,7 +14,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table($this->tableName, function (Blueprint $table) {
-            $table->string('phone_extension',5)->nullable()->default(null)->unique();
+            $table->string('phone_extension',5)->nullable()->default(null);
+            $table->unique(['legal_id','phone_extension']);
         });
     }
 
