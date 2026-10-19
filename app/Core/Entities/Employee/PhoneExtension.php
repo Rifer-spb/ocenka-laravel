@@ -29,4 +29,9 @@ class PhoneExtension
     {
         return $this->value;
     }
+
+    public function hasValue(): bool
+    {
+        return $this->value !== null;
+    }
 }

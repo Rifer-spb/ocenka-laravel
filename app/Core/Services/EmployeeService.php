@@ -118,6 +118,15 @@ class EmployeeService
     public function updatePhoneExtension(int $employeeId, PhoneExtension $extension): void
     {
         $employee = EmployeeFinder::getById($employeeId);
+
+        $isExistExtension =
+            $extension->hasValue()
+            && EmployeeFinder::hasByPhoneExtension($extension->getValue());
+
+        if ($isExistExtension) {
+            throw new \DomainException('Такой внутренний номер уже добавлен.');
+        }
+
         $employee->updatePhoneExtension($extension);
         $employee->saveOrFail();
     }

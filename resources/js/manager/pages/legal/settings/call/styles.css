@@ -14,3 +14,12 @@
     vertical-align: middle;
     padding: 5px;
 }
+
+.call .employee-extensions .td {
+    vertical-align: middle;
+    padding: 5px 0;
+}
+
+.call .employee-extensions .td:last-child {
+    width: 50%;
+}

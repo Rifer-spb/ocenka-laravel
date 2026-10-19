@@ -29,4 +29,9 @@ class EmployeeFinder
 
         return $employee;
     }
+
+    public static function hasByPhoneExtension(string $extension): bool
+    {
+        return Employee::where(['phone_extension' => $extension])->exists();
+    }
 }

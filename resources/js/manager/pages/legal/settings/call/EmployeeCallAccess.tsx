@@ -6,7 +6,7 @@ type TProps = {
     handler: Function;
 }
 
-export default function Access({ employees, handler } : TProps) {
+export default function EmployeeCallAccess({ employees, handler } : TProps) {
     return (
         <div className='table'>
             {employees.map((employee, index) => (
