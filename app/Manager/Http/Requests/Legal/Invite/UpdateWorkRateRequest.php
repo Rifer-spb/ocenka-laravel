@@ -24,7 +24,7 @@ class UpdateWorkRateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'value' => 'integer|integer|min:0',
+            'value' => 'integer|min:0',
         ];
     }
 

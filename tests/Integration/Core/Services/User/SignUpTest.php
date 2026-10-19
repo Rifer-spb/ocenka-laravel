@@ -10,8 +10,10 @@ use App\Core\Services\UserService;
 use App\Core\ValueObjects\Email;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Queue;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(UserService::class, 'signUpManager')]
 class SignUpTest extends TestCase
 {
     private UserService $service;

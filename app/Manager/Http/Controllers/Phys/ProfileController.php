@@ -2,6 +2,7 @@
 
 namespace App\Manager\Http\Controllers\Phys;
 
+use App\Core\Attributes\TestClass;
 use App\Core\Http\Controllers\AbstractController;
 use App\Core\Entities\User\Phys\PhysPhone;
 use App\Core\Entities\User\Phys\ValueObjects\Holiday;
@@ -17,6 +18,11 @@ use App\Manager\Http\Requests\Phys\Profile\AddPhoneRequest;
 use App\Manager\Http\Requests\Phys\Profile\UpdateHolidayRequest;
 use App\Manager\Http\Requests\Phys\Profile\UpdateNameRequest;
 use Illuminate\Http\RedirectResponse;
+use Tests\Feature\Manager\Http\Controllers\Phys\Profile\ChangePasswordTest;
+use Tests\Feature\Manager\Http\Controllers\Phys\Profile\Phone\AddPhoneTest;
+use Tests\Feature\Manager\Http\Controllers\Phys\Profile\Phone\DeletePhoneTest;
+use Tests\Feature\Manager\Http\Controllers\Phys\Profile\UpdateHolidayTest;
+use Tests\Feature\Manager\Http\Controllers\Phys\Profile\UpdateNameTest;
 
 class ProfileController extends AbstractController
 {
@@ -30,7 +36,9 @@ class ProfileController extends AbstractController
     /**
      * @param UpdateNameRequest $request
      * @return RedirectResponse
+     * @throws \Throwable
      */
+    #[TestClass(UpdateNameTest::class)]
     public function updateName(UpdateNameRequest $request): RedirectResponse
     {
         $this->profileService->updateName(
@@ -46,7 +54,9 @@ class ProfileController extends AbstractController
     /**
      * @param AddPhoneRequest $request
      * @return RedirectResponse
+     * @throws \Throwable
      */
+    #[TestClass(AddPhoneTest::class)]
     public function addPhone(AddPhoneRequest $request)
     {
         $this->profileService->addPhone(
@@ -60,7 +70,9 @@ class ProfileController extends AbstractController
     /**
      * @param PhysPhone $phone
      * @return RedirectResponse
+     * @throws \Throwable
      */
+    #[TestClass(DeletePhoneTest::class)]
     public function deletePhone(PhysPhone $phone)
     {
         $this->profileService->deletePhone($this->getUserId(), $phone->id);
@@ -71,7 +83,9 @@ class ProfileController extends AbstractController
     /**
      * @param UpdateHolidayRequest $request
      * @return RedirectResponse
+     * @throws \Throwable
      */
+    #[TestClass(UpdateHolidayTest::class)]
     public function updateHoliday(UpdateHolidayRequest $request)
     {
         $holiday = new Holiday($request->holidayFrom, $request->holidayTo);
@@ -86,6 +100,7 @@ class ProfileController extends AbstractController
      * @return RedirectResponse
      * @throws \Throwable
      */
+    #[TestClass(ChangePasswordTest::class)]
     public function changePassword(ChangePasswordRequest $request)
     {
         $this->userService->changePassword(

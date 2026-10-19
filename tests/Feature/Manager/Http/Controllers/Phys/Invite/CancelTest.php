@@ -4,8 +4,11 @@ namespace Tests\Feature\Manager\Http\Controllers\Phys\Invite;
 
 use App\Core\Entities\Invite\Invite;
 use App\Core\Entities\User\Phys\Phys;
+use App\Manager\Http\Controllers\Phys\InviteController;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(InviteController::class,'cancel')]
 class CancelTest extends TestCase
 {
     use CommonTrait;

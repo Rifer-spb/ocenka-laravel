@@ -2,11 +2,11 @@
 
 namespace App\Core\Entities\User\ValueObjects;
 
+use App\Core\Attributes\TestClass;
 use InvalidArgumentException;
+use Tests\Unit\Core\Entities\User\ValueObjects\PasswordTest;
 
-/**
- * Тесты @see \Tests\Unit\Core\Models\User\ValueObjects\PasswordTest
- */
+#[TestClass(PasswordTest::class)]
 class Password
 {
     private int $minLength = 8;

@@ -3,8 +3,11 @@
 namespace Tests\Feature\Manager\Http\Controllers\Phys\Profile;
 
 use App\Core\Entities\User\Phys\Phys;
+use App\Manager\Http\Controllers\Phys\ProfileController;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(ProfileController::class,'updateName')]
 class UpdateNameTest extends TestCase
 {
     public function testMaxLength()

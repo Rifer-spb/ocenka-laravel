@@ -2,6 +2,7 @@
 
 namespace App\Core\Entities\Invite;
 
+use App\Core\Attributes\TestClass;
 use App\Core\Entities\Employee\Employee;
 use App\Core\Finders\InviteFinder;
 use App\Core\Entities\AbstractEntity;
@@ -11,6 +12,12 @@ use App\Core\Entities\User\User;
 use Carbon\Carbon;
 use Database\Factories\Core\Entities\Invite\InviteFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Tests\Unit\Core\Entities\Invite\InviteCompleteTest;
+use Tests\Unit\Core\Entities\Invite\InviteConfirmTest;
+use Tests\Unit\Core\Entities\Invite\InviteCreateTest;
+use Tests\Unit\Core\Entities\Invite\InviteForWhoTest;
+use Tests\Unit\Core\Entities\Invite\InviteGetForWhoUser;
+use Tests\Unit\Core\Entities\Invite\InviteStatusTest;
 
 /**
  * @property int $id
@@ -35,10 +42,9 @@ class Invite extends AbstractEntity
      * @param Legal $legal
      * @param InviteForWho $for
      * @return self
-     *
      * @throws \Throwable
-     * @see \Tests\Unit\Core\Models\Invite\InviteCreateTest
      */
+    #[TestClass(InviteCreateTest::class)]
     public static function createNew(Phys $phys, Legal $legal, InviteForWho $for): self
     {
         if (InviteFinder::hasWait($phys, $legal)) {
@@ -59,51 +65,25 @@ class Invite extends AbstractEntity
         return $invite;
     }
 
-    /**
-     * @return bool
-     *
-     * @see \Tests\Unit\Core\Models\Invite\InviteStatusTest
-     */
+    #[TestClass(InviteStatusTest::class)]
     public function isActive(): bool
     {
         return $this->status == InviteStatus::ACTIVE->value;
     }
 
-    /**
-     * @return bool
-     *
-     * @see \Tests\Unit\Core\Models\Invite\InviteStatusTest
-     */
+    #[TestClass(InviteStatusTest::class)]
     public function isWait(): bool
     {
         return $this->status == InviteStatus::WAIT->value;
     }
 
-    /**
-     * @return bool
-     *
-     * @see \Tests\Unit\Core\Models\Invite\InviteStatusTest
-     */
+    #[TestClass(InviteStatusTest::class)]
     public function isComplete(): bool
     {
         return $this->status == InviteStatus::COMPLETE->value;
     }
 
-    public function getCreatedAtFormated(): string
-    {
-        return $this->created_at->format('d.m.Y H:i');
-    }
-
-    public function getCompletedAtFormated(): string
-    {
-        return $this->completed_at->format('d.m.Y H:i');
-    }
-
-    /**
-     * @return void
-     *
-     * @see \Tests\Unit\Core\Models\Invite\InviteConfirmTest
-     */
+    #[TestClass(InviteConfirmTest::class)]
     public function confirm(): void
     {
         if (! $this->isWait()) {
@@ -113,11 +93,7 @@ class Invite extends AbstractEntity
         $this->status = InviteStatus::ACTIVE->value;
     }
 
-    /**
-     * @return void
-     *
-     * @see \Tests\Unit\Core\Models\Invite\InviteCompleteTest
-     */
+    #[TestClass(InviteCompleteTest::class)]
     public function complete(): void
     {
         if (! $this->isActive()) {
@@ -128,34 +104,32 @@ class Invite extends AbstractEntity
         $this->status = InviteStatus::COMPLETE->value;
     }
 
-    /**
-     * @return bool
-     *
-     * @see \Tests\Unit\Core\Models\Invite\InviteForWhoTest
-     */
+    #[TestClass(InviteForWhoTest::class)]
     public function isForPhys(): bool
     {
         return $this->for === InviteForWho::PHYS->value;
     }
 
-    /**
-     * @return bool
-     *
-     * @see \Tests\Unit\Core\Models\Invite\InviteForWhoTest
-     */
+    #[TestClass(InviteForWhoTest::class)]
     public function isForLegal(): bool
     {
         return $this->for === InviteForWho::LEGAL->value;
     }
 
-    /**
-     * @return User
-     *
-     * @see \Tests\Unit\Core\Models\Invite\InviteGetForWhoUser
-     */
+    #[TestClass(InviteGetForWhoUser::class)]
     public function getForWhoUser(): User
     {
         return $this->isForPhys() ? $this->phys : $this->legal;
+    }
+
+    public function getCreatedAtFormated(): string
+    {
+        return $this->created_at->format('d.m.Y H:i');
+    }
+
+    public function getCompletedAtFormated(): string
+    {
+        return $this->completed_at->format('d.m.Y H:i');
     }
 
     public function legal(): HasOne|Legal

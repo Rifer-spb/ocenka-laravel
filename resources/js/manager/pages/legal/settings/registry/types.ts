@@ -1,5 +1,5 @@
-type TEmployees = {
+export type TEmployees = {
     id: number;
     name: string;
-    value: boolean;
+    canRegistry: boolean;
 }

@@ -2,6 +2,7 @@
 
 namespace App\Manager\Http\Controllers\Phys;
 
+use App\Core\Attributes\TestClass;
 use App\Core\Http\Controllers\AbstractController;
 use App\Core\Entities\Invite\Invite;
 use App\Core\Services\InviteService;
@@ -9,6 +10,10 @@ use App\Core\ValueObjects\Email;
 use App\Manager\Http\Requests\Phys\Invite\CreateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Tests\Feature\Manager\Http\Controllers\Phys\Invite\CancelTest;
+use Tests\Feature\Manager\Http\Controllers\Phys\Invite\ConfirmTest;
+use Tests\Feature\Manager\Http\Controllers\Phys\Invite\CreateTest;
+use Tests\Feature\Manager\Http\Controllers\Phys\Invite\ResendTest;
 
 class InviteController extends AbstractController
 {
@@ -22,6 +27,7 @@ class InviteController extends AbstractController
     /**
      * @throws \Throwable
      */
+    #[TestClass(CreateTest::class)]
     public function create(CreateRequest $request)
     {
         $this->service->createForLegal(
@@ -36,6 +42,7 @@ class InviteController extends AbstractController
      * @param Invite $invite
      * @return RedirectResponse
      */
+    #[TestClass(ResendTest::class)]
     public function reSend(Invite $invite)
     {
         $this->service->reSendEmail($invite->id);
@@ -46,6 +53,7 @@ class InviteController extends AbstractController
     /**
      * @throws \Throwable
      */
+    #[TestClass(CancelTest::class)]
     public function cancel(Invite $invite)
     {
         $this->service->cancel($invite->id);
@@ -58,6 +66,7 @@ class InviteController extends AbstractController
      * @return RedirectResponse
      * @throws \Throwable
      */
+    #[TestClass(ConfirmTest::class)]
     public function confirm(Invite $invite)
     {
         $this->service->confirm($invite->id);

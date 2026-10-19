@@ -3,8 +3,10 @@
 namespace Tests\Unit\Core\Entities\Notary;
 
 use App\Core\Entities\Notary\NotariatId;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\TestCase;
 
+#[CoversClass(NotariatId::class)]
 class NotariatIdTest extends TestCase
 {
     public function testSuccessWithInt(): void

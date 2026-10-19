@@ -2,6 +2,7 @@
 
 namespace App\Core\Services;
 
+use App\Core\Attributes\TestClass;
 use App\Core\Finders\UserFinder;
 use App\Core\Jobs\SendMailJob;
 use App\Core\Mails\User\SignUpManagerMail;
@@ -12,6 +13,8 @@ use App\Core\Entities\User\User;
 use App\Core\Entities\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
 use Illuminate\Support\Facades\DB;
+use Tests\Integration\Core\Services\User\ChangePasswordTest;
+use Tests\Integration\Core\Services\User\SignUpTest;
 
 class UserService
 {
@@ -22,6 +25,7 @@ class UserService
      * @return void
      * @throws \Throwable
      */
+    #[TestClass(ChangePasswordTest::class)]
     public function changePassword(int $userId, Password $oldPassword, Password $newPassword): void
     {
         $user = UserFinder::getById($userId);
@@ -36,6 +40,7 @@ class UserService
      * @return User
      * @throws \Throwable
      */
+    #[TestClass(SignUpTest::class)]
     public function signUpManager(Email $email, Password $password, Role $role): User
     {
         if (! $role->isManager()) {

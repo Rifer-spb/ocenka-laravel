@@ -5,10 +5,16 @@ namespace Tests\Unit\Core\Entities\Notary;
 use App\Core\Entities\Notary\Notary;
 use App\Core\Entities\Notary\NotaryPhone;
 use App\Core\ValueObjects\NationalPhone;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Notary::class, 'addPhone')]
 class AddPhoneTest extends TestCase
 {
+    /**
+     * @return void
+     * @throws \Throwable
+     */
     public function testAlreadyExists()
     {
         $notary = Notary::factory()
@@ -21,6 +27,10 @@ class AddPhoneTest extends TestCase
         $notary->addPhone(new NationalPhone($phone));
     }
 
+    /**
+     * @return void
+     * @throws \Throwable
+     */
     public function testSuccess()
     {
         $notary = Notary::factory()->create();

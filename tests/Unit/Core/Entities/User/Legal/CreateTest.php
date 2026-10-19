@@ -11,8 +11,10 @@ use App\Core\Entities\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Legal::class, 'createNew')]
 class CreateTest extends TestCase
 {
     public function testSignUpSuccess()

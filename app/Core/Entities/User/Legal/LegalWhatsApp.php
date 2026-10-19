@@ -15,7 +15,4 @@ class LegalWhatsApp extends AbstractEntity
 {
     protected $table = 'legal_whatsapp';
     public $timestamps = false;
-    protected $fillable = [
-        'id',
-    ];
 }

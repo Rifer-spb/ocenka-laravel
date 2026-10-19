@@ -2,15 +2,25 @@
 
 namespace App\Manager\Http\Controllers\Legal;
 
-use App\Core\Http\Controllers\AbstractController;
-use App\Core\Entities\User\Legal\Dto\Company;
+use App\Core\Attributes\TestClass;
+use App\Core\Entities\User\Legal\LegalPhone;
+use App\Core\Entities\User\Legal\ValueObjects\Company;
 use App\Core\Entities\User\Legal\ValueObjects\RegistryTemplate;
 use App\Core\Entities\User\ValueObjects\Password;
+use App\Core\Http\Controllers\AbstractController;
 use App\Core\Services\LegalProfileService;
 use App\Core\Services\UserService;
+use App\Core\ValueObjects\NationalPhone;
 use App\Manager\Http\Requests\ChangePasswordRequest;
+use App\Manager\Http\Requests\Legal\Profile\AddPhoneRequest;
 use App\Manager\Http\Requests\Legal\Profile\UpdateCompanyRequest;
 use App\Manager\Http\Requests\Legal\Registry\UpdateTemplateRequest;
+use Illuminate\Http\RedirectResponse;
+use Tests\Feature\Manager\Http\Controllers\Legal\Profile\ChangePasswordTest;
+use Tests\Feature\Manager\Http\Controllers\Legal\Profile\Phone\AddPhoneTest;
+use Tests\Feature\Manager\Http\Controllers\Legal\Profile\Phone\DeletePhoneTest;
+use Tests\Feature\Manager\Http\Controllers\Legal\Profile\UpdateCompanyTest;
+use Tests\Feature\Manager\Http\Controllers\Legal\Profile\UpdateRegistryTemplateTest;
 
 class ProfileController extends AbstractController
 {
@@ -24,6 +34,7 @@ class ProfileController extends AbstractController
     /**
      * @throws \Throwable
      */
+    #[TestClass(UpdateCompanyTest::class)]
     public function updateCompany(UpdateCompanyRequest $request)
     {
         $this->profileService->updateCompany(
@@ -47,6 +58,7 @@ class ProfileController extends AbstractController
     /**
      * @throws \Throwable
      */
+    #[TestClass(ChangePasswordTest::class)]
     public function changePassword(ChangePasswordRequest $request)
     {
         $this->userService->changePassword(
@@ -61,6 +73,7 @@ class ProfileController extends AbstractController
     /**
      * @throws \Throwable
      */
+    #[TestClass(UpdateRegistryTemplateTest::class)]
     public function updateRegistryTemplate(UpdateTemplateRequest $request)
     {
         $this->profileService->updateRegistryTemplate(
@@ -69,5 +82,32 @@ class ProfileController extends AbstractController
         );
 
         return back()->with(['success' => 'Успешно обновлено']);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    #[TestClass(AddPhoneTest::class)]
+    public function addPhone(AddPhoneRequest $request)
+    {
+        $this->profileService->addPhone(
+            $this->getUserId(),
+            new NationalPhone($request->phone),
+        );
+
+        return back()->with('success', 'Успешно обновлено');
+    }
+
+    /**
+     * @param LegalPhone $phone
+     * @return RedirectResponse
+     * @throws \Throwable
+     */
+    #[TestClass(DeletePhoneTest::class)]
+    public function deletePhone(LegalPhone $phone)
+    {
+        $this->profileService->deletePhone($this->getUserId(), $phone->id);
+
+        return back()->with('success', 'Успешно удалено');
     }
 }

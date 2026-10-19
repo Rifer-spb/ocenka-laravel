@@ -5,7 +5,7 @@ namespace App\Core\Entities\Employee;
 use App\Core\Entities\AbstractEntity;
 use App\Core\Entities\Direction;
 use Database\Factories\Core\Entities\Employee\EmployeeReportAccessFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
@@ -31,8 +31,8 @@ class EmployeeReportAccess extends AbstractEntity
         ];
     }
 
-    public function direction(): HasOne
+    public function direction(): BelongsTo
     {
-        return $this->hasOne(Direction::class, 'id', 'direction_id');
+        return $this->belongsTo(Direction::class, 'direction_id', 'id');
     }
 }

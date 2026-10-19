@@ -1,16 +1,21 @@
 import AppLayout from "@manager/layouts/appManagerLayout";
 import './styles.css';
-import './types';
-import Access from "./Access";
+import EmployeeCallAccess from "./EmployeeCallAccess";
 import {router} from "@inertiajs/react";
 import { updateCall } from "@managerRoutes/legal/employees";
+import Templates from "./Templates";
+import { TEmployees, TTemplate, TPhone } from './types';
+import BlockSection from "@manager/components/common/BlockSection";
+import Phones from "./phones/Phones";
+import EmployeeExtensions from "@manager/pages/legal/settings/call/EmployeeExtensions";
 
 type TProps = {
-    template: string;
     employees: TEmployees[];
+    templates: TTemplate[];
+    phones: TPhone[];
 };
 
-export default function ({ employees } : TProps) {
+export default function ({ employees, templates, phones } : TProps) {
     const handleChangeAccess = (employeeId: number) => {
         router.patch(updateCall.url(employeeId));
     }
@@ -19,7 +24,18 @@ export default function ({ employees } : TProps) {
         <AppLayout>
             <div className="call">
                 <h1>Реестр звонков</h1>
-                <Access employees={employees} handler={handleChangeAccess}/>
+                <BlockSection label='Права сотрудников' maxWidth='300px'>
+                    <EmployeeCallAccess employees={employees} handler={handleChangeAccess}/>
+                </BlockSection>
+                <BlockSection label='Шаблоны комментариев' maxWidth='900px' className='templates'>
+                    <Templates templates={templates}/>
+                </BlockSection>
+                <BlockSection label='Номера телефонов' maxWidth='350px'>
+                    <Phones phones={phones} />
+                </BlockSection>
+                <BlockSection label='Добавочные номера сотрудников' maxWidth='450px'>
+                    <EmployeeExtensions employees={employees} />
+                </BlockSection>
             </div>
         </AppLayout>
     );

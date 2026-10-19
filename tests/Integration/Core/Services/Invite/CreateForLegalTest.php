@@ -10,8 +10,10 @@ use App\Core\Entities\User\Legal\Legal;
 use App\Core\Entities\User\Phys\Phys;
 use App\Core\Services\InviteService;
 use App\Core\ValueObjects\Email;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(InviteService::class, 'createForLegal')]
 class CreateForLegalTest extends TestCase
 {
     private InviteService $service;

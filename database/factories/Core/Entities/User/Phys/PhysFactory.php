@@ -35,9 +35,10 @@ class PhysFactory extends Factory
         ];
     }
 
-    public function withProfile(): static
+    public function withProfile(array $state = []): static
     {
-        return $this->afterCreating(fn (Phys $p) => PhysProfile::factory()->create(['id' => $p->id]));
+        return $this->afterCreating(fn (Phys $p) => PhysProfile::factory()
+            ->create(['id' => $p->id, ...$state]));
     }
 
     public function withPhone(array $state = []): static

@@ -1,5 +1,6 @@
 <?php
 
+use App\Manager\Http\Controllers\Legal\CallCommentTemplateController;
 use App\Manager\Http\Controllers\Legal\EmployeeController;
 use App\Manager\Http\Controllers\Legal\InviteController;
 use App\Manager\Http\Controllers\Legal\ProfileController;
@@ -28,6 +29,8 @@ Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
         Route::patch('company', 'updateCompany')->name('company.update');
         Route::patch('password', 'changePassword')->name('password.update');
         Route::patch('registry-template', 'updateRegistryTemplate')->name('updateRegistryTemplate');
+        Route::post('phones', 'addPhone')->name('phones.create');
+        Route::delete('phones/{phone}', 'deletePhone')->name('phones.delete');
     });
 
     Route::prefix('invites')->name('invites.')->controller(InviteController::class)->group(function () {
@@ -50,6 +53,17 @@ Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
             Route::patch('work-rate', 'updateWorkRate')->name('updateWorkRate');
             Route::patch('call', 'updateCall')->name('updateCall');
             Route::patch('registry', 'updateRegistry')->name('updateRegistry');
+            Route::patch('phone-extension', 'updatePhoneExtension')->name('updatePhoneExtension');
         });
     });
+
+    Route::prefix('call-templates')
+        ->name('callTemplates.')
+        ->controller(CallCommentTemplateController::class)
+        ->group(function () {
+            Route::post('/', 'create')->name('create');
+            Route::patch('{template}', 'update')->name('update');
+            Route::delete('{template}', 'delete')->name('delete');
+        }
+    );
 });

@@ -4,8 +4,11 @@ namespace Tests\Feature\Manager\Http\Controllers\Legal\Employee;
 
 use App\Core\Entities\Employee\Employee;
 use App\Core\Entities\User\Legal\Legal;
+use App\Manager\Http\Controllers\Legal\EmployeeController;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(EmployeeController::class, 'updateWorkRate')]
 class UpdateWorkRateTest extends TestCase
 {
     public function testWithAnotherInviteId()
@@ -16,20 +19,6 @@ class UpdateWorkRateTest extends TestCase
 
         $response = $this->actingAs($legal)->patch($route);
         $response->assertStatus(404);
-    }
-
-    public function testRequired()
-    {
-        $employee = Employee::factory()->create();
-        $route = $this->getRoute($employee);
-
-        $response = $this->actingAs($employee->legal)->patch($route, [
-            'value' => ''
-        ]);
-        $employee->refresh();
-
-        $response->assertSessionHas(['success' => 'Успешно обновлено']);
-        $this->assertEquals(0, $employee->work_rate);
     }
 
     public function testInteger()
@@ -56,7 +45,7 @@ class UpdateWorkRateTest extends TestCase
         $response->assertSessionHasErrors(['value' => 'Значение не может быть отрицательным']);
     }
 
-    public function testSuccess()
+    public function testSuccessWithValue()
     {
         $employee = Employee::factory()->create();
         $route = $this->getRoute($employee);
@@ -68,6 +57,20 @@ class UpdateWorkRateTest extends TestCase
 
         $response->assertSessionHas(['success' => 'Успешно обновлено']);
         $this->assertEquals($value, $employee->work_rate);
+    }
+
+    public function testSuccessEmpty()
+    {
+        $employee = Employee::factory()->create();
+        $route = $this->getRoute($employee);
+
+        $response = $this->actingAs($employee->legal)->patch($route, [
+            'value' => ''
+        ]);
+        $employee->refresh();
+
+        $response->assertSessionHas(['success' => 'Успешно обновлено']);
+        $this->assertEquals(0, $employee->work_rate);
     }
 
     private function getLegal(): Legal

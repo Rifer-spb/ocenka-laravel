@@ -2,7 +2,17 @@
 
 namespace App\Core\Services;
 
+use App\Core\Attributes\TestClass;
+use App\Core\Entities\Employee\PhoneExtension;
 use App\Core\Finders\EmployeeFinder;
+use Tests\Integration\Core\Services\Employee\UpdateDoReportTest;
+use Tests\Integration\Core\Services\Employee\UpdatePhoneExtensionTest;
+use Tests\Integration\Core\Services\Employee\UpdateWriteReportTest;
+use Tests\Integration\Core\Services\Employee\UpdateCanRideTest;
+use Tests\Integration\Core\Services\Employee\UpdateIsManagerTest;
+use Tests\Integration\Core\Services\Employee\UpdateWorkRateTest;
+use Tests\Integration\Core\Services\Employee\UpdateCanCallTest;
+use Tests\Integration\Core\Services\Employee\UpdateCanRegistryTest;
 
 class EmployeeService
 {
@@ -12,6 +22,7 @@ class EmployeeService
      * @return void
      * @throws \Throwable
      */
+    #[TestClass(UpdateDoReportTest::class)]
     public function switchDoReportAccess(int $employeeId, int $accessId): void
     {
         $employee = EmployeeFinder::getById($employeeId);
@@ -24,6 +35,7 @@ class EmployeeService
      * @return void
      * @throws \Throwable
      */
+    #[TestClass(UpdateWriteReportTest::class)]
     public function switchWriteReportAccess(int $employeeId, int $accessId): void
     {
         $employee = EmployeeFinder::getById($employeeId);
@@ -35,6 +47,7 @@ class EmployeeService
      * @return void
      * @throws \Throwable
      */
+    #[TestClass(UpdateCanRideTest::class)]
     public function switchRideAccess(int $employeeId): void
     {
         $employee = EmployeeFinder::getById($employeeId);
@@ -47,6 +60,7 @@ class EmployeeService
      * @return void
      * @throws \Throwable
      */
+    #[TestClass(UpdateIsManagerTest::class)]
     public function switchIsManagerAccess(int $employeeId): void
     {
         $employee = EmployeeFinder::getById($employeeId);
@@ -60,6 +74,7 @@ class EmployeeService
      * @return void
      * @throws \Throwable
      */
+    #[TestClass(UpdateWorkRateTest::class)]
     public function updateWorkRate(int $employeeId, string $value): void
     {
         $employee = EmployeeFinder::getById($employeeId);
@@ -72,6 +87,7 @@ class EmployeeService
      * @return void
      * @throws \Throwable
      */
+    #[TestClass(UpdateCanRegistryTest::class)]
     public function switchCanRegistryAccess(int $employeeId): void
     {
         $employee = EmployeeFinder::getById($employeeId);
@@ -84,10 +100,36 @@ class EmployeeService
      * @return void
      * @throws \Throwable
      */
+    #[TestClass(UpdateCanCallTest::class)]
     public function switchCanCallAccess(int $employeeId): void
     {
         $employee = EmployeeFinder::getById($employeeId);
         $employee->switchCanCallAccess();
+        $employee->saveOrFail();
+    }
+
+    /**
+     * @param int $employeeId
+     * @param PhoneExtension $extension
+     * @return void
+     * @throws \Throwable
+     */
+    #[TestClass(UpdatePhoneExtensionTest::class)]
+    public function updatePhoneExtension(int $employeeId, PhoneExtension $extension): void
+    {
+        $employee = EmployeeFinder::getById($employeeId);
+
+        if ($extension->hasValue()) {
+            $legalId = $employee->legal_id;
+            $extensionValue = $extension->getValue();
+            $hasAnotherExtension = EmployeeFinder::hasByLegalIdAndPhoneExtension($legalId, $extensionValue);
+
+            if ($hasAnotherExtension) {
+                throw new \DomainException('Такой внутренний номер уже добавлен.');
+            }
+        }
+
+        $employee->updatePhoneExtension($extension);
         $employee->saveOrFail();
     }
 }

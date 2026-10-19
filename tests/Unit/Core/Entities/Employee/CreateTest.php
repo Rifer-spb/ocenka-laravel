@@ -6,10 +6,15 @@ use App\Core\Entities\Direction;
 use App\Core\Entities\Employee\Employee;
 use App\Core\Entities\Employee\EmployeeReportAccess;
 use App\Core\Entities\Invite\Invite;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(Employee::class, 'createNew')]
 class CreateTest extends TestCase
 {
+    /**
+     * @throws \Throwable
+     */
     public function testSuccess()
     {
         $invite = Invite::factory()->withWait()->create();

@@ -1,10 +1,10 @@
 import AppLayout from "@manager/layouts/appManagerLayout";
 import './styles.css';
 import Template from "./Template";
-import './types';
 import Access from "./Access";
 import {router} from "@inertiajs/react";
 import { updateRegistry } from "@managerRoutes/legal/employees";
+import { TEmployees } from './types';
 
 type TProps = {
     template: string;

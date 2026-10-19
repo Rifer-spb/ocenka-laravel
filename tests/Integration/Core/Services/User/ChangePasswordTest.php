@@ -7,8 +7,10 @@ use App\Core\Entities\User\ValueObjects\Password;
 use App\Core\Services\UserService;
 use App\Core\ValueObjects\Email;
 use Illuminate\Support\Facades\Hash;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(UserService::class, 'changePassword')]
 class ChangePasswordTest extends TestCase
 {
     private UserService $service;

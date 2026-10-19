@@ -2,6 +2,7 @@
 
 namespace App\Core\Entities\Employee;
 
+use App\Core\Attributes\TestClass;
 use App\Core\Entities\AbstractEntity;
 use App\Core\Entities\Direction;
 use App\Core\Entities\EntityNotFoundException;
@@ -10,8 +11,13 @@ use App\Core\Entities\User\Legal\Legal;
 use App\Core\Entities\User\Phys\Phys;
 use Database\Factories\Core\Entities\Employee\EmployeeFactory;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Tests\Unit\Core\Entities\Employee\CreateTest;
+use Tests\Unit\Core\Entities\Employee\GetReportAccessTest;
+use Tests\Unit\Core\Entities\Employee\SwitchAccessTest;
+use Tests\Unit\Core\Entities\Employee\UpdatePhoneExtensionTest;
 
 /**
  * @property int $id
@@ -23,6 +29,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property bool $can_ride
  * @property bool $can_registry
  * @property bool $can_call
+ * @property null|int $phone_extension Внутренний, добавочный номер сотрудника (101, 102, 103 и т.д.)
  * @property Legal $legal
  * @property Phys $phys
  * @property Collection|EmployeeReportAccess[] $reportAccess
@@ -46,10 +53,9 @@ class Employee extends AbstractEntity
     /**
      * @param Invite $invite
      * @return self
-     *
      * @throws \Throwable
-     * @see \Tests\Unit\Core\Models\Employee\CreateTest
      */
+    #[TestClass(CreateTest::class)]
     public static function createNew(Invite $invite): self
     {
         $employee = new self();
@@ -73,9 +79,8 @@ class Employee extends AbstractEntity
     /**
      * @param int $id
      * @return EmployeeReportAccess
-     *
-     * @see \Tests\Unit\Core\Models\Employee\GetReportAccessTest
      */
+    #[TestClass(GetReportAccessTest::class)]
     public function getReportAccess(int $id): EmployeeReportAccess
     {
         if (!$access = $this->reportAccess->find($id)) {
@@ -88,10 +93,9 @@ class Employee extends AbstractEntity
     /**
      * @param int $id
      * @return void
-     *
      * @throws \Throwable
-     * @see \Tests\Unit\Core\Models\Employee\SwitchAccessTest
      */
+    #[TestClass(SwitchAccessTest::class)]
     public function switchDoReportAccess(int $id): void
     {
         $access = $this->getReportAccess($id);
@@ -102,10 +106,9 @@ class Employee extends AbstractEntity
     /**
      * @param int $id
      * @return void
-     *
      * @throws \Throwable
-     * @see \Tests\Unit\Core\Models\Employee\SwitchAccessTest
      */
+    #[TestClass(SwitchAccessTest::class)]
     public function switchWriteReportAccess(int $id): void
     {
         $access = $this->getReportAccess($id);
@@ -113,34 +116,34 @@ class Employee extends AbstractEntity
         $access->saveOrFail();
     }
 
-    /**
-     * @return void
-     *
-     * @see \Tests\Unit\Core\Models\Employee\SwitchAccessTest
-     */
+    #[TestClass(SwitchAccessTest::class)]
     public function switchRideAccess(): void
     {
         $this->can_ride = !$this->can_ride;
     }
 
-    /**
-     * @return void
-     *
-     * @see \Tests\Unit\Core\Models\Employee\SwitchAccessTest
-     */
+    #[TestClass(SwitchAccessTest::class)]
     public function switchIsManagerAccess(): void
     {
         $this->is_manager = !$this->is_manager;
     }
 
+    #[TestClass(SwitchAccessTest::class)]
     public function switchCanRegistryAccess(): void
     {
         $this->can_registry = !$this->can_registry;
     }
 
+    #[TestClass(SwitchAccessTest::class)]
     public function switchCanCallAccess(): void
     {
         $this->can_call = !$this->can_call;
+    }
+
+    #[TestClass(UpdatePhoneExtensionTest::class)]
+    public function updatePhoneExtension(PhoneExtension $extension): void
+    {
+        $this->phone_extension = $extension->getValue();
     }
 
     public function reportAccess(): HasMany|EmployeeReportAccess
@@ -148,13 +151,13 @@ class Employee extends AbstractEntity
         return $this->hasMany(EmployeeReportAccess::class, 'employee_id', 'id')->orderBy('id');
     }
 
-    public function legal(): HasOne|Legal
+    public function legal(): BelongsTo
     {
-        return $this->hasOne(Legal::class, 'id', 'legal_id');
+        return $this->belongsTo(Legal::class, 'legal_id', 'id');
     }
 
-    public function phys(): HasOne|Phys
+    public function phys(): BelongsTo
     {
-        return $this->hasOne(Phys::class, 'id', 'phys_id');
+        return $this->belongsTo(Phys::class, 'phys_id', 'id');
     }
 }

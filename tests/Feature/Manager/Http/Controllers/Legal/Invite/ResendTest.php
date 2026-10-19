@@ -5,9 +5,12 @@ namespace Tests\Feature\Manager\Http\Controllers\Legal\Invite;
 use App\Core\Entities\User\Legal\Legal;
 use App\Core\Jobs\SendMailJob;
 use App\Core\Entities\Invite\Invite;
+use App\Manager\Http\Controllers\Legal\InviteController;
 use Illuminate\Support\Facades\Queue;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(InviteController::class, 'reSend')]
 class ResendTest extends TestCase
 {
     public function testWithAnotherInviteId()

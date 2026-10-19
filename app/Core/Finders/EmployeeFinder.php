@@ -30,11 +30,8 @@ class EmployeeFinder
         return $employee;
     }
 
-    /**
-     * @return Employee[]
-     */
-    public static function getAll(): array
+    public static function hasByLegalIdAndPhoneExtension(int $legalId, string $extension): bool
     {
-        return Employee::with(['phys.profile', 'reportAccess'])->orderBy('id')->get()->all();
+        return Employee::where(['legal_id' => $legalId, 'phone_extension' => $extension])->exists();
     }
 }

@@ -3,10 +3,12 @@
 namespace Tests\Unit\Core\Entities\User\Phys\ValueObjects;
 
 use Carbon\Carbon;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\TestCase;
 use InvalidArgumentException;
 use App\Core\Entities\User\Phys\ValueObjects\Holiday;
 
+#[CoversClass(Holiday::class)]
 class HolidayTest extends TestCase
 {
     // ==================== ПУСТЫЕ ЗНАЧЕНИЯ ====================

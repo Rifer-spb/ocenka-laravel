@@ -6,8 +6,11 @@ use App\Core\Entities\Invite\Invite;
 use App\Core\Entities\Invite\InviteStatus;
 use App\Core\Entities\User\Legal\Legal;
 use App\Core\Entities\User\Phys\Phys;
+use App\Manager\Http\Controllers\Legal\InviteController;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use Tests\TestCase;
 
+#[CoversMethod(InviteController::class, 'create')]
 class CreateTest extends TestCase
 {
     public function testRequire()

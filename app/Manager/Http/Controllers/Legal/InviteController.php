@@ -2,6 +2,7 @@
 
 namespace App\Manager\Http\Controllers\Legal;
 
+use App\Core\Attributes\TestClass;
 use App\Core\Http\Controllers\AbstractController;
 use App\Core\Entities\Invite\Invite;
 use App\Core\Services\InviteService;
@@ -9,6 +10,11 @@ use App\Core\ValueObjects\Email;
 use App\Manager\Http\Requests\Legal\Invite\CreateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Tests\Feature\Manager\Http\Controllers\Legal\Invite\CancelTest;
+use Tests\Feature\Manager\Http\Controllers\Legal\Invite\CloseTest;
+use Tests\Feature\Manager\Http\Controllers\Legal\Invite\ConfirmTest;
+use Tests\Feature\Manager\Http\Controllers\Legal\Invite\CreateTest;
+use Tests\Feature\Manager\Http\Controllers\Legal\Invite\ResendTest;
 
 class InviteController extends AbstractController
 {
@@ -23,7 +29,9 @@ class InviteController extends AbstractController
      * @param CreateRequest $request
      * @return RedirectResponse
      * @throws \Exception
+     * @throws \Throwable
      */
+    #[TestClass(CreateTest::class)]
     public function create(CreateRequest $request)
     {
         $this->service->createForPhys(
@@ -39,6 +47,7 @@ class InviteController extends AbstractController
      * @return RedirectResponse
      * @throws \Exception
      */
+    #[TestClass(ResendTest::class)]
     public function reSend(Invite $invite)
     {
         $this->service->reSendEmail($invite->id);
@@ -49,6 +58,7 @@ class InviteController extends AbstractController
     /**
      * @throws \Throwable
      */
+    #[TestClass(CancelTest::class)]
     public function cancel(Invite $invite)
     {
         $this->service->cancel($invite->id);
@@ -60,6 +70,7 @@ class InviteController extends AbstractController
      * @return RedirectResponse
      * @throws \Throwable
      */
+    #[TestClass(ConfirmTest::class)]
     public function confirm(Invite $invite)
     {
         $this->service->confirm($invite->id);
@@ -71,6 +82,7 @@ class InviteController extends AbstractController
      * @return RedirectResponse
      * @throws \Throwable
      */
+    #[TestClass(CloseTest::class)]
     public function close(Invite $invite)
     {
         $this->service->close($invite->id);

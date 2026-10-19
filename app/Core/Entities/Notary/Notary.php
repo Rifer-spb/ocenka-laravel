@@ -2,14 +2,20 @@
 
 namespace App\Core\Entities\Notary;
 
+use App\Core\Attributes\TestClass;
 use App\Core\Entities\AbstractEntity;
 use App\Core\ValueObjects\Email;
 use App\Core\ValueObjects\NationalPhone;
-use App\Core\ValueObjects\Site;
 use Database\Factories\Core\Entities\Notary\NotaryFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Tests\Unit\Core\Entities\Notary\AddEmailTest;
+use Tests\Unit\Core\Entities\Notary\AddPhoneTest;
+use Tests\Unit\Core\Entities\Notary\CreateTest;
+use Tests\Unit\Core\Entities\Notary\EditTest;
+use Tests\Unit\Core\Entities\Notary\HasEmailTest;
+use Tests\Unit\Core\Entities\Notary\HasPhoneTest;
 
 /**
  * @property int $id
@@ -43,8 +49,8 @@ class Notary extends AbstractEntity
      * @param array $phones
      * @return self
      * @throws \Throwable
-     * @see \Tests\Unit\Core\Models\Notary\CreateTest
      */
+    #[TestClass(CreateTest::class)]
     public static function createNew(NotariatId $notariatId, NotaryRegion $region, string $name, string $address, array $phones): self
     {
         $notary = new self();
@@ -64,8 +70,8 @@ class Notary extends AbstractEntity
     /**
      * @param int|string $phone
      * @return bool
-     * @see \Tests\Unit\Core\Models\Notary\HasPhoneTest
      */
+    #[TestClass(HasPhoneTest::class)]
     public function hasPhone(int|string $phone): bool
     {
         return $this->phones->contains('phone', $phone);
@@ -74,8 +80,8 @@ class Notary extends AbstractEntity
     /**
      * @param string $email
      * @return bool
-     * @see \Tests\Unit\Core\Models\Notary\HasEmailTest
      */
+    #[TestClass(HasEmailTest::class)]
     public function hasEmail(string $email): bool
     {
         return $this->emails->contains('email', $email);
@@ -85,8 +91,8 @@ class Notary extends AbstractEntity
      * @param NationalPhone $phone
      * @return NotaryPhone
      * @throws \Throwable
-     * @see \Tests\Unit\Core\Models\Notary\AddPhoneTest
      */
+    #[TestClass(AddPhoneTest::class)]
     public function addPhone(NationalPhone $phone): NotaryPhone
     {
         if ($this->hasPhone($phone->getValue())) {
@@ -107,8 +113,8 @@ class Notary extends AbstractEntity
      * @param Email $email
      * @return NotaryEmail
      * @throws \Throwable
-     * @see \Tests\Unit\Core\Models\Notary\AddEmailTest
      */
+    #[TestClass(AddEmailTest::class)]
     public function addEmail(Email $email): NotaryEmail
     {
         if ($this->hasEmail($email->getValue())) {
@@ -128,6 +134,7 @@ class Notary extends AbstractEntity
     /**
      * @throws \Throwable
      */
+    #[TestClass(EditTest::class)]
     public function edit(NotaryUpdateData $data): void
     {
         $this->emails()->delete();

@@ -2,12 +2,16 @@
 
 namespace App\Core\ReadServices;
 
-use App\Core\Finders\LegalTypeFinder;
+use App\Core\Entities\LegalType;
 
 class LegalTypeReadService
 {
-    public function getList(): array
+    public function getAll(): array
     {
-        return LegalTypeFinder::getAll()->pluck('name', 'id')->all();
+        return LegalType
+            ::orderBy('name')
+            ->get()
+            ->pluck('name', 'id')
+            ->all();
     }
 }

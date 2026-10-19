@@ -2,23 +2,36 @@
 
 namespace App\Core\Entities\User\Legal;
 
+use App\Core\Attributes\TestClass;
+use App\Core\Entities\EntityNotFoundException;
 use App\Core\Entities\LegalType;
-use App\Core\Entities\User\Legal\Dto\Company;
+use App\Core\Entities\User\Legal\ValueObjects\Company;
 use App\Core\Entities\User\Legal\ValueObjects\RegistryTemplate;
 use App\Core\Entities\User\Role;
 use App\Core\Entities\User\User;
 use App\Core\Entities\User\ValueObjects\Password;
 use App\Core\ValueObjects\Email;
+use App\Core\ValueObjects\NationalPhone;
 use Database\Factories\Core\Entities\User\Legal\LegalFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Str;
+use Tests\Unit\Core\Entities\User\Legal\CreateTest;
+use Tests\Unit\Core\Entities\User\Legal\GetNameTest;
+use Tests\Unit\Core\Entities\User\Legal\Phone\AddPhoneTest;
+use Tests\Unit\Core\Entities\User\Legal\Phone\DeletePhoneTest;
+use Tests\Unit\Core\Entities\User\Legal\Phone\GetPhoneByIdTest;
+use Tests\Unit\Core\Entities\User\Legal\Phone\HasPhoneTest;
+use Tests\Unit\Core\Entities\User\Legal\UpdateCompanyTest;
+use Tests\Unit\Core\Entities\User\Legal\UpdateRegistryTemplateTest;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * @property LegalProfile $profile
  * @property LegalPayment $payment
  * @property LegalMail $mail
  * @property LegalWhatsApp $whatsApp
+ * @property Collection|LegalPhone[] $phones
  *
  * @method static LegalFactory factory()
  */
@@ -28,27 +41,22 @@ class Legal extends User
      * @param Email $email
      * @param Password $password
      * @return self
-     *
-     * Тесты @see \Tests\Unit\Core\Models\User\Legal\CreateTest
+     * @throws \Throwable
      */
+    #[TestClass(CreateTest::class)]
     public static function createNew(Email $email, Password $password): self
     {
-        $user = parent::create([
-            'username' => $email->getValue(),
-            'email' => $email->getValue(),
-            'password' => $password->getValue(),
-            'role' => Role::LEGAL->value,
-            'email_verify_token' => Str::random(60),
-        ]);
+        $user = parent::newManager($email, $password, Role::LEGAL);
 
-        LegalProfile::create(['id' => $user->id]);
-        LegalPayment::create(['id' => $user->id]);
-        LegalMail::create(['id' => $user->id]);
-        LegalWhatsApp::create(['id' => $user->id]);
+        $user->profile()->make()->saveOrFail();
+        $user->payment()->make()->saveOrFail();
+        $user->mail()->make()->saveOrFail();
+        $user->whatsApp()->make()->saveOrFail();
 
         return $user;
     }
 
+    #[TestClass(GetNameTest::class)]
     public function getName(): string
     {
         return ! empty($this->profile->short_name)
@@ -59,6 +67,7 @@ class Legal extends User
     /**
      * @throws \Throwable
      */
+    #[TestClass(UpdateCompanyTest::class)]
     public function updateCompany(LegalType $type, Company $company): void
     {
         $profile = $this->profile;
@@ -69,11 +78,62 @@ class Legal extends User
     /**
      * @throws \Throwable
      */
+    #[TestClass(UpdateRegistryTemplateTest::class)]
     public function updateRegistryTemplate(RegistryTemplate $template): void
     {
         $profile = $this->profile;
         $profile->registry_template = $template->getValue();
         $profile->saveOrFail();
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    #[TestClass(AddPhoneTest::class)]
+    public function addPhone(NationalPhone $phone): LegalPhone
+    {
+        if ($this->hasPhone($phone->getValue())) {
+            throw new \DomainException('Такой номер уже добавлен.');
+        }
+
+        /** @var LegalPhone $model */
+        $model = $this->phones()->make();
+        $model->phone = $phone->getValue();
+        $model->saveOrFail();
+
+        $this->syncCollection('phones', $model);
+
+        return $model;
+    }
+
+    #[TestClass(HasPhoneTest::class)]
+    public function hasPhone(string $phone): bool
+    {
+        return $this->phones->contains('phone', $phone);
+    }
+
+    #[TestClass(GetPhoneByIdTest::class)]
+    public function getPhoneById(int $id): LegalPhone
+    {
+        $phone = $this->phones->firstWhere('id', $id);
+
+        if (! $phone) {
+            throw new EntityNotFoundException('Номер телефона не найден.');
+        }
+
+        return $phone;
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    #[TestClass(DeletePhoneTest::class)]
+    public function deletePhone(int $id): void
+    {
+        $phone = $this->getPhoneById($id);
+        $phone->deleteOrFail();
+
+        $this->unSyncCollection('phones', $phone);
     }
 
     /*******************************************************/
@@ -85,23 +145,28 @@ class Legal extends User
         });
     }
 
-    public function profile(): HasOne|LegalProfile
+    public function profile(): HasOne
     {
         return $this->hasOne(LegalProfile::class, 'id', 'id');
     }
 
-    public function payment(): HasOne|LegalPayment
+    public function payment(): HasOne
     {
         return $this->hasOne(LegalPayment::class, 'id', 'id');
     }
 
-    public function mail(): HasOne|LegalMail
+    public function mail(): HasOne
     {
         return $this->hasOne(LegalMail::class, 'id', 'id');
     }
 
-    public function whatsApp(): HasOne|LegalWhatsApp
+    public function whatsApp(): HasOne
     {
         return $this->hasOne(LegalWhatsApp::class, 'id', 'id');
+    }
+
+    public function phones(): HasMany
+    {
+        return $this->hasMany(LegalPhone::class, 'legal_id', 'id');
     }
 }
