@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('legal_id');
             $table->foreign('legal_id')->references('id')->on('users');
-            $table->unsignedInteger('phys_id');
+            $table->unsignedInteger('phys_id')->nullable();
             $table->foreign('phys_id')->references('id')->on('users');
             $table->string('mango_call_id', 100)->unique();
             $table->string('phone_from', 50);
