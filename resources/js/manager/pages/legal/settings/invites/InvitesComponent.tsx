@@ -1,8 +1,9 @@
 import InviteComponent from './InviteComponent';
 import { IInviteItem } from './types';
-import { useManagerRoute } from '@manager/hooks/useAppRoute';
 import { router } from '@inertiajs/react';
 import {IInviteTab} from "@manager/components/invite/types";
+import { reSend, cancel, confirm as confirmInvite, close } from "@managerRoutes/legal/invites";
+import { updateDoReport, updateWriteReport, updateRide, updateManager, updateWorkRate } from "@managerRoutes/legal/employees";
 
 interface IProps {
     currentTab: IInviteTab
@@ -10,46 +11,42 @@ interface IProps {
 }
 
 export default function({ currentTab, invites } : IProps) {
-    const route = useManagerRoute();
-    const baseUrlInvites = 'invites';
-    const baseUrlEmployees = 'employees';
-
     const handleReSend = (id: number) => {
-        router.post(route(`${baseUrlInvites}/${id}/re-send`));
+        router.post(reSend.url(id));
     };
 
     const handleCancel = (id: number) => {
-        router.patch(route(`${baseUrlInvites}/${id}/cancel`));
+        router.patch(cancel.url(id));
     };
 
     const handleConfirm = (id: number) => {
-        router.patch(route(`${baseUrlInvites}/${id}/confirm`));
+        router.patch(confirmInvite.url(id));
     };
 
     const handleClose = (id: number) => {
         if (confirm('Уверены что хотите завершить связь с сотрудником?')) {
-            router.patch(route(`${baseUrlInvites}/${id}/close`));
+            router.patch(close.url(id));
         }
     };
 
     const handleUpdateDoReport = (id: number, accessId: number) => {
-        router.patch(route(`${baseUrlEmployees}/${id}/do-report/${accessId}`));
+        router.patch(updateDoReport.url({ employee: id, accessId: accessId }));
     };
 
     const handleUpdateWriteReport = (id: number, accessId: number) => {
-        router.patch(route(`${baseUrlEmployees}/${id}/write-report/${accessId}`));
+        router.patch(updateWriteReport.url({ employee: id, accessId: accessId }));
     };
 
     const handleUpdateRide = (id: number) => {
-        router.patch(route(`${baseUrlEmployees}/${id}/ride`));
+        router.patch(updateRide.url(id));
     };
 
     const handleUpdateManager = (id: number) => {
-        router.patch(route(`${baseUrlEmployees}/${id}/manager`));
+        router.patch(updateManager.url(id));
     };
 
     const handleUpdateWorkRate = (id: number, value: number) => {
-        router.patch(route(`${baseUrlEmployees}/${id}/work-rate`), { value: value });
+        router.patch(updateWorkRate.url(id), { value: value });
     };
 
     return (
