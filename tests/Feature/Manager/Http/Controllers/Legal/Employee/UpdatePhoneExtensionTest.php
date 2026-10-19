@@ -66,6 +66,20 @@ class UpdatePhoneExtensionTest extends TestCase
         ]);
     }
 
+    public function testExist()
+    {
+        $employee = Employee::factory()->create(['phone_extension' => 101]);
+        $route = $this->getRoute($employee);
+
+        $response = $this->actingAs($employee->legal)->patch($route, [
+            'value' => '101'
+        ]);
+
+        $response->assertSessionHasErrors([
+            'value' => 'Номер уже занят',
+        ]);
+    }
+
     public function testSuccessWithNumber()
     {
         $employee = Employee::factory()->create();

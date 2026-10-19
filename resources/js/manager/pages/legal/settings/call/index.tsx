@@ -1,19 +1,21 @@
 import AppLayout from "@manager/layouts/appManagerLayout";
 import './styles.css';
-import Access from "./Access";
+import EmployeeCallAccess from "./EmployeeCallAccess";
 import {router} from "@inertiajs/react";
 import { updateCall } from "@managerRoutes/legal/employees";
-import {TEmployeesAccess} from "@manager/types";
 import Templates from "./Templates";
-import './types';
+import { TEmployees, TTemplate, TPhone } from './types';
 import BlockSection from "@manager/components/common/BlockSection";
+import Phones from "./phones/Phones";
+import EmployeeExtensions from "@manager/pages/legal/settings/call/EmployeeExtensions";
 
 type TProps = {
-    employees: TEmployeesAccess[];
+    employees: TEmployees[];
     templates: TTemplate[];
+    phones: TPhone[];
 };
 
-export default function ({ employees, templates } : TProps) {
+export default function ({ employees, templates, phones } : TProps) {
     const handleChangeAccess = (employeeId: number) => {
         router.patch(updateCall.url(employeeId));
     }
@@ -23,10 +25,16 @@ export default function ({ employees, templates } : TProps) {
             <div className="call">
                 <h1>Реестр звонков</h1>
                 <BlockSection label='Права сотрудников' maxWidth='300px'>
-                    <Access employees={employees} handler={handleChangeAccess}/>
+                    <EmployeeCallAccess employees={employees} handler={handleChangeAccess}/>
                 </BlockSection>
                 <BlockSection label='Шаблоны комментариев' maxWidth='900px' className='templates'>
                     <Templates templates={templates}/>
+                </BlockSection>
+                <BlockSection label='Номера телефонов' maxWidth='350px'>
+                    <Phones phones={phones} />
+                </BlockSection>
+                <BlockSection label='Добавочные номера сотрудников' maxWidth='450px'>
+                    <EmployeeExtensions employees={employees} />
                 </BlockSection>
             </div>
         </AppLayout>

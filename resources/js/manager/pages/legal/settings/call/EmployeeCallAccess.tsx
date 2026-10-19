@@ -1,12 +1,12 @@
 import CheckboxGroup from "@common/components/form/CheckboxGroup";
-import {TEmployeesAccess} from "@manager/types";
+import { TEmployees } from './types';
 
 type TProps = {
-    employees: TEmployeesAccess[];
+    employees: TEmployees[];
     handler: Function;
 }
 
-export default function Access({ employees, handler } : TProps) {
+export default function EmployeeCallAccess({ employees, handler } : TProps) {
     return (
         <div className='table'>
             {employees.map((employee, index) => (
@@ -15,7 +15,7 @@ export default function Access({ employees, handler } : TProps) {
                     <div className='td'>
                         <CheckboxGroup
                             key={index}
-                            checked={employee.value}
+                            checked={employee.canCall}
                             onChange={() => handler(employee.id)}
                         />
                     </div>

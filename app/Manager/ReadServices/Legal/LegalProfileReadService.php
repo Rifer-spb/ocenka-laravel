@@ -3,9 +3,20 @@
 namespace App\Manager\ReadServices\Legal;
 
 use App\Core\Entities\User\Legal\Legal;
+use App\Core\Entities\User\Legal\LegalPhone;
 
 class LegalProfileReadService
 {
+    public function getPhones(Legal $legal): array
+    {
+        $callback = fn (LegalPhone $p) => [
+            'id' => $p->id,
+            'phone' => $p->phone,
+        ];
+
+        return $legal->phones->map($callback)->all();
+    }
+
     public function getCompany(Legal $legal): array
     {
         $profile = $legal->profile;

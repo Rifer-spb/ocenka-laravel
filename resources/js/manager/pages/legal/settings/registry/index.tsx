@@ -4,11 +4,11 @@ import Template from "./Template";
 import Access from "./Access";
 import {router} from "@inertiajs/react";
 import { updateRegistry } from "@managerRoutes/legal/employees";
-import {TEmployeesAccess} from "@manager/types";
+import { TEmployees } from './types';
 
 type TProps = {
     template: string;
-    employees: TEmployeesAccess[];
+    employees: TEmployees[];
 };
 
 export default function ({ template, employees } : TProps) {
