@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import { Link } from "@inertiajs/react";
 import { useManagerRoute } from "@manager/hooks/useAppRoute";
 
-interface MenuItem {
+type MenuItem = {
     route: string;
     name: string;
 }

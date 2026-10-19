@@ -1,5 +1,5 @@
-export interface IInviteTab {
-    id: string,
-    name: string,
-    count: number
+export type IInviteTab = {
+    id: string;
+    name: string;
+    count: number;
 }

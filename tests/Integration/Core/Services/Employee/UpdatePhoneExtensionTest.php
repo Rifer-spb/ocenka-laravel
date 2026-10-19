@@ -34,6 +34,19 @@ class UpdatePhoneExtensionTest extends TestCase
     /**
      * @throws \Throwable
      */
+    public function testExist()
+    {
+        $employee = Employee::factory()->create(['phone_extension' => 101]);
+
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Такой внутренний номер уже добавлен.');
+
+        $this->service->updatePhoneExtension($employee->id, new PhoneExtension(101));
+    }
+
+    /**
+     * @throws \Throwable
+     */
     public function testSuccessWithValue()
     {
         $employee = Employee::factory()->create();

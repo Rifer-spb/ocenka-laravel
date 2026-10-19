@@ -2,7 +2,9 @@
 
 namespace App\Manager\Http\Requests\Legal\Employee;
 
+use App\Core\Entities\Employee\Employee;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 /**
  * @property string $value
@@ -17,7 +19,12 @@ class UpdatePhoneExtensionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'value' => ['nullable', 'string', 'regex:/^(?=.*[1-9])\d{1,3}$/'],
+            'value' => [
+                'nullable',
+                'string',
+                'regex:/^(?=.*[1-9])\d{1,3}$/',
+                'unique:'.Employee::getTableName().',phone_extension',
+            ],
         ];
     }
 
@@ -25,6 +32,7 @@ class UpdatePhoneExtensionRequest extends FormRequest
     {
         return [
             'value.regex' => 'Значение должно быть от 1 до 3 цифр',
+            'value.unique' => 'Номер уже занят'
         ];
     }
 }

@@ -19,16 +19,9 @@ class AccountPageController extends AbstractController
 
     public function __invoke(): Response
     {
-        return Inertia::render('manager/legal/settings/account/index', $this->getData());
-    }
-
-    private function getData(): array
-    {
-        $legal = $this->getUser();
-
-        return [
-            'types' => $this->typeReadService->getList(),
-            'company' => $this->profileReadService->getCompany($legal),
-        ];
+        return Inertia::render('manager/legal/settings/account/index', [
+            'types' => $this->typeReadService->getAll(),
+            'company' => $this->profileReadService->getCompany($this->getUser())
+        ]);
     }
 }
