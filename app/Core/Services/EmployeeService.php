@@ -119,12 +119,14 @@ class EmployeeService
     {
         $employee = EmployeeFinder::getById($employeeId);
 
-        $isExistExtension =
-            $extension->hasValue()
-            && EmployeeFinder::hasByPhoneExtension($extension->getValue());
+        if ($extension->hasValue()) {
+            $legalId = $employee->legal_id;
+            $extensionValue = $extension->getValue();
+            $hasAnotherExtension = EmployeeFinder::hasByLegalIdAndPhoneExtension($legalId, $extensionValue);
 
-        if ($isExistExtension) {
-            throw new \DomainException('Такой внутренний номер уже добавлен.');
+            if ($hasAnotherExtension) {
+                throw new \DomainException('Такой внутренний номер уже добавлен.');
+            }
         }
 
         $employee->updatePhoneExtension($extension);

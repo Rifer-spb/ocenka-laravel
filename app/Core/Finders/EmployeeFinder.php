@@ -30,8 +30,8 @@ class EmployeeFinder
         return $employee;
     }
 
-    public static function hasByPhoneExtension(string $extension): bool
+    public static function hasByLegalIdAndPhoneExtension(int $legalId, string $extension): bool
     {
-        return Employee::where(['phone_extension' => $extension])->exists();
+        return Employee::where(['legal_id' => $legalId, 'phone_extension' => $extension])->exists();
     }
 }
