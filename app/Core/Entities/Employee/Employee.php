@@ -13,7 +13,6 @@ use Database\Factories\Core\Entities\Employee\EmployeeFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Tests\Unit\Core\Entities\Employee\CreateTest;
 use Tests\Unit\Core\Entities\Employee\GetReportAccessTest;
 use Tests\Unit\Core\Entities\Employee\SwitchAccessTest;

@@ -1,8 +1,8 @@
 import InviteComponent from './InviteComponent';
 import { IInviteItem } from './types';
-import { useManagerRoute } from '@manager/hooks/useAppRoute';
 import { router } from '@inertiajs/react';
 import {IInviteTab} from "@manager/components/invite/types";
+import { reSend, cancel, confirm } from "@managerRoutes/phys/invites";
 
 type Props = {
     invites: IInviteItem[];
@@ -10,19 +10,16 @@ type Props = {
 }
 
 export default function({ invites, currentTab } : Props) {
-    const route = useManagerRoute();
-    const baseUrl = 'settings/invites';
-
     const handleReSend = (id: number) => {
-        router.patch(route(`${baseUrl}/${id}/re-send`));
+        router.patch(reSend.url(id));
     };
 
     const handleCancel = (id: number) => {
-        router.patch(route(`${baseUrl}/${id}/cancel`));
+        router.patch(cancel.url(id));
     };
 
     const handleConfirm = (id: number) => {
-        router.patch(route(`${baseUrl}/${id}/confirm`));
+        router.patch(confirm.url(id));
     };
 
     return (

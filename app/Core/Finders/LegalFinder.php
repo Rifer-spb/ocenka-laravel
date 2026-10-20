@@ -28,4 +28,9 @@ class LegalFinder
 
         return $user;
     }
+
+    public static function findByPhone(int $phone): ?Legal
+    {
+        return Legal::whereHas('phones', fn ($q) => $q->where('phone', $phone))->first();
+    }
 }

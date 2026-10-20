@@ -7,9 +7,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import '../css/common.css';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { configureEcho } from '@laravel/echo-react';
+
+configureEcho({ broadcaster: 'reverb' });
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
-
 const modulePages = import.meta.glob('./*/pages/**/*.tsx');
 
 function resolve(name: string) {
