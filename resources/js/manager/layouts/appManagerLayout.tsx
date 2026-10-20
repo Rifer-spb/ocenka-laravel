@@ -3,9 +3,10 @@ import {SharedData} from "@manager/types";
 import AppGuestHeader from '@manager/components/appGuestHeader';
 import AppUserHeader from '@manager/components/appUserHeader';
 import AppMain from "@manager/components/appMain";
-import {useEffect} from "react";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 import '../../../css/manager.css';
+import WebSocketRenderer from "@manager/components/WebSocketRenderer";
 
 export default function ({ children } : { children: any }) {
     const { auth, flash } = usePage<SharedData>().props;
@@ -23,14 +24,13 @@ export default function ({ children } : { children: any }) {
         <div className="layout">
             { auth.isAuthenticated ?
                 <>
-                    <AppUserHeader/>
-                    <AppMain children={children}/>
+                    <AppUserHeader />
+                    <AppMain children={children} />
+                    <WebSocketRenderer userId={auth.user.id} />
                 </> :
                 <>
                     <AppGuestHeader/>
-                    <main>
-                        {children}
-                    </main>
+                    <main>{children}</main>
                 </>
             }
 

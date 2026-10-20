@@ -84,7 +84,18 @@ services:
     ports:
       - "6379:6379"  # Redis порт для приложений
       - "8001:8001"  # Веб-интерфейс для браузера
-    #environment:
-    #  - "REDIS_USERNAME=user"
-    #  - "REDIS_PASSWORD=password"
-    #  - "REDIS_DISABLE_DEFAULT_USER=true"
+  reverb:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    container_name: ocenka_laravel_reverb
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    command: php artisan reverb:start --host=0.0.0.0 --port=8080
+    ports:
+      - "8080:8080" # Пробрасываем порт наружу, чтобы браузер мог подключиться
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
