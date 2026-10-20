@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands\Mango;
 
+use App\Core\Entities\Call\MangoCallId;
 use App\Core\Services\Mango\AppearedResult;
 use App\Core\Services\Mango\MangoService;
+use App\Core\ValueObjects\NationalPhone;
 use Carbon\CarbonImmutable;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
@@ -24,9 +26,9 @@ class AppearedCommand extends Command
     public function handle(): int
     {
         $result = $this->service->appeared(
-            Str::random(100),
-            79312311947,
-            79312311947,
+            new MangoCallId(Str::random(100)),
+            new NationalPhone(79312311947),
+            new NationalPhone(79312311947),
             CarbonImmutable::createFromTimestamp(time())
         );
 

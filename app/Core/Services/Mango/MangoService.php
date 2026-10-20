@@ -3,11 +3,13 @@
 namespace App\Core\Services\Mango;
 
 use App\Core\Entities\Call\Call;
+use App\Core\Entities\Call\MangoCallId;
 use App\Core\Events\WebSocket\EventType;
 use App\Core\Events\WebSocket\UserEvent;
 use App\Core\Finders\CallFinder;
 use App\Core\Finders\EmployeeFinder;
 use App\Core\Finders\LegalFinder;
+use App\Core\ValueObjects\NationalPhone;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Log;
 
@@ -16,18 +18,14 @@ class MangoService
     /**
      * @throws \Throwable
      */
-    public function appeared(string $entryId, int $phoneFrom, int $phoneTo, CarbonImmutable $appearedAt): AppearedResult
+    public function appeared(MangoCallId $entryId, NationalPhone $phoneFrom, NationalPhone $phoneTo, CarbonImmutable $appearedAt): AppearedResult
     {
-        ArgumentValidator::validateEntryId($entryId);
-        ArgumentValidator::validateFrom($phoneFrom);
-        ArgumentValidator::validateTo($phoneTo);
-
-        if (CallFinder::hasByMangoId($entryId)) {
+        if (CallFinder::hasByMangoId($entryId->getValue())) {
             Log::warning('Звонок уже добавлен', ['mango_call_id' => $entryId]);
             return AppearedResult::AlreadyExists;
         }
 
-        if (! $legal = LegalFinder::findByPhone($phoneTo)) {
+        if (! $legal = LegalFinder::findByPhone($phoneTo->getValue())) {
             Log::warning('Юрлицо не найдено', ['phone' => $phoneTo]);
             return AppearedResult::LegalNotFound;
         }
@@ -59,7 +57,7 @@ class MangoService
 
     public function connected()
     {
-
+        
     }
 
     public function summary()

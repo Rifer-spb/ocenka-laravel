@@ -4,6 +4,7 @@ namespace App\Core\Entities\Call;
 
 use App\Core\Entities\AbstractEntity;
 use App\Core\Entities\User\Legal\Legal;
+use App\Core\ValueObjects\NationalPhone;
 use Carbon\CarbonImmutable;
 
 /**
@@ -30,13 +31,13 @@ class Call extends AbstractEntity
     /**
      * @throws \Throwable
      */
-    public static function createNew(Legal $legal, string $mangoCallId, int $phoneFrom, int $phoneTo, CarbonImmutable $appearedAt): self
+    public static function createNew(Legal $legal, MangoCallId $mangoCallId, NationalPhone $phoneFrom, NationalPhone $phoneTo, CarbonImmutable $appearedAt): self
     {
         $call = new self();
         $call->legal_id = $legal->id;
-        $call->mango_call_id = $mangoCallId;
-        $call->phone_from = $phoneFrom;
-        $call->phone_to = $phoneTo;
+        $call->mango_call_id = $mangoCallId->getValue();
+        $call->phone_from = $phoneFrom->getValue();
+        $call->phone_to = $phoneTo->getValue();
         $call->appeared_at = $appearedAt->format('Y-m-d H:i:s');
         $call->status = self::STATUS_LOST;
         $call->saveOrFail();
