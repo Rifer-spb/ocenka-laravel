@@ -59,9 +59,17 @@ class Legal extends User
     #[TestClass(GetNameTest::class)]
     public function getName(): string
     {
-        return ! empty($this->profile->short_name)
-            ? $this->profile->short_name
-            : $this->username;
+        return $this->profile->short_name ?? $this->username;
+    }
+
+    public function getAbbr(): string
+    {
+        return $this->profile->abbr ?? $this->username;
+    }
+
+    public function getFullName(): string
+    {
+        return $this->profile->full_name ?? $this->username;
     }
 
     /**

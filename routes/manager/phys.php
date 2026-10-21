@@ -1,5 +1,6 @@
 <?php
 
+use App\Manager\Http\Controllers\Phys\CallController;
 use App\Manager\Http\Controllers\Phys\InviteController;
 use App\Manager\Http\Controllers\Phys\NotaryController;
 use App\Manager\Http\Controllers\Phys\ProfileController;
@@ -49,5 +50,9 @@ Route::prefix('phys')->name('phys.')->middleware('auth')->group(function () {
         Route::get('export-search', 'exportSearch')->name('exportSearch');
         Route::get('{notary}', 'getNotary')->name('getNotary');
         Route::patch('{notary}', 'updateNotary')->name('updateNotary');
+    });
+
+    Route::prefix('calls')->name('calls.')->controller(CallController::class)->group(function () {
+        Route::get('{call}', 'getCall')->name('getCall');
     });
 });
