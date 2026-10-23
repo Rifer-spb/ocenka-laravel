@@ -33,7 +33,6 @@ export default function ({ children } : { children: any }) {
                     <main>{children}</main>
                 </>
             }
-
         </div>
     );
 };
