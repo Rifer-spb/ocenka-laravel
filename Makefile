@@ -30,3 +30,6 @@ wg:
 
 chown:
 	sudo chown -R $USER:$USER /home/rifer/PhpstormProjects/ocenka-laravel/database/migrations
+
+call-inbox:
+	docker exec -it ocenka_laravel_php php artisan mango:appeared
