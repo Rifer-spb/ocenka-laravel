@@ -39,9 +39,9 @@ class MangoService
             $appearedAt
         );
 
-        $employeeIds = EmployeeFinder::getAllPhysIdWithCallAccess($legal);
+        $physIds = EmployeeFinder::getAllPhysIdWithCallAccess($legal);
 
-        $event = new UserEvent(EventType::Call, $employeeIds, [
+        $event = new UserEvent(EventType::Call, $physIds, [
             'action' => WebSocketAction::add,
             'callId' => $call->id
         ]);
@@ -64,11 +64,11 @@ class MangoService
         $call->connectedBy($employee, $connectedAt);
         $call->saveOrFail();
 
-        $employeeIds = EmployeeFinder::getAllPhysIdWithCallAccess($call->legal);
+        $physIds = EmployeeFinder::getAllPhysIdWithCallAccess($call->legal);
 
-        unset($employeeIds[array_search($employee->id, $employeeIds)]);
+        unset($physIds[array_search($employee->id, $physIds)]);
 
-        $event = new UserEvent(EventType::Call, $employeeIds, [
+        $event = new UserEvent(EventType::Call, $physIds, [
             'action' => WebSocketAction::delete,
             'callId' => $call->id
         ]);
@@ -99,9 +99,9 @@ class MangoService
                 throw new \DomainException('Звонок не в статусе пропущенного.');
             }
 
-            $employeeIds = EmployeeFinder::getAllPhysIdWithCallAccess($call->legal);
+            $physIds = EmployeeFinder::getAllPhysIdWithCallAccess($call->legal);
 
-            $event = new UserEvent(EventType::Call, $employeeIds, [
+            $event = new UserEvent(EventType::Call, $physIds, [
                 'action' => WebSocketAction::delete,
                 'callId' => $call->id
             ]);
