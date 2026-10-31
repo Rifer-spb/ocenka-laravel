@@ -21,7 +21,7 @@ Route::prefix('legal')->name('legal.')->middleware('auth')->group(function () {
         Route::get('account', AccountPageController::class)->name('account');
         Route::get('invites', InvitePageController::class)->name('invites');
         Route::get('registry', RegistryPageController::class)->name('registry');
-        Route::get('call', CallPageController::class)->name('call');
+        Route::get('calls', CallPageController::class)->name('calls');
     });
 
     //Controllers

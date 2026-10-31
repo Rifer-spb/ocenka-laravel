@@ -10,23 +10,33 @@ class PhysCallReadService
     {
         $prevCallsQuery = Call
             ::where('legal_id', $call->legal_id)
-            ->whereNot('id', $call->id);
+            ->where('id', '!=', $call->id);
 
-        $prevCall = $prevCallsQuery
+        $prevCall = (clone $prevCallsQuery)
             ->orderByDesc('id')
             ->first();
 
+        $prevCallsComments = (clone $prevCallsQuery)
+            ->with('phys.profile')
+            ->where('comment', '!=', '')
+            ->where('appeared_at', '>', now()->subDays(90))
+            ->orderByDesc('id')
+            ->get();
+
+        $physCallback = fn(Call $c) => [
+            'name' => $c->phys->getName()
+        ];
+
         $prevCall = $prevCall ? [
             'appearedAt' => $prevCall->appeared_at,
-            'phys' => $prevCall->isCompleted() ? [
-                'name' => $call->phys->getName()
-            ] : null
+            'phys' => $prevCall->isCompleted() ? $physCallback($prevCall) : null,
+            'isMissed' => $prevCall->isMissed()
         ] : null;
 
         return [
             'id' => $call->id,
             'status' => [
-                'isInProcess' => $call->isInProgress(),
+                'isInProcess' => $call->isInProcess(),
                 'isCompleted' => $call->isCompleted(),
             ],
             'from' => [
@@ -38,12 +48,16 @@ class PhysCallReadService
                 'name' => $call->legal->getAbbr(),
                 'fullName' => $call->legal->getFullName(),
             ],
-            'phys' => $call->phys ? [
-                'name' => $call->phys->getName()
-            ] : null,
+            'phys' => $call->phys ? $physCallback($call) : null,
             'appearedAt' => $call->appeared_at,
             'prevCall' => $prevCall,
             'countPrevCalls' => $prevCallsQuery->count(),
+            'prevCallsComments' => $prevCallsComments->map(fn(Call $c) => [
+                'id' => $c->id,
+                'appearedAt' => $c->appeared_at,
+                'comment' => $c->comment,
+                'phys' => $c->phys ? $physCallback($c) : null,
+            ])
         ];
     }
 }

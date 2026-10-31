@@ -1,6 +1,6 @@
 import Button from "@common/components/form/Button";
 import Modal from "@manager/components/common/modal/Modal";
-import TemplateForm from "@manager/pages/legal/settings/call/TemplateForm";
+import TemplateForm from "@manager/pages/legal/settings/calls/TemplateForm";
 import {useState} from "react";
 import { create as createTemplate } from "@managerRoutes/legal/callTemplates";
 import { update as updateTemplate } from "@managerRoutes/legal/callTemplates";

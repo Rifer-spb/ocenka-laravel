@@ -33,3 +33,12 @@ chown:
 
 call-inbox:
 	docker exec -it ocenka_laravel_php php artisan mango:appeared
+
+call-connect:
+	docker exec -it ocenka_laravel_php php artisan mango:connected
+
+call-summary:
+	docker exec -it ocenka_laravel_php php artisan mango:summary
+
+call-delete:
+	docker exec -it ocenka_laravel_php php artisan mango:delete

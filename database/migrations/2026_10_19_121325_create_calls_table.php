@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('mango_call_id', 100)->unique();
             $table->string('phone_from', 50);
             $table->string('phone_to', 50);
-            $table->unsignedSmallInteger('status');
+            $table->unsignedSmallInteger('status')->default(0);
             $table->text('comment')->nullable();
             $table->timestamp('appeared_at');
             $table->timestamp('connected_at')->nullable();

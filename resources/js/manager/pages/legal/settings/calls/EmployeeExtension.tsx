@@ -1,4 +1,4 @@
-import {TEmployees} from "@manager/pages/legal/settings/call/types";
+import {TEmployees} from "@manager/pages/legal/settings/calls/types";
 import InputGroup from "@common/components/form/InputGroup";
 import { updatePhoneExtension } from "@managerRoutes/legal/employees";
 import { useForm } from "@inertiajs/react";

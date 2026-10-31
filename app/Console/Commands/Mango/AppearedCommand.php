@@ -3,7 +3,6 @@
 namespace App\Console\Commands\Mango;
 
 use App\Core\Entities\Call\MangoCallId;
-use App\Core\Services\Mango\AppearedResult;
 use App\Core\Services\Mango\MangoService;
 use App\Core\ValueObjects\NationalPhone;
 use Carbon\CarbonImmutable;
@@ -25,19 +24,20 @@ class AppearedCommand extends Command
      */
     public function handle(): int
     {
-        $result = $this->service->appeared(
-            new MangoCallId(Str::random(100)),
-            new NationalPhone(79312311947),
-            new NationalPhone(79312311947),
-            CarbonImmutable::createFromTimestamp(time())
-        );
+        try {
+            $this->service->appeared(
+                new MangoCallId(Str::random(100)),
+                new NationalPhone(79312311947),
+                new NationalPhone(79312311947),
+                CarbonImmutable::createFromTimestamp(time())
+            );
+        } catch (\Throwable $e) {
+            $this->warn("⚠️ {$e->getMessage()}");
 
-        match ($result) {
-            AppearedResult::Ok => $this->info('✅ Звонок добавлен'),
-            AppearedResult::AlreadyExists => $this->warn('⚠️ Звонок уже добавлен'),
-            AppearedResult::LegalNotFound => $this->warn('⚠️ Юрлицо не найдено'),
-            AppearedResult::NoEmployees => $this->warn('⚠️ Сотрудники не найдены'),
-        };
+            return self::FAILURE;
+        }
+
+        $this->info('✅ Звонок добавлен');
 
         return self::SUCCESS;
     }

@@ -2,6 +2,7 @@ import InertiaForm from "@common/components/form/InertiaForm";
 import InputGroup from "@common/components/form/InputGroup";
 import TextareaGroup from "@common/components/form/TextareaGroup";
 import Button from "@common/components/form/Button";
+import { TTemplateForm } from "@manager/pages/legal/settings/calls/types";
 
 type TProps = {
     form: TTemplateForm;

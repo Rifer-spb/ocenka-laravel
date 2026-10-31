@@ -16,8 +16,10 @@ class CallController extends AbstractController
 
     public function getCall(Call $call)
     {
+        $result = $this->callReadService->getCall($call);
+
         return [
-            'call' => $this->callReadService->getCall($call),
+            'call' => $result,
         ];
     }
 }

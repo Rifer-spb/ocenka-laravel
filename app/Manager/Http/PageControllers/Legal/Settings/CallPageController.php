@@ -21,7 +21,7 @@ class CallPageController extends AbstractController
 
     public function __invoke(): Response
     {
-        return Inertia::render('manager/legal/settings/call/index', [
+        return Inertia::render('manager/legal/settings/calls/index', [
             'employees' => $this->employeeReadService->getCallSettings($this->getUser()),
             'templates' => $this->callCommentTemplateReadService->getAllByLegal($this->getUserId()),
             'phones' => $this->profileReadService->getPhones($this->getUser()),

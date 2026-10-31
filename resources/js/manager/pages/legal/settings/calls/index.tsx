@@ -7,7 +7,7 @@ import Templates from "./Templates";
 import { TEmployees, TTemplate, TPhone } from './types';
 import BlockSection from "@manager/components/common/BlockSection";
 import Phones from "./phones/Phones";
-import EmployeeExtensions from "@manager/pages/legal/settings/call/EmployeeExtensions";
+import EmployeeExtensions from "./EmployeeExtensions";
 
 type TProps = {
     employees: TEmployees[];

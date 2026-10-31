@@ -13,9 +13,7 @@ class EmployeeFinder
     {
         $employee = Employee::find($id);
 
-        if (! $employee) {
-            throw new EntityNotFoundException('Сотрудник не найден.');
-        }
+        self::validateNotFound($employee);
 
         return $employee;
     }
@@ -24,9 +22,7 @@ class EmployeeFinder
     {
         $employee = Employee::where(['invite_id' => $invite->id])->first();
 
-        if (! $employee) {
-            throw new EntityNotFoundException('Сотрудник не найден.');
-        }
+        self::validateNotFound($employee);
 
         return $employee;
     }
@@ -36,11 +32,37 @@ class EmployeeFinder
         return Employee::where(['legal_id' => $legalId, 'phone_extension' => $extension])->exists();
     }
 
+    /**
+     * @param Legal $legal
+     * @return array<int>
+     */
     public static function getAllPhysIdWithCallAccess(Legal $legal): array
     {
-        return Employee
+        $personIds = Employee
             ::where('legal_id', $legal->id)
             ->where('can_call', true)
             ->pluck('phys_id')->all();
+
+        if (! $personIds) {
+            throw new EntityNotFoundException('Сотрудники не найдены.');
+        }
+
+        return $personIds;
+    }
+
+    public static function getByPhoneExtension(string|int $extension): Employee
+    {
+        $employee = Employee::where(['phone_extension' => $extension])->first();
+
+        self::validateNotFound($employee);
+
+        return $employee;
+    }
+
+    private static function validateNotFound(?Employee $employee): void
+    {
+        if (! $employee) {
+            throw new EntityNotFoundException('Сотрудник не найден.');
+        }
     }
 }

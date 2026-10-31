@@ -1,0 +1,136 @@
+.call-modal-overlay {
+    background: rgba(0,0,0,0.5);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+}
+
+.call-modal {
+    position: absolute;
+    width: 700px;
+    top: 100px;
+    left: 50%;
+    margin-left: -350px;
+    z-index: 999;
+}
+
+.call-modal h1 {
+    text-align: center;
+    color: #00ff0a;
+    font-size: 41px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-weight: normal;
+}
+
+.call-modal .call-tabs ul li {
+    float: left;
+    border-right: 1px solid #d6d6d6;
+}
+
+.call-modal .call-tabs ul li:last-child {
+    border: none;
+}
+
+.call-modal .call-tabs ul li a {
+    font-size: 14px;
+    color: #1a5d00;
+    text-decoration: none;
+    padding: 8px 15px;
+    background-color: #9fd417;
+    display: block;
+}
+
+.call-modal .call-tabs ul li a:hover {
+    background-color: #87b70d;
+}
+
+.call-modal .call-tabs-content {
+    background-color: #FFF;
+    width: 100%;
+    padding: 20px;
+}
+
+.call-modal .call-notify-list ul li a:hover {
+    background-color: #87b70d;
+}
+
+.call-modal .call-tabs ul li.active a {
+    font-weight: bold;
+}
+
+.call-modal .call-tabs ul li.status-in-process a {
+    background-color: #ff5050;
+    color: #560000;
+}
+
+.call-modal .call-tabs ul li.status-completed a {
+    background-color: #4e97ff;
+    color: #003256;
+}
+
+.call-modal .current-call .call-from,
+.call-modal .current-call .call-to,
+.call-modal .current-call .prev-call-info,
+.call-modal .current-call .call-talk-person,
+.call-modal .current-call .call-comments {
+    margin-bottom: 10px;
+}
+
+.call-modal .current-call {
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.call-modal .current-call h2 {
+    color: #6c6c6c;
+    margin-bottom: 10px;
+}
+
+.call-modal .current-call .prev-call-info .td,
+.call-modal .current-call .call-talk-person .td {
+    vertical-align: middle;
+}
+
+.call-modal .current-call .prev-call-info .td:first-child,
+.call-modal .current-call .call-talk-person .td:first-child {
+    width: 200px;
+}
+
+.call-modal .current-call .prev-call-info .th,
+.call-modal .current-call .call-talk-person .th {
+    color: #6c6c6c;
+    font-size: 14px;
+    width: 120px;
+    vertical-align: middle;
+}
+
+.call-modal .current-call h5 {
+    font-size: 14px;
+    font-weight: bold;
+    color: #6c6c6c;
+    margin-bottom: 0;
+}
+
+.call-modal .call-comments {
+    font-size: 14px;
+}
+
+.call-modal .call-comments-more {
+    background: none;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.call-modal .call-comments-more:hover {
+    text-decoration: underline;
+}
+
+.call-modal .call-talk-person .td {
+    padding-left: 5px;
+}
