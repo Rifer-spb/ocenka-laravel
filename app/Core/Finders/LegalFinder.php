@@ -39,7 +39,7 @@ class LegalFinder
     private static function validateNotFound(?Legal $legal): void
     {
         if (! $legal) {
-            throw new EntityNotFoundException("Юр.лицо не найдено.");
+            throw new EntityNotFoundException('Юр.лицо не найдено.');
         }
     }
 }

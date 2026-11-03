@@ -2,6 +2,7 @@
 
 namespace App\Core\Services\Mango;
 
+use App\Core\Attributes\TestClass;
 use App\Core\Entities\Call\Call;
 use App\Core\Entities\Call\MangoCallId;
 use App\Core\Entities\Employee\PhoneExtension;
@@ -12,6 +13,7 @@ use App\Core\Finders\EmployeeFinder;
 use App\Core\Finders\LegalFinder;
 use App\Core\ValueObjects\NationalPhone;
 use Carbon\CarbonImmutable;
+use Tests\Integration\Core\Services\Mango\AppearedTest;
 
 class MangoService
 {
@@ -23,10 +25,15 @@ class MangoService
      * @return void
      * @throws \Throwable
      */
+    #[TestClass(AppearedTest::class)]
     public function appeared(MangoCallId $entryId, NationalPhone $phoneFrom, NationalPhone $phoneTo, CarbonImmutable $appearedAt): void
     {
         if (CallFinder::hasByMangoId($entryId->getValue())) {
             throw new \DomainException('Звонок уже добавлен.');
+        }
+
+        if ($phoneFrom->getValue() == $phoneTo->getValue()) {
+            throw new \DomainException('Номера не могут быть одинаковые.');
         }
 
         $legal = LegalFinder::getByPhone($phoneTo->getValue());
