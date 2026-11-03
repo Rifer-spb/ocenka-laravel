@@ -15,6 +15,7 @@ use App\Core\ValueObjects\NationalPhone;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Log;
 use Tests\Integration\Core\Services\Mango\AppearedTest;
+use Tests\Integration\Core\Services\Mango\ConnectedTest;
 
 class MangoService
 {
@@ -59,10 +60,15 @@ class MangoService
      * @return void
      * @throws \Throwable
      */
+    #[TestClass(ConnectedTest::class)]
     public function connected(MangoCallId $entryId, PhoneExtension $extension, CarbonImmutable $connectedAt): void
     {
         $call = CallFinder::getByMangoId($entryId->getValue());
         $employee = EmployeeFinder::getByPhoneExtension($extension->getValue());
+
+        if (! $employee->can_call) {
+            throw new \DomainException('У сотрудника нету прав на принятие звонка.');
+        }
 
         $call->connectedBy($employee, $connectedAt);
         $call->saveOrFail();

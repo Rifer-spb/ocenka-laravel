@@ -20,9 +20,7 @@ class LegalFinder
     {
         $user = Legal::where('username', $username)->first();
 
-        if (! $user) {
-            throw new EntityNotFoundException("Юр.лицо с username {$username} не найдено.");
-        }
+        self::validateNotFound($user);
 
         return $user;
     }
