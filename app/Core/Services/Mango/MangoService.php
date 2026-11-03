@@ -16,6 +16,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Log;
 use Tests\Integration\Core\Services\Mango\AppearedTest;
 use Tests\Integration\Core\Services\Mango\ConnectedTest;
+use Tests\Integration\Core\Services\Mango\SummaryTest;
 
 class MangoService
 {
@@ -90,6 +91,7 @@ class MangoService
      * @return void
      * @throws \Throwable
      */
+    #[TestClass(SummaryTest::class)]
     public function summary(MangoCallId $entryId, MangoCallStatus $status, CarbonImmutable $endedAt): void
     {
         $call = CallFinder::getByMangoId($entryId->getValue());
