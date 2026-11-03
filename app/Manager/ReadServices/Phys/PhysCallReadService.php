@@ -41,7 +41,7 @@ class PhysCallReadService
             ],
             'from' => [
                 'phone' => $call->phone_from,
-                'isMobile' => $call->isMobile()
+                'isMobile' => $call->isMobileFromPhone()
             ],
             'to' => ['phone' => $call->phone_to],
             'legal' => [
