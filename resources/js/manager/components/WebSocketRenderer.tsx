@@ -38,6 +38,8 @@ export default function WebSocketRenderer({ userId } : TProps) {
             .catch(err => console.log(err))
     }
 
+    const handleClearCalls = () => setCalls([]);
+
     useEcho<TUserEvent>(`user.${userId}`, '.UserEvent', (event) => {
         if (event.type === 'call') {
             if (event.data.action === 'add') {
@@ -52,7 +54,7 @@ export default function WebSocketRenderer({ userId } : TProps) {
 
     return (
         <>
-            {calls.length && <CallModal calls={calls}/>}
+            {calls.length && <CallModal calls={calls} handleClose={handleClearCalls}/>}
         </>
     );
 }
