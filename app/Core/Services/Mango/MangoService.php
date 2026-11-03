@@ -96,7 +96,7 @@ class MangoService
 
         if ($status->isMissed()) {
             if (! $call->isMissed()) {
-                throw new \DomainException('Звонок не в статусе пропущенного.');
+                throw new \DomainException('Звонок должен иметь статус пропущенный.');
             }
 
             $physIds = EmployeeFinder::findAllPhysIdWithCallAccess($call->legal);
