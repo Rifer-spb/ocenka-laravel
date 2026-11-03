@@ -83,26 +83,6 @@ class AppearedTest extends TestCase
     /**
      * @throws \Throwable
      */
-    public function testEmployeesNotFound()
-    {
-        Legal::factory()
-            ->withPhone(['phone' => $phoneTo = 78122223344])
-            ->create();
-
-        $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage('Сотрудники не найдены.');
-
-        $this->service->appeared(
-            new MangoCallId(Str::random(40)),
-            new NationalPhone(79112223344),
-            new NationalPhone($phoneTo),
-            now()->toImmutable(),
-        );
-    }
-
-    /**
-     * @throws \Throwable
-     */
     public function testSuccess()
     {
         $phoneTo = 78122223344;

@@ -36,18 +36,12 @@ class EmployeeFinder
      * @param Legal $legal
      * @return array<int>
      */
-    public static function getAllPhysIdWithCallAccess(Legal $legal): array
+    public static function findAllPhysIdWithCallAccess(Legal $legal): array
     {
-        $personIds = Employee
+        return Employee
             ::where('legal_id', $legal->id)
             ->where('can_call', true)
             ->pluck('phys_id')->all();
-
-        if (! $personIds) {
-            throw new EntityNotFoundException('Сотрудники не найдены.');
-        }
-
-        return $personIds;
     }
 
     public static function getByPhoneExtension(string|int $extension): Employee
