@@ -33,7 +33,7 @@ class AppearedTest extends TestCase
     /**
      * @throws \Throwable
      */
-    public function testAllReadyExists()
+    public function testAlReadyExists()
     {
         Call::factory()->create(['mango_call_id' => $mangoId = Str::random(40)]);
 
