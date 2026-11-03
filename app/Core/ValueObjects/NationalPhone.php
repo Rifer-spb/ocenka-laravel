@@ -2,13 +2,13 @@
 
 namespace App\Core\ValueObjects;
 
+use App\Core\Attributes\TestClass;
 use App\Core\Helpers\StringHelper;
 use App\Core\Validators\PhoneValidator;
 use InvalidArgumentException;
+use Tests\Unit\Core\ValueObjects\NationalPhoneTest;
 
-/**
- * Тесты @see \Tests\Unit\Core\ValueObjects\NationalPhoneTest
- */
+#[TestClass(NationalPhoneTest::class)]
 class NationalPhone
 {
     private string $value;

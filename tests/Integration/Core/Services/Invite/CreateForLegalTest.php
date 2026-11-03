@@ -44,11 +44,14 @@ class CreateForLegalTest extends TestCase
         $legalEmail = 'test@test.com';
 
         $this->expectException(EntityNotFoundException::class);
-        $this->expectExceptionMessage("Юр.лицо с username {$legalEmail} не найдено.");
+        $this->expectExceptionMessage('Юр.лицо не найдено.');
 
         $this->service->createForLegal($phys->id, new Email($legalEmail));
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function testSuccess()
     {
         $phys = Phys::factory()->create();

@@ -59,7 +59,7 @@ export default function () {
                 {route: route('settings/account'), name: 'Аккаунт'},
                 {route: route('settings/invites'), name: 'Приглашения'},
                 {route: route('settings/registry'), name: 'Договора'},
-                {route: route('settings/call'), name: 'Звонки'},
+                {route: route('settings/calls'), name: 'Звонки'},
             ];
         }
 

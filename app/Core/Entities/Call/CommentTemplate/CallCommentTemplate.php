@@ -6,7 +6,7 @@ use App\Core\Attributes\TestClass;
 use App\Core\Entities\AbstractEntity;
 use App\Core\Entities\User\Legal\Legal;
 use Database\Factories\Core\Entities\Call\CommentTemplate\CallCommentTemplateFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Tests\Unit\Core\Entities\Call\CommentTemplate\CreateTest;
 use Tests\Unit\Core\Entities\Call\CommentTemplate\EditTest;
 
@@ -43,8 +43,8 @@ class CallCommentTemplate extends AbstractEntity
         $this->text = $text->getValue();
     }
 
-    public function legal(): HasOne
+    public function legal(): BelongsTo
     {
-        return $this->hasOne(Legal::class, 'id', 'legal_id');
+        return $this->belongsTo(Legal::class);
     }
 }

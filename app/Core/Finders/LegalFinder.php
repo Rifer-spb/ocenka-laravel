@@ -11,9 +11,7 @@ class LegalFinder
     {
         $legal = Legal::find($id);
 
-        if (! $legal) {
-            throw new EntityNotFoundException("Юр.лицо не найдено.");
-        }
+        self::validateNotFound($legal);
 
         return $legal;
     }
@@ -22,15 +20,24 @@ class LegalFinder
     {
         $user = Legal::where('username', $username)->first();
 
-        if (! $user) {
-            throw new EntityNotFoundException("Юр.лицо с username {$username} не найдено.");
-        }
+        self::validateNotFound($user);
 
         return $user;
     }
 
-    public static function findByPhone(int $phone): ?Legal
+    public static function getByPhone(int $phone): Legal
     {
-        return Legal::whereHas('phones', fn ($q) => $q->where('phone', $phone))->first();
+        $legal = Legal::whereHas('phones', fn ($q) => $q->where('phone', $phone))->first();
+
+        self::validateNotFound($legal);
+
+        return $legal;
+    }
+
+    private static function validateNotFound(?Legal $legal): void
+    {
+        if (! $legal) {
+            throw new EntityNotFoundException('Юр.лицо не найдено.');
+        }
     }
 }

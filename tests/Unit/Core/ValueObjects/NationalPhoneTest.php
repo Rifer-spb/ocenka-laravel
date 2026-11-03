@@ -2,10 +2,12 @@
 
 namespace Tests\Unit\Core\ValueObjects;
 
+use App\Core\Attributes\TestClass;
 use InvalidArgumentException;
 use App\Core\ValueObjects\NationalPhone;
 use Tests\TestCase;
 
+#[TestClass(NationalPhone::class)]
 class NationalPhoneTest extends TestCase
 {
     // ========== УСПЕШНЫЕ СЦЕНАРИИ ==========
