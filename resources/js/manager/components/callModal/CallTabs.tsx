@@ -1,4 +1,4 @@
-import { TCall } from "@manager/types";
+import { TCall } from "./types";
 import React from "react";
 
 type TProps = {
@@ -8,7 +8,7 @@ type TProps = {
     handleSelectTab: (e: any, call: TCall) => void;
 };
 
-export default function ({ calls, currentCall, children, handleSelectTab } : TProps) {
+export default function CallTabs({ calls, currentCall, children, handleSelectTab } : TProps) {
     const getClass = (call: TCall) => {
         const classes = [];
 

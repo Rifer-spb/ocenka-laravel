@@ -1,5 +1,5 @@
-import {TEmployees} from "@manager/pages/legal/settings/call/types";
-import EmployeeExtension from "@manager/pages/legal/settings/call/EmployeeExtension";
+import {TEmployees} from "@manager/pages/legal/settings/calls/types";
+import EmployeeExtension from "@manager/pages/legal/settings/calls/EmployeeExtension";
 
 export default function ({ employees } : { employees: TEmployees[] }) {
     return !employees.length ? null : (
