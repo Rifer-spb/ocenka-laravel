@@ -41,12 +41,7 @@ class MangoService
 
         $physIds = EmployeeFinder::getAllPhysIdWithCallAccess($legal);
 
-        $event = new UserEvent(EventType::Call, $physIds, [
-            'action' => WebSocketAction::add,
-            'callId' => $call->id
-        ]);
-
-        broadcast($event);
+        $this->sendWebSocketMessage(WebSocketAction::add, $physIds, $call);
     }
 
     /**
@@ -66,21 +61,12 @@ class MangoService
 
         $physIds = EmployeeFinder::getAllPhysIdWithCallAccess($call->legal);
 
-        unset($physIds[array_search($employee->id, $physIds)]);
+        if (($physKey = array_search($employee->id, $physIds)) !== false) {
+            unset($physIds[$physKey]);
+        }
 
-        $event = new UserEvent(EventType::Call, $physIds, [
-            'action' => WebSocketAction::delete,
-            'callId' => $call->id
-        ]);
-
-        broadcast($event);
-
-        $event = new UserEvent(EventType::Call, [$employee->id], [
-            'action' => WebSocketAction::update,
-            'callId' => $call->id
-        ]);
-
-        broadcast($event);
+        $this->sendWebSocketMessage(WebSocketAction::delete, $physIds, $call);
+        $this->sendWebSocketMessage(WebSocketAction::update, [$employee->id], $call);
     }
 
     /**
@@ -100,13 +86,7 @@ class MangoService
             }
 
             $physIds = EmployeeFinder::getAllPhysIdWithCallAccess($call->legal);
-
-            $event = new UserEvent(EventType::Call, $physIds, [
-                'action' => WebSocketAction::delete,
-                'callId' => $call->id
-            ]);
-
-            broadcast($event);
+            $this->sendWebSocketMessage(WebSocketAction::delete, $physIds, $call);
 
             return;
         }
@@ -114,8 +94,13 @@ class MangoService
         $call->ended($endedAt);
         $call->saveOrFail();
 
-        $event = new UserEvent(EventType::Call, [$call->phys_id], [
-            'action' => WebSocketAction::update,
+        $this->sendWebSocketMessage(WebSocketAction::update, [$call->phys_id], $call);
+    }
+
+    private function sendWebSocketMessage(WebSocketAction $action, $userIds, Call $call): void
+    {
+        $event = new UserEvent(EventType::Call, $userIds, [
+            'action' => $action,
             'callId' => $call->id
         ]);
 
